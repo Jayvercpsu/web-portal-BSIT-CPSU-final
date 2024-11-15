@@ -1,90 +1,81 @@
  <?php
-include('includes/config.php');
+    include('includes/config.php');
 
-?>
-<!--  Author Name: MH RONY.
-GigHub Link: https://github.com/dev-mhrony
-Facebook Link:https://www.facebook.com/dev.mhrony
-Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
-for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
-Visit My Website : developerrony.com -->
-<!DOCTYPE html>
-<html lang="en">
+    ?>
 
-<head>
+ <!DOCTYPE html>
+ <html lang="en">
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-     
-    <title>Live News Portal | About us</title>
+ <head>
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <meta name="description" content="">
+     <meta name="author" content="">
+     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
 
-    <!-- Custom styles for this template -->
-    <link href="css/modern-business.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/icons.css">
-</head>
+     <title> CPSU BSIT Web Portal | About us</title>
 
-<body>
-     
-    <!-- Navigation -->
-    <?php include('includes/header.php');?>
-    <!-- Page Content -->
-    <div class="container">
+     <!-- Bootstrap core CSS -->
+     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        <?php 
-$pagetype='aboutus';
-$query=mysqli_query($con,"select PageTitle,Description from tblpages where PageName='$pagetype'");
-while($row=mysqli_fetch_array($query))
-{
+     <!-- Custom styles for this template -->
+     <link href="css/modern-business.css" rel="stylesheet">
+     <link rel="stylesheet" href="css/icons.css">
+ </head>
 
-?>
-        <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle'])?>
+ <body>
 
-        </h1>
+     <!-- Navigation -->
+     <?php include('includes/header.php'); ?>
+     <!-- Page Content -->
+     <div class="container">
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="index.php">Home</a>
-            </li>
-            <li class="breadcrumb-item active">About</li>
-        </ol>
+         <?php
+            $pagetype = 'aboutus';
+            $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
+            while ($row = mysqli_fetch_array($query)) {
 
-        <!-- Intro Content -->
-        <div class="row">
+            ?>
+             <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle']) ?>
 
-            <div class="col-lg-12">
+             </h1>
 
-                <p><?php echo $row['Description'];?></p>
-            </div>
-        </div>
-        <!-- /.row -->
-        <?php } ?>
+             <ol class="breadcrumb">
+                 <li class="breadcrumb-item">
+                     <a href="index.php">Home</a>
+                 </li>
+                 <li class="breadcrumb-item active">About</li>
+             </ol>
 
+             <!-- Intro Content -->
+             <div class="row">
 
-        <div class="col-md-12"><a href="tel:+8801608445456">
-                <img src="images/ads.jpg" class="img-fluid"></a>
+                 <div class="col-lg-12">
 
-        </div>
-
-    </div>
+                     <p><?php echo $row['Description']; ?></p>
+                 </div>
+             </div>
+             <!-- /.row -->
+         <?php } ?>
 
 
 
-    <!-- /.container -->
 
-    <!-- Footer -->
-    <?php include('includes/footer.php');?>
-     
+     </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-</body>
 
-</html>
+     <!-- /.container -->
+
+     <!-- Footer -->
+     <?php include('includes/footer.php'); ?>
+
+
+     <!-- Bootstrap core JavaScript -->
+     <script src="vendor/jquery/jquery.min.js"></script>
+     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+ </body>
+
+ </html>

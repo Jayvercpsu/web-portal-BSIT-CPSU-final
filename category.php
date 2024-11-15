@@ -16,7 +16,7 @@ include('includes/config.php');
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <title>Live News Portal | Category Page</title>
+    <title> CPSU BSIT Web Portal | Category Page</title>
      
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

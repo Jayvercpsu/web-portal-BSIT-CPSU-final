@@ -36,7 +36,7 @@ echo "<script>alert('Invalid Details');</script>";
 
 
     <!-- App title -->
-    <title> Live News Portal | Admin Panel</title>
+    <title>  CPSU BSIT Web Portal | Admin Panel</title>
 
     <!-- App css -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />

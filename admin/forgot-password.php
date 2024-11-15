@@ -41,7 +41,7 @@ echo "<script type='text/javascript'> document.location = 'index.php'; </script>
 
           
             <!-- App title -->
-            <title>Live News Portal | Forgot Password</title>
+            <title> CPSU BSIT Web Portal | Forgot Password</title>
 
             <!-- App css -->
             <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />

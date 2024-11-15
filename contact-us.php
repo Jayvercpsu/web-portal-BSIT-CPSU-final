@@ -1,80 +1,75 @@
- 
-<?php
-include('includes/config.php');
+ <?php
+    include('includes/config.php');
 
-?>
-<!DOCTYPE html>
-<html lang="en">
+    ?>
+ <!DOCTYPE html>
+ <html lang="en">
 
-<head>
-     
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <title>Live News Portel || Contact us</title>
-     
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ <head>
 
-    <!-- Custom styles for this template -->
-    <link href="css/modern-business.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/icons.css">
-</head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <meta name="description" content="">
+     <meta name="author" content="">
+     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+     <title>CPSU BSIT Web Portal || Contact us</title>
 
-<body>
-     
-    <!-- Navigation -->
-    <?php include('includes/header.php');?>
-    <!-- Page Content -->
-    <div class="container">
+     <!-- Bootstrap core CSS -->
+     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        <?php 
-$pagetype='contactus';
-$query=mysqli_query($con,"select PageTitle,Description from tblpages where PageName='$pagetype'");
-while($row=mysqli_fetch_array($query))
-{
+     <!-- Custom styles for this template -->
+     <link href="css/modern-business.css" rel="stylesheet">
+     <link rel="stylesheet" href="css/icons.css">
+ </head>
 
-?>
-        <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle'])?>
+ <body>
 
-        </h1>
+     <!-- Navigation -->
+     <?php include('includes/header.php'); ?>
+     <!-- Page Content -->
+     <div class="container">
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="index.php">Home</a>
-            </li>
-            <li class="breadcrumb-item active">Contact</li>
-        </ol>
+         <?php
+            $pagetype = 'contactus';
+            $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
+            while ($row = mysqli_fetch_array($query)) {
 
-        <!-- Intro Content -->
-        <div class="row">
+            ?>
+             <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle']) ?>
 
-            <div class="col-lg-12" style="    text-align: center;">
+             </h1>
 
-                <p><?php echo $row['Description'];?></p>
-            </div>
-        </div>
-        <!-- /.row -->
-        <?php } ?>
+             <ol class="breadcrumb">
+                 <li class="breadcrumb-item">
+                     <a href="index.php">Home</a>
+                 </li>
+                 <li class="breadcrumb-item active">Contact</li>
+             </ol>
 
-        <div class="col-md-12"><a href="tel:+8801608445456">
-                <img src="images/ads.jpg" class="img-fluid"></a>
+             <!-- Intro Content -->
+             <div class="row">
 
-        </div>
-    </div>
-    <!-- /.container -->
+                 <div class="col-lg-12" style="    text-align: center;">
 
-    <!-- Footer -->
-    <?php include('includes/footer.php');?>
-     
-    <script src="js/foot.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                     <p><?php echo $row['Description']; ?></p>
+                 </div>
+             </div>
+             <!-- /.row -->
+         <?php } ?>
 
-</body>
- 
+      
+     </div>
+     <!-- /.container -->
 
-</html>
+     <!-- Footer -->
+     <?php include('includes/footer.php'); ?>
+
+     <script src="js/foot.js"></script>
+     <!-- Bootstrap core JavaScript -->
+     <script src="vendor/jquery/jquery.min.js"></script>
+     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+ </body>
+
+
+ </html>
