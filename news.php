@@ -31,11 +31,11 @@ include('includes/config.php');
 
 </head>
 <style>
-.breadcrumb li {
-    margin-top: 10px;
-}
-    
+    .breadcrumb li {
+        margin-top: 10px;
+    }
 </style>
+
 <body>
 
     <!-- Navigation -->

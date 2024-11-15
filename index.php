@@ -30,7 +30,7 @@
         <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
 
         <link rel="stylesheet" href="./assets/css/theme.css">
-
+        <link rel="stylesheet" href="css/home-page.css">
     </head>
 
     <body>
@@ -39,108 +39,17 @@
         <?php include('includes/header.php'); ?>
 
 
-        <style>
-            /* Black, Violet, and White Theme */
-            body {
-                font-family: Arial, sans-serif;
-                color: #ffffff;
-                /* White text for all sections */
-                background-color: #000000;
-                /* Black background */
-            }
 
-            .btn-primary {
-                background-color: #6a0dad;
-                /* Violet buttons */
-                border-color: #6a0dad;
-                color: #ffffff;
-                /* White text */
-            }
-
-            .btn-primary:hover {
-                background-color: #4b0082;
-                /* Dark violet for hover effect */
-                border-color: #4b0082;
-            }
-
-            .page-hero {
-                background-color: #6a0dad;
-                /* Violet for the hero section */
-                color: #ffffff;
-                /* White text */
-            }
-
-            .page-hero .subhead,
-            .page-hero h1 {
-                color: #ffffff;
-                /* Ensuring all text is white */
-            }
-
-            .circle-shape {
-                background-color: #6a0dad;
-                /* Violet circles */
-            }
-
-            .card-service {
-                background-color: #000000;
-                /* Black background for cards */
-                color: #ffffff;
-                /* White text */
-                border: 1px solid #6a0dad;
-                /* Violet border for emphasis */
-            }
-
-            .card-service p span {
-                color: #6a0dad;
-                /* Violet highlight */
-            }
-
-            .card-doctor .body {
-                background-color: #000000;
-                /* Match the black theme */
-                color: #ffffff;
-                /* White text */
-            }
-
-            .page-section.bg-light {
-                background-color: #000000;
-                /* Black background */
-            }
-
-            .form-control {
-                background-color: #000000;
-                /* Black input fields */
-                color: #ffffff;
-                /* White text */
-                border: 1px solid #6a0dad;
-                /* Violet border */
-            }
-
-            .form-control::placeholder {
-                color: #a280d1;
-                /* Violet placeholder text */
-            }
-
-            .custom-select {
-                background-color: #000000;
-                /* Black dropdowns */
-                color: #ffffff;
-                /* White text */
-                border: 1px solid #6a0dad;
-                /* Violet border */
-            }
-        </style>
-
-        <!-- Content Example -->
-        <div class="page-hero bg-image overlay-dark" style="background-image: url(images/sample_bsit.jpg);">
-            <div class="hero-section">
-                <div class="container text-center wow zoomIn">
-                    <span class="subhead">CPSU BSIT Department</span>
-                    <h1 class="display-4">Empowering Future IT Professionals</h1>
-                    <a href="#" class="btn btn-primary">Learn More</a>
+        <div class="page-hero bg-image overlay-dark" style="background-image: url('images/sample_bsit.jpg');">
+            <div class="hero-section d-flex align-items-center">
+                <div class="container text-center text-white wow zoomIn">
+                    <span class="subhead d-block mb-2 fs-5">CPSU BSIT Department</span>
+                    <h1 class="display-5 fw-bold">Empowering Future IT Professionals</h1>
+                    <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
                 </div>
             </div>
         </div>
+
 
         <!-- Services Section -->
         <div class="bg-light">
