@@ -62,7 +62,7 @@
              </div>
 
              <!-- Button mobile view to collapse sidebar menu -->
-             <div class="navbar navbar-default" role="navigation">
+             <div class="navbar navbar-default" role="navigation">  
                  <div class="container">
 
                      <!-- Navbar-left -->

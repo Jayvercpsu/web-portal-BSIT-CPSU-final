@@ -248,9 +248,15 @@
                                       </div>
                                   </form>
 
-                                  <div class="clearfix"></div>
-                                  <a href="../index.php" class="text-custom"><i class="mdi mdi-home"></i> Back Home</a>
-                              </div>
+                                  <div class="d-flex justify-content-between flex-wrap mt-3">
+    <a href="index.php" class="btn btn-link text-decoration-none">
+        <i class="mdi mdi-arrow-left"></i> Back
+    </a>
+    <a href="../index.php" class="btn btn-link text-decoration-none">
+        <i class="mdi mdi-home"></i> Back Home
+    </a>
+</div>
+
                           </div>
                           <!-- end card-box -->
 

@@ -1,4 +1,4 @@
- <?php
+<?php
     include('includes/config.php');
 
     ?>
@@ -16,18 +16,194 @@
 
      <title> CPSU BSIT Web Portal | About us</title>
 
-     <!-- Bootstrap core CSS -->
-     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-     <!-- Custom styles for this template -->
-     <link href="css/modern-business.css" rel="stylesheet">
      <link rel="stylesheet" href="css/icons.css">
+
+     <link rel="stylesheet" href="./assets/css/maicons.css">
+
+     <link rel="stylesheet" href="./assets/css/bootstrap.css">
+
+     <link rel="stylesheet" href="./assets/vendor/owl-carousel/css/owl.carousel.css">
+
+     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
+
+     <link rel="stylesheet" href="./assets/css/theme.css">
+
  </head>
+
+ <style>
+     /* Black, Violet, and White Theme */
+     body {
+         font-family: Arial, sans-serif;
+         color: #ffffff;
+         /* White text for all sections */
+         background-color: #000000;
+         /* Black background */
+     }
+
+     .btn-primary {
+         background-color: #6a0dad;
+         /* Violet buttons */
+         border-color: #6a0dad;
+         color: #ffffff;
+         /* White text */
+     }
+
+     .btn-primary:hover {
+         background-color: #4b0082;
+         /* Dark violet for hover effect */
+         border-color: #4b0082;
+     }
+
+     .page-hero {
+         background-color: #6a0dad;
+         /* Violet for the hero section */
+         color: #ffffff;
+         /* White text */
+     }
+
+     .page-hero .subhead,
+     .page-hero h1 {
+         color: #ffffff;
+         /* Ensuring all text is white */
+     }
+
+     .circle-shape {
+         background-color: #6a0dad;
+         /* Violet circles */
+     }
+
+     .card-service {
+         background-color: #000000;
+         /* Black background for cards */
+         color: #ffffff;
+         /* White text */
+         border: 1px solid #6a0dad;
+         /* Violet border for emphasis */
+     }
+
+     .card-service p span {
+         color: #6a0dad;
+         /* Violet highlight */
+     }
+
+     .card-doctor .body {
+         background-color: #000000;
+         /* Match the black theme */
+         color: #ffffff;
+         /* White text */
+     }
+
+     .page-section.bg-light {
+         background-color: #000000;
+         /* Black background */
+     }
+
+     .form-control {
+         background-color: #000000;
+         /* Black input fields */
+         color: #ffffff;
+         /* White text */
+         border: 1px solid #6a0dad;
+         /* Violet border */
+     }
+
+     .form-control::placeholder {
+         color: #a280d1;
+         /* Violet placeholder text */
+     }
+
+     .custom-select {
+         background-color: #000000;
+         /* Black dropdowns */
+         color: #ffffff;
+         /* White text */
+         border: 1px solid #6a0dad;
+         /* Violet border */
+     }
+ </style>
 
  <body>
 
      <!-- Navigation -->
      <?php include('includes/header.php'); ?>
+
+
+
+
+
+
+     <div class="page-banner overlay-dark bg-image" style="background-image: url(images/sample_bsit.jpg);">
+         <div class="banner-section">
+             <div class="container text-center wow fadeInUp">
+                 <nav aria-label="Breadcrumb">
+                     <br><br>
+                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
+                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                         <li class="breadcrumb-item active" aria-current="page">About</li>
+                     </ol>
+                 </nav>
+                 <h1 class="font-weight-normal">About</h1>
+             </div> <!-- .container -->
+         </div> <!-- .banner-section -->
+     </div> <!-- .page-banner -->
+
+
+     <!-- Services Section -->
+     <div class="bg-light">
+         <div class="page-section py-3 mt-md-n5 custom-index">
+             <div class="container">
+                 <div class="row justify-content-center">
+                     <div class="col-md-4 py-3 py-md-0">
+                         <div class="card-service wow fadeInUp">
+                             <div class="circle-shape">
+                                 <span class="mai-chatbubbles-outline"></span>
+                             </div>
+                             <p><span>Chat</span> with IT Experts</p>
+                         </div>
+                     </div>
+                     <div class="col-md-4 py-3 py-md-0">
+                         <div class="card-service wow fadeInUp">
+                             <div class="circle-shape">
+                                 <span class="mai-shield-checkmark"></span>
+                             </div>
+                             <p><span>Secure</span> Systems</p>
+                         </div>
+                     </div>
+                     <div class="col-md-4 py-3 py-md-0">
+                         <div class="card-service wow fadeInUp">
+                             <div class="circle-shape">
+                                 <span class="mai-basket"></span>
+                             </div>
+                             <p><span>Innovative</span> Solutions</p>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+
+
+
+
+
+
+     </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
      <!-- Page Content -->
      <div class="container">
 
@@ -37,31 +213,89 @@
             while ($row = mysqli_fetch_array($query)) {
 
             ?>
-             <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle']) ?>
+            
 
-             </h1>
 
-             <ol class="breadcrumb">
-                 <li class="breadcrumb-item">
-                     <a href="index.php">Home</a>
-                 </li>
-                 <li class="breadcrumb-item active">About</li>
-             </ol>
 
-             <!-- Intro Content -->
-             <div class="row">
 
-                 <div class="col-lg-12">
 
-                     <p><?php echo $row['Description']; ?></p>
+
+             <div class="page-section">
+                 <div class="container">
+                     <div class="row justify-content-center">
+                         <div class="col-lg-8 wow fadeInUp">
+                         <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle']) ?></h1>
+                             <div class="text-lg">
+
+                                 <div class="row">
+                                     <div class="col-lg-12">
+                                         <p><?php echo $row['Description']; ?></p>
+                                     </div>
+                                 </div>
+
+                             <?php } ?>
+                             </div>
+                         </div>
+
+
+
+                         <div class="col-lg-10 mt-5">
+                             <h1 class="text-center mb-5 wow fadeInUp">Meet Our Faculty</h1>
+                             <div class="row justify-content-center">
+                                 <div class="col-md-6 col-lg-4 wow zoomIn">
+                                     <div class="card-doctor">
+                                         <div class="header">
+                                             <img src="./assets/faculty_image/dandan.jpg" alt="">
+                                             <div class="meta">
+                                                 <a href="#"><span class="mai-call"></span></a>
+                                                 <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                             </div>
+                                         </div>
+                                         <div class="body">
+                                             <p class="text-xl mb-0">Dexter G. Dandan</p>
+                                             <span class="text-sm text-grey">Program Head</span>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="col-md-6 col-lg-4 wow zoomIn">
+                                     <div class="card-doctor">
+                                         <div class="header">
+                                             <img src="./assets/faculty_image/deliza.jpg" alt="">
+                                             <div class="meta">
+                                                 <a href="#"><span class="mai-call"></span></a>
+                                                 <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                             </div>
+                                         </div>
+                                         <div class="body">
+                                             <p class="text-xl mb-0">Deliza Grace Delgado</p>
+                                             <span class="text-sm text-grey">Instructor</span>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="col-md-6 col-lg-4 wow zoomIn">
+                                     <div class="card-doctor">
+                                     <div class="header">
+                                             <img src="./assets/faculty_image/clint.jpg" alt="">
+                                             <div class="meta">
+                                                 <a href="#"><span class="mai-call"></span></a>
+                                                 <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                             </div>
+                                         </div>
+                                         <div class="body">
+                                             <p class="text-xl mb-0">Clint Clarido</p>
+                                             <span class="text-sm text-grey">Instructor</span>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <a href="instructor.php" class="btn btn-primary wow fadeInUp">Show More</a>
+                             </div>
+                         </div>
+
+
+
+                     </div>
                  </div>
              </div>
-             <!-- /.row -->
-         <?php } ?>
-
-
-
-
      </div>
 
 
@@ -75,6 +309,16 @@
      <!-- Bootstrap core JavaScript -->
      <script src="vendor/jquery/jquery.min.js"></script>
      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+     <script src="./assets/js/jquery-3.5.1.min.js"></script>
+
+     <script src="./assets/js/bootstrap.bundle.min.js"></script>
+
+     <script src="./assets/vendor/owl-carousel/js/owl.carousel.min.js"></script>
+
+     <script src="./assets/vendor/wow/wow.min.js"></script>
+
+     <script src="./assets/js/theme.js"></script>
+
 
  </body>
 

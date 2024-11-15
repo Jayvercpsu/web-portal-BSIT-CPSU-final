@@ -364,8 +364,7 @@
                         <div class="footer-widget-heading">
                             <h3>About Us</h3>
                         </div>
-                        <ul class="footer-menu">
-                            <li><a href="#">Our Story</a></li>
+                        <ul class="footer-menu"> 
                             <li><a href="#">Contact Us</a></li>
                             <li><a href="#">Career</a></li>
                         </ul>

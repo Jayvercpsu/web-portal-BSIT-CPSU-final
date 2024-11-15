@@ -13,245 +13,408 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-        <title> CPSU BSIT Web Portal | Home Page</title>
+        <title> CPSU BSIT Web Portal | News Page</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link href="css/modern-business.css" rel="stylesheet">
         <link rel="stylesheet" href="css/icons.css">
         <link rel="stylesheet" href="css/owl.carousel.min.css">
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-        
+
+        <link rel="stylesheet" href="./assets/css/maicons.css">
+
+        <link rel="stylesheet" href="./assets/css/bootstrap.css">
+
+        <link rel="stylesheet" href="./assets/vendor/owl-carousel/css/owl.carousel.css">
+
+        <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
+
+        <link rel="stylesheet" href="./assets/css/theme.css">
+
     </head>
 
     <body>
 
         <!-- Navigation -->
         <?php include('includes/header.php'); ?>
-        <!-- Page Content -->
-        <div class="container-fluid">
-            <div class="row" style="margin-top: 4%">
-                <!-- Blog Entries Column -->
-                <div class="col-md-2 mt-4">
-              
+
+
+        <style>
+            /* Black, Violet, and White Theme */
+            body {
+                font-family: Arial, sans-serif;
+                color: #ffffff;
+                /* White text for all sections */
+                background-color: #000000;
+                /* Black background */
+            }
+
+            .btn-primary {
+                background-color: #6a0dad;
+                /* Violet buttons */
+                border-color: #6a0dad;
+                color: #ffffff;
+                /* White text */
+            }
+
+            .btn-primary:hover {
+                background-color: #4b0082;
+                /* Dark violet for hover effect */
+                border-color: #4b0082;
+            }
+
+            .page-hero {
+                background-color: #6a0dad;
+                /* Violet for the hero section */
+                color: #ffffff;
+                /* White text */
+            }
+
+            .page-hero .subhead,
+            .page-hero h1 {
+                color: #ffffff;
+                /* Ensuring all text is white */
+            }
+
+            .circle-shape {
+                background-color: #6a0dad;
+                /* Violet circles */
+            }
+
+            .card-service {
+                background-color: #000000;
+                /* Black background for cards */
+                color: #ffffff;
+                /* White text */
+                border: 1px solid #6a0dad;
+                /* Violet border for emphasis */
+            }
+
+            .card-service p span {
+                color: #6a0dad;
+                /* Violet highlight */
+            }
+
+            .card-doctor .body {
+                background-color: #000000;
+                /* Match the black theme */
+                color: #ffffff;
+                /* White text */
+            }
+
+            .page-section.bg-light {
+                background-color: #000000;
+                /* Black background */
+            }
+
+            .form-control {
+                background-color: #000000;
+                /* Black input fields */
+                color: #ffffff;
+                /* White text */
+                border: 1px solid #6a0dad;
+                /* Violet border */
+            }
+
+            .form-control::placeholder {
+                color: #a280d1;
+                /* Violet placeholder text */
+            }
+
+            .custom-select {
+                background-color: #000000;
+                /* Black dropdowns */
+                color: #ffffff;
+                /* White text */
+                border: 1px solid #6a0dad;
+                /* Violet border */
+            }
+        </style>
+
+        <!-- Content Example -->
+        <div class="page-hero bg-image overlay-dark" style="background-image: url(images/sample_bsit.jpg);">
+            <div class="hero-section">
+                <div class="container text-center wow zoomIn">
+                    <span class="subhead">CPSU BSIT Department</span>
+                    <h1 class="display-4">Empowering Future IT Professionals</h1>
+                    <a href="#" class="btn btn-primary">Learn More</a>
                 </div>
-                <div class="col-md-7">
-                    <h4 class="widget-title mb-4">Today <span>Highlight</span></h4>
-                    <!-- Blog Post -->
-                    <div class="row">
-                        <div class="owl-carousel owl-theme" id="slider">
-                            <div class="card mb-4 border-0">
-                                <img class="card-img-top" src="admin/assets/images/01.jpg" alt="" width="100%">
-                                <div class="card-body">
-                                    <p class="m-0">
-                                        <!--category-->
-                                        <a class="badge bg-dark text-decoration-none link-light" href="#" style="color:#fff">Sports</a>
-                                        <!--Subcategory--->
-                                        <a class="badge bg-warning text-decoration-none link-light" style="color:#fff">Sports</a>
-                                    </p>
-                                    <p class="m-0"><small> Posted on 2022-11-11 00:20:09</small></p>
-                                    <a href="#" class="card-title text-decoration-none text-dark">
-                                        <h5 class="card-title">FIFA World Cup 2022: Semi-final 1, England vs New Zealand Who Said What</h5>
-                                    </a>
-                                    <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                                </div>
-                            </div>
-                            <div class="card mb-4 border-0">
-                                <img class="card-img-top" src="admin/postimages/8bc5c30be91dca9d07c1db858c60e39f.jpg" alt="" width="100%">
-                                <div class="card-body">
-                                    <p class="m-0">
-                                        <!--category-->
-                                        <a class="badge bg-dark text-decoration-none link-light" href="#" style="color:#fff">Sports</a>
-                                        <!--Subcategory--->
-                                        <a class="badge bg-warning text-decoration-none link-light" style="color:#fff">Sports</a>
-                                    </p>
-                                    <p class="m-0"><small> Posted on 2022-11-11 00:20:09</small></p>
-                                    <a href="#" class="card-title text-decoration-none text-dark">
-                                        <h5 class="card-title">T20 World Cup 2022: Semi-final 1, England vs New Zealand Who Said What</h5>
-                                    </a>
-                                    <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                                </div>
-                            </div>
-                            <div class="card mb-4 border-0">
-                                <img class="card-img-top" src="admin/postimages/8bc5c30be91dca9d07c1db858c60e39f.jpg" alt="" width="100%">
-                                <div class="card-body">
-                                    <p class="m-0">
-                                        <!--category-->
-                                        <a class="badge bg-dark text-decoration-none link-light" href="#" style="color:#fff">Sports</a>
-                                        <!--Subcategory--->
-                                        <a class="badge bg-warning text-decoration-none link-light" style="color:#fff">Sports</a>
-                                    </p>
-                                    <p class="m-0"><small> Posted on 2022-11-11 00:20:09</small></p>
-                                    <a href="#" class="card-title text-decoration-none text-dark">
-                                        <h5 class="card-title">T20 World Cup 2022: Semi-final 1, England vs New Zealand Who Said What</h5>
-                                    </a>
-                                    <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                        if (isset($_GET['pageno'])) {
-                            $pageno = $_GET['pageno'];
-                        } else {
-                            $pageno = 1;
-                        }
-                        $no_of_records_per_page = 8;
-                        $offset = ($pageno - 1) * $no_of_records_per_page;
-
-
-                        $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
-                        $result = mysqli_query($con, $total_pages_sql);
-                        $total_rows = mysqli_fetch_array($result)[0];
-                        $total_pages = ceil($total_rows / $no_of_records_per_page);
-
-
-                        $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
-                        while ($row = mysqli_fetch_array($query)) {
-                        ?>
-                            <div class="col-md-6">
-                                <div class="card mb-4 border-0">
-                                    <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" height="200px">
-                                    <div class="card-body">
-                                        <p class="m-0">
-                                            <!--category-->
-                                            <a class="badge bg-dark text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
-                                            <!--Subcategory--->
-                                            <a class="badge bg-warning text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
-                                        </p>
-                                        <p class="m-0"><small> Posted on <?php echo htmlentities($row['postingdate']); ?></small></p>
-                                        <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="card-title text-decoration-none text-dark">
-                                            <h5 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h5>
-                                        </a>
-                                        <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                                    </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <div class="col-md-12">
-
-
-                            <!-- Pagination -->
-                            <!-- <ul class="pagination justify-content-center mb-4">
-                            <li class="page-item"><a href="?pageno=1"  class="page-link border-0">First</a></li>
-                            <li class="<?php if ($pageno <= 1) {
-                                            echo 'disabled';
-                                        } ?> page-item">
-                            <a href="<?php if ($pageno <= 1) {
-                                            echo '#';
-                                        } else {
-                                            echo "?pageno=" . ($pageno - 1);
-                                        } ?>" class="page-link border-0">Prev</a>
-                            </li>
-                            <li class="<?php if ($pageno >= $total_pages) {
-                                            echo 'disabled';
-                                        } ?> page-item">
-                            <a href="<?php if ($pageno >= $total_pages) {
-                                            echo '#';
-                                        } else {
-                                            echo "?pageno=" . ($pageno + 1);
-                                        } ?> " class="page-link border-0">Next</a>
-                            </li>
-                            <li class="page-item"><a href="?pageno=<?php echo $total_pages; ?>" class="page-link border-0">Last</a></li>
-                            </ul> -->
-                        </div>
-
-
-                        <!-- Static -->
-                        <div class="col-md-12">
-                            <div class="card mb-4 mt-5 border-0">
-                                <div class="row g-3">
-                                    <!-- Vision Section -->
-                                    <div class="col-md-4 text-center">
-                                        <img src="admin/assets/images/vision.jpg" alt="Vision" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                                        <h5 class="text-dark">Vision</h5>
-                                        <p class="text-secondary">Our vision is to create a better future through innovation and excellence.</p>
-                                    </div>
-                                    <!-- Mission Section -->
-                                    <div class="col-md-4 text-center">
-                                        <img src="admin/assets/images/mission.jpg" alt="Mission" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                                        <h5 class="text-dark">Mission</h5>
-                                        <p class="text-secondary">Our mission is to empower individuals by providing exceptional learning opportunities.</p>
-                                    </div>
-                                    <!-- Objectives Section -->
-                                    <div class="col-md-4 text-center">
-                                        <img src="admin/assets/images/objectives.jpg" alt="Objectives" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                                        <h5 class="text-dark">Objectives</h5>
-                                        <p class="text-secondary">Our objectives include fostering creativity, leadership, and a passion for learning.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-                    </div>
-
-                </div>
-                <!-- Sidebar Widgets Column -->
-                <?php include('includes/sidebar.php'); ?>
             </div>
+        </div>
 
+        <!-- Services Section -->
+        <div class="bg-light">
+            <div class="page-section py-3 mt-md-n5 custom-index">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 py-3 py-md-0">
+                            <div class="card-service wow fadeInUp">
+                                <div class="circle-shape">
+                                    <span class="mai-chatbubbles-outline"></span>
+                                </div>
+                                <p><span>Chat</span> with IT Experts</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 py-3 py-md-0">
+                            <div class="card-service wow fadeInUp">
+                                <div class="circle-shape">
+                                    <span class="mai-shield-checkmark"></span>
+                                </div>
+                                <p><span>Secure</span> Systems</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 py-3 py-md-0">
+                            <div class="card-service wow fadeInUp">
+                                <div class="circle-shape">
+                                    <span class="mai-basket"></span>
+                                </div>
+                                <p><span>Innovative</span> Solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.row -->
+
+
+
+
+
+        <div class="page-section pb-0" id="about">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 py-3 wow fadeInUp">
+                        <h1>Welcome to the CPSU BSIT Program</h1>
+                        <p class="text-grey mb-4">
+                            At CPSU, the Bachelor of Science in Information Technology program equips students with the skills and knowledge to lead in a technology-driven world. From software development to networking, our curriculum fosters innovation and problem-solving in the field of IT.
+                        </p>
+                        <a href="#courses" class="btn btn-primary">Discover Courses</a>
+                    </div>
+                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
+                        <div class="img-place custom-img-1">
+                            <img src="images/sample2.jpg" alt="CPSU Students">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.container -->
+        </div>
+
+
+
+
+
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <?php
+            $pagetype = 'aboutus';
+            $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
+            while ($row = mysqli_fetch_array($query)) {
+
+            ?>
+
+
+
+
+
+
+
+                <div class="page-section">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8 wow fadeInUp">
+                                <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle']) ?></h1>
+                                <div class="text-lg">
+
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p><?php echo $row['Description']; ?></p>
+                                        </div>
+                                    </div>
+
+                                <?php } ?>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-10 mt-5">
+                                <h1 class="text-center mb-5 wow fadeInUp">Meet Our Faculty</h1>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-6 col-lg-4 wow zoomIn">
+                                        <div class="card-doctor">
+                                            <div class="header">
+                                                <img src="./assets/faculty_image/dandan.jpg" alt="">
+                                                <div class="meta">
+                                                    <a href="#"><span class="mai-call"></span></a>
+                                                    <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                                </div>
+                                            </div>
+                                            <div class="body">
+                                                <p class="text-xl mb-0">Dexter G. Dandan</p>
+                                                <span class="text-sm text-grey">Program Head</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4 wow zoomIn">
+                                        <div class="card-doctor">
+                                            <div class="header">
+                                                <img src="./assets/faculty_image/deliza.jpg" alt="">
+                                                <div class="meta">
+                                                    <a href="#"><span class="mai-call"></span></a>
+                                                    <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                                </div>
+                                            </div>
+                                            <div class="body">
+                                                <p class="text-xl mb-0">Deliza Grace Delgado</p>
+                                                <span class="text-sm text-grey">Instructor</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-4 wow zoomIn">
+                                        <div class="card-doctor">
+                                            <div class="header">
+                                                <img src="./assets/faculty_image/clint.jpg" alt="">
+                                                <div class="meta">
+                                                    <a href="#"><span class="mai-call"></span></a>
+                                                    <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                                </div>
+                                            </div>
+                                            <div class="body">
+                                                <p class="text-xl mb-0">Clint Clarido</p>
+                                                <span class="text-sm text-grey">Instructor</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="instructor.php" class="btn btn-primary wow fadeInUp">Show More</a>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+
+
+
+
+
+        <div class="page-section bg-light" id="news">
+            <div class="container">
+                <h1 class="text-center wow fadeInUp">Latest News</h1>
+                <div class="row mt-5">
+                    <div class="col-lg-4 py-2 wow zoomIn">
+                        <div class="card-blog">
+                            <div class="header">
+                                <div class="post-category">
+                                    <a href="#">Events</a>
+                                </div>
+                                <a href="news-details.html" class="post-thumb">
+                                    <img src="./assets/img/news/news_1.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="body">
+                                <h5 class="post-title"><a href="news-details.html">CPSU Hackathon 2024</a></h5>
+                                <div class="site-info">
+                                    <div class="avatar mr-2">
+                                        <div class="avatar-img">
+                                            <img src="./assets/img/person/person_1.jpg" alt="">
+                                        </div>
+                                        <span>Admin</span>
+                                    </div>
+                                    <span class="mai-time"></span> 2 weeks ago
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 py-2 wow zoomIn">
+                        <div class="card-blog">
+                            <div class="header">
+                                <div class="post-category">
+                                    <a href="#">Awards</a>
+                                </div>
+                                <a href="news-details.html" class="post-thumb">
+                                    <img src="./assets/img/news/news_2.jpg" alt="">
+                                </a>
+                            </div>
+                            <div class="body">
+                                <h5 class="post-title"><a href="news-details.html">CPSU BSIT Tops Regional IT Competition</a></h5>
+                                <div class="site-info">
+                                    <div class="avatar mr-2">
+                                        <div class="avatar-img">
+                                            <img src="./assets/img/person/person_2.jpg" alt="">
+                                        </div>
+                                        <span>Admin</span>
+                                    </div>
+                                    <span class="mai-time"></span> 1 month ago
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-4 wow zoomIn">
+                    <a href="news.html" class="btn btn-primary">View All News</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-section">
+            <div class="container">
+                <h1 class="text-center wow fadeInUp">Contact Us</h1>
+                <form class="main-form">
+                    <div class="row mt-5">
+                        <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
+                            <input type="text" class="form-control" placeholder="Full Name">
+                        </div>
+                        <div class="col-12 col-sm-6 py-2 wow fadeInRight">
+                            <input type="email" class="form-control" placeholder="Email Address">
+                        </div>
+                        <div class="col-12 py-2 wow fadeInUp">
+                            <textarea name="message" class="form-control" rows="6" placeholder="Enter Message"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3 wow zoomIn">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- Footer -->
         <?php include('includes/footer.php'); ?>
 
+        <script src="./assets/js/jquery-3.5.1.min.js"></script>
 
-        
-<!-- Add wow.js for animations -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+        <script src="./assets/js/bootstrap.bundle.min.js"></script>
 
+        <script src="./assets/vendor/wow/wow.min.js"></script>
 
-
-        <script src="js/foot.js"></script>
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script>
-            $('#slider').owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: false,
-                dots: false,
-                autoplay: true,
-                animateOut: 'fadeOut',
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 1
-                    },
-                    1000: {
-                        items: 1
-                    }
-                }
-            });
-            $('#slider2').owlCarousel({
-                loop: true,
-                margin: 10,
-                nav: false,
-                dots: false,
-                autoplay: true,
-                animateOut: 'fadeOut',
-                responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 1
-                    },
-                    1000: {
-                        items: 4
-                    }
-                }
-            });
-        </script>
+        <script src="./assets/js/theme.js"></script>
     </body>
 
 
