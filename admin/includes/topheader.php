@@ -3,7 +3,7 @@
 
 
  <head>
-     <title>CPSU BSIT Web Portal</title>
+     <title>Live News Portal By MH RONY.</title>
      <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
      <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -53,7 +53,8 @@
 
                  <a href="index.php" class="logo">
                      <span>
-                         <img src="assets/images/logo.png" alt="" height="60">
+                         <img src="assets/images/bsit_logo.png" alt="" height="60">
+                         <img src="assets/images/BSIT_name.webp" alt="" height="60">
                      </span>
 
                  </a>

@@ -39,7 +39,14 @@
                     </div>
                 </div>
             </div>
-          
+            <!--  
+  Author Name: MH RONY.
+  GigHub Link: https://github.com/dev-mhrony
+  Facebook Link:https://www.facebook.com/dev.mhrony
+  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+  Visit My Website : developerrony.com 
+-->
             <!-- end row -->
             <div class="row">
                 <div class="col-md-4">
@@ -49,7 +56,12 @@
                             <span class="d-block mb-4 text-nowrap">Freelancer from Bangladesh</span>
                         </div>
                         <br><br>
-                         
+                        <!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
                         <div class="card-body">
                             <div class="row ">
                                 <div class="col-md-6">
@@ -66,7 +78,14 @@
                         </div>
                     </div>
                 </div>
-              
+                <!--  
+  Author Name: MH RONY.
+  GigHub Link: https://github.com/dev-mhrony
+  Facebook Link:https://www.facebook.com/dev.mhrony
+  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+  Visit My Website : developerrony.com 
+-->
                 <div class="col-md-4">
                     <div class="card-box h-100">
                         <div class="card-body">
@@ -81,7 +100,12 @@
                         </div>
                     </div>
                 </div>
-                 
+                <!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
                 <a href="manage-categories.php">
                     <div class="col-lg-2 col-md-2 col-sm-6">
                         <div class="card-box widget-box-one text-center">
@@ -111,7 +135,14 @@
                         </div>
                     </div>
                 </a>
-              
+                <!--  
+  Author Name: MH RONY.
+  GigHub Link: https://github.com/dev-mhrony
+  Facebook Link:https://www.facebook.com/dev.mhrony
+  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+  Visit My Website : developerrony.com 
+-->
                 <a href="manage-subcategories.php">
                     <div class="col-lg-4 col-md-4 col-sm-6">
                         <div class="card-box widget-box-one text-center">
@@ -130,7 +161,12 @@
 
             </div>
             <!-- end row -->
-             
+            <!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
             <div class="row">
                 <!--  <a href="trash-posts.php">
                <div class="col-lg-4 col-md-4 col-sm-6">
@@ -161,7 +197,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                              
+                                <!--  
+  Author Name: MH RONY.
+  GigHub Link: https://github.com/dev-mhrony
+  Facebook Link:https://www.facebook.com/dev.mhrony
+  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+  Visit My Website : developerrony.com 
+-->
                                 <?php
                            $query=mysqli_query($con,"select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 ");
                            $rowcount=mysqli_num_rows($query);
@@ -195,7 +238,12 @@
     </div>
     <!-- content -->
     <?php include('includes/footer.php');?>
-     
+    <!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
 </div>
 <!-- ============================================================== -->
 <!-- End Right content here -->
@@ -216,7 +264,12 @@
                 <input type="checkbox" checked data-plugin="switchery" data-color="#7fc1fc" data-size="small" />
             </div>
         </div>
-         
+        <!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
         <div class="row m-t-20">
             <div class="col-xs-8">
                 <h5 class="m-0">API Access</h5>
@@ -235,7 +288,14 @@
                 <input type="checkbox" checked data-plugin="switchery" data-color="#7fc1fc" data-size="small" />
             </div>
         </div>
-      
+        <!--  
+  Author Name: MH RONY.
+  GigHub Link: https://github.com/dev-mhrony
+  Facebook Link:https://www.facebook.com/dev.mhrony
+  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+  Visit My Website : developerrony.com 
+-->
         <div class="row m-t-20">
             <div class="col-xs-8">
                 <h5 class="m-0">Online Status</h5>
@@ -246,7 +306,12 @@
             </div>
         </div>
     </div>
-     
+    <!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
 </div>
 <!-- /Right-bar -->
 </div>
@@ -284,6 +349,16 @@ var options = {
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
 </script>
- 
+<!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
 <?php } ?>
- 
+<!--  Author Name: MH RONY.
+                        GigHub Link: https://github.com/dev-mhrony
+                        Facebook Link:https://www.facebook.com/dev.mhrony
+                        Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
+                        for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
+                        Visit My Website : developerrony.com -->
