@@ -17,8 +17,7 @@
     </div>
 </div>
  
-<a href="tel:+8801608445456">
-    <img src="images/ads.jpg" class="img-fluid"></a>
+
 
 <!-- Side Widget -->
 <div class="card my-4 border-0">
@@ -38,8 +37,7 @@
         </ul>
     </div>
 </div>
-<a href="tel:+8801608445456">
-    <img src="images/ads.jpg" class="img-fluid"></a>
+
  
 <!-- Side Widget -->
 <div class="card my-4 border-0">
@@ -59,8 +57,7 @@
     </div>
 </div>
 
-<a href="tel:+8801608445456">
-    <img src="images/ads.jpg" class="img-fluid"></a>
+
 
 <!-- Side Widget -->
 <div class="card my-4 border-0">
@@ -82,42 +79,45 @@
 </div>
  
 
-<a href="tel:+8801608445456">
-    <img src="images/ads.jpg" class="img-fluid"></a>
 
-<h5 class="card-header border-0 bg-transparent">Most Popular</h5>
+<h5 class="card-header border-0 bg-transparent">Our Links</h5>
+
+<!-- Our Professors Section -->
 <div class="card my-4 border-0">
     <div class="card-body p-2">
-        <iframe width="100%" height="180px" class="youtube" src="https://www.youtube.com/embed/h3xcb_lojMQ" title="Sample Videos / Dummy Videos For Demo Use" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</div>
-<a href="tel:+8801608445456">
-    <img src="images/ads.jpg" class="img-fluid"></a>
-<div class="card my-4 border-0">
-    <div class="card-body p-2">
-        <iframe width="100%" height="180px" class="youtube" src="https://www.youtube.com/embed/8ipv81cdGSE" title="Sample Videos / Dummy Videos For Demo Use" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="your_professors_link_here" class="btn btn-dark w-100">Meet Our Professors</a>
+        <p class="text-center mt-2">Click to learn more about our esteemed professors.</p>
     </div>
 </div>
 
-<a href="tel:+8801608445456">
-    <img src="images/ads.jpg" class="img-fluid"></a>
- 
+<!-- Our Gallery Section -->
 <div class="card my-4 border-0">
     <div class="card-body p-2">
-        <iframe width="100%" height="180px" class="youtube" src="https://www.youtube.com/embed/ra84Xw-dd4Y" title="Sample Videos / Dummy Videos For Demo Use" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="your_gallery_link_here" class="btn btn-dark w-100">Explore Our Gallery</a>
+        <p class="text-center mt-2">Click to view photos and videos from our events.</p>
     </div>
 </div>
-<a href="tel:+8801608445456">
-    <img src="images/ads.jpg" class="img-fluid"></a>
+
+<!-- Additional Links -->
 <div class="card my-4 border-0">
     <div class="card-body p-2">
-        <iframe width="100%" height="180px" class="youtube" src="https://www.youtube.com/embed/LkdDSqa-oSs" title="Sample Videos / Dummy Videos For Demo Use" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="your_additional_link1_here" class="btn btn-dark w-100">Learn More About Us</a>
+        <p class="text-center mt-2">Click to find out more about our institution.</p>
     </div>
 </div>
- 
+
 <div class="card my-4 border-0">
     <div class="card-body p-2">
-        <iframe width="100%" height="180px" class="youtube" src="https://www.youtube.com/embed/cQNX1PgWqL4" title="Sample Videos / Dummy Videos For Demo Use" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <a href="your_additional_link2_here" class="btn btn-dark w-100">Our Achievements</a>
+        <p class="text-center mt-2">Click to explore our major accomplishments.</p>
     </div>
 </div>
+
+<div class="card my-4 border-0">
+    <div class="card-body p-2">
+        <a href="your_additional_link3_here" class="btn btn-dark w-100">Programs and Activities</a>
+        <p class="text-center mt-2">Click to learn more about our programs and activities.</p>
+    </div>
+</div>
+
 </div>
