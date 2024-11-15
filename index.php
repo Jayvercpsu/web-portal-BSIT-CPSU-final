@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="css/owl.carousel.min.css">
         <link rel="stylesheet" href="css/owl.theme.default.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        
     </head>
 
     <body>
@@ -33,25 +34,7 @@
             <div class="row" style="margin-top: 4%">
                 <!-- Blog Entries Column -->
                 <div class="col-md-2 mt-4">
-                    <!-- Categories Widget -->
-                    <div class="card my-4 border-0">
-                        <h5 class="card-header bg-white border-0">Categories</h5>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <ul class="list-unstyled mb-0">
-                                        <?php $query = mysqli_query($con, "select id,CategoryName from tblcategory");
-                                        while ($row = mysqli_fetch_array($query)) {
-                                        ?>
-                                            <li class=" mb-2">
-                                                <a href="category.php?catid=<?php echo htmlentities($row['id']) ?>" class="text-secondary"><?php echo htmlentities($row['CategoryName']); ?></a>
-                                            </li>
-                                        <?php } ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+              
                 </div>
                 <div class="col-md-7">
                     <h4 class="widget-title mb-4">Today <span>Highlight</span></h4>
@@ -216,6 +199,13 @@
         <!-- /.container -->
         <!-- Footer -->
         <?php include('includes/footer.php'); ?>
+
+
+        
+<!-- Add wow.js for animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+
 
         <script src="js/foot.js"></script>
         <!-- Bootstrap core JavaScript -->
