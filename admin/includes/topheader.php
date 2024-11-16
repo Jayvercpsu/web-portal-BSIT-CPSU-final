@@ -3,7 +3,7 @@
 
 
  <head>
-     <title>Live News Portal By MH RONY.</title>
+     <title>CPSU BSIT Web Portal | Admin</title>
      <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
 
      <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -62,7 +62,7 @@
              </div>
 
              <!-- Button mobile view to collapse sidebar menu -->
-             <div class="navbar navbar-default" role="navigation">  
+             <div class="navbar navbar-default" role="navigation">
                  <div class="container">
 
                      <!-- Navbar-left -->
@@ -75,13 +75,10 @@
 
 
                      </ul>
-                     <ul class="nav navbar-nav" style=" width: 50%; margin-top: 23px; color: red;">
-                         <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"><b>Today Trending News : </b>Online news portal. Besides, the only owner of this code is Code Camp BD or MH RONY. </marquee>
-                         <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();"><b> Notes : </b>This is an educational project from where you can gain knowledge. No one can claim it as their own or sell it for their own sake. If you want to create any project, contact us through Facebook, YouTube or website.</marquee>
-                     </ul>
 
-                     <div id="google_translate_element">
 
+                     <div id="">
+                         <!-- google_translate_element -->
                      </div>
 
 
@@ -97,7 +94,7 @@
                              <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">
                                  <li>
 
-                                     <h5>Hi, MH RONY</h5>
+                                     <h5>Hi, Admin</h5>
                                  </li>
 
                                  <li><a href="change-password.php"><i class="ti-settings m-r-5"></i> Change Password</a></li>

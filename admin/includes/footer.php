@@ -8,8 +8,9 @@
 -->
 <footer class="foot text-center" style=" position: sticky;
   top: 0;">
-    <?php echo date('Y');?> © Design and Developed by
-    <a href=" https://developerrony.com"> MH RONY</a>
+ <?php echo date('Y'); ?> © Copyright
+<a href="#"> CPSU Department</a>
+
 </footer>
 </div>
 </div>
@@ -131,8 +132,7 @@ function googleTranslateElementInit() {
 #google_translate_element {
     padding-top: 13px;
     position: absolute;
-    top: 7px;
-    right: 100px;
+    top: 7px; 
 }
 </style>
  
