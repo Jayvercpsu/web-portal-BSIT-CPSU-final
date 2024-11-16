@@ -11,7 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+    // Check if the email is already taken based on role
     if ($role === 'student') {
+        // Map year to the appropriate table for student
         $yearTables = [
             '1st Year' => 'first_year',
             '2nd Year' => 'second_year',
@@ -25,9 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $table = $yearTables[$year];
-        $checkEmailSql = "SELECT * FROM $table WHERE email='$email'";
-    } else if ($role === 'professor') {
-        $checkEmailSql = "SELECT * FROM professors WHERE email='$email'";
+        $checkEmailSql = "SELECT * FROM $table WHERE email='$email'"; // Check if the email is already used
+    } elseif ($role === 'professor') {
+        $checkEmailSql = "SELECT * FROM professors WHERE email='$email'"; // Check if the email is already used for professors
     } else {
         echo "<script>alert('Invalid role selected.');</script>";
         exit();
@@ -38,18 +40,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows($checkEmailResult) > 0) {
         echo "<script>alert('This email is already registered. Please use a different email.');</script>";
     } else {
+        // Insert into role-specific table
         if ($role === 'student') {
             $sql = "INSERT INTO $table (full_name, email, password) VALUES ('$fullName', '$email', '$hashedPassword')";
-        } else if ($role === 'professor') {
+        } elseif ($role === 'professor') {
             $sql = "INSERT INTO professors (full_name, email, password) VALUES ('$fullName', '$email', '$hashedPassword')";
-            $userSql = "INSERT INTO users (full_name, email, password, role) VALUES ('$fullName', '$email', '$hashedPassword', '$role')";
-            mysqli_query($con, $userSql); // Add to users table for professors
         }
 
-        if (mysqli_query($con, $sql)) {
-            $sessionQuery = $role === 'professor' 
+        // Insert into users table for both students and professors
+        $userSql = "INSERT INTO users (full_name, email, password, role) VALUES ('$fullName', '$email', '$hashedPassword', '$role')";
+
+        // Execute the insert queries for the specific role and the users table
+        if (mysqli_query($con, $sql) && mysqli_query($con, $userSql)) {
+            // Set session for the user
+            $sessionQuery = $role === 'professor'
                 ? "SELECT * FROM professors WHERE email='$email'" 
                 : "SELECT * FROM $table WHERE email='$email'";
+
             $result = mysqli_query($con, $sessionQuery);
 
             if ($result && mysqli_num_rows($result) > 0) {
@@ -58,11 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['full_name'] = $user['full_name'];
                 $_SESSION['role'] = $role;
 
-                header("Location: login.php");
+                // Success message after registration
+                echo "<script>alert('Sign up successful! Please log in.'); window.location.href='login.php';</script>";
                 exit();
             }
         } else {
-            echo "Error: " . mysqli_error($con);
+            echo "<script>alert('Error during registration: " . mysqli_error($con) . "');</script>";
         }
     }
 }
