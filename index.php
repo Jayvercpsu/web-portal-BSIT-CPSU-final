@@ -94,7 +94,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 py-3 wow fadeInUp">
                         <h1>Welcome to the CPSU BSIT Program</h1>
-                        <p class="text-grey mb-4">
+                        <p class="text-white mb-4">
                             At CPSU, the Bachelor of Science in Information Technology program equips students with the skills and knowledge to lead in a technology-driven world. From software development to networking, our curriculum fosters innovation and problem-solving in the field of IT.
                         </p>
                         <a href="#courses" class="btn btn-primary">Discover Courses</a>
@@ -107,7 +107,122 @@
                 </div>
             </div>
         </div>
+
+
+
+
+        <div class="container" id="about">
+            <!-- Key Features of the BSIT Program Section -->
+            <div class="text-center mb-5" style="margin-top: 10%;">
+                <h2 class="text-white wow fadeInRight">Key Features of the BSIT Program</h2>
+            </div>
+
+            <div class="row mb-4">
+                <!-- Industry-Oriented Curriculum -->
+                <div class="col-md-4 mb-4  wow fadeInLeft">
+                    <div class="card h-100 shadow border border-violet">
+                        <div class="card-body bg-black text-white rounded">
+                            <h5 class="card-title text-violet">Industry-Oriented Curriculum</h5>
+                            <p class="card-text">The curriculum is designed to address the latest trends and technologies in IT, ensuring that students are job-ready upon graduation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hands-on Learning -->
+                <div class="col-md-4 mb-4  wow fadeInDown">
+                    <div class="card h-100 shadow border border-violet">
+                        <div class="card-body bg-black text-white rounded">
+                            <h5 class="card-title text-violet">Hands-on Learning</h5>
+                            <p class="card-text">With state-of-the-art laboratories and technology-driven resources, students gain practical experience through real-world projects, internships, and laboratory sessions.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skilled Faculty -->
+                <div class="col-md-4 mb-4  wow fadeInRight">
+                    <div class="card h-100 shadow border border-violet">
+                        <div class="card-body bg-black text-white rounded">
+                            <h5 class="card-title text-violet">Skilled Faculty</h5>
+                            <p class="card-text">The department boasts a team of highly qualified and experienced faculty members who are committed to the academic growth and development of students.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose BSIT at CPSU Section -->
+            <div class="py-5">
+                <div class="text-center mb-5 wow fadeInLeft">
+                    <h2 class="text-white">Why Choose BSIT at CPSU?</h2>
+                </div>
+                <div class="row">
+                    <!-- Modern Infrastructure -->
+                    <div class="col-md-4 mb-4  wow fadeInLeft">
+                        <div class="card h-100 shadow border border-violet">
+                            <div class="card-body bg-black text-white rounded">
+                                <h5 class="card-title text-violet">Modern Infrastructure</h5>
+                                <p class="card-text">Access to well-equipped computer labs and the latest software tools.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Career Opportunities -->
+                    <div class="col-md-4 mb-4  wow fadeInDown">
+                        <div class="card h-100 shadow border border-violet">
+                            <div class="card-body bg-black text-white rounded">
+                                <h5 class="card-title text-violet">Career Opportunities</h5>
+                                <p class="card-text">Strong partnerships with top tech companies for internships and job placements.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Student Support -->
+                    <div class="col-md-4 mb-4  wow fadeInRight">
+                        <div class="card h-100 shadow border border-violet">
+                            <div class="card-body bg-black text-white rounded">
+                                <h5 class="card-title text-violet">Student Support</h5>
+                                <p class="card-text">Our department offers mentorship, academic advising, and career counseling services to help students achieve their academic and professional goals.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Join Now Button Section -->
+            <div class="text-center mb-5  wow fadeInUp">
+                <a href="#" class="btn btn-violet text-white btn-lg">Join Now</a>
+            </div>
         </div>
+
+        <!-- Custom Bootstrap Violet Button Styling -->
+        <style>
+            .btn-violet {
+                background-color: #6f42c1;
+                border-color: #6f42c1;
+            }
+
+            .btn-violet:hover {
+                background-color: #5a2a9b;
+                border-color: #5a2a9b;
+            }
+
+            .text-violet {
+                color: #6f42c1;
+            }
+
+            .bg-black {
+                background-color: #000000;
+            }
+
+            /* Adding violet border to each card */
+            .card {
+                border: 2px solid #6f42c1;
+                /* Violet border */
+            }
+        </style>
+
+
+
+
 
 
 
@@ -121,31 +236,24 @@
             $pagetype = 'aboutus';
             $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
             while ($row = mysqli_fetch_array($query)) {
-
             ?>
-
-
-
-
-
-
-
                 <div class="page-section">
                     <div class="container">
                         <div class="row justify-content-center">
-                            <div class="col-lg-8 wow fadeInUp">
+
+
+                            <div class="col-lg-8 col-md-10 col-sm-12 wow fadeInUp">
                                 <h1 class="mt-5 mb-3 text-center"><?php echo htmlentities($row['PageTitle']) ?></h1>
                                 <div class="text-lg">
-
                                     <div class="row">
-                                        <div class="col-lg-12">
+                                        <div class="col-12">
                                             <p><?php echo $row['Description']; ?></p>
                                         </div>
                                     </div>
-
-                                <?php } ?>
                                 </div>
+                            <?php } ?>
                             </div>
+
 
 
 
@@ -157,8 +265,12 @@
                                             <div class="header">
                                                 <img src="./assets/faculty_image/dandan.jpg" alt="">
                                                 <div class="meta">
-                                                    <a href="#"><span class="mai-call"></span></a>
-                                                    <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                                    <a href="https://facebook.com" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-f"></i>
+                                                    </a>
+                                                    <a href="https://www.messenger.com/" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-messenger"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="body">
@@ -171,9 +283,13 @@
                                         <div class="card-doctor">
                                             <div class="header">
                                                 <img src="./assets/faculty_image/deliza.jpg" alt="">
-                                                <div class="meta">
-                                                    <a href="#"><span class="mai-call"></span></a>
-                                                    <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                                     <div class="meta">
+                                                    <a href="https://facebook.com" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-f"></i>
+                                                    </a>
+                                                    <a href="https://www.messenger.com/" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-messenger"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="body">
@@ -186,9 +302,13 @@
                                         <div class="card-doctor">
                                             <div class="header">
                                                 <img src="./assets/faculty_image/clint.jpg" alt="">
-                                                <div class="meta">
-                                                    <a href="#"><span class="mai-call"></span></a>
-                                                    <a href="#"><span class="mai-logo-whatsapp"></span></a>
+                                                     <div class="meta">
+                                                    <a href="https://facebook.com" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-f"></i>
+                                                    </a>
+                                                    <a href="https://www.messenger.com/" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-messenger"></i>
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="body">
@@ -213,112 +333,117 @@
 
 
 
-        <div class="page-section bg-light" id="news">
-            <div class="container">
-                <h1 class="text-center text-dark wow fadeInUp">Latest News</h1>
-                <div class="row mt-5">
-                    <div class="col-lg-4 py-2 wow zoomIn">
-                        <div class="card-blog">
-                            <div class="header">
-                                <div class="post-category">
-                                    <a href="#">Events</a>
-                                </div>
-                                <a href="news-details.html" class="post-thumb">
-                                    <img src="./assets/img/news/news_1.jpg" alt="">
-                                </a>
-                            </div>
-                            <div class="body">
-                                <h5 class="post-title"><a href="news-details.html">CPSU Hackathon 2024</a></h5>
-                                <div class="site-info">
-                                    <div class="avatar mr-2">
-                                        <div class="avatar-img">
-                                            <img src="./assets/img/person/person_1.jpg" alt="">
+
+
+
+
+                <div class="page-section bg-light" id="news">
+                    <div class="container">
+                        <h1 class="text-center text-dark wow fadeInUp">Latest News</h1>
+                        <div class="row mt-5">
+                            <div class="col-lg-4 py-2 wow zoomIn">
+                                <div class="card-blog">
+                                    <div class="header">
+                                        <div class="post-category">
+                                            <a href="#">Events</a>
                                         </div>
-                                        <span>Admin</span>
+                                        <a href="news-details.html" class="post-thumb">
+                                            <img src="./images/sample_bsit.jpg" alt="">
+                                        </a>
                                     </div>
-                                    <span class="mai-time"></span> 2 weeks ago
+                                    <div class="body">
+                                        <h5 class="post-title"><a href="news-details.html">CPSU Hackathon 2024</a></h5>
+                                        <div class="site-info">
+                                            <div class="avatar mr-2">
+                                                <div class="avatar-img">
+                                                    <img src="./assets/img/person/person_1.jpg" alt="">
+                                                </div>
+                                                <span>Admin</span>
+                                            </div>
+                                            <span class="mai-time"></span> 2 weeks ago
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 py-2 wow zoomIn">
+                                <div class="card-blog">
+                                    <div class="header">
+                                        <div class="post-category">
+                                            <a href="#">Awards</a>
+                                        </div>
+                                        <a href="news-details.html" class="post-thumb">
+                                            <img src="./images/sample2.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="body">
+                                        <h5 class="post-title"><a href="news-details.html">CPSU BSIT Tops Regional IT Competition</a></h5>
+                                        <div class="site-info">
+                                            <div class="avatar mr-2">
+                                                <div class="avatar-img">
+                                                    <img src="./images/sample2.jpg" alt="">
+                                                </div>
+                                                <span>Admin</span>
+                                            </div>
+                                            <span class="mai-time"></span> 1 month ago
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <div class="col-12 text-center mt-4 wow zoomIn">
+                            <a href="news.html" class="btn btn-primary">View All News</a>
+                        </div>
                     </div>
-                    <div class="col-lg-4 py-2 wow zoomIn">
-                        <div class="card-blog">
-                            <div class="header">
-                                <div class="post-category">
-                                    <a href="#">Awards</a>
-                                </div>
-                                <a href="news-details.html" class="post-thumb">
-                                    <img src="./assets/img/news/news_2.jpg" alt="">
-                                </a>
+                </div>
+
+
+
+                <!-- Static -->
+                <div class="col-md-12 p-0 Tops">
+                    <div class="py-5">
+                        <!-- Adjusted row with gap -->
+                        <div class="row d-flex justify-content-center text-center gy-4 gap-4">
+                            <!-- Vision Section -->
+                            <div class="col-md-3 text-center wow fadeInLeft" data-wow-delay="0.2s">
+                                <img src="admin/assets/images/vision.jpg" alt="Vision" class="img-fluid rounded shadow-sm mb-2" draggable="false">
+                                <h5 class="text-white">Vision</h5>
+                                <p class="text-white">Our vision is to create a better future through innovation and excellence.</p>
                             </div>
-                            <div class="body">
-                                <h5 class="post-title"><a href="news-details.html">CPSU BSIT Tops Regional IT Competition</a></h5>
-                                <div class="site-info">
-                                    <div class="avatar mr-2">
-                                        <div class="avatar-img">
-                                            <img src="./assets/img/person/person_2.jpg" alt="">
-                                        </div>
-                                        <span>Admin</span>
-                                    </div>
-                                    <span class="mai-time"></span> 1 month ago
-                                </div>
+                            <!-- Mission Section -->
+                            <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.2s">
+                                <img src="admin/assets/images/mission.jpg" alt="Mission" class="img-fluid rounded shadow-sm mb-2" draggable="false">
+                                <h5 class="text-white">Mission</h5>
+                                <p class="text-white">Our mission is to empower individuals by providing exceptional learning opportunities.</p>
+                            </div>
+                            <!-- Objectives Section -->
+                            <div class="col-md-3 text-center wow fadeInRight" data-wow-delay="0.2s">
+                                <img src="admin/assets/images/objectives.jpg" alt="Objectives" class="img-fluid rounded shadow-sm mb-2" draggable="false">
+                                <h5 class="text-white">Objectives</h5>
+                                <p class="text-white">Our objectives include fostering creativity, leadership, and a passion for learning.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 text-center mt-4 wow zoomIn">
-                    <a href="news.html" class="btn btn-primary">View All News</a>
-                </div>
-            </div>
-        </div>
 
 
 
-        <!-- Static -->
-        <div class="col-md-12 p-0 Tops">
-            <div class="py-5">
-                <!-- Adjusted row with gap -->
-                <div class="row d-flex justify-content-center text-center gy-4 gap-4">
-                    <!-- Vision Section -->
-                    <div class="col-md-3 text-center wow fadeInLeft" data-wow-delay="0.2s">
-                        <img src="admin/assets/images/vision.jpg" alt="Vision" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                        <h5 class="text-white">Vision</h5>
-                        <p class="text-white">Our vision is to create a better future through innovation and excellence.</p>
-                    </div>
-                    <!-- Mission Section -->
-                    <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.2s">
-                        <img src="admin/assets/images/mission.jpg" alt="Mission" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                        <h5 class="text-white">Mission</h5>
-                        <p class="text-white">Our mission is to empower individuals by providing exceptional learning opportunities.</p>
-                    </div>
-                    <!-- Objectives Section -->
-                    <div class="col-md-3 text-center wow fadeInRight" data-wow-delay="0.2s">
-                        <img src="admin/assets/images/objectives.jpg" alt="Objectives" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                        <h5 class="text-white">Objectives</h5>
-                        <p class="text-white">Our objectives include fostering creativity, leadership, and a passion for learning.</p>
+
+
+
+
+
+                <!-- Responsive Map Section -->
+                <div class="maps-container wow fadeInUp">
+                    <div class="responsive-map">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d980.9179023218929!2d123.35990996159614!3d10.447612092268333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a93f4321fa90b3%3A0x5a32a445f78a1f2f!2sCentral%20Philippines%20State%20University%20-%20Don%20Justo%20V.%20Valmayor%20Campus!5e0!3m2!1sen!2sph!4v1731682023909!5m2!1sen!2sph"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
                     </div>
                 </div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-        <!-- Responsive Map Section -->
-        <div class="maps-container wow fadeInUp">
-            <div class="responsive-map">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d980.9179023218929!2d123.35990996159614!3d10.447612092268333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a93f4321fa90b3%3A0x5a32a445f78a1f2f!2sCentral%20Philippines%20State%20University%20-%20Don%20Justo%20V.%20Valmayor%20Campus!5e0!3m2!1sen!2sph!4v1731682023909!5m2!1sen!2sph"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
-        </div>
 
 
 
@@ -345,16 +470,16 @@
 
 
 
-        <!-- Footer -->
-        <?php include('includes/footer.php'); ?>
+                <!-- Footer -->
+                <?php include('includes/footer.php'); ?>
 
-        <script src="./assets/js/jquery-3.5.1.min.js"></script>
+                <script src="./assets/js/jquery-3.5.1.min.js"></script>
 
-        <script src="./assets/js/bootstrap.bundle.min.js"></script>
+                <script src="./assets/js/bootstrap.bundle.min.js"></script>
 
-        <script src="./assets/vendor/wow/wow.min.js"></script>
+                <script src="./assets/vendor/wow/wow.min.js"></script>
 
-        <script src="./assets/js/theme.js"></script>
+                <script src="./assets/js/theme.js"></script>
     </body>
 
 
