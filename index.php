@@ -267,7 +267,7 @@ while ($row = mysqli_fetch_array($query)) {
 
 
                     <div class="col-lg-10 mt-5">
-                        <h1 class="text-center mb-5 wow fadeInUp">Meet Our Faculty</h1>
+                        <h1 class="text-center mb-5 wow fadeInUp">Meet Our Instructors</h1>
                         <div class="row justify-content-center">
                             <div class="col-md-6 col-lg-4 wow zoomIn">
                                 <div class="card-doctor">

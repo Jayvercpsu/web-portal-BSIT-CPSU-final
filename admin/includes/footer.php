@@ -1,32 +1,17 @@
-<!--  
-  Author Name: MH RONY.
-  GigHub Link: https://github.com/dev-mhrony
-  Facebook Link:https://www.facebook.com/dev.mhrony
-  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
-  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
-  Visit My Website : https://developerrony.com
--->
 <footer class="foot text-center" style=" position: sticky;
   top: 0;">
- <?php echo date('Y'); ?> © Copyright
-<a href="#"> CPSU Department</a>
+    <?php echo date('Y'); ?> © Copyright
+    <a href="#"> CPSU Department</a>
 
 </footer>
 </div>
 </div>
 <!-- END wrapper -->
 <script>
-var resizefunc = [];
+    var resizefunc = [];
 </script>
 <!-- jQuery  -->
-<!--  
-  Author Name: MH RONY.
-  GigHub Link: https://github.com/dev-mhrony
-  Facebook Link:https://www.facebook.com/dev.mhrony
-  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
-  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
-  Visit My Website : https://developerrony.com 
--->
+
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bts.js"></script>
 
@@ -37,14 +22,7 @@ var resizefunc = [];
 <script src="assets/js/jquery.slimscroll.js"></script>
 <script src="assets/js/jquery.scrollTo.min.js"></script>
 <script src="../plugins/switchery/switchery.min.js"></script>
-<!--  
-  Author Name: MH RONY.
-  GigHub Link: https://github.com/dev-mhrony
-  Facebook Link:https://www.facebook.com/dev.mhrony
-  Youtube Link: https://www.youtube.com/channel/UChYhUxkwDNialcxj-OFRcDw
-  for any PHP, Laravel, Python, Dart, Flutter work contact me at developer.mhrony@gmail.com  
-  Visit My Website : https://developerrony.com 
--->
+
 <script src="assets/js/jquery.core.js"></script>
 <script src="assets/js/jquery.app.js"></script>
 
@@ -59,45 +37,45 @@ var resizefunc = [];
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#example').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ]
+    $(document).ready(function() {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
     });
-});
-$(document).ready(function() {
-    $('#example1').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'csvHtml5',
-            'pdfHtml5'
-        ]
+    $(document).ready(function() {
+        $('#example1').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
     });
-});
 </script>
 <script>
-jQuery(document).ready(function() {
+    jQuery(document).ready(function() {
 
-    $('.summernote').summernote({
-        height: 240, // set editor height
-        minHeight: null, // set minimum height of editor
-        maxHeight: null, // set maximum height of editor
-        focus: false // set focus to editable area after initializing summernote
-    });
-    // Select2
-    $(".select2").select2();
+        $('.summernote').summernote({
+            height: 240, // set editor height
+            minHeight: null, // set minimum height of editor
+            maxHeight: null, // set maximum height of editor
+            focus: false // set focus to editable area after initializing summernote
+        });
+        // Select2
+        $(".select2").select2();
 
-    $(".select2-limiting").select2({
-        maximumSelectionLength: 2
+        $(".select2-limiting").select2({
+            maximumSelectionLength: 2
+        });
     });
-});
 </script>
 <script src="../plugins/switchery/switchery.min.js"></script>
 
@@ -106,37 +84,37 @@ jQuery(document).ready(function() {
 
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <script type="text/javascript">
-function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en'
-    }, 'google_translate_element');
-}
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en'
+        }, 'google_translate_element');
+    }
 </script>
- 
+
 <style>
-.goog-logo-link {
-    display: none !important;
-}
+    .goog-logo-link {
+        display: none !important;
+    }
 
-.goog-te-gadget {
-    color: transparent;
-}
+    .goog-te-gadget {
+        color: transparent;
+    }
 
-.goog-te-gadget .goog-te-combo {
-    margin: 0px 0;
-    padding: 8px;
-    color: #000;
-    background: #eeee;
-}
+    .goog-te-gadget .goog-te-combo {
+        margin: 0px 0;
+        padding: 8px;
+        color: #000;
+        background: #eeee;
+    }
 
-#google_translate_element {
-    padding-top: 13px;
-    position: absolute;
-    top: 7px; 
-}
+    #google_translate_element {
+        padding-top: 13px;
+        position: absolute;
+        top: 7px;
+    }
 </style>
- 
+
 </body>
- 
+
 
 </html>
