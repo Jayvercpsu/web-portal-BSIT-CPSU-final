@@ -33,7 +33,7 @@
                     <a class="nav-link text-dark" href="contact-us.php"><i class="fa fa-phone"></i> Contact us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="login.php"><i class="fa fa-user"></i> Join</a>
+                    <a class="nav-link text-dark" href="users/login.php"><i class="fa fa-user"></i> Join</a>
                 </li>
             </ul>
         </div>
