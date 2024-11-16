@@ -13,8 +13,12 @@
      <meta name="author" content="">
      <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
      <title>CPSU BSIT Web Portal || Contact us</title>
-
+     <!-- Bootstrap core CSS -->
+     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Custom styles for this template -->
      <link rel="stylesheet" href="css/icons.css">
+     <link rel="stylesheet" href="css/owl.carousel.min.css">
+     <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
      <link rel="stylesheet" href="./assets/css/maicons.css">
 
@@ -26,6 +30,7 @@
 
      <link rel="stylesheet" href="./assets/css/theme.css">
      <link rel="stylesheet" href="css/home-page.css">
+ 
  </head>
 
 
@@ -134,21 +139,14 @@
      <!-- Footer -->
      <?php include('includes/footer.php'); ?>
 
-     <script src="js/foot.js"></script>
-     <!-- Bootstrap core JavaScript -->
-     <script src="vendor/jquery/jquery.min.js"></script>
-     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
      <script src="./assets/js/jquery-3.5.1.min.js"></script>
 
      <script src="./assets/js/bootstrap.bundle.min.js"></script>
 
-     <script src="./assets/vendor/owl-carousel/js/owl.carousel.min.js"></script>
-
      <script src="./assets/vendor/wow/wow.min.js"></script>
 
      <script src="./assets/js/theme.js"></script>
-
 
  </body>
 

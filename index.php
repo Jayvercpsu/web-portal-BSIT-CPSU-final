@@ -272,25 +272,30 @@
             </div>
         </div>
 
-        <div class="page-section">
-            <div class="container">
-                <h1 class="text-center wow fadeInUp">Contact Us</h1>
-                <form class="main-form">
-                    <div class="row mt-5">
-                        <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
-                            <input type="text" class="form-control" placeholder="Full Name">
-                        </div>
-                        <div class="col-12 col-sm-6 py-2 wow fadeInRight">
-                            <input type="email" class="form-control" placeholder="Email Address">
-                        </div>
-                        <div class="col-12 py-2 wow fadeInUp">
-                            <textarea name="message" class="form-control" rows="6" placeholder="Enter Message"></textarea>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3 wow zoomIn">Send Message</button>
-                </form>
+
+
+
+
+
+
+        <div class="maps-container wow fadeInUp">
+            <div class="responsive-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d980.9179023218929!2d123.35990996159614!3d10.447612092268333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a93f4321fa90b3%3A0x5a32a445f78a1f2f!2sCentral%20Philippines%20State%20University%20-%20Don%20Justo%20V.%20Valmayor%20Campus!5e0!3m2!1sen!2sph!4v1731682023909!5m2!1sen!2sph"
+                    width="600"
+                    height="450"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
+
+
+
+
+
 
 
 
