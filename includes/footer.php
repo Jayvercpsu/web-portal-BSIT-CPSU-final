@@ -203,7 +203,7 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #007bff;
+            background-color: #6a0dad;
             color: white;
             width: 50px;          /* Set the width */
             height: 50px;         /* Set the height */
@@ -218,7 +218,7 @@
         }
 
         .scroll-to-top:hover {
-            background-color: #0056b3;
+            background-color: #5a0dad;
         }
 
         .scroll-to-top.show {

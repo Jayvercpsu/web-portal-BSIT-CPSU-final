@@ -198,31 +198,6 @@ include('includes/config.php');
                     </div>
 
 
-                    <!-- Static -->
-                    <div class="col-md-12">
-                        <div class="card mb-4 mt-5 border-0">
-                            <div class="row g-3">
-                                <!-- Vision Section -->
-                                <div class="col-md-4 text-center">
-                                    <img src="admin/assets/images/vision.jpg" alt="Vision" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                                    <h5 class="text-dark">Vision</h5>
-                                    <p class="text-secondary">Our vision is to create a better future through innovation and excellence.</p>
-                                </div>
-                                <!-- Mission Section -->
-                                <div class="col-md-4 text-center">
-                                    <img src="admin/assets/images/mission.jpg" alt="Mission" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                                    <h5 class="text-dark">Mission</h5>
-                                    <p class="text-secondary">Our mission is to empower individuals by providing exceptional learning opportunities.</p>
-                                </div>
-                                <!-- Objectives Section -->
-                                <div class="col-md-4 text-center">
-                                    <img src="admin/assets/images/objectives.jpg" alt="Objectives" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                                    <h5 class="text-dark">Objectives</h5>
-                                    <p class="text-secondary">Our objectives include fostering creativity, leadership, and a passion for learning.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
 
 
