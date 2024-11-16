@@ -1,0 +1,173 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000;
+    animation: fadeIn 1s ease-in;
+    font-family: monospace;
+    color: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#preloader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    z-index: 9999;
+}
+
+#status {
+    width: 40px;
+    height: 40px;
+    background: url('./assets/image/bsit_logo.png') no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -20px 0 0 -20px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px; /* Container max width for responsiveness */
+    margin: auto;
+    padding: 2rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.logo-container img {
+    width: 50px; /* Adjust size as necessary */
+    margin-right: 10px;
+}
+
+.form {
+    position: relative;
+    display: block;
+    padding: 2.2rem;
+    background: linear-gradient(
+        14deg,
+        rgba(2, 0, 36, 0.8) 0%,
+        rgba(24, 24, 65, 0.7) 66%,
+        rgb(20, 76, 99) 100%
+    );
+    border: 2px solid #fff;
+    box-shadow: rgba(0, 212, 255) 0px 0px 50px -15px;
+    border-radius: 8px;
+    overflow: hidden;
+    opacity: 0; /* Start invisible for fade-in effect */
+    animation: fadeInForm 0.5s forwards;
+    width: 100%; /* Ensure form takes full width */
+}
+
+@keyframes fadeInForm {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-container input,
+.form button {
+    outline: none;
+    border: 2px solid #ffffff;
+    margin: 8px 0;
+    font-family: monospace;
+    border-radius: 4px;
+}
+
+.input-container input {
+    background-color: #fff;
+    padding: 6px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 100%;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.submit {
+    display: block;
+    padding: 8px;
+    background: linear-gradient(90deg, #243949 0%, #517fa4 100%);
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    width: 100%;
+    text-transform: uppercase;
+    transition: transform 0.2s;
+}
+
+.submit:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 4px 5px 17px -4px #ffffff;
+}
+
+.signup-link {
+    color: #c0c0c0;
+    font-size: 0.875rem;
+    text-align: center;
+    font-family: monospace;
+}
+
+.signup-link a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    body {
+        padding: 10px; /* Add padding for smaller screens */
+    }
+
+    .container {
+        width: 100%; /* Full width on small screens */
+    }
+
+    .logo-container img {
+        width: 40px; /* Smaller logo for mobile */
+    }
+}

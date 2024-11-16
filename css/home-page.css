@@ -1,0 +1,108 @@
+/* Black, Violet, and White Theme */
+body {
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  /* White text for all sections */
+  background-color: #000000;
+  /* Black background */
+}
+
+.btn-primary {
+  background-color: #6a0dad;
+  /* Violet buttons */
+  border-color: #6a0dad;
+  color: #ffffff;
+  /* White text */
+}
+
+.btn-primary:hover {
+  background-color: #4b0082;
+  /* Dark violet for hover effect */
+  border-color: #4b0082;
+}
+
+.page-hero {
+  background-color: #6a0dad;
+  /* Violet for the hero section */
+  color: #ffffff;
+  /* White text */
+}
+
+.page-hero .subhead,
+.page-hero h1 {
+  color: #ffffff;
+  /* Ensuring all text is white */
+}
+
+.circle-shape {
+  background-color: #6a0dad;
+  /* Violet circles */
+}
+
+.card-service {
+  background-color: #000000;
+  /* Black background for cards */
+  color: #ffffff;
+  /* White text */
+  border: 1px solid #6a0dad;
+  /* Violet border for emphasis */
+}
+
+.card-service p span {
+  color: #6a0dad;
+  /* Violet highlight */
+}
+
+.card-doctor .body {
+  background-color: #000000;
+  /* Match the black theme */
+  color: #ffffff;
+  /* White text */
+}
+
+.page-section.bg-light {
+  background-color: #000000;
+  /* Black background */
+}
+
+.form-control {
+  background-color: #000000;
+  /* Black input fields */
+  color: #ffffff;
+  /* White text */
+  border: 1px solid #6a0dad;
+  /* Violet border */
+}
+
+.form-control::placeholder {
+  color: #a280d1;
+  /* Violet placeholder text */
+}
+
+.custom-select {
+  background-color: #000000;
+  /* Black dropdowns */
+  color: #ffffff;
+  /* White text */
+  border: 1px solid #6a0dad;
+}
+.responsive-map {
+  position: relative;
+  padding-bottom: 45%; /* Aspect ratio 16:9 */
+  height: 0;
+  overflow: hidden;
+}
+
+.responsive-map iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.maps-container {
+  margin: 20px auto;
+  max-width: 800px; /* Optional: limits the map's max width */
+}
