@@ -46,7 +46,7 @@
                  <nav aria-label="Breadcrumb">
                      <br><br>
                      <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                         <li class="breadcrumb-item"><a style="color: violet;" href="index.html">Home</a></li>
                          <li class="breadcrumb-item active" aria-current="page">News</li>
                      </ol>
                  </nav>
@@ -125,7 +125,7 @@
 
 
      <br><br>
- 
+
      <!-- Footer -->
      <?php include('includes/footer.php'); ?>
 

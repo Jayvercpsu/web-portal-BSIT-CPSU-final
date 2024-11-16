@@ -9,7 +9,7 @@
                  <div class="input-group">
                      <input type="text" name="searchtitle" class="form-control rounded-0" placeholder="Search for..." required>
                      <span class="input-group-btn">
-                         <button class="btn btn-secondary rounded-0" type="submit"><i class="fa fa-search"></i></button>
+                         <button class="btn btn-primary rounded-0" type="submit"><i class="fa fa-search"></i></button>
                      </span>
              </form>
          </div>
