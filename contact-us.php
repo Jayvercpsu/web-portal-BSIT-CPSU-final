@@ -30,7 +30,7 @@
 
      <link rel="stylesheet" href="./assets/css/theme.css">
      <link rel="stylesheet" href="css/home-page.css">
- 
+
  </head>
 
 
@@ -124,18 +124,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+     <br><br>
+ 
      <!-- Footer -->
      <?php include('includes/footer.php'); ?>
 
