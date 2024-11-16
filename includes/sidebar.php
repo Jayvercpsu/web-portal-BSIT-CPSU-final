@@ -18,7 +18,7 @@
 
  <!-- Categories Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header bg-white border-0">Categories</h5>
+     <h5 class="card-header bg-dark border-0">Categories</h5>
      <div class="card-body">
          <div class="row">
              <div class="col-lg-12">
@@ -40,7 +40,7 @@
 
  <!-- Side Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header border-0 bg-white">Recent News</h5>
+     <h5 class="card-header border-0 bg-dark">Recent News</h5>
      <div class="card-body">
          <ul class="mb-0 list-unstyled">
              <?php
@@ -60,7 +60,7 @@
 
  <!-- Side Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header border-0 bg-white">Popular News</h5>
+     <h5 class="card-header border-0 bg-dark">Popular News</h5>
      <div class="card-body">
          <ul class="list-unstyled">
              <?php
@@ -80,7 +80,7 @@
 
  <!-- Side Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header border-0 bg-white">Top Trending</h5>
+     <h5 class="card-header border-0 bg-dark">Top Trending</h5>
      <div class="card-body">
          <ul class="mb-0 list-unstyled">
              <?php
@@ -105,7 +105,7 @@
  <div class="card my-4 border-0">
      <div class="card-body p-2">
          <a href="your_professors_link_here" class="btn btn-dark w-100">Meet Our Professors</a>
-         <p class="text-center mt-2">Click to learn more about our esteemed professors.</p>
+         <p class="text-center mt-2 text-dark">Click to learn more about our esteemed professors.</p>
      </div>
  </div>
 
@@ -113,7 +113,7 @@
  <div class="card my-4 border-0">
      <div class="card-body p-2">
          <a href="your_gallery_link_here" class="btn btn-dark w-100">Explore Our Gallery</a>
-         <p class="text-center mt-2">Click to view photos and videos from our events.</p>
+         <p class="text-center mt-2 text-dark">Click to view photos and videos from our events.</p>
      </div>
  </div>
 
@@ -121,21 +121,21 @@
  <div class="card my-4 border-0">
      <div class="card-body p-2">
          <a href="your_additional_link1_here" class="btn btn-dark w-100">Learn More About Us</a>
-         <p class="text-center mt-2">Click to find out more about our institution.</p>
+         <p class="text-center mt-2 text-dark">Click to find out more about our institution.</p>
      </div>
  </div>
 
  <div class="card my-4 border-0">
      <div class="card-body p-2">
          <a href="your_additional_link2_here" class="btn btn-dark w-100">Our Achievements</a>
-         <p class="text-center mt-2">Click to explore our major accomplishments.</p>
+         <p class="text-center mt-2 text-dark">Click to explore our major accomplishments.</p>
      </div>
  </div>
 
  <div class="card my-4 border-0">
      <div class="card-body p-2">
          <a href="your_additional_link3_here" class="btn btn-dark w-100">Programs and Activities</a>
-         <p class="text-center mt-2">Click to learn more about our programs and activities.</p>
+         <p class="text-center mt-2 text-dark">Click to learn more about our programs and activities.</p>
      </div>
  </div>
 
