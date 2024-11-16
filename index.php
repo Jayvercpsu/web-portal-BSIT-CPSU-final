@@ -2,26 +2,6 @@
 session_start();
 include('includes/config.php');
 
-// Pagination and fetch logic from database
-if (isset($_GET['pageno'])) {
-    $pageno = $_GET['pageno'];
-} else {
-    $pageno = 1;
-}
-$no_of_records_per_page = 8;
-$offset = ($pageno - 1) * $no_of_records_per_page;
-
-$total_pages_sql = "SELECT COUNT(*) FROM tblposts";
-$result = mysqli_query($con, $total_pages_sql);
-$total_rows = mysqli_fetch_array($result)[0];
-$total_pages = ceil($total_rows / $no_of_records_per_page);
-
-$query = mysqli_query($con, "SELECT tblposts.id AS pid, tblposts.PostTitle AS posttitle, tblposts.PostImage, tblcategory.CategoryName AS category, tblcategory.id AS cid, tblsubcategory.Subcategory AS subcategory, tblposts.PostDetails AS postdetails, tblposts.PostingDate AS postingdate, tblposts.PostUrl AS url
-FROM tblposts
-LEFT JOIN tblcategory ON tblcategory.id = tblposts.CategoryId
-LEFT JOIN tblsubcategory ON tblsubcategory.SubCategoryId = tblposts.SubCategoryId
-WHERE tblposts.Is_Active = 1
-ORDER BY tblposts.id DESC LIMIT $offset, $no_of_records_per_page");
 
 ?>
 
@@ -65,11 +45,12 @@ ORDER BY tblposts.id DESC LIMIT $offset, $no_of_records_per_page");
 
     <div class="page-hero bg-image overlay-dark" style="background-image: url('images/sample_bsit.jpg');">
         <div class="hero-section d-flex align-items-center">
-            <div class="container text-center text-white wow zoomIn">
-                <span class="subhead d-block mb-2 fs-5">CPSU BSIT Department</span>
-                <h1 class="display-5 fw-bold">Empowering Future IT Professionals</h1>
-                <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
-            </div>
+        <div class="container text-center text-white wow zoomIn mt-5">
+    <span class="subhead d-block mb-2 fs-5">CPSU BSIT Department</span>
+    <h1 class="display-5 fw-bold">Empowering Future IT Professionals</h1>
+    <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
+</div>
+
         </div>
     </div>
 
@@ -359,122 +340,59 @@ ORDER BY tblposts.id DESC LIMIT $offset, $no_of_records_per_page");
 
 
 
-    <!-- 
-                <div class="page-section bg-light" id="news">
-                    <div class="container">
-                        <h1 class="text-center text-dark wow fadeInUp">Latest News</h1>
-                        <div class="row mt-5">
-                            <div class="col-lg-4 py-2 wow zoomIn">
-                                <div class="card-blog">
-                                    <div class="header">
-                                        <div class="post-category">
-                                            <a href="#">Events</a>
-                                        </div>
-                                        <a href="news-details.html" class="post-thumb">
-                                            <img src="./images/sample_bsit.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="body">
-                                        <h5 class="post-title"><a href="news-details.html">CPSU Hackathon 2024</a></h5>
-                                        <div class="site-info">
-                                            <div class="avatar mr-2">
-                                                <div class="avatar-img">
-                                                    <img src="./assets/img/person/person_1.jpg" alt="">
-                                                </div>
-                                                <span>Admin</span>
-                                            </div>
-                                            <span class="mai-time"></span> 2 weeks ago
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 py-2 wow zoomIn">
-                                <div class="card-blog">
-                                    <div class="header">
-                                        <div class="post-category">
-                                            <a href="#">Awards</a>
-                                        </div>
-                                        <a href="news-details.html" class="post-thumb">
-                                            <img src="./images/sample2.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="body">
-                                        <h5 class="post-title"><a href="news-details.html">CPSU BSIT Tops Regional IT Competition</a></h5>
-                                        <div class="site-info">
-                                            <div class="avatar mr-2">
-                                                <div class="avatar-img">
-                                                    <img src="./images/sample2.jpg" alt="">
-                                                </div>
-                                                <span>Admin</span>
-                                            </div>
-                                            <span class="mai-time"></span> 1 month ago
-                                        </div>
-                                    </div>
-                                </div>
+
+
+
+    <div class="page-section bg-light" id="news">
+        <div class="container">
+            <h1 class="text-center text-dark wow fadeInUp">Latest News</h1>
+            <div class="row mt-5">
+                <?php
+                // Limit to 3 posts for the homepage
+                $pageno = isset($_GET['pageno']) ? $_GET['pageno'] : 1;
+                $no_of_records_per_page = 3;  // Show only 3 posts initially
+                $offset = ($pageno - 1) * $no_of_records_per_page;
+
+                // Fetch total rows and calculate the total pages
+                $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
+                $result = mysqli_query($con, $total_pages_sql);
+                $total_rows = mysqli_fetch_array($result)[0];
+                $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+                // Fetch the posts
+                $query = mysqli_query($con, "SELECT tblposts.id AS pid, tblposts.PostTitle AS posttitle, tblposts.PostImage, tblcategory.CategoryName AS category, tblcategory.id AS cid, tblsubcategory.Subcategory AS subcategory, tblposts.PostDetails AS postdetails, tblposts.PostingDate AS postingdate, tblposts.PostUrl AS url FROM tblposts LEFT JOIN tblcategory ON tblcategory.id = tblposts.CategoryId LEFT JOIN tblsubcategory ON tblsubcategory.SubCategoryId = tblposts.SubCategoryId WHERE tblposts.Is_Active = 1 ORDER BY tblposts.id DESC LIMIT $offset, $no_of_records_per_page");
+
+                // Loop through the posts and display them
+                while ($row = mysqli_fetch_array($query)) {
+                ?>
+                    <div class="col-md-6">
+                        <div class="card mb-4 border-0">
+                            <img class="card-img-top" src="./admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" height="200px">
+                            <div class="card-body">
+                                <p class="m-0">
+                                    <!-- Category -->
+                                    <a class="badge bg-dark text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
+                                    <!-- Subcategory -->
+                                    <a class="badge bg-warning text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
+                                </p>
+                                <p class="m-0"><small>Posted on <?php echo htmlentities($row['postingdate']); ?></small></p>
+                                <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="card-title text-decoration-none text-dark">
+                                    <h5 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h5>
+                                </a>
                             </div>
                         </div>
-                        
-                        <div class="col-12 text-center mt-4 wow zoomIn">
-                            <a href="news.html" class="btn btn-primary">View All News</a>
-                        </div>
                     </div>
-                </div> -->
+                <?php } ?>
+            </div>
+
+            <!-- Show More Button -->
+            <div class="col-md-12 text-center">
+                <a href="news.php" class="btn btn-primary">Show More</a>
+            </div>
 
 
-
-
-
-
-                <div class="page-section bg-light" id="news">
-    <div class="container">
-        <h1 class="text-center text-dark wow fadeInUp">Latest News</h1>
-        <div class="row mt-5">
-            <?php
-            // Limit to 3 posts for the homepage
-            $pageno = isset($_GET['pageno']) ? $_GET['pageno'] : 1;
-            $no_of_records_per_page = 3;  // Show only 3 posts initially
-            $offset = ($pageno - 1) * $no_of_records_per_page;
-
-            // Fetch total rows and calculate the total pages
-            $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
-            $result = mysqli_query($con, $total_pages_sql);
-            $total_rows = mysqli_fetch_array($result)[0];
-            $total_pages = ceil($total_rows / $no_of_records_per_page);
-
-            // Fetch the posts
-            $query = mysqli_query($con, "SELECT tblposts.id AS pid, tblposts.PostTitle AS posttitle, tblposts.PostImage, tblcategory.CategoryName AS category, tblcategory.id AS cid, tblsubcategory.Subcategory AS subcategory, tblposts.PostDetails AS postdetails, tblposts.PostingDate AS postingdate, tblposts.PostUrl AS url FROM tblposts LEFT JOIN tblcategory ON tblcategory.id = tblposts.CategoryId LEFT JOIN tblsubcategory ON tblsubcategory.SubCategoryId = tblposts.SubCategoryId WHERE tblposts.Is_Active = 1 ORDER BY tblposts.id DESC LIMIT $offset, $no_of_records_per_page");
-
-            // Loop through the posts and display them
-            while ($row = mysqli_fetch_array($query)) {
-            ?>
-                <div class="col-md-6">
-                    <div class="card mb-4 border-0">
-                        <img class="card-img-top" src="./admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" height="200px">
-                        <div class="card-body">
-                            <p class="m-0">
-                                <!-- Category -->
-                                <a class="badge bg-dark text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
-                                <!-- Subcategory -->
-                                <a class="badge bg-warning text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
-                            </p>
-                            <p class="m-0"><small>Posted on <?php echo htmlentities($row['postingdate']); ?></small></p>
-                            <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="card-title text-decoration-none text-dark">
-                                <h5 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h5>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
         </div>
-
-        <!-- Show More Button -->
-        <div class="col-md-12 text-center">
-            <a href="news.php" class="btn btn-primary">Show More</a>
-        </div>
-
-   
     </div>
-</div>
 
 
 
