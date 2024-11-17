@@ -1,4 +1,4 @@
- <div class="col-md-3 ">
+<div class="col-md-3 ">
      <!-- Search Widget -->
      <!-- <h4 class="widget-title mb-5">Don't <span>Miss</span></h4> -->
 
@@ -9,7 +9,7 @@
                  <div class="input-group">
                      <input type="text" name="searchtitle" class="form-control rounded-0" placeholder="Search for..." required>
                      <span class="input-group-btn">
-                         <button class="btn btn-primary rounded-0" type="submit"><i class="fa fa-search"></i></button>
+                         <button style="background-color: #6a0dad;" class="btn text-white rounded-0" type="submit"><i class="fa fa-search"></i></button>
                      </span>
              </form>
          </div>
@@ -18,7 +18,7 @@
 
  <!-- Categories Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header bg-dark border-0">Categories</h5>
+     <h5 class="card-header bg-dark border-0 text-white">Categories</h5>
      <div class="card-body">
          <div class="row">
              <div class="col-lg-12">
@@ -40,7 +40,7 @@
 
  <!-- Side Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header border-0 bg-dark">Recent News</h5>
+     <h5 class="card-header border-0 bg-dark text-white">Recent News</h5>
      <div class="card-body">
          <ul class="mb-0 list-unstyled">
              <?php
@@ -49,7 +49,7 @@
 
                 ?>
                  <li class="d-flex mb-2 align-items-center">
-                     <img class="mr-2 rounded-circle" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" width="50px" height="50px">
+                     <img class="mr-2 rounded-circle" src="./admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" width="50px" height="50px">
                      <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="text-dark font-weight-bold"><?php echo htmlentities($row['posttitle']); ?></a>
                  </li>
              <?php } ?>
@@ -60,7 +60,7 @@
 
  <!-- Side Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header border-0 bg-dark">Popular News</h5>
+     <h5 class="card-header border-0 bg-dark text-white">Popular News</h5>
      <div class="card-body">
          <ul class="list-unstyled">
              <?php
@@ -80,7 +80,7 @@
 
  <!-- Side Widget -->
  <div class="card my-4 border-0">
-     <h5 class="card-header border-0 bg-dark">Top Trending</h5>
+     <h5 class="card-header border-0 bg-dark text-white">Top Trending</h5>
      <div class="card-body">
          <ul class="mb-0 list-unstyled">
              <?php
@@ -89,7 +89,7 @@
 
                 ?>
                  <li class="d-flex mb-2 align-items-center">
-                     <img class="mr-2 rounded" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" width="50px" height="50px">
+                     <img class="mr-2 rounded" src="./admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" width="50px" height="50px">
                      <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="text-dark font-weight-bold"><?php echo htmlentities($row['posttitle']); ?></a>
                  </li>
              <?php } ?>

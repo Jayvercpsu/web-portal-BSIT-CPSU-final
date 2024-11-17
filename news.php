@@ -29,8 +29,7 @@ include('includes/config.php');
 
     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
 
-    <link rel="stylesheet" href="./assets/css/theme.css">
-    <link rel="stylesheet" href="css/home-page.css">
+    <link rel="stylesheet" href="./assets/css/theme.css"> 
 
 
 

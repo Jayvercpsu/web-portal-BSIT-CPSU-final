@@ -103,6 +103,7 @@ include('includes/config.php');
         </a>
     </div>
 
+
     <!-- Initialize Carousel (Optional for extra control) -->
     <script>
         $(document).ready(function() {

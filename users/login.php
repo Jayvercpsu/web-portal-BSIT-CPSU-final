@@ -32,16 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    // Check for admin login
-    if (!$user) {
-        $sql = "SELECT * FROM users WHERE email='$email' AND password='$password' AND role='admin'";
-        $result = mysqli_query($con, $sql);
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
-            $user['role'] = 'admin'; // Set role for admin
-        }
-    }
 
     // Validate user login and session creation
     if ($user) {
@@ -51,11 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirect based on role
         if ($_SESSION['role'] === 'professor') {
-            header("Location: professor_dashboard.php");
+            header("Location: professor/index.php");
         } elseif ($_SESSION['role'] === 'student') {
-            header("Location: student_dashboard.php");
-        } elseif ($_SESSION['role'] === 'admin') {
-            header("Location: admin_dashboard.php");
+            header("Location: student/index.php");
         } else {
             echo "<script>alert('User role not found.');</script>";
         }
@@ -68,6 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/home-signup.css">
     <link rel="stylesheet" href="../css/home-login-signup.css">
 </head>
+
 <body>
 
     <div id="preloader">
@@ -118,4 +109,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 
 </body>
+
 </html>

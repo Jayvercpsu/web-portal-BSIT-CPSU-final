@@ -5,7 +5,7 @@
     if (empty($_SESSION['token'])) {
         $_SESSION['token'] = bin2hex(random_bytes(32));
     }
-
+ 
     if (isset($_POST['submit'])) {
         //Verifying CSRF Token
         if (!empty($_POST['csrftoken'])) {
@@ -55,7 +55,12 @@
      <meta name="author" content="">
      <title> CPSU BSIT Web Portal | Home Page</title>
      <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-     <link rel="stylesheet" href="css/icons.css">
+    <!-- Bootstrap core CSS -->
+    <link href="./vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+     <!-- Custom styles for this template -->
+     <link rel="stylesheet" href="./css/icons.css">
+     <link rel="stylesheet" href="./css/owl.carousel.min.css">
+     <link rel="stylesheet" href="./css/owl.theme.default.min.css">
 
      <link rel="stylesheet" href="./assets/css/maicons.css">
 
@@ -66,7 +71,7 @@
      <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
 
      <link rel="stylesheet" href="./assets/css/theme.css">
- </head>
+
 
  <body>
 
@@ -86,7 +91,7 @@
                     ?>
                      <div class="card border-0">
                          <div class="card-body">
-                             <a class="badge bg-success text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
+                             <a style="color: white;" class="badge bg-dark text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
                              <!--Subcategory--->
                              <a class="badge bg-warning text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
                              <h1 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h1>
@@ -98,10 +103,10 @@
                                      Last Updated by <?php echo htmlentities($row['lastUpdatedBy']); ?> on<?php echo htmlentities($row['UpdationDate']); ?>
                              </p>
                          <?php endif; ?>
-                         <p><strong>Share:</strong> <a href="http://www.facebook.com/share.php?u=<?php echo $currenturl; ?>" target="_blank">Facebook</a> |
-                             <a href="https://twitter.com/share?url=<?php echo $currenturl; ?>" target="_blank">Twitter</a> |
-                             <a href="https://web.whatsapp.com/send?text=<?php echo $currenturl; ?>" target="_blank">Whatsapp</a> |
-                             <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo $currenturl; ?>" target="_blank">Linkedin</a> <b>Visits:</b> <?php print $visits; ?>
+                         <p><strong>Share:</strong> <a style="color: #6a0dad;" href="http://www.facebook.com/share.php?u=<?php echo $currenturl; ?>" target="_blank">Facebook</a> |
+                             <a style="color: #6a0dad;" href="https://twitter.com/share?url=<?php echo $currenturl; ?>" target="_blank">Twitter</a> |
+                             <a style="color: #6a0dad;" href="https://web.whatsapp.com/send?text=<?php echo $currenturl; ?>" target="_blank">Whatsapp</a> |
+                             <a style="color: #6a0dad;" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=<?php echo $currenturl; ?>" target="_blank">Linkedin</a> <b>Visits:</b> <?php print $visits; ?>
                          </p>
                          <hr>
                          <img class="img-fluid w-100" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>">
@@ -152,7 +157,7 @@
                          <div class="form-group">
                              <textarea class="form-control rounded-0" name="comment" rows="3" placeholder="Comment" required></textarea>
                          </div>
-                         <button type="submit" class="btn btn-danger" name="submit">Submit</button>
+                         <button type="submit" class="btn" style="color: white; background-color: #6a0dad;" name="submit">Submit</button>
                      </form>
                  </div>
              </div>
