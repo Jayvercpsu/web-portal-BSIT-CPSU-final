@@ -186,8 +186,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="profile_image">Profile Image:</label>
-                                            <input type="file" class="form-control" name="profile_image">
+                                            <input type="file" id="profile_image" class="form-control" name="profile_image">
+                                            <img id="image-preview" class="img-thumbnail" alt="New Image Preview" style="display:none;">
                                         </div>
+
+
                                         <div class="form-group">
                                             <label for="year">Year:</label>
                                             <select class="form-control" name="year">
@@ -197,13 +200,10 @@
                                                 <option value="4" <?php echo ($student['year'] == '4') ? 'selected' : ''; ?>>Fourth Year</option>
                                             </select>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <label for="password">Current Password:</label>
-                                            <input type="text" class="form-control" name="password" value="<?php echo htmlentities($student['password']); ?>" readonly>
-                                        </div> -->
+
 
                                         <div class="form-group">
-                                            <label for="new_password">New Password (Leave blank if you don't want to change):</label>
+                                            <label for="new_password">Your Password</label>
                                             <input type="password" class="form-control" value="<?php echo htmlentities($student['password']); ?>" name="password" id="new_password" placeholder="Enter new password">
                                             <input type="checkbox" onclick="togglePassword()"> Show Password
                                         </div>
@@ -217,6 +217,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                        document.getElementById('profile_image').addEventListener('change', function(event) {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                var previewImage = document.getElementById('image-preview');
+                                previewImage.src = e.target.result;
+                                previewImage.style.display = 'block'; // Show the preview image
+                            }
+                            reader.readAsDataURL(event.target.files[0]);
+                        });
+                    </script>
 
                     <script>
                         function togglePassword() {
