@@ -1,9 +1,9 @@
-<?php
-session_start();
-include('includes/config.php');
+<!-- <?php
+        // session_start();
+        // include('includes/config.php');
 
 
-?>
+        ?> -->
 
 
 <!DOCTYPE html>

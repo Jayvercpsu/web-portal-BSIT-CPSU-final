@@ -1,7 +1,7 @@
  <?php
-    session_start();
-    include('includes/config.php');
-    //Genrating CSRF Token
+    // session_start();
+    // include('includes/config.php');
+    // //Genrating CSRF Token
     if (empty($_SESSION['token'])) {
         $_SESSION['token'] = bin2hex(random_bytes(32));
     }
@@ -55,7 +55,7 @@
      <meta name="author" content="">
      <title> CPSU BSIT Web Portal | Home Page</title>
      <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
-     
+
      <!-- Bootstrap core CSS -->
      <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
      <!-- Custom styles for this template -->

@@ -17,6 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result && mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
             $user['role'] = 'student'; // Set role for students
+
+            // Store user details in session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['full_name'] = $user['full_name'];  // Store student name
+            $_SESSION['profile_image'] = $user['profile_image']; // Store profile image if exists
+            $_SESSION['role'] = 'student'; // Set user role in session
             break;
         }
     }
@@ -29,17 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result && mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
             $user['role'] = 'professor'; // Set role for professors
+            $_SESSION['role'] = 'professor'; // Set user role in session
         }
     }
 
-
-
     // Validate user login and session creation
     if ($user) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['full_name'] = $user['full_name'];
-        $_SESSION['role'] = $user['role'];
-
         // Redirect based on role
         if ($_SESSION['role'] === 'professor') {
             header("Location: professor/index.php");
@@ -57,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,7 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/home-signup.css">
     <link rel="stylesheet" href="../css/home-login-signup.css">
 </head>
-
 <body>
 
     <div id="preloader">
@@ -109,5 +108,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 
 </body>
-
 </html>
