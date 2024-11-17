@@ -1,51 +1,33 @@
 <?php
 session_start();
-include('config.php');
+include('includes/config.php'); // Include your database connection file
 
-// Check if the user is logged in
-if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
-    $userId = $_SESSION['user_id'];
-    $role = $_SESSION['role']; // Get the role (student or professor)
+// Check if the user is logged in and has a valid user_id in the session
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
 
-    // Initialize user data
-    $fullName = '';
-    $profileImage = '';
+    // Fetch the student's data from the users table
+    $query = "SELECT full_name, profile_image FROM users WHERE id = '$user_id'";
+    $result = mysqli_query($con, $query);
+    $student = mysqli_fetch_assoc($result);
 
-    if ($role == 'student') {
-        // For student, fetch data from the student tables (first_year, second_year, etc.)
-        $yearTables = ['first_year', 'second_year', 'third_year', 'fourth_year'];
-        foreach ($yearTables as $table) {
-            $query = "SELECT full_name, profile_image FROM $table WHERE id = ?";
-            $stmt = mysqli_prepare($con, $query);
-            mysqli_stmt_bind_param($stmt, 'i', $userId);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_bind_result($stmt, $fullName, $profileImage);
-            mysqli_stmt_fetch($stmt);
-            mysqli_stmt_close($stmt);
-
-            if ($fullName) {
-                break; // If user found, stop the loop
-            }
-        }
-    } elseif ($role == 'professor') {
-        // For professor, fetch data from the professors table
-        $query = "SELECT full_name, profile_image FROM professors WHERE id = ?";
-        $stmt = mysqli_prepare($con, $query);
-        mysqli_stmt_bind_param($stmt, 'i', $userId);
-        mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $fullName, $profileImage);
-        mysqli_stmt_fetch($stmt);
-        mysqli_stmt_close($stmt);
+    // Check if student data exists
+    if (!$student) {
+        echo "Student data not found.";
+        exit();
     }
 
     // Set default profile image if none is set
+    $profileImage = $student['profile_image'];
     if (empty($profileImage)) {
-        $profileImage = './assets/profile-images/default-profile.png';
+        $profileImage = './assets/profile-images/default-profile.png'; // Default image path
     }
+
+    // Get the full name of the user
+    $full_name = $student['full_name'];
 } else {
-    // Redirect to login if not logged in
-    header("Location: login.php");
-    exit();
+    $full_name = "Guest";
+    $profileImage = './assets/profile-images/default-profile.png'; // Default image path for guest
 }
 ?>
 
@@ -87,7 +69,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['role'])) {
                         <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="Profile" class="rounded-circle" width="40" height="40">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
-                        <a class="dropdown-item" href="#"><strong>Hi <?php echo htmlspecialchars($fullName); ?></strong></a>
+                        <a class="dropdown-item" href="#"><strong>Hi <?php echo htmlspecialchars($full_name); ?></strong></a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> Edit Profile</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

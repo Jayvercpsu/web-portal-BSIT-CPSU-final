@@ -8,26 +8,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $user = null;
 
-    // Check for student login (in the student tables)
-    $yearTables = ['first_year', 'second_year', 'third_year', 'fourth_year'];
-    foreach ($yearTables as $table) {
-        $sql = "SELECT * FROM $table WHERE email='$email' AND password='$password'";
-        $result = mysqli_query($con, $sql);
+    // Check for student login (in the users table first)
+    $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+    $result = mysqli_query($con, $sql);
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
-            $user['role'] = 'student'; // Set role for students
+    if ($result && mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        $user['role'] = 'student'; // Set role for students
 
-            // Store user details in session
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['full_name'] = $user['full_name'];  // Store student name
-            $_SESSION['profile_image'] = $user['profile_image']; // Store profile image if exists
-            $_SESSION['role'] = 'student'; // Set user role in session
-            break;
-        }
+        // Store user details in session
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['full_name'] = $user['full_name'];  // Store student name
+        $_SESSION['profile_image'] = $user['profile_image']; // Store profile image if exists
+        $_SESSION['role'] = 'student'; // Set user role in session
     }
 
-    // Check for professor login
+    // If no user found, check for professor login
     if (!$user) {
         $sql = "SELECT * FROM professors WHERE email='$email' AND password='$password'";
         $result = mysqli_query($con, $sql);
