@@ -6,44 +6,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
-    $user = null;
-
-    // Check for student login (in the users table first)
+    // Check for login in the `users` table
     $sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
     $result = mysqli_query($con, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
-        $user['role'] = 'student'; // Set role for students
-
-        // Store user details in session
         $_SESSION['user_id'] = $user['id'];
-        $_SESSION['full_name'] = $user['full_name'];  // Store student name
-        $_SESSION['profile_image'] = $user['profile_image']; // Store profile image if exists
-        $_SESSION['role'] = 'student'; // Set user role in session
-    }
+        $_SESSION['full_name'] = $user['full_name'];
+        $_SESSION['role'] = $user['role'];
 
-    // If no user found, check for professor login
-    if (!$user) {
-        $sql = "SELECT * FROM professors WHERE email='$email' AND password='$password'";
-        $result = mysqli_query($con, $sql);
-
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
-            $user['role'] = 'professor'; // Set role for professors
-            $_SESSION['role'] = 'professor'; // Set user role in session
-        }
-    }
-
-    // Validate user login and session creation
-    if ($user) {
         // Redirect based on role
-        if ($_SESSION['role'] === 'professor') {
+        if ($user['role'] === 'professor') {
             header("Location: professor/index.php");
-        } elseif ($_SESSION['role'] === 'student') {
+        } elseif ($user['role'] === 'student') {
             header("Location: student/index.php");
         } else {
-            echo "<script>alert('User role not found.');</script>";
+            echo "<script>alert('Invalid role assigned. Please contact admin.');</script>";
         }
         exit();
     } else {
@@ -51,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

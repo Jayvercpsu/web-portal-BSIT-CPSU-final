@@ -5,13 +5,12 @@ include('../includes/config.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullName = mysqli_real_escape_string($con, $_POST['fullName']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
-    $password = mysqli_real_escape_string($con, $_POST['password']); // Plain text password
+    $password = mysqli_real_escape_string($con, $_POST['password']);
     $role = mysqli_real_escape_string($con, $_POST['role']);
     $year = isset($_POST['year']) ? mysqli_real_escape_string($con, $_POST['year']) : null;
 
-    // Check if the email is already taken based on role
+    // Check if the email is already taken
     if ($role === 'student') {
-        // Map year to the appropriate table for student
         $yearTables = [
             '1st Year' => 'first_year',
             '2nd Year' => 'second_year',
@@ -25,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         $table = $yearTables[$year];
-        $checkEmailSql = "SELECT * FROM $table WHERE email='$email'"; // Check if the email is already used
+        $checkEmailSql = "SELECT * FROM $table WHERE email='$email'";
     } elseif ($role === 'professor') {
-        $checkEmailSql = "SELECT * FROM professors WHERE email='$email'"; // Check if the email is already used for professors
+        $checkEmailSql = "SELECT * FROM professors WHERE email='$email'";
     } else {
         echo "<script>alert('Invalid role selected.');</script>";
         exit();
@@ -38,21 +37,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows($checkEmailResult) > 0) {
         echo "<script>alert('This email is already registered. Please use a different email.');</script>";
     } else {
-        // Insert into the respective role-specific table (without 'year' column)
         if ($role === 'student') {
             $sql = "INSERT INTO $table (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
         } elseif ($role === 'professor') {
             $sql = "INSERT INTO professors (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
         }
 
-        // Insert into users table for both students and professors (with 'year' column for students)
         $userSql = "INSERT INTO users (full_name, email, password, role, year) VALUES ('$fullName', '$email', '$password', '$role', '$year')";
 
-        // Execute the insert queries for the specific role and the users table
         if (mysqli_query($con, $sql) && mysqli_query($con, $userSql)) {
-            // Set session for the user
             $sessionQuery = $role === 'professor'
-                ? "SELECT * FROM professors WHERE email='$email'" 
+                ? "SELECT * FROM professors WHERE email='$email'"
                 : "SELECT * FROM $table WHERE email='$email'";
 
             $result = mysqli_query($con, $sessionQuery);
@@ -63,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['full_name'] = $user['full_name'];
                 $_SESSION['role'] = $role;
 
-                // Success message after registration
                 echo "<script>alert('Sign up successful! Please log in.'); window.location.href='login.php';</script>";
                 exit();
             }
@@ -87,11 +81,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         function toggleYearSelect() {
             const roleSelect = document.getElementById('role');
             const yearSelect = document.getElementById('yearSelect');
-            yearSelect.style.display = (roleSelect.value === 'student') ? 'block' : 'none';
-            // Reset year selection if role changes
-            if (roleSelect.value !== 'student') {
-                const yearInput = document.querySelector('[name="year"]');
-                yearInput.value = ""; // Reset year selection
+            const yearInput = document.querySelector('[name="year"]');
+
+            if (roleSelect.value === 'student') {
+                yearSelect.style.display = 'block';
+                yearInput.setAttribute('required', 'required');
+            } else {
+                yearSelect.style.display = 'none';
+                yearInput.removeAttribute('required');
+                yearInput.value = ""; // Reset the year value
             }
         }
     </script>
@@ -151,7 +149,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <script>
-        // Hide preloader when the window is loaded
         window.onload = function() {
             document.getElementById('preloader').style.display = 'none';
         };
