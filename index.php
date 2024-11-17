@@ -16,7 +16,7 @@ include('includes/config.php');
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
-    <title> CPSU BSIT Web Portal | News Page</title>
+    <title> CPSU BSIT Web Portal | Home Page</title>
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
@@ -34,6 +34,12 @@ include('includes/config.php');
 
     <link rel="stylesheet" href="./assets/css/theme.css">
     <link rel="stylesheet" href="css/home-page.css">
+
+    <!-- Bootstrap JS and Popper.js (for Carousel functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
 </head>
 
 <body>
@@ -42,17 +48,72 @@ include('includes/config.php');
     <?php include('includes/header.php'); ?>
 
 
+    <!-- Bootstrap Carousel -->
+    <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="3000">
+        <div class="carousel-inner">
 
-    <div class="page-hero bg-image overlay-dark" style="background-image: url('images/sample_bsit.jpg');">
-        <div class="hero-section d-flex align-items-center">
-            <div class="container text-center text-white wow zoomIn mt-5">
-                <span class="subhead d-block mb-2 fs-5">CPSU BSIT Department</span>
-                <h1 class="display-5 fw-bold">Empowering Future IT Professionals</h1>
-                <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
+            <!-- First Slide -->
+            <div class="carousel-item active">
+                <div class="page-hero bg-image overlay-dark" style="background-image: url('images/sample_bsit.jpg');">
+                    <div class="hero-section d-flex align-items-center">
+                        <div class="container text-center text-white wow zoomIn mt-5">
+                            <span class="subhead d-block mb-2 fs-5">CPSU BSIT Department</span>
+                            <h1 class="display-5 fw-bold">Empowering Future IT Professionals</h1>
+                            <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            <!-- Second Slide -->
+            <div class="carousel-item">
+                <div class="page-hero bg-image overlay-dark" style="background-image: url('images/sample2.jpg');">
+                    <div class="hero-section d-flex align-items-center">
+                        <div class="container text-center text-white wow zoomIn mt-5">
+                            <span class="subhead d-block mb-2 fs-5">Innovating Education</span>
+                            <h1 class="display-5 fw-bold">Shaping Tomorrow's Leaders</h1>
+                            <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Third Slide -->
+            <div class="carousel-item">
+                <div class="page-hero bg-image overlay-dark" style="background-image: url('images/whole.jpg');">
+                    <div class="hero-section d-flex align-items-center">
+                        <div class="container text-center text-white wow zoomIn mt-5">
+                            <span class="subhead d-block mb-2 fs-5">A New Era of Technology</span>
+                            <h1 class="display-5 fw-bold">Leading the Digital Transformation</h1>
+                            <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Carousel Controls -->
+        <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
+
+    <!-- Initialize Carousel (Optional for extra control) -->
+    <script>
+        $(document).ready(function() {
+            $('#carouselExample').carousel({
+                interval: 3000 // Slide every 5 seconds
+            });
+        });
+    </script>
+
+
+
 
 
     <!-- Services Section -->
@@ -229,17 +290,17 @@ include('includes/config.php');
 
 
 
-<?php
-$pagetype = 'aboutus';
-$query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
-while ($row = mysqli_fetch_array($query)) {
-?>
-    <div class="page-section" style="display: flex; align-items: center; padding: 50px 0;">
-        <div class="container">
-            <div class="row justify-content-center">
-                <!-- Image on the left side -->
-                <div class="col-lg-6 col-md-6 col-sm-12 wow fadeInLeft"
-                    style="background-image: url('./assets/faculty_image/whole.jpg'); 
+    <?php
+    $pagetype = 'aboutus';
+    $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
+    while ($row = mysqli_fetch_array($query)) {
+    ?>
+        <div class="page-section" style="display: flex; align-items: center; padding: 50px 0;">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <!-- Image on the left side -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 wow fadeInLeft"
+                        style="background-image: url('./assets/faculty_image/whole.jpg'); 
                            background-size: cover; 
                            background-position: center; 
                            height: 620px; 
@@ -247,16 +308,16 @@ while ($row = mysqli_fetch_array($query)) {
                            margin-top: 60px;
                            background-color: #ddd; /* Default color in case image fails */
                            border-radius: 10px;">
-                </div>
+                    </div>
 
-                <!-- Text content on the right side -->
-                <div class="col-lg-6 col-md-6 col-sm-12 wow fadeInUp"
-                    style="background-color: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 10px;">
-                    <h1 class="mt-5 mb-3 text-center text-white"><?php echo htmlentities($row['PageTitle']) ?></h1>
-                    <div class="text-lg">
-                        <div class="row">
-                            <div class="col-12">
-                                <p class="text-white"><?php echo $row['Description']; ?></p>
+                    <!-- Text content on the right side -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 wow fadeInUp"
+                        style="background-color: rgba(0, 0, 0, 0.5); padding: 20px; border-radius: 10px;">
+                        <h1 class="mt-5 mb-3 text-center text-white"><?php echo htmlentities($row['PageTitle']) ?></h1>
+                        <div class="text-lg">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="text-white"><?php echo $row['Description']; ?></p>
                                 </div>
                             </div>
                         </div>
