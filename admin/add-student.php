@@ -11,8 +11,8 @@ if (isset($_POST['submit'])) {
     $created_at = date('Y-m-d H:i:s');
 
     // Insert into the users table
-    $user_query = "INSERT INTO users (full_name, email, role, password, created_at) 
-                   VALUES ('$full_name', '$email', 'student', '$password', '$created_at')";
+    $user_query = "INSERT INTO users (full_name, email, role, year, password, created_at) 
+                   VALUES ('$full_name', '$email', 'student', '$year', '$password', '$created_at')";
     
     if (mysqli_query($con, $user_query)) {
         // Insert into the respective year table

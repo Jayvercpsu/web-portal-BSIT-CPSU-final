@@ -5,11 +5,9 @@ include('../includes/config.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullName = mysqli_real_escape_string($con, $_POST['fullName']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
+    $password = mysqli_real_escape_string($con, $_POST['password']); // Plain text password
     $role = mysqli_real_escape_string($con, $_POST['role']);
     $year = isset($_POST['year']) ? mysqli_real_escape_string($con, $_POST['year']) : null;
-
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     // Check if the email is already taken based on role
     if ($role === 'student') {
@@ -40,15 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows($checkEmailResult) > 0) {
         echo "<script>alert('This email is already registered. Please use a different email.');</script>";
     } else {
-        // Insert into role-specific table
+        // Insert into the respective role-specific table (without 'year' column)
         if ($role === 'student') {
-            $sql = "INSERT INTO $table (full_name, email, password) VALUES ('$fullName', '$email', '$hashedPassword')";
+            $sql = "INSERT INTO $table (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
         } elseif ($role === 'professor') {
-            $sql = "INSERT INTO professors (full_name, email, password) VALUES ('$fullName', '$email', '$hashedPassword')";
+            $sql = "INSERT INTO professors (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
         }
 
-        // Insert into users table for both students and professors
-        $userSql = "INSERT INTO users (full_name, email, password, role) VALUES ('$fullName', '$email', '$hashedPassword', '$role')";
+        // Insert into users table for both students and professors (with 'year' column for students)
+        $userSql = "INSERT INTO users (full_name, email, password, role, year) VALUES ('$fullName', '$email', '$password', '$role', '$year')";
 
         // Execute the insert queries for the specific role and the users table
         if (mysqli_query($con, $sql) && mysqli_query($con, $userSql)) {
@@ -75,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

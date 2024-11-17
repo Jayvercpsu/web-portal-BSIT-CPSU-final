@@ -6,66 +6,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
 
-    $yearTables = ['first_year', 'second_year', 'third_year', 'fourth_year'];
     $user = null;
 
+    // Check for student login (in the student tables)
+    $yearTables = ['first_year', 'second_year', 'third_year', 'fourth_year'];
     foreach ($yearTables as $table) {
-        $sql = "SELECT * FROM $table WHERE email='$email'";
+        $sql = "SELECT * FROM $table WHERE email='$email' AND password='$password'";
         $result = mysqli_query($con, $sql);
 
         if ($result && mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
-            $user['role'] = 'student'; // Set role explicitly for students
+            $user['role'] = 'student'; // Set role for students
             break;
         }
     }
 
+    // Check for professor login
     if (!$user) {
-        $sql = "SELECT * FROM professors WHERE email='$email'";
+        $sql = "SELECT * FROM professors WHERE email='$email' AND password='$password'";
         $result = mysqli_query($con, $sql);
 
         if ($result && mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
-            $user['role'] = 'professor'; // Set role explicitly for professors
+            $user['role'] = 'professor'; // Set role for professors
         }
     }
 
+    // Check for admin login
     if (!$user) {
-        $sql = "SELECT * FROM users WHERE email='$email'";
+        $sql = "SELECT * FROM users WHERE email='$email' AND password='$password' AND role='admin'";
         $result = mysqli_query($con, $sql);
 
         if ($result && mysqli_num_rows($result) > 0) {
             $user = mysqli_fetch_assoc($result);
+            $user['role'] = 'admin'; // Set role for admin
         }
     }
 
+    // Validate user login and session creation
     if ($user) {
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['full_name'] = $user['full_name'];
-            $_SESSION['role'] = $user['role'];
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['full_name'] = $user['full_name'];
+        $_SESSION['role'] = $user['role'];
 
-            if ($_SESSION['role'] === 'professor') {
-                header("Location: professor_dashboard.php");
-            } else if ($_SESSION['role'] === 'student') {
-                header("Location: student_dashboard.php");
-            } else {
-                echo "<script>alert('User role not found.');</script>";
-            }
-            exit();
+        // Redirect based on role
+        if ($_SESSION['role'] === 'professor') {
+            header("Location: professor_dashboard.php");
+        } elseif ($_SESSION['role'] === 'student') {
+            header("Location: student_dashboard.php");
+        } elseif ($_SESSION['role'] === 'admin') {
+            header("Location: admin_dashboard.php");
         } else {
-            echo "<script>alert('Invalid email or password.');</script>";
+            echo "<script>alert('User role not found.');</script>";
         }
+        exit();
     } else {
-        echo "<script>alert('No account found with that email.');</script>";
+        echo "<script>alert('Invalid email or password.');</script>";
     }
-} 
+}
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,7 +75,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../css/home-signup.css">
     <link rel="stylesheet" href="../css/home-login-signup.css">
 </head>
-
 <body>
 
     <div id="preloader">
@@ -117,5 +118,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 
 </body>
-
 </html>

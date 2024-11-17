@@ -35,8 +35,8 @@ if (isset($_GET['email'])) {
         $new_year = mysqli_real_escape_string($con, $_POST['year']);
         $new_password = mysqli_real_escape_string($con, $_POST['password']);
 
-        // Step 1: Update in the users table
-        $update_query = "UPDATE users SET full_name = '$full_name', email = '$new_email', password = '$new_password' WHERE email = '$email'";
+        // Step 1: Update in the users table with the new 'year' column
+        $update_query = "UPDATE users SET full_name = '$full_name', email = '$new_email', password = '$new_password', year = '$new_year' WHERE email = '$email'";
         if (mysqli_query($con, $update_query)) {
 
             // Step 2: Remove from the current year table
@@ -102,10 +102,10 @@ if (isset($_GET['email'])) {
                             <div class="form-group">
                                 <label for="year">Year</label>
                                 <select name="year" class="form-control">
-                                    <option value="first_year" <?php echo $current_year == 'first_year' ? 'selected' : ''; ?>>First Year</option>
-                                    <option value="second_year" <?php echo $current_year == 'second_year' ? 'selected' : ''; ?>>Second Year</option>
-                                    <option value="third_year" <?php echo $current_year == 'third_year' ? 'selected' : ''; ?>>Third Year</option>
-                                    <option value="fourth_year" <?php echo $current_year == 'fourth_year' ? 'selected' : ''; ?>>Fourth Year</option>
+                                    <option value="first_year" <?php echo $student['year'] == 'first_year' ? 'selected' : ''; ?>>First Year</option>
+                                    <option value="second_year" <?php echo $student['year'] == 'second_year' ? 'selected' : ''; ?>>Second Year</option>
+                                    <option value="third_year" <?php echo $student['year'] == 'third_year' ? 'selected' : ''; ?>>Third Year</option>
+                                    <option value="fourth_year" <?php echo $student['year'] == 'fourth_year' ? 'selected' : ''; ?>>Fourth Year</option>
                                 </select>
                             </div>
                             <div class="form-group">
