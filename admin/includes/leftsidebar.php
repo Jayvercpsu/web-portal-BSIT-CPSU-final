@@ -38,12 +38,11 @@
                               </ul>
                           </li>
                           <li>
-                              <a href="all-student.php" class="waves-effect"><i class="fa fa-users" aria-hidden="true"></i> <span>All Students</span></a>
+                              <a href="all-professors.php" class="waves-effect"><i class="fa fa-users" aria-hidden="true"></i> <span>All Professors</span></a>
                           </li>
                           <li>
-                              <a href="all-professor.php" class="waves-effect"><i class="fa fa-users" aria-hidden="true"></i> <span>All Professors</span></a>
+                              <a href="all-students.php" class="waves-effect"><i class="fa fa-users" aria-hidden="true"></i> <span>All Students</span></a>
                           </li>
-
                           <li class="has_sub">
                               <a href="javascript:void(0);" class="waves-effect"><i class="ti ti-files"></i> <span> CMS </span> <span class="menu-arrow"></span></a>
                               <ul class="list-unstyled">
