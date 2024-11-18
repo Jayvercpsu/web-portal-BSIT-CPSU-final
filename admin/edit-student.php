@@ -4,12 +4,14 @@ include('includes/config.php');
 error_reporting(0);
 
 if (isset($_GET['email'])) {
-    $email = mysqli_real_escape_string($con, $_GET['email']);
+    $email = $_GET['email'];
 
-    // Fetch the current student details
-    $query = "SELECT * FROM users WHERE email = '$email' AND role = 'student'";
-    $result = mysqli_query($con, $query);
-    $student = mysqli_fetch_assoc($result);
+    // Fetch current student details
+    $stmt = $con->prepare("SELECT * FROM users WHERE email = ? AND role = 'student'");
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $student = $result->fetch_assoc();
 
     if (!$student) {
         echo "<script>alert('No student found');</script>";
@@ -18,43 +20,53 @@ if (isset($_GET['email'])) {
     }
 
     // Determine current year by checking year tables
-    $current_year = ''; 
-    $year_tables = ['first_year', 'second_year', 'third_year', 'fourth_year'];
-    foreach ($year_tables as $year_table) {
-        $year_query = "SELECT * FROM $year_table WHERE email = '$email'";
-        $year_result = mysqli_query($con, $year_query);
-        if (mysqli_num_rows($year_result) > 0) {
-            $current_year = $year_table;
+    $current_year = '';
+    $year_tables = [
+        '1st Year' => 'first_year',
+        '2nd Year' => 'second_year',
+        '3rd Year' => 'third_year',
+        '4th Year' => 'fourth_year'
+    ];
+    foreach ($year_tables as $year => $table) {
+        $year_stmt = $con->prepare("SELECT * FROM $table WHERE email = ?");
+        $year_stmt->bind_param('s', $email);
+        $year_stmt->execute();
+        $year_result = $year_stmt->get_result();
+        if ($year_result->num_rows > 0) {
+            $current_year = $table;
             break;
         }
     }
 
     if (isset($_POST['update'])) {
-        $full_name = mysqli_real_escape_string($con, $_POST['full_name']);
-        $new_email = mysqli_real_escape_string($con, $_POST['email']);
-        $new_year = mysqli_real_escape_string($con, $_POST['year']);
-        $new_password = mysqli_real_escape_string($con, $_POST['password']);
+        $full_name = $_POST['full_name'];
+        $new_email = $_POST['email'];
+        $new_year = $_POST['year'];
+        $new_password = $_POST['password'];
+        $new_year_table = $year_tables[$new_year];
 
-        // Step 1: Update in the users table with the new 'year' column
-        $update_query = "UPDATE users SET full_name = '$full_name', email = '$new_email', password = '$new_password', year = '$new_year' WHERE email = '$email'";
-        if (mysqli_query($con, $update_query)) {
+        // Update in the users table
+        $update_stmt = $con->prepare("UPDATE users SET full_name = ?, email = ?, password = ?, year = ? WHERE email = ?");
+        $update_stmt->bind_param('sssss', $full_name, $new_email, $new_password, $new_year, $email);
+        if ($update_stmt->execute()) {
 
-            // Step 2: Remove from the current year table
+            // Remove from the current year table
             if ($current_year) {
-                $delete_from_current_year = "DELETE FROM $current_year WHERE email = '$email'";
-                mysqli_query($con, $delete_from_current_year);
+                $delete_stmt = $con->prepare("DELETE FROM $current_year WHERE email = ?");
+                $delete_stmt->bind_param('s', $email);
+                $delete_stmt->execute();
             }
 
-            // Step 3: Insert the student into the new year table with password
-            $insert_query = "INSERT INTO $new_year (full_name, email, password, created_at) 
-                             VALUES ('$full_name', '$new_email', '$new_password', NOW()) 
-                             ON DUPLICATE KEY UPDATE full_name = '$full_name', password = '$new_password'";
-
-            if (mysqli_query($con, $insert_query)) {
+            // Insert into the new year table
+            $insert_stmt = $con->prepare("INSERT INTO $new_year_table (full_name, email, password, created_at) 
+                                          VALUES (?, ?, ?, NOW()) 
+                                          ON DUPLICATE KEY UPDATE full_name = ?, password = ?");
+            $insert_stmt->bind_param('sssss', $full_name, $new_email, $new_password, $full_name, $new_password);
+            if ($insert_stmt->execute()) {
                 echo "<script>alert('Student updated successfully');</script>";
                 echo "<script>window.location.href = 'all-students.php';</script>";
             } else {
-                echo "<script>alert('Error updating student in the new year table');</script>";
+                echo "<script>alert('Error inserting student into the new year table');</script>";
             }
         } else {
             echo "<script>alert('Error updating student in the users table');</script>";
@@ -102,10 +114,10 @@ if (isset($_GET['email'])) {
                             <div class="form-group">
                                 <label for="year">Year</label>
                                 <select name="year" class="form-control">
-                                    <option value="first_year" <?php echo $student['year'] == 'first_year' ? 'selected' : ''; ?>>First Year</option>
-                                    <option value="second_year" <?php echo $student['year'] == 'second_year' ? 'selected' : ''; ?>>Second Year</option>
-                                    <option value="third_year" <?php echo $student['year'] == 'third_year' ? 'selected' : ''; ?>>Third Year</option>
-                                    <option value="fourth_year" <?php echo $student['year'] == 'fourth_year' ? 'selected' : ''; ?>>Fourth Year</option>
+                                    <option value="1st Year" <?php echo $student['year'] == '1st Year' ? 'selected' : ''; ?>>First Year</option>
+                                    <option value="2nd Year" <?php echo $student['year'] == '2nd Year' ? 'selected' : ''; ?>>Second Year</option>
+                                    <option value="3rd Year" <?php echo $student['year'] == '3rd Year' ? 'selected' : ''; ?>>Third Year</option>
+                                    <option value="4th Year" <?php echo $student['year'] == '4th Year' ? 'selected' : ''; ?>>Fourth Year</option>
                                 </select>
                             </div>
                             <div class="form-group">

@@ -18,16 +18,16 @@ if (isset($_POST['submit'])) {
         // Insert into the respective year table
         $year_table = "";
         switch ($year) {
-            case 'first_year':
+            case '1st Year':
                 $year_table = 'first_year';
                 break;
-            case 'second_year':
+            case '2nd Year':
                 $year_table = 'second_year';
                 break;
-            case 'third_year':
+            case '3rd Year':
                 $year_table = 'third_year';
                 break;
-            case 'fourth_year':
+            case '4th Year':
                 $year_table = 'fourth_year';
                 break;
             default:
@@ -96,10 +96,10 @@ if (isset($_POST['submit'])) {
                                 <label for="year">Year</label>
                                 <select name="year" class="form-control" required>
                                     <option value="">Select Year</option>
-                                    <option value="first_year">First Year</option>
-                                    <option value="second_year">Second Year</option>
-                                    <option value="third_year">Third Year</option>
-                                    <option value="fourth_year">Fourth Year</option>
+                                    <option value="1st Year">First Year</option>
+                                    <option value="2nd Year">Second Year</option>
+                                    <option value="3rd Year">Third Year</option>
+                                    <option value="4th Year">Fourth Year</option>
                                 </select>
                             </div>
                             <div class="form-group">
