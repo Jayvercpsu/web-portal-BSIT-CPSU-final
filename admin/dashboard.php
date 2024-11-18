@@ -8,6 +8,8 @@ if (strlen($_SESSION['login']) == 0) {
 ?>
     <?php include('includes/topheader.php'); ?>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font/css/materialdesignicons.min.css" rel="stylesheet">
+
     <!-- ========== Left Sidebar Start ========== -->
     <?php include('includes/leftsidebar.php'); ?>
     <!-- Left Sidebar End -->
@@ -42,20 +44,113 @@ if (strlen($_SESSION['login']) == 0) {
                 <div class="row">
 
 
-                    <div class="col-md-4">
-                        <div class="card-box h-100">
-                            <div class="card-body">
-                                <div class="row ">
-                                    <div class="card-header">
-                                        <h4 class="card-title m-0">Visits of 2023</h4>
-                                    </div>
-                                    <div id="chart">
-                                        <apexchart type="radialBar" height="265" :options="chartOptions" :series="series"></apexchart>
-                                    </div>
+
+
+
+
+
+
+
+                    <a href="manage-first-year.php">
+                        <div class="col-lg-2 col-md-2 col-sm-6">
+                            <div class="card-box widget-box-one text-center">
+                                <i class="mdi mdi-account-group widget-one-icon"></i>
+                                <div class="wigdet-one-content">
+                                    <p class="m-0 text-secondary" title="Statistics">First Year Students</p>
+                                    <?php
+                                    $query = mysqli_query($con, "SELECT * FROM first_year");
+                                    $countFirstYear = mysqli_num_rows($query);
+                                    ?>
+                                    <h2><?php echo htmlentities($countFirstYear); ?></h2>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
+
+                    <a href="manage-second-year.php">
+                        <div class="col-lg-2 col-md-2 col-sm-6">
+                            <div class="card-box widget-box-one text-center">
+                                <i class="mdi mdi-account-group widget-one-icon"></i>
+                                <div class="wigdet-one-content">
+                                    <p class="m-0 text-secondary" title="Statistics">Second Year Students</p>
+                                    <?php
+                                    $query = mysqli_query($con, "SELECT * FROM second_year");
+                                    $countSecondYear = mysqli_num_rows($query);
+                                    ?>
+                                    <h2><?php echo htmlentities($countSecondYear); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="manage-third-year.php">
+                        <div class="col-lg-2 col-md-2 col-sm-6">
+                            <div class="card-box widget-box-one text-center">
+                                <i class="mdi mdi-account-group widget-one-icon"></i>
+                                <div class="wigdet-one-content">
+                                    <p class="m-0 text-secondary" title="Statistics">Third Year Students</p>
+                                    <?php
+                                    $query = mysqli_query($con, "SELECT * FROM third_year");
+                                    $countThirdYear = mysqli_num_rows($query);
+                                    ?>
+                                    <h2><?php echo htmlentities($countThirdYear); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="manage-fourth-year.php">
+                        <div class="col-lg-2 col-md-2 col-sm-6">
+                            <div class="card-box widget-box-one text-center">
+                                <i class="mdi mdi-account-group widget-one-icon"></i>
+                                <div class="wigdet-one-content">
+                                    <p class="m-0 text-secondary" title="Statistics">Fourth Year Students</p>
+                                    <?php
+                                    $query = mysqli_query($con, "SELECT * FROM fourth_year");
+                                    $countFourthYear = mysqli_num_rows($query);
+                                    ?>
+                                    <h2><?php echo htmlentities($countFourthYear); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="manage-users.php">
+                        <div class="col-lg-2 col-md-2 col-sm-6">
+                            <div class="card-box widget-box-one text-center">
+                                <i class="mdi mdi-account-multiple widget-one-icon"></i>
+                                <div class="wigdet-one-content">
+                                    <p class="m-0 text-secondary" title="Statistics">All Users</p>
+                                    <?php
+                                    $query = mysqli_query($con, "SELECT * FROM users");
+                                    $countUsers = mysqli_num_rows($query);
+                                    ?>
+                                    <h2><?php echo htmlentities($countUsers); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="manage-professors.php">
+                        <div class="col-lg-2 col-md-2 col-sm-6">
+                            <div class="card-box widget-box-one text-center">
+                                <i class="mdi mdi-school widget-one-icon"></i>
+                                <div class="wigdet-one-content">
+                                    <p class="m-0 text-secondary" title="Statistics">Professors</p>
+                                    <?php
+                                    $query = mysqli_query($con, "SELECT * FROM professors");
+                                    $countProfessors = mysqli_num_rows($query);
+                                    ?>
+                                    <h2><?php echo htmlentities($countProfessors); ?></h2>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+
+
+
+
 
                     <a href="manage-categories.php">
                         <div class="col-lg-2 col-md-2 col-sm-6">
@@ -71,6 +166,12 @@ if (strlen($_SESSION['login']) == 0) {
                             </div>
                         </div>
                     </a>
+
+
+
+
+
+
                     <!-- end col -->
                     <a href="manage-posts.php">
                         <div class="col-lg-2 col-md-2 col-sm-6">
