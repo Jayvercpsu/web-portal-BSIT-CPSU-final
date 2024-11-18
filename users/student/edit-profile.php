@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('includes/config.php'); // Include your database connection file
+include('includes/config.php');  
 
 // Check if the user is logged in and has a valid user_id in the session
 if (isset($_SESSION['user_id'])) {

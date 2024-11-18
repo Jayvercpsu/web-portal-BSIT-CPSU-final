@@ -31,6 +31,7 @@ if (isset($_SESSION['user_id'])) {
 }
 ?>
 
+
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
     <div class="container">
         <!-- BSIT Logo and Name (Visible on all screen sizes) -->
@@ -68,12 +69,13 @@ if (isset($_SESSION['user_id'])) {
                     <button class="btn btn-link nav-link text-dark p-0 border-0" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="Profile" class="rounded-circle" width="40" height="40">
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown">
+                    <div class="dropdown-menu dropdown-menu-left" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="#"><strong>Hi <?php echo htmlspecialchars($full_name); ?></strong></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> Edit Profile</a>
+                        <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> Edit account</a>
+                        <a class="dropdown-item" href="my-instructors.php"><i class="fa fa-users"></i> My Instructors</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fa fa-sign-out"></i> Logout
+                            <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>
                 </li>
@@ -87,7 +89,7 @@ if (isset($_SESSION['user_id'])) {
 
             .nav-link:hover {
                 text-decoration: underline;
-                color: #6a0dad; 
+                color: #6a0dad;
             }
         </style>
 
