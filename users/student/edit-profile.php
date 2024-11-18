@@ -151,8 +151,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <a href="index.php" class="d-flex flex-row align-items-center">
-                            <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
-                            <h6>Back to profile</h6>
+                            <i style="color: #6a0dad;" class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                            <h6 class="h6-custom">Back to profile</h6>
                         </a>
                         <h6>Edit Profile</h6>
                     </div>
@@ -189,14 +189,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" class="btn btn-custom">Save Changes</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <style>
+        .btn-custom {
+            background-color: #6a0dad;
+            color: white;
+        }
 
+        .h6-custom {
+            color: #6a0dad;
+        }
+
+        .btn-custom:hover {
+            background-color: #5a0dad;
+            color: white;
+        }
+    </style>
     <script>
         document.getElementById('profile_image').addEventListener('change', function(event) {
             var reader = new FileReader();

@@ -79,14 +79,32 @@ if (isset($_SESSION['user_id'])) {
                 </li>
             </ul>
         </div>
+        <style>
+            .dropdown-item:hover {
+                background-color: #6a0dad;
+                color: white;
+            }
+
+            .nav-link:hover {
+                text-decoration: underline;
+                color: #6a0dad; 
+            }
+        </style>
+
 
         <!-- CPSU Text and Logo (Visible on large screens only) -->
         <div class="navbar-brand d-lg-flex align-items-center d-none d-lg-flex">
             <h1 class="mb-0" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">CPSU</h1>
             <img src="../../admin/assets/images/cpsu_logo.png" height="65" alt="CPSU Logo" class="ml-2">
         </div>
+
+
     </div>
 </nav>
+
+
+
+
 
 <!-- Logout Confirmation Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
@@ -102,7 +120,7 @@ if (isset($_SESSION['user_id'])) {
                 Are you sure you want to log out?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary text-white" data-dismiss="modal">Cancel</button>
                 <a href="logout.php" class="btn btn-danger">Logout</a>
             </div>
         </div>
