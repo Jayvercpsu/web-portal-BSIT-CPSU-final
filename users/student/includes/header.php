@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('includes/config.php');  
+include('includes/config.php');
 
 // Check if the user is logged in and has a valid user_id in the session
 if (isset($_SESSION['user_id'])) {
@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
                         <a class="dropdown-item" href="#"><strong>Hi <?php echo htmlspecialchars($full_name); ?></strong></a>
                         <div class="dropdown-divider"></div>
                         <!-- <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> My account</a> -->
-                        <a class="dropdown-item" href="sidebar-myaccount.php"><i class="fa fa-edit"></i> My account</a>
+                        <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> My account</a>
                         <!-- <a class="dropdown-item" href="my-instructors.php"><i class="fa fa-users"></i> My Instructors</a>
                         <a class="dropdown-item" href="my-subjects.php"><i class="fa fa-book"></i> My Subjects</a> -->
 
