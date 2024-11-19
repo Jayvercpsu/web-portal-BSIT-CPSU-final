@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('includes/config.php'); // Include your database connection file
+include('includes/config.php');  
 
 // Check if the user is logged in and has a valid user_id in the session
 if (isset($_SESSION['user_id'])) {
@@ -72,8 +72,11 @@ if (isset($_SESSION['user_id'])) {
                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="#"><strong>Hi <?php echo htmlspecialchars($full_name); ?></strong></a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> Edit account</a>
-                        <a class="dropdown-item" href="my-instructors.php"><i class="fa fa-users"></i> My Instructors</a>
+                        <!-- <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> My account</a> -->
+                        <a class="dropdown-item" href="sidebar-myaccount.php"><i class="fa fa-edit"></i> My account</a>
+                        <!-- <a class="dropdown-item" href="my-instructors.php"><i class="fa fa-users"></i> My Instructors</a>
+                        <a class="dropdown-item" href="my-subjects.php"><i class="fa fa-book"></i> My Subjects</a> -->
+
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>

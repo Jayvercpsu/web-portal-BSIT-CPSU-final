@@ -1,6 +1,5 @@
-<?php
-session_start();
-include('includes/config.php');  
+<?php 
+include('includes/config.php');
 
 // Check if the user is logged in and has a valid user_id in the session
 if (isset($_SESSION['user_id'])) {
@@ -107,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         $con->commit();
-        header("Location: edit-profile.php?update=success");
+        header("Location: sidebar-myaccount.php?update=success");
         exit();
     } catch (Exception $e) {
         $con->rollback();
@@ -124,117 +123,122 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="./assets/css/edit-profile.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body>
+<body class="bg-light">
+ 
+
+    <!-- Success alert if profile updated -->
     <?php if (isset($_GET['update']) && $_GET['update'] == 'success'): ?>
-        <script type="text/javascript">
+        <script>
             alert("Profile updated successfully!");
         </script>
     <?php endif; ?>
 
-    <div class="container rounded bg-white mt-5">
-        <div class="row">
-            <div class="col-md-4 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <img class="rounded-circle mt-5" src="<?php echo htmlentities($profileImage); ?>" width="200" height="200">
-                    <span class="font-weight-bold"><?php echo htmlentities($student['full_name']); ?></span>
-                    <span class="text-black-50"><?php echo htmlentities($student['email']); ?></span>
-                    <span>Year: <?php echo htmlentities($student['year']); ?></span>
-                    <span><?php echo htmlentities($formatted_created_at); ?></span> <!-- Display formatted date -->
+    <div class="d-flex">
+        <!-- Main Profile Content -->
+        <div class="container mt-5 p-4 bg-white shadow rounded flex-grow-1">
+            <div class="row">
+                <!-- Left Profile Section -->
+                <div class="col-md-4 bg-primary text-white text-center py-4 rounded-left">
+                    <img class="rounded-circle mt-4 border border-white" src="<?php echo htmlentities($profileImage); ?>" alt="Profile Image" width="150" height="150">
+                    <h5 class="mt-3"><?php echo htmlentities($student['full_name']); ?></h5>
+                    <p><?php echo htmlentities($student['email']); ?></p>
+                    <p>Year: <?php echo htmlentities($student['year']); ?></p>
+                    <p><?php echo htmlentities($formatted_created_at); ?></p>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <a href="index.php" class="d-flex flex-row align-items-center">
-                            <i style="color: #6a0dad;" class="fa fa-long-arrow-left mr-1 mb-1"></i>
-                            <h6 class="h6-custom">Back to profile</h6>
-                        </a>
-                        <h6>Edit Profile</h6>
+
+                <!-- Right Edit Section -->
+                <div class="col-md-8">
+
+                    <div class="py-4">
+                        <!-- Back to Profile Link -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <a href="index.php" class="text-decoration-none">
+                                <i class="fa fa-long-arrow-left mr-2"></i>
+                                <span class="text-primary font-weight-bold">Back to profile</span>
+                            </a>
+                            <h5>Edit Profile</h5>
+                        </div>
+
+                        <!-- Form Section -->
+                        <form method="POST" enctype="multipart/form-data">
+                            <!-- Full Name -->
+                            <div class="form-group">
+                                <label for="full_name" class="font-weight-bold">Full Name:</label>
+                                <input type="text" id="full_name" class="form-control" name="full_name" value="<?php echo htmlentities($student['full_name']); ?>" required>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email" class="font-weight-bold">Email:</label>
+                                <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlentities($student['email']); ?>" required>
+                            </div>
+
+                            <!-- Profile Image -->
+                            <div class="form-group">
+                                <label for="profile_image" class="font-weight-bold">Profile Image:</label>
+                                <input type="file" id="profile_image" class="form-control" name="profile_image">
+                                <div class="mt-2">
+                                    <img id="image-preview" class="img-thumbnail d-none" alt="New Image Preview">
+                                </div>
+                            </div>
+
+                            <!-- Year -->
+                            <div class="form-group">
+                                <label for="year" class="font-weight-bold">Year:</label>
+                                <select id="year" class="form-control" name="year">
+                                    <option value="1st Year" <?php echo ($student['year'] == '1st Year') ? 'selected' : ''; ?>>First Year</option>
+                                    <option value="2nd Year" <?php echo ($student['year'] == '2nd Year') ? 'selected' : ''; ?>>Second Year</option>
+                                    <option value="3rd Year" <?php echo ($student['year'] == '3rd Year') ? 'selected' : ''; ?>>Third Year</option>
+                                    <option value="4th Year" <?php echo ($student['year'] == '4th Year') ? 'selected' : ''; ?>>Fourth Year</option>
+                                </select>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-group">
+                                <label for="password" class="font-weight-bold">Your Password:</label>
+                                <input type="password" id="new_password" class="form-control" name="password" value="<?php echo htmlentities($student['password']); ?>" placeholder="Enter new password">
+                                <div class="mt-2">
+                                    <input type="checkbox" onclick="togglePassword()"> Show Password
+                                </div>
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                            </div>
+                        </form>
                     </div>
-                    <form method="POST" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="full_name" value="<?php echo htmlentities($student['full_name']); ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" name="email" value="<?php echo htmlentities($student['email']); ?>" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="profile_image">Profile Image:</label>
-                            <input type="file" id="profile_image" class="form-control" name="profile_image">
-                            <img id="image-preview" class="img-thumbnail" alt="New Image Preview" style="display:none;">
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="year">Year:</label>
-                            <select class="form-control" name="year">
-                                <option value="1st Year" <?php echo ($student['year'] == '1st Year') ? 'selected' : ''; ?>>First Year</option>
-                                <option value="2nd Year" <?php echo ($student['year'] == '2nd Year') ? 'selected' : ''; ?>>Second Year</option>
-                                <option value="3rd Year" <?php echo ($student['year'] == '3rd Year') ? 'selected' : ''; ?>>Third Year</option>
-                                <option value="4th Year" <?php echo ($student['year'] == '4th Year') ? 'selected' : ''; ?>>Fourth Year</option>
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label for="new_password">Your Password</label>
-                            <input type="password" class="form-control" value="<?php echo htmlentities($student['password']); ?>" name="password" id="new_password" placeholder="Enter new password">
-                            <input type="checkbox" onclick="togglePassword()"> Show Password
-                        </div>
-
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-custom">Save Changes</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <style>
-        .btn-custom {
-            background-color: #6a0dad;
-            color: white;
-        }
 
-        .h6-custom {
-            color: #6a0dad;
-        }
-
-        .btn-custom:hover {
-            background-color: #5a0dad;
-            color: white;
-        }
-    </style>
     <script>
+        // Image preview functionality
         document.getElementById('profile_image').addEventListener('change', function(event) {
             var reader = new FileReader();
             reader.onload = function(e) {
                 var previewImage = document.getElementById('image-preview');
                 previewImage.src = e.target.result;
-                previewImage.style.display = 'block'; // Show the preview image
-            }
+                previewImage.classList.remove('d-none');
+            };
             reader.readAsDataURL(event.target.files[0]);
         });
-    </script>
 
-    <script>
+        // Toggle password visibility
         function togglePassword() {
             var passwordField = document.getElementById('new_password');
-            var passwordType = passwordField.type;
-            if (passwordType === 'password') {
-                passwordField.type = 'text';
-            } else {
-                passwordField.type = 'password';
-            }
+            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
         }
     </script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 
 </html>
