@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Redirect based on role
         if ($user['role'] === 'professor') {
-            header("Location: professor/index.php");
+            header("Location: professor/dashboard.php");
         } elseif ($user['role'] === 'student') {
             header("Location: student/index.php");
         } else {

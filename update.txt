@@ -1,8 +1,8 @@
 Admin - Assign Instructor to 1st year to 4th year
 
 Instructor - View under students sa 1st year to 4th year Add/delete
-            - under year, can able to write update post
+           - under year, can able to write update post
 
 Student - after logged in, can view all the update of the 1st year nga under sya sa instructor 
         - if the students are 1st year / 4th year must directly go to the corresponding year nga 
-            na-a tanang update sa 1st year or 4th year where he/she belong on that particular year
+          na-a tanang update sa 1st year or 4th year where he/she belong on that particular year  
