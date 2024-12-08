@@ -19,28 +19,16 @@ if (!$professor) {
     $error = "Unable to fetch profile details. Please contact the administrator.";
 }
 
-// Update profile details
-if (isset($_POST['update_details'])) {
-    $full_name = mysqli_real_escape_string($con, $_POST['full_name']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
-
-    if (!empty($full_name) && !empty($password)) {
-        $update_query = "UPDATE users SET full_name = '$full_name', password = '$password' WHERE id = '$professor_id' AND role = 'professor'";
-        if (mysqli_query($con, $update_query)) {
-            $msg = "Profile details updated successfully!";
-            $professor['full_name'] = $full_name;
-            $professor['password'] = $password;
-        } else {
-            $error = "Failed to update profile details. Please try again.";
-        }
-    } else {
-        $error = "Full name and password are required.";
-    }
-}
-
 // Update profile image
 if (isset($_POST['update_profile_image'])) {
     $profile_image = $professor['profile_image'];
+    $default_image_path = "./assets/profile-images/default-profile.png";
+    $image_folder = './assets/profile-images/';
+
+    // Ensure the directory exists
+    if (!is_dir($image_folder)) {
+        mkdir($image_folder, 0777, true);
+    }
 
     if (!empty($_FILES["profile_image"]["name"])) {
         $imgfile = $_FILES["profile_image"]["name"];
@@ -48,32 +36,38 @@ if (isset($_POST['update_profile_image'])) {
         $valid_extensions = array("jpg", "jpeg", "png", "gif");
 
         if (in_array($extension, $valid_extensions)) {
-            // Delete all existing images in the 'admin pictures' folder
-            $image_folder = './assets/profile_image/';
-            $files = glob($image_folder . '*'); // Get all files in the folder
-            foreach ($files as $file) {
-                if (is_file($file)) {
-                    unlink($file); // Delete the file
-                }
-            }
-
-            // Save the new image
+            // Generate a unique filename
             $profile_image = uniqid() . "." . $extension;
-            move_uploaded_file($_FILES["profile_image"]["tmp_name"], $image_folder . $profile_image);
+            $target_path = $image_folder . $profile_image;
 
-            // Update the database
-            $update_query = "UPDATE users SET profile_image = '$profile_image' WHERE id = '$professor_id' AND role = 'professor'";
-            if (mysqli_query($con, $update_query)) {
-                $msg = "Profile image updated successfully!";
-                $professor['profile_image'] = $profile_image;
+            if (move_uploaded_file($_FILES["profile_image"]["tmp_name"], $target_path)) {
+                // Update the database
+                $update_users_query = "UPDATE users SET profile_image = '$target_path' WHERE id = '$professor_id' AND role = 'professor'";
+                $update_professors_query = "UPDATE professors SET profile_image = '$target_path' WHERE id = '$professor_id'";
+
+                if (mysqli_query($con, $update_users_query) && mysqli_query($con, $update_professors_query)) {
+                    $msg = "Profile image updated successfully!";
+                    $professor['profile_image'] = $target_path;
+                } else {
+                    $error = "Failed to update profile image in the database.";
+                }
             } else {
-                $error = "Failed to update profile image. Please try again.";
+                $error = "Failed to upload the profile image. Please check folder permissions.";
             }
         } else {
             $error = "Invalid file format. Only JPG, JPEG, PNG, and GIF are allowed.";
         }
     } else {
-        $error = "Please select an image to upload.";
+        // Use default profile image if no file is uploaded
+        $update_users_query = "UPDATE users SET profile_image = '$default_image_path' WHERE id = '$professor_id' AND role = 'professor'";
+        $update_professors_query = "UPDATE professors SET profile_image = '$default_image_path' WHERE id = '$professor_id'";
+
+        if (mysqli_query($con, $update_users_query) && mysqli_query($con, $update_professors_query)) {
+            $msg = "Default profile image assigned.";
+            $professor['profile_image'] = $default_image_path;
+        } else {
+            $error = "Failed to assign the default profile image.";
+        }
     }
 }
 ?>

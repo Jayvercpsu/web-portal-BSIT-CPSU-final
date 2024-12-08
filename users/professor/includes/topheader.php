@@ -1,33 +1,23 @@
 <?php
  
-$professor_id = $_SESSION['user_id'];
+
+$professor_id = $_SESSION['user_id'] ?? null; // Ensure user ID exists in the session
 $msg = $error = "";
 
-// Fetch professor details from the 'users' table where role is 'professor'
-$query = mysqli_query($con, "SELECT * FROM users WHERE id = '$professor_id' AND role = 'professor'");
-$professor = mysqli_fetch_assoc($query);
+// Default values for name and profile image
+$full_name = 'Guest';
+$profile_image = '../assets/profile-images/default-profile.png';
 
-if (!$professor) {
-    $error = "Unable to fetch profile details. Please contact the administrator.";
-}
-
-// Fetch full name and profile image
-$full_name = 'Guest'; // Default name if no data is found
-$profile_image = 'default_profile.png'; // Default image if no image is set
-
-try {
-    // Query to fetch professor's name and profile image
+if ($professor_id) {
+    // Fetch professor details from the 'users' table where role is 'professor'
     $query = "SELECT full_name, profile_image FROM users WHERE id = '$professor_id' AND role = 'professor' LIMIT 1";
     $result = mysqli_query($con, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
-        $full_name = $row['full_name'];
-        $profile_image = $row['profile_image'] ? $row['profile_image'] : 'default_profile.png'; // Fallback to default if no image found
+        $full_name = $row['full_name'] ?? 'Guest';
+        $profile_image = !empty($row['profile_image']) ? $row['profile_image'] : '../assets/profile-images/default-profile.png';
     }
-} catch (Exception $e) {
-    // Log the error and fallback to default value
-    error_log("Error fetching professor details: " . $e->getMessage());
 }
 ?>
 
@@ -46,30 +36,11 @@ try {
     <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="../plugins/switchery/switchery.min.css">
     <script src="assets/js/modernizr.min.js"></script>
-    <!-- Summernote css -->
+    <!-- Additional Plugins -->
     <link href="../plugins/summernote/summernote.css" rel="stylesheet" />
-    <!-- Select2 -->
     <link href="../plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
-    <!-- Jquery filer css -->
     <link href="../plugins/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
     <link href="../plugins/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
-    <script>
-        function checkAvailability() {
-            $("#loaderIcon").show();
-            jQuery.ajax({
-                url: "check_availability.php",
-                data: 'username=' + $("#sadminusername").val(),
-                type: "POST",
-                success: function(data) {
-                    $("#user-availability-status").html(data);
-                    $("#loaderIcon").hide();
-                },
-                error: function() {}
-            });
-        }
-    </script>
 </head>
 <body class="fixed-left">
     <!-- Begin page -->
@@ -88,7 +59,6 @@ try {
             <!-- Button mobile view to collapse sidebar menu -->
             <div class="navbar navbar-default" role="navigation">
                 <div class="container">
-
                     <!-- Navbar-left -->
                     <ul class="nav navbar-nav navbar-left">
                         <li>
@@ -98,15 +68,11 @@ try {
                         </li>
                     </ul>
 
-                    <div id="">
-                        <!-- google_translate_element -->
-                    </div>
-
                     <!-- Right(Notification) -->
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown user-box">
                             <a href="" class="dropdown-toggle waves-effect user-link" data-toggle="dropdown" aria-expanded="true">
-                                <img src="./assets/profile_image/<?php echo htmlentities($profile_image); ?>" alt="user-img" class="img-circle user-img">
+                                <img src="<?php echo htmlentities($profile_image); ?>" alt="user-img" class="img-circle user-img">
                             </a>
 
                             <ul class="dropdown-menu dropdown-menu-right arrow-dropdown-menu arrow-menu-right user-list notify-list">

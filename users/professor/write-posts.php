@@ -2,6 +2,23 @@
 session_start();
 include('includes/config.php');
 
+// Ensure user is logged in and fetch their role
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch the user's role
+$result = mysqli_query($con, "SELECT role FROM users WHERE id = '$user_id'");
+$user = mysqli_fetch_assoc($result);
+if (!$user || $user['role'] !== 'professor') {
+    $_SESSION['error'] = "Access denied. Only professors can post.";
+    header('Location: dashboard.php');
+    exit();
+}
+
 // Handle post submission
 if (isset($_POST['submit'])) {
     $posttext = isset($_POST['posttext']) ? $_POST['posttext'] : null;
@@ -39,9 +56,9 @@ if (isset($_POST['submit'])) {
     if (empty($posttext) && empty($postimage)) {
         $_SESSION['error'] = "Please provide either text content or an image.";
     } else {
-        // Insert into database
-        $query = mysqli_query($con, "INSERT INTO professors_post (PostText, PostImage, created_at) 
-            VALUES ('$posttext', '$postimage', NOW())");
+        // Insert post into database
+        $query = mysqli_query($con, "INSERT INTO professors_post (user_id, PostText, PostImage, created_at) 
+            VALUES ('$user_id', '$posttext', '$postimage', NOW())");
 
         if ($query) {
             $_SESSION['msg'] = "Post successfully added!";
@@ -55,22 +72,20 @@ if (isset($_POST['submit'])) {
 if (isset($_GET['delete_post_id'])) {
     $post_id = $_GET['delete_post_id'];
 
-    // First, check if the post exists and fetch the post image (if exists)
-    $query = mysqli_query($con, "SELECT PostImage FROM professors_post WHERE id = '$post_id'");
+    // Ensure the post belongs to the current professor
+    $query = mysqli_query($con, "SELECT PostImage FROM professors_post WHERE id = '$post_id' AND user_id = '$user_id'");
     $row = mysqli_fetch_assoc($query);
 
     if ($row && isset($row['PostImage']) && !empty($row['PostImage'])) {
-        // If a post image exists, proceed with file deletion
+        // Delete post image from server
         $post_image_path = './assets/professors_updates/' . $row['PostImage'];
-
-        // Check if it's a valid file before unlinking
         if (file_exists($post_image_path) && !is_dir($post_image_path)) {
-            unlink($post_image_path); // Delete the image from the server
+            unlink($post_image_path);
         }
     }
 
-    // Now, delete the post from the database
-    $delete_query = mysqli_query($con, "DELETE FROM professors_post WHERE id = '$post_id'");
+    // Delete the post from the database
+    $delete_query = mysqli_query($con, "DELETE FROM professors_post WHERE id = '$post_id' AND user_id = '$user_id'");
 
     if ($delete_query) {
         $_SESSION['msg'] = "Post successfully deleted!";
@@ -79,21 +94,14 @@ if (isset($_GET['delete_post_id'])) {
     }
 }
 
-// Fetch professor details
-try {
-    // Query to fetch professor's name and profile image
-    $query = "SELECT full_name, profile_image FROM professors LIMIT 1";
-    $result = mysqli_query($con, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $full_name = $row['full_name'];
-        $profile_image = $row['profile_image'];
-    }
-} catch (Exception $e) {
-    // Log the error and fallback to default value
-    error_log("Error fetching professor name: " . $e->getMessage());
-}
+// Fetch posts made by professors
+$query = mysqli_query($con, "
+    SELECT pp.id, pp.PostText as content, pp.PostImage as image, pp.created_at, u.full_name, u.profile_image 
+    FROM professors_post pp
+    INNER JOIN users u ON pp.user_id = u.id
+    WHERE u.role = 'professor'
+    ORDER BY pp.created_at DESC
+");
 ?>
 
 
@@ -163,25 +171,104 @@ try {
             <!-- Newsfeed Posts -->
             <div class="container py-5">
                 <div class="row justify-content-center">
+
                     <!-- Form to Add Post -->
-                    <form name="addpost" method="post" class="row mb-4" enctype="multipart/form-data">
-                        <div class="col-md-12">
+                    <div class="post-form">
+                        <form name="addpost" method="post" class="row mb-4" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="posttext" class="text-dark">Post Text (Optional)</label>
-                                <textarea class="form-control" id="posttext" name="posttext" rows="5" placeholder="Share your thoughts..."></textarea>
+                                <textarea class="form-control post-textarea" id="posttext" name="posttext" rows="2" placeholder="What's on your mind?"></textarea>
                             </div>
-
-                            <div class="form-group">
-                                <input type="file" class="form-control-file" id="postimage" name="postimage" accept="image/*">
+                            <div class="form-actions">
+                                <label for="postimage" class="upload-btn">
+                                    <i class="fa fa-image"></i> Add Photo
+                                    <input type="file" id="postimage" name="postimage" accept="image/*" hidden>
+                                </label>
+                                <button type="submit" name="submit" class="btn btn-primary">Post</button>
                             </div>
+                        </form>
+                    </div>
+                    <style>
+                        .post-form {
+                            background: #fff;
+                            border: 1px solid #ddd;
+                            border-radius: 10px;
+                            padding: 15px;
+                            width: 100%;
+                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                        }
 
-                            <button type="submit" name="submit" class="btn btn-primary btn-lg btn-block mt-3">Post</button>
-                        </div>
-                    </form>
+                        .post-textarea {
+                            width: 100%;
+                            border: 1px solid #ddd;
+                            border-radius: 10px;
+                            padding: 10px;
+                            font-size: 14px;
+                            outline: none;
+                            resize: none;
+                            margin-bottom: 10px;
+                            font-family: 'Arial', sans-serif;
+                        }
+
+                        .post-textarea::placeholder {
+                            color: #888;
+                        }
+
+                        .form-actions {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+
+                        .upload-btn {
+                            display: inline-flex;
+                            align-items: center;
+                            background: #f1f1f1;
+                            border: 1px solid #ddd;
+                            border-radius: 20px;
+                            padding: 8px 15px;
+                            font-size: 14px;
+                            color: #444;
+                            cursor: pointer;
+                            transition: background 0.3s, color 0.3s;
+                        }
+
+                        .upload-btn:hover {
+                            background: #eaeaea;
+                            color: #000;
+                        }
+
+                        .upload-btn i {
+                            margin-right: 8px;
+                            font-size: 16px;
+                        }
+
+                        .btn-primary {
+                            background-color: #007bff;
+                            border: none;
+                            border-radius: 20px;
+                            padding: 8px 20px;
+                            color: white;
+                            font-size: 14px;
+                            cursor: pointer;
+                            transition: background 0.3s ease;
+                        }
+
+                        .btn-primary:hover {
+                            background-color: #0056b3;
+                        }
+                    </style>
+
 
                     <?php
-                    // Fetch posts from the database
-                    $query = mysqli_query($con, "SELECT id, PostText as content, PostImage as image, created_at FROM professors_post ORDER BY created_at DESC");
+                    // Fetch posts made by the logged-in professor
+                    $query = mysqli_query($con, "
+    SELECT pp.id, pp.PostText as content, pp.PostImage as image, pp.created_at, u.full_name, u.profile_image 
+    FROM professors_post pp
+    INNER JOIN users u ON pp.user_id = u.id
+    WHERE u.id = '$user_id'
+    ORDER BY pp.created_at DESC
+");
+
                     $rowcount = mysqli_num_rows($query);
 
                     if ($rowcount == 0) {
@@ -192,11 +279,13 @@ try {
                         <?php
                     } else {
                         while ($row = mysqli_fetch_array($query)) {
-                            // Set default profile image if not available
-                            $profileImagePath = $profile_image ? './assets/profile_image/' . htmlentities($profile_image) : './assets/profile_image/default.jpg';
+                            // Set profile image path
+                            $profileImagePath = !empty($row['profile_image'])
+                                ? './assets/profile-images/' . htmlentities($row['profile_image'])
+                                : './assets/profile-images/default-profile.png';
                         ?>
-
                             <br><br>
+
 
                             <!-- New Post UI -->
                             <section class="mb-4 mt-2">
@@ -207,7 +296,7 @@ try {
                                             <div class="">
                                                 <div>
                                                     <img src="<?php echo $profileImagePath; ?>" class="border rounded-circle me-2" alt="Avatar" style="height: 40px; width:auto" />
-                                                    <strong><?php echo htmlentities($full_name); ?></strong>
+                                                    <strong><?php echo htmlentities($row['full_name']); ?></strong>
                                                     <div class="text-muted d-block" style="margin-top: -6px">
                                                         <small><?php echo htmlentities($row['created_at']); ?></small>
                                                     </div>
@@ -231,7 +320,6 @@ try {
                                         </div>
 
                                     </div>
-
                                     <!-- Media -->
                                     <?php if (!empty($row['image'])) { ?>
                                         <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
