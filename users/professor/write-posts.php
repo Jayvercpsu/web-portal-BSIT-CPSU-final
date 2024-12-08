@@ -203,8 +203,7 @@ $query = mysqli_query($con, "
 
                                                     </div>
                                                 </div>
-                                                <!-- Three dots icon with toggle delete button aligned to the right -->
-                                                <!-- Three dots icon with toggle delete button aligned to the right -->
+                                                <!-- Three dots icon with toggle delete button aligned to the right --> 
                                                 <div class="text-right">
                                                     <button class="btn btn-link" onclick="toggleDelete(<?php echo $row['id']; ?>)">
                                                         <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -227,18 +226,16 @@ $query = mysqli_query($con, "
                                                         }
                                                     }
                                                 </script>
-
-
                                             </div>
-
                                             <div>
                                                 <?php if (!empty($row['content'])) { ?>
                                                     <p class="text-dark" style="font-size: 16px;"><?php echo htmlentities($row['content']); ?></p>
                                                 <?php } ?>
                                             </div>
                                         </div>
-                                        <div class="post-content" style="align-items:center; margin:auto; margin-left: 20%;">
 
+                                        
+                                        <div class="post-content" style="align-items:center; margin:auto; margin-left: 20%;">
                                             <!-- Media -->
                                             <?php if (!empty($row['image'])) { ?>
                                                 <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    
+
     <style>
         /* General Sidebar Styling */
         .w3-sidebar {
@@ -52,7 +52,7 @@
             }
 
             .w3-teall {
-                display: flex; 
+                display: flex;
                 padding: 10px;
             }
 
@@ -112,7 +112,7 @@
         <!-- Sidebar Links with Icons -->
         <a href="edit-profile.php" class="w3-bar-item w3-button"><i class="fa fa-user-circle"></i> Edit Account</a>
         <a href="my-instructors.php" class="w3-bar-item w3-button"><i class="fa fa-users"></i> My Instructors</a>
-        <a href="my-subjects.php" class="w3-bar-item w3-button"><i class="fa fa-book"></i> My Subjects</a>
+        <!-- <a href="my-subjects.php" class="w3-bar-item w3-button"><i class="fa fa-book"></i> My Subjects</a> -->
         <a href="#" data-toggle="modal" data-target="#logoutModal" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
     </div>
 
@@ -143,32 +143,32 @@
             <button class="w3-button w3-teall w3-xlarge w3-hide-large" onclick="w3_open()">&#9776;</button>
             <h1 class="text-white">Settings</h1>
         </div>
- 
 
-    <script>
-        // Open sidebar
-        function w3_open() {
-            document.getElementById("mySidebar").classList.add("open");
-        }
 
-        // Close sidebar
-        function w3_close() {
-            document.getElementById("mySidebar").classList.remove("open");
-        }
-
-        // Ensure the sidebar toggles on all screen sizes
-        window.addEventListener('resize', function () {
-            if (window.innerWidth >= 993) {
-                document.getElementById("mySidebar").classList.add("open"); // Show sidebar on large screens
-            } else {
-                document.getElementById("mySidebar").classList.remove("open"); // Hide sidebar on small screens
+        <script>
+            // Open sidebar
+            function w3_open() {
+                document.getElementById("mySidebar").classList.add("open");
             }
-        });
-    </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+            // Close sidebar
+            function w3_close() {
+                document.getElementById("mySidebar").classList.remove("open");
+            }
+
+            // Ensure the sidebar toggles on all screen sizes
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 993) {
+                    document.getElementById("mySidebar").classList.add("open"); // Show sidebar on large screens
+                } else {
+                    document.getElementById("mySidebar").classList.remove("open"); // Hide sidebar on small screens
+                }
+            });
+        </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
 </body>
 
