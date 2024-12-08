@@ -132,6 +132,7 @@ $query = mysqli_query($con, "
 <!-- HTML -->
 <?php include('includes/topheader.php'); ?>
 <?php include('includes/leftsidebar.php'); ?>
+<link rel="stylesheet" href="./assets/css/write-posts.css">
 
 <!-- Start right Content here -->
 <div class="content-page">
@@ -151,171 +152,24 @@ $query = mysqli_query($con, "
             </div>
 
 
-            <!-- Display success or error message -->
-            <?php if (isset($_SESSION['msg'])): ?>
-                <div class="alert alert-success" id="success-msg">
-                    <?php
-                    echo $_SESSION['msg'];
-                    unset($_SESSION['msg']); // Clear message after displaying
-                    ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if (isset($_SESSION['error'])): ?>
-                <div class="alert alert-danger" id="error-msg">
-                    <?php
-                    echo $_SESSION['error'];
-                    unset($_SESSION['error']); // Clear message after displaying
-                    ?>
-                </div>
-            <?php endif; ?>
-
-            <script>
-                // Hide success message after 2 seconds
-                setTimeout(function() {
-                    var successMsg = document.getElementById("success-msg");
-                    if (successMsg) {
-                        successMsg.style.display = "none";
-                    }
-                }, 2000);
-
-                // Hide error message after 2 seconds
-                setTimeout(function() {
-                    var errorMsg = document.getElementById("error-msg");
-                    if (errorMsg) {
-                        errorMsg.style.display = "none";
-                    }
-                }, 2000);
-            </script>
-
+            <?php include('includes/newsfeed/display-sucess-msg.php') ?>
 
 
             <!-- Newsfeed Posts -->
             <div class="container py-5">
                 <div class="row justify-content-center">
 
-                    <!-- Form to Add Post -->
-                    <div class="post-form">
-                        <form name="addpost" method="post" class="row mb-4" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <textarea class="form-control post-textarea" id="posttext" name="posttext" rows="2" placeholder="What's on your mind?"></textarea>
-                            </div>
-                            <div class="form-actions">
-                                <label for="postimage" class="upload-btn">
-                                    <i class="fa fa-image"></i> Add Photo
-                                    <input type="file" id="postimage" name="postimage" accept="image/*" hidden>
-                                </label>
-                                <button type="submit" name="submit" class="btn btn-primary">Post</button>
-                            </div>
-                            <!-- Image Preview -->
-                            <div id="imagePreviewContainer" class="mt-3" style="display: none;">
-                                <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- JavaScript for Image Preview -->
-                    <script>
-                        const postImageInput = document.getElementById('postimage');
-                        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-                        const imagePreview = document.getElementById('imagePreview');
-
-                        postImageInput.addEventListener('change', function(event) {
-                            const file = event.target.files[0];
-                            if (file) {
-                                const reader = new FileReader();
-                                reader.onload = function(e) {
-                                    imagePreview.src = e.target.result;
-                                    imagePreviewContainer.style.display = 'block';
-                                };
-                                reader.readAsDataURL(file);
-                            } else {
-                                imagePreviewContainer.style.display = 'none';
-                            }
-                        });
-                    </script>
-
-                    <style>
-                        .post-form {
-                            background: #fff;
-                            border: 1px solid #ddd;
-                            border-radius: 10px;
-                            padding: 15px;
-                            width: 100%;
-                            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                        }
-
-                        .post-textarea {
-                            width: 100%;
-                            border: 1px solid #ddd;
-                            border-radius: 10px;
-                            padding: 10px;
-                            font-size: 14px;
-                            outline: none;
-                            resize: none;
-                            margin-bottom: 10px;
-                            font-family: 'Arial', sans-serif;
-                        }
-
-                        .post-textarea::placeholder {
-                            color: #888;
-                        }
-
-                        .form-actions {
-                            display: flex;
-                            justify-content: space-between;
-                            align-items: center;
-                        }
-
-                        .upload-btn {
-                            display: inline-flex;
-                            align-items: center;
-                            background: #f1f1f1;
-                            border: 1px solid #ddd;
-                            border-radius: 20px;
-                            padding: 8px 15px;
-                            font-size: 14px;
-                            color: #444;
-                            cursor: pointer;
-                            transition: background 0.3s, color 0.3s;
-                        }
-
-                        .upload-btn:hover {
-                            background: #eaeaea;
-                            color: #000;
-                        }
-
-                        .upload-btn i {
-                            margin-right: 8px;
-                            font-size: 16px;
-                        }
-
-                        .btn-primary {
-                            background-color: #007bff;
-                            border: none;
-                            border-radius: 20px;
-                            padding: 8px 20px;
-                            color: white;
-                            font-size: 14px;
-                            cursor: pointer;
-                            transition: background 0.3s ease;
-                        }
-
-                        .btn-primary:hover {
-                            background-color: #0056b3;
-                        }
-                    </style>
-
+                    <?php include('includes/newsfeed/newsfeed-addpost.php') ?>
 
                     <?php
                     // Fetch posts made by the logged-in professor
                     $query = mysqli_query($con, "
-    SELECT pp.id, pp.PostText as content, pp.PostImage as image, pp.created_at, u.full_name, u.profile_image 
-    FROM professors_post pp
-    INNER JOIN users u ON pp.user_id = u.id
-    WHERE u.id = '$user_id'
-    ORDER BY pp.created_at DESC
-");
+                    SELECT pp.id, pp.PostText as content, pp.PostImage as image, pp.created_at, u.full_name, u.profile_image 
+                    FROM professors_post pp
+                    INNER JOIN users u ON pp.user_id = u.id
+                    WHERE u.id = '$user_id'
+                    ORDER BY pp.created_at DESC
+                ");
 
                     $rowcount = mysqli_num_rows($query);
 
@@ -334,7 +188,6 @@ $query = mysqli_query($con, "
                         ?>
                             <br><br>
 
-
                             <!-- New Post UI -->
                             <section class="mb-4 mt-2">
                                 <div class="card shadow-sm rounded-lg">
@@ -351,6 +204,7 @@ $query = mysqli_query($con, "
                                                     </div>
                                                 </div>
                                                 <!-- Three dots icon with toggle delete button aligned to the right -->
+                                                <!-- Three dots icon with toggle delete button aligned to the right -->
                                                 <div class="text-right">
                                                     <button class="btn btn-link" onclick="toggleDelete(<?php echo $row['id']; ?>)">
                                                         <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -360,6 +214,20 @@ $query = mysqli_query($con, "
                                                         <button class="btn btn-primary btn-sm" onclick="openEditModal('<?php echo $row['id']; ?>', '<?php echo htmlentities($row['content']); ?>')">Edit Post</button>
                                                     </div>
                                                 </div>
+
+                                                <script>
+                                                    function toggleDelete(postId) {
+                                                        const deleteBtn = document.getElementById(`delete-btn-${postId}`);
+
+                                                        // Check if the delete button is currently visible or hidden and toggle it
+                                                        if (deleteBtn.style.display === 'none' || deleteBtn.style.display === '') {
+                                                            deleteBtn.style.display = 'block'; // Show the delete button
+                                                        } else {
+                                                            deleteBtn.style.display = 'none'; // Hide the delete button
+                                                        }
+                                                    }
+                                                </script>
+
 
                                             </div>
 
@@ -413,91 +281,8 @@ $query = mysqli_query($con, "
         <!-- End Newsfeed Posts -->
 
 
-       <!-- Edit Post Modal -->
-<div class="modal fade" id="editPostModal" tabindex="-1" role="dialog" aria-labelledby="editPostModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form method="post" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editPostModalLabel">Edit Post</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" name="edit_post_id" id="edit_post_id">
-                    <div class="form-group">
-                        <label for="edit_posttext">Edit Content</label>
-                        <textarea class="form-control" name="edit_posttext" id="edit_posttext" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="edit_postimage">Change Photo</label>
-                        <input type="file" class="form-control-file" name="edit_postimage" id="edit_postimage" accept="image/*">
-                    </div>
-                    <!-- Image Preview -->
-                    <div id="editImagePreviewContainer" class="text-center mt-3" style="display: none;">
-                        <img id="editImagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" name="edit_post" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+        <?php include('includes/newsfeed/edit-modal.php') ?>
 
-<script>
-    // Function to preview image when editing a post
-    document.getElementById('edit_postimage').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const previewContainer = document.getElementById('editImagePreviewContainer');
-        const previewImage = document.getElementById('editImagePreview');
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewContainer.style.display = 'block';
-                previewImage.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        } else {
-            previewContainer.style.display = 'none';
-            previewImage.src = '#';
-        }
-    });
-
-    // Function to open the edit modal and populate existing data
-    function openEditModal(postId, content, imageSrc) {
-        document.getElementById('edit_post_id').value = postId;
-        document.getElementById('edit_posttext').value = content;
-
-        const previewContainer = document.getElementById('editImagePreviewContainer');
-        const previewImage = document.getElementById('editImagePreview');
-
-        if (imageSrc) {
-            previewContainer.style.display = 'block';
-            previewImage.src = imageSrc;
-        } else {
-            previewContainer.style.display = 'none';
-            previewImage.src = '#';
-        }
-
-        $('#editPostModal').modal('show');
-    }
-</script>
-
-
-
-
-        <!-- JavaScript to toggle delete button visibility -->
-        <script>
-            function toggleDelete(postId) {
-                var deleteButton = document.getElementById('delete-btn-' + postId);
-                deleteButton.style.display = (deleteButton.style.display === 'none' || deleteButton.style.display === '') ? 'block' : 'none';
-            }
-        </script>
     </div>
 
     <?php include('includes/footer.php'); ?>
