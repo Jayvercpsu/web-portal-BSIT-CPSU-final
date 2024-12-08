@@ -1,12 +1,11 @@
-<?php
- 
+<?php 
 
-$professor_id = $_SESSION['user_id'] ?? null; // Ensure user ID exists in the session
+$professor_id = $_SESSION['user_id'] ?? null;  // Ensure user ID exists in the session
 $msg = $error = "";
 
 // Default values for name and profile image
 $full_name = 'Guest';
-$profile_image = '../assets/profile-images/default-profile.png';
+$profile_image = './assets/profile-images/default-profile.png';  // Default path for profile image
 
 if ($professor_id) {
     // Fetch professor details from the 'users' table where role is 'professor'
@@ -16,7 +15,8 @@ if ($professor_id) {
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $full_name = $row['full_name'] ?? 'Guest';
-        $profile_image = !empty($row['profile_image']) ? $row['profile_image'] : '../assets/profile-images/default-profile.png';
+        // If profile image exists, use it, otherwise fallback to default
+        $profile_image = !empty($row['profile_image']) ? './assets/profile-images/' . $row['profile_image'] : './assets/profile-images/default-profile.png';
     }
 }
 ?>
