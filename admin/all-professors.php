@@ -14,6 +14,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'del') {
         echo "<script>alert('Error deleting professor');</script>";
     }
 }
+
 ?>
 
 <?php include('includes/topheader.php'); ?>
@@ -52,6 +53,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'del') {
                                         <th>#</th>
                                         <th>Full Name</th>
                                         <th>Email</th>
+                                        <th>Year Level</th>
                                         <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
@@ -66,6 +68,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'del') {
                                         <td><?php echo $cnt; ?></td>
                                         <td><?php echo $row['full_name']; ?></td>
                                         <td><?php echo $row['email']; ?></td>
+                                        <td><?php echo $row['year_level']; ?></td>
                                         <td><?php echo $row['created_at']; ?></td>
                                         <td>
                                             <a href="edit-professors.php?pid=<?php echo $row['id']; ?>">
@@ -74,6 +77,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'del') {
                                             <a href="all-professors.php?action=del&rid=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete?')">
                                                 <button class="btn btn-danger">Delete</button>
                                             </a>
+
+                                            <!-- Assign Year Level Button -->
+                                            <a href="assign-professors.php?pid=<?php echo $row['id']; ?>" class="btn btn-info">Assign Year Level</a>
                                         </td>
                                     </tr>
                                     <?php
