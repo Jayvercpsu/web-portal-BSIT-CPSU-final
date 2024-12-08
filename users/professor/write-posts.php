@@ -299,75 +299,77 @@ $query = mysqli_query($con, "
                                                     <strong><?php echo htmlentities($row['full_name']); ?></strong>
                                                     <div class="text-muted d-block" style="margin-top: -6px">
                                                         <small><?php echo htmlentities($row['created_at']); ?></small>
+
+                                                    </div>
+                                                </div>
+                                                <!-- Three dots icon with toggle delete button aligned to the right -->
+                                                <div class="text-right">
+                                                    <button class="btn btn-link" onclick="toggleDelete(<?php echo $row['id']; ?>)">
+                                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                                    </button>
+                                                    <div id="delete-btn-<?php echo $row['id']; ?>" class="delete-btn" style="display: none;">
+                                                        <a href="?delete_post_id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">Delete Post</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Three dots icon with toggle delete button aligned to the right -->
-                                            <div class="text-right">
-                                                <button class="btn btn-link" onclick="toggleDelete(<?php echo $row['id']; ?>)">
-                                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                                </button>
-                                                <div id="delete-btn-<?php echo $row['id']; ?>" class="delete-btn" style="display: none;">
-                                                    <a href="?delete_post_id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">Delete Post</a>
-                                                </div>
+
+                                            <div>
+                                                <?php if (!empty($row['content'])) { ?>
+                                                    <p class="text-dark" style="font-size: 16px;"><?php echo htmlentities($row['content']); ?></p>
+                                                <?php } ?>
                                             </div>
                                         </div>
+                                        <div class="post-content" style="align-items:center; margin:auto; margin-left: 30%;">
 
-                                        <div>
-                                            <?php if (!empty($row['content'])) { ?>
-                                                <p class="text-dark" style="font-size: 16px;"><?php echo htmlentities($row['content']); ?></p>
+                                            <!-- Media -->
+                                            <?php if (!empty($row['image'])) { ?>
+                                                <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                                                    <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-30 rounded" style="height:500px; width: 60%; " />
+                                                    <a href="#!">
+                                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                                    </a>
+                                                </div>
                                             <?php } ?>
                                         </div>
-
                                     </div>
-                                    <!-- Media -->
-                                    <?php if (!empty($row['image'])) { ?>
-                                        <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-                                            <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-100 rounded" />
-                                            <a href="#!">
-                                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                                            </a>
+
+                                    <!-- Reactions -->
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
+                                            <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
+                                                <i class="fas fa-thumbs-up me-2"></i>Like
+                                            </button>
+                                            <button type="button" class="btn btn-link btn-lg comment-btn" data-mdb-ripple-color="dark">
+                                                <i class="fas fa-comment-alt me-2"></i>Comment
+                                            </button>
+                                            <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
+                                                <i class="fas fa-share me-2"></i>Share
+                                            </button>
                                         </div>
-                                    <?php } ?>
-                                </div>
-
-                                <!-- Reactions -->
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
-                                        <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
-                                            <i class="fas fa-thumbs-up me-2"></i>Like
-                                        </button>
-                                        <button type="button" class="btn btn-link btn-lg comment-btn" data-mdb-ripple-color="dark">
-                                            <i class="fas fa-comment-alt me-2"></i>Comment
-                                        </button>
-                                        <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
-                                            <i class="fas fa-share me-2"></i>Share
-                                        </button>
                                     </div>
                                 </div>
-                </div>
-                <!-- Comments Section (below the reactions) -->
-                <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="padding: 15px; background-color: #f8f9fa;">
-                    <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>"></div>
-                    <textarea class="form-control" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
-                    <button type="button" class="btn btn-primary mt-2" id="submitComment-<?php echo $row['id']; ?>">Post Comment</button>
-                </div>
-                </section>
-        <?php }
+                                <!-- Comments Section (below the reactions) -->
+                                <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="padding: 15px; background-color: #f8f9fa;">
+                                    <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>"></div>
+                                    <textarea class="form-control" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
+                                    <button type="button" class="btn btn-primary mt-2" id="submitComment-<?php echo $row['id']; ?>">Post Comment</button>
+                                </div>
+                            </section>
+                    <?php }
                     } ?>
+                </div>
             </div>
         </div>
+        <!-- End Newsfeed Posts -->
+
+
+        <!-- JavaScript to toggle delete button visibility -->
+        <script>
+            function toggleDelete(postId) {
+                var deleteButton = document.getElementById('delete-btn-' + postId);
+                deleteButton.style.display = (deleteButton.style.display === 'none' || deleteButton.style.display === '') ? 'block' : 'none';
+            }
+        </script>
     </div>
-    <!-- End Newsfeed Posts -->
 
-
-    <!-- JavaScript to toggle delete button visibility -->
-    <script>
-        function toggleDelete(postId) {
-            var deleteButton = document.getElementById('delete-btn-' + postId);
-            deleteButton.style.display = (deleteButton.style.display === 'none' || deleteButton.style.display === '') ? 'block' : 'none';
-        }
-    </script>
-</div>
-
-<?php include('includes/footer.php'); ?>
+    <?php include('includes/footer.php'); ?>
