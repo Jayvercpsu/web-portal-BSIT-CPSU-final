@@ -42,12 +42,12 @@ if (isset($_POST['update_profile_image'])) {
 
             if (move_uploaded_file($_FILES["profile_image"]["tmp_name"], $target_path)) {
                 // Update the database
-                $update_users_query = "UPDATE users SET profile_image = '$target_path' WHERE id = '$professor_id' AND role = 'professor'";
-                $update_professors_query = "UPDATE professors SET profile_image = '$target_path' WHERE id = '$professor_id'";
+                $update_users_query = "UPDATE users SET profile_image = '$profile_image' WHERE id = '$professor_id' AND role = 'professor'";
+                $update_professors_query = "UPDATE professors SET profile_image = '$profile_image' WHERE id = '$professor_id'";
 
                 if (mysqli_query($con, $update_users_query) && mysqli_query($con, $update_professors_query)) {
                     $msg = "Profile image updated successfully!";
-                    $professor['profile_image'] = $target_path;
+                    $professor['profile_image'] = $profile_image;
                 } else {
                     $error = "Failed to update profile image in the database.";
                 }
@@ -75,13 +75,6 @@ if (isset($_POST['update_profile_image'])) {
 <!-- HTML -->
 <?php include('includes/topheader.php'); ?>
 <?php include('includes/leftsidebar.php'); ?>
-
-
-
-
-
-
-
 
 <!-- Start right Content here -->
 <div class="content-page">
@@ -134,7 +127,7 @@ if (isset($_POST['update_profile_image'])) {
                         <label for="profile_image">Profile Image</label>
                         <input type="file" name="profile_image" class="form-control">
                         <?php if (!empty($professor['profile_image'])) { ?>
-                            <img src="./assets/profile_image/<?php echo htmlentities($professor['profile_image']); ?>" alt="Profile Image" style="width: 100px; height: 100px; margin-top: 10px;">
+                            <img src="./assets/profile-images/<?php echo htmlentities($professor['profile_image']); ?>" alt="Profile Image" style="width: 100px; height: 100px; margin-top: 10px;">
                         <?php } ?>
                     </div>
                     <button type="submit" name="update_profile_image" class="btn btn-primary">Update Profile Image</button>
