@@ -1,5 +1,6 @@
 <?php 
 
+
 $professor_id = $_SESSION['user_id'] ?? null;  // Ensure user ID exists in the session
 $msg = $error = "";
 
@@ -15,8 +16,16 @@ if ($professor_id) {
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $full_name = $row['full_name'] ?? 'Guest';
-        // If profile image exists, use it, otherwise fallback to default
-        $profile_image = !empty($row['profile_image']) ? './assets/profile-images/' . $row['profile_image'] : './assets/profile-images/default-profile.png';
+
+        // If profile image exists, use it; otherwise, fallback to default
+        $profile_image_path = $row['profile_image'] ? './assets/profile-images/' . $row['profile_image'] : './assets/profile-images/default-profile.png';
+
+        // Check if the file exists
+        if (!file_exists($profile_image_path)) {
+            $profile_image = './assets/profile-images/default-profile.png';  // Fallback to default if file does not exist
+        } else {
+            $profile_image = $profile_image_path;
+        }
     }
 }
 ?>
@@ -26,7 +35,6 @@ if ($professor_id) {
 <head>
     <title>CPSU BSIT Web Portal | Professors</title>
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
-
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/components.css" rel="stylesheet" type="text/css" />

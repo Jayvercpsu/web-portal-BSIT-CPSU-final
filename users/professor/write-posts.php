@@ -19,9 +19,9 @@ if (!$user || $user['role'] !== 'professor') {
     exit();
 }
 
-// Handle post submission
 if (isset($_POST['submit'])) {
-    $posttext = isset($_POST['posttext']) ? $_POST['posttext'] : null;
+    // Sanitize inputs
+    $posttext = isset($_POST['posttext']) ? mysqli_real_escape_string($con, $_POST['posttext']) : null;
     $postimage = null;
 
     if (!empty($_FILES["postimage"]["name"])) {
@@ -47,9 +47,14 @@ if (isset($_POST['submit'])) {
         $_SESSION['error'] = "Please provide either text content or an image.";
     } else {
         $query = mysqli_query($con, "INSERT INTO professors_post (user_id, PostText, PostImage, created_at) VALUES ('$user_id', '$posttext', '$postimage', NOW())");
-        $_SESSION['msg'] = $query ? "Post successfully added!" : "Something went wrong. Please try again.";
+        if ($query) {
+            $_SESSION['msg'] = "Post successfully added!";
+        } else {
+            $_SESSION['error'] = "Something went wrong. Please try again.";
+        }
     }
 }
+
 
 // Handle post update
 if (isset($_POST['edit_post'])) {
@@ -203,7 +208,7 @@ $query = mysqli_query($con, "
 
                                                     </div>
                                                 </div>
-                                                <!-- Three dots icon with toggle delete button aligned to the right --> 
+                                                <!-- Three dots icon with toggle delete button aligned to the right -->
                                                 <div class="text-right">
                                                     <button class="btn btn-link" onclick="toggleDelete(<?php echo $row['id']; ?>)">
                                                         <i class="fa-solid fa-ellipsis-vertical"></i>
@@ -234,7 +239,7 @@ $query = mysqli_query($con, "
                                             </div>
                                         </div>
 
-                                        
+
                                         <div class="post-content" style="align-items:center; margin:auto; margin-left: 20%;">
                                             <!-- Media -->
                                             <?php if (!empty($row['image'])) { ?>

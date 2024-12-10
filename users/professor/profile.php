@@ -84,7 +84,7 @@ if (isset($_POST['update_profile_image'])) {
                 <div class="col-xs-12">
                     <div class="page-title-box">
                         <h4 class="page-title">My Profile</h4>
-                        <ol class="breadcrumb p-0 m-0"> 
+                        <ol class="breadcrumb p-0 m-0">
                             <li><a href="#">Dashboard</a></li>
                             <li class="active">My Profile</li>
                         </ol>
@@ -126,9 +126,11 @@ if (isset($_POST['update_profile_image'])) {
                     <div class="form-group">
                         <label for="profile_image">Profile Image</label>
                         <input type="file" name="profile_image" class="form-control">
-                        <?php if (!empty($professor['profile_image'])) { ?>
-                            <img src="./assets/profile-images/<?php echo htmlentities($professor['profile_image']); ?>" alt="Profile Image" style="width: 100px; height: 100px; margin-top: 10px;">
-                        <?php } ?>
+                        <?php
+                        $profile_image = !empty($professor['profile_image']) ? './assets/profile-images/' . htmlentities($professor['profile_image']) : './assets/profile-images/default-profile.png';
+                        ?>
+                        <img src="<?php echo $profile_image; ?>" alt="Profile Image" style="width: 100px; height: 100px; margin-top: 10px;">
+                
                     </div>
                     <button type="submit" name="update_profile_image" class="btn btn-primary">Update Profile Image</button>
                 </form>
