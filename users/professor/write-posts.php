@@ -208,6 +208,20 @@ $query = mysqli_query($con, "
                             $profileImagePath = !empty($row['profile_image'])
                                 ? './assets/profile-images/' . htmlentities($row['profile_image'])
                                 : './assets/profile-images/default-profile.png';
+
+
+
+                            // Check if the user has liked this post
+                            $like_check_query = mysqli_query($con, "SELECT * FROM like_reactions WHERE user_id = '$user_id' AND post_id = '{$row['id']}'");
+                            $is_liked = mysqli_num_rows($like_check_query) > 0;
+
+                            // Get the total number of likes for the post
+                            $like_count_query = mysqli_query($con, "SELECT COUNT(*) AS total_likes FROM like_reactions WHERE post_id = '{$row['id']}'");
+                            $like_count = mysqli_fetch_assoc($like_count_query)['total_likes'];
+
+                            // Fetch total number of comments for the current post
+                            $comment_count_query = mysqli_query($con, "SELECT COUNT(*) AS total_comments FROM student_comments WHERE post_id = '{$row['id']}'");
+                            $comment_count = mysqli_fetch_assoc($comment_count_query)['total_comments'];
                         ?>
                             <br><br>
 
@@ -259,15 +273,15 @@ $query = mysqli_query($con, "
 
 
                                         <div class="post-content" style="align-items:center; margin:auto; margin-left: 20%;">
-                                           <!-- Media -->
-<?php if (!empty($row['image'])) { ?>
-    <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-        <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-30 rounded" style="height:500px; width: 70%;" />
-        <a href="#!">
-            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-        </a>
-    </div>
-<?php } ?>
+                                            <!-- Media -->
+                                            <?php if (!empty($row['image'])) { ?>
+                                                <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+                                                    <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-30 rounded" style="height:500px; width: 70%;" />
+                                                    <a href="#!">
+                                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+                                                    </a>
+                                                </div>
+                                            <?php } ?>
 
                                         </div>
                                     </div>
@@ -275,24 +289,123 @@ $query = mysqli_query($con, "
                                     <!-- Reactions -->
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between text-center border-top border-bottom mb-4">
-                                            <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
-                                                <i class="fas fa-thumbs-up me-2"></i>Like
+
+
+                                            <button type="button" class="btn btn-link btn-lg" id="likeBtn-<?php echo $row['id']; ?>" onclick="toggleLike(<?php echo $row['id']; ?>)">
+                                                <i class="fas fa-thumbs-up me-2" id="likeIcon-<?php echo $row['id']; ?>"></i>Like
+                                                <span id="likeCount-<?php echo $row['id']; ?>" class="like-count mx-2"><?php echo $like_count; ?></span>
                                             </button>
-                                            <button type="button" class="btn btn-link btn-lg comment-btn" data-mdb-ripple-color="dark">
-                                                <i class="fas fa-comment-alt me-2"></i>Comment
+
+
+
+                                            <button type="button" class="btn btn-link btn-lg comment-btn" onclick="toggleComments(<?php echo $row['id']; ?>)">
+                                                <i class="fas fa-comment-alt me-2"></i>Comment (<?php echo $comment_count; ?>)
                                             </button>
-                                            <button type="button" class="btn btn-link btn-lg" data-mdb-ripple-color="dark">
+                                            <button type="button" class="btn btn-link btn-lg">
                                                 <i class="fas fa-share me-2"></i>Share
                                             </button>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Comments Section (below the reactions) -->
-                                <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="padding: 15px; background-color: #f8f9fa;">
-                                    <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>"></div>
-                                    <textarea class="form-control" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
-                                    <button type="button" class="btn btn-primary mt-2" id="submitComment-<?php echo $row['id']; ?>">Post Comment</button>
-                                </div>
+
+                                    <!-- Comments Section -->
+                                    <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="display: none; padding: 15px; background-color: #f8f9fa;">
+                                        <textarea class="form-control mt-3" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
+                                        <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>"></div>
+                                        <button type="button" class="btn btn-primary mt-2" onclick="submitProfessorComment(<?php echo $row['id']; ?>)">Post Comment</button>
+                                        <button type="button" class="btn btn-link load-more-comments" id="loadMore-<?php echo $row['id']; ?>" onclick="loadMoreComments(<?php echo $row['id']; ?>)">
+                                            Load More Comments
+                                        </button>
+
+                                        <button type="button" class="btn btn-secondary mt-2" onclick="hideComments(<?php echo $row['id']; ?>)">Hide Comments</button>
+                                    </div>
+
+                                    <script>
+                                        const commentOffsets = {}; // Track offsets for each post ID
+
+                                        function toggleComments(postId) {
+                                            const commentsSection = document.getElementById(`comments-${postId}`);
+                                            commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+                                        }
+
+                                        function hideComments(postId) {
+                                            const commentsSection = document.getElementById(`comments-${postId}`);
+                                            commentsSection.style.display = 'none';
+                                        }
+
+                                        function loadMoreComments(postId) {
+                                            const button = document.getElementById(`loadMore-${postId}`);
+                                            const commentList = document.getElementById(`comment-list-${postId}`);
+
+                                            if (!commentOffsets[postId]) commentOffsets[postId] = 0;
+
+                                            const offset = commentOffsets[postId];
+                                            const limit = 5;
+
+                                            button.disabled = true;
+                                            button.innerHTML = 'Loading...';
+
+                                            fetch('fetch_comments.php', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: `post_id=${postId}&offset=${offset}`
+                                                })
+                                                .then(response => response.text())
+                                                .then(data => {
+                                                    if (data.trim()) {
+                                                        commentList.insertAdjacentHTML('beforeend', data);
+                                                        commentOffsets[postId] += limit;
+
+                                                        if (data.split('<div class="comment').length - 1 < limit) {
+                                                            button.style.display = 'none';
+                                                        } else {
+                                                            button.disabled = false;
+                                                            button.innerHTML = 'Load More Comments';
+                                                        }
+                                                    } else {
+                                                        button.style.display = 'none';
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error loading comments:', error);
+                                                    button.disabled = false;
+                                                    button.innerHTML = 'Load More Comments';
+                                                });
+                                        }
+
+                                        function submitProfessorComment(postId) {
+                                            const commentText = document.getElementById(`commentText-${postId}`).value;
+
+                                            if (commentText.trim() === '') {
+                                                alert('Comment cannot be empty!');
+                                                return;
+                                            }
+
+                                            fetch('submit_professor_comment.php', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: `post_id=${postId}&comment=${encodeURIComponent(commentText)}`
+                                                })
+                                                .then(response => response.text())
+                                                .then(data => {
+                                                    if (data === 'success') {
+                                                        document.getElementById(`commentText-${postId}`).value = '';
+                                                        document.getElementById(`comment-list-${postId}`).innerHTML = '';
+                                                        commentOffsets[postId] = 0;
+                                                        loadMoreComments(postId);
+                                                    } else {
+                                                        console.error('Error submitting comment:', data);
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error:', error);
+                                                });
+                                        }
+                                    </script>
+
                             </section>
                     <?php }
                     } ?>
@@ -300,7 +413,39 @@ $query = mysqli_query($con, "
             </div>
         </div>
         <!-- End Newsfeed Posts -->
+        <!-- AJAX to Toggle the Like Button -->
+        <script>
+            function toggleLike(postId) {
+                $.ajax({
+                    url: 'like_reactions.php',
+                    type: 'POST',
+                    data: {
+                        post_id: postId
+                    },
+                    success: function(response) {
+                        const data = JSON.parse(response);
+                        const likeBtn = $('#likeBtn-' + postId);
+                        const likeIcon = $('#likeIcon-' + postId);
+                        const likeCount = $('#likeCount-' + postId);
 
+                        if (data.status === 'success') {
+                            if (data.action === 'liked') {
+                                likeIcon.css('color', '#4b0082'); // Change color to purple
+                            } else {
+                                likeIcon.css('color', ''); // Reset color to default
+                            }
+
+                            likeCount.text(data.total_likes); // Update the like count
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Error processing your request');
+                    }
+                });
+            }
+        </script>
 
         <?php include('includes/newsfeed/edit-modal.php') ?>
 
