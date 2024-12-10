@@ -145,8 +145,7 @@ if ($professor_id) {
                                     </div>
                                 </div>
 
-
-                                <!-- Comments Section (Visible when comment button is clicked) -->
+                                <!-- Comments Section -->
                                 <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="display: none;">
                                     <!-- Student Comment Form -->
                                     <?php if ($_SESSION['role'] === 'student') : ?>
@@ -160,7 +159,96 @@ if ($professor_id) {
                                     <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>">
                                         <!-- Comments will be dynamically loaded here -->
                                     </div>
+
+                                    <!-- Load More Comments Button -->
+                                    <button type="button" class="btn btn-link load-more-comments" id="loadMore-<?php echo $row['id']; ?>" onclick="loadMoreComments(<?php echo $row['id']; ?>)">
+                                        Load More Comments
+                                    </button>
+
+                                    <!-- Hide Comments Button -->
+                                    <button type="button" class="btn btn-link hide-comments" id="hideComments-<?php echo $row['id']; ?>" onclick="hideComments(<?php echo $row['id']; ?>)">
+                                        Hide Comments
+                                    </button>
                                 </div>
+
+                         
+
+                                <script>
+                                    const commentOffsets = {}; // To track offsets for each post ID
+
+                                    function loadMoreComments(postId) {
+                                        const button = document.getElementById(`loadMore-${postId}`);
+                                        const commentList = document.getElementById(`comment-list-${postId}`);
+
+                                        // Initialize offset if not already set
+                                        if (!commentOffsets[postId]) commentOffsets[postId] = 0;
+
+                                        const offset = commentOffsets[postId];
+                                        const limit = 5; // Same limit as in the backend
+
+                                        button.disabled = true; // Prevent multiple clicks
+                                        button.innerHTML = 'Loading...';
+
+                                        fetch('fetch_comments.php', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                                },
+                                                body: `post_id=${postId}&offset=${offset}`
+                                            })
+                                            .then(response => response.text()) // Parse as plain text because comments are HTML
+                                            .then(data => {
+                                                if (data.trim()) {
+                                                    // Append comments
+                                                    commentList.insertAdjacentHTML('beforeend', data);
+
+                                                    // Update offset
+                                                    commentOffsets[postId] += limit;
+
+                                                    // Check if there are fewer comments returned than the limit (no more comments)
+                                                    if (data.split('<div class="comment').length - 1 < limit) {
+                                                        button.style.display = 'none'; // Hide the button if no more comments
+                                                    } else {
+                                                        button.disabled = false;
+                                                        button.innerHTML = 'Load More Comments';
+                                                    }
+                                                } else {
+                                                    button.style.display = 'none'; // Hide button if no more comments
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error loading comments:', error);
+                                                button.disabled = false;
+                                                button.innerHTML = 'Load More Comments';
+                                            });
+                                    }
+
+                                    function toggleComments(postId) {
+                                        const commentsSection = document.getElementById(`comments-${postId}`);
+                                        const toggleButton = document.getElementById(`toggleComments-${postId}`);
+
+                                        if (commentsSection.style.display === 'none') {
+                                            commentsSection.style.display = 'block';
+                                            toggleButton.textContent = 'Hide Comments';
+                                        } else {
+                                            commentsSection.style.display = 'none';
+                                            toggleButton.textContent = 'Show Comments';
+                                        }
+                                    }
+
+                                    function hideComments(postId) {
+                                        const commentsSection = document.getElementById(`comments-${postId}`);
+                                        const toggleButton = document.getElementById(`toggleComments-${postId}`);
+
+                                        commentsSection.style.display = 'none';
+                                        toggleButton.textContent = 'Show Comments';
+                                    }
+                                </script>
+
+
+
+
+
 
 
                                 <script>
