@@ -117,7 +117,7 @@ if ($professor_id) {
                                     <?php } ?>
                                 </div>
 
-                                <!-- Reactions -->
+                                <!-- Reactions Section -->
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center border-top border-bottom mb-4">
                                         <!-- Left Side (Like Button and Count) -->
@@ -129,7 +129,7 @@ if ($professor_id) {
                                         </div>
 
                                         <!-- Centered Comment Button -->
-                                        <button type="button" class="btn btn-link btn-lg comment-btn mx-auto">
+                                        <button type="button" class="btn btn-link btn-lg comment-btn mx-auto" onclick="toggleComments(<?php echo $row['id']; ?>)">
                                             <i class="fas fa-comment-alt me-2"></i>Comment
                                         </button>
 
@@ -140,17 +140,64 @@ if ($professor_id) {
                                     </div>
                                 </div>
 
-                        
+                                <!-- Comments Section (Visible when comment button is clicked) -->
+                                <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="display: none;">
+                                    <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>">
+                                        <!-- Comments will be dynamically inserted here -->
+                                    </div>
+
+                                    <!-- Student Comment Form -->
+                                    <?php if ($_SESSION['role'] === 'student') : ?>
+                                        <textarea class="form-control comment-textarea" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
+                                        <button type="button" class="btn btn-custom mt-2" id="submitComment-<?php echo $row['id']; ?>" onclick="submitStudentComment(<?php echo $row['id']; ?>)">Post Comment</button>
+                                    <?php else : ?>
+                                        <p>You must be a student to post a comment.</p>
+                                    <?php endif; ?>
+                                </div>
+
+                                <script>
+                                    // Toggle the visibility of the comments section
+                                    function toggleComments(postId) {
+                                        var commentSection = document.getElementById('comments-' + postId);
+                                        // Toggle visibility
+                                        commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
+                                    }
+
+                                    // Submit a student comment
+                                    function submitStudentComment(postId) {
+                                        var commentText = document.getElementById('commentText-' + postId).value;
+
+                                        if (commentText.trim() === "") {
+                                            alert("Please enter a comment.");
+                                            return;
+                                        }
+
+                                        // Get the user ID and role (only students can comment)
+                                        var userId = <?php echo $_SESSION['user_id']; ?>; // Get user ID from session
+                                        var userRole = <?php echo json_encode($_SESSION['role']); ?>; // Get user role
+
+                                        if (userRole !== 'student') {
+                                            alert("You must be a student to post a comment.");
+                                            return;
+                                        }
+
+                                        // Make an AJAX request to store the comment in the database
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "submit_student_comment.php", true);
+                                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                                // Update the comment list with the new comment
+                                                document.getElementById('comment-list-' + postId).innerHTML = xhr.responseText;
+                                                // Clear the comment textarea
+                                                document.getElementById('commentText-' + postId).value = "";
+                                            }
+                                        };
+                                        xhr.send("post_id=" + postId + "&user_id=" + userId + "&comment=" + encodeURIComponent(commentText));
+                                    }
+                                </script>
 
 
-                            </div>
-
-                            <!-- Comments Section -->
-                            <div class="comments-section" id="comments-<?php echo $row['id']; ?>">
-                                <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>"></div>
-                                <textarea class="form-control comment-textarea" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
-                                <button type="button" class="btn btn-custom mt-2" id="submitComment-<?php echo $row['id']; ?>">Post Comment</button>
-                            </div>
                         </section>
                 <?php
                     }
