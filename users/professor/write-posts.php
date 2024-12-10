@@ -19,22 +19,32 @@ if (!$user || $user['role'] !== 'professor') {
     exit();
 }
 
+
+
+
 if (isset($_POST['submit'])) {
     // Sanitize inputs
     $posttext = isset($_POST['posttext']) ? mysqli_real_escape_string($con, $_POST['posttext']) : null;
     $postimage = null;
 
+    // Check if an image is uploaded
     if (!empty($_FILES["postimage"]["name"])) {
         $imgfile = $_FILES["postimage"]["name"];
         $extension = pathinfo($imgfile, PATHINFO_EXTENSION);
         $valid_extensions = ["jpg", "jpeg", "png", "gif"];
 
+        // Validate file type
         if (in_array($extension, $valid_extensions)) {
-            $target_dir = "./assets/professors_updates/";
-            if (!is_dir($target_dir)) mkdir($target_dir, 0777, true);
+            $target_dir = "./assets/professors_updates/"; // Set the upload directory
+            if (!is_dir($target_dir)) {
+                mkdir($target_dir, 0777, true); // Create directory if it doesn't exist
+            }
+
+            // Generate a unique filename for the image
             $postimage = uniqid() . "." . $extension;
             $target_file = $target_dir . $postimage;
 
+            // Move the uploaded file to the target directory
             if (!move_uploaded_file($_FILES["postimage"]["tmp_name"], $target_file)) {
                 $_SESSION['error'] = "There was an error uploading the file.";
             }
@@ -43,10 +53,17 @@ if (isset($_POST['submit'])) {
         }
     }
 
+    // Ensure that there's either text or an image
     if (empty($posttext) && empty($postimage)) {
         $_SESSION['error'] = "Please provide either text content or an image.";
     } else {
-        $query = mysqli_query($con, "INSERT INTO professors_post (user_id, PostText, PostImage, created_at) VALUES ('$user_id', '$posttext', '$postimage', NOW())");
+        // Save the full path for the image in the database (save just the image name)
+        $full_image_path = $postimage; // Don't store the full path, just the image name
+
+        // Insert the post into the database
+        $query = mysqli_query($con, "INSERT INTO professors_post (user_id, PostText, PostImage, created_at) 
+                                     VALUES ('$user_id', '$posttext', '$full_image_path', NOW())");
+
         if ($query) {
             $_SESSION['msg'] = "Post successfully added!";
         } else {
@@ -54,6 +71,7 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+
 
 
 // Handle post update
@@ -241,15 +259,16 @@ $query = mysqli_query($con, "
 
 
                                         <div class="post-content" style="align-items:center; margin:auto; margin-left: 20%;">
-                                            <!-- Media -->
-                                            <?php if (!empty($row['image'])) { ?>
-                                                <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-                                                    <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-30 rounded" style="height:500px; width: 70%;" />
-                                                    <a href="#!">
-                                                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
-                                                    </a>
-                                                </div>
-                                            <?php } ?>
+                                           <!-- Media -->
+<?php if (!empty($row['image'])) { ?>
+    <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
+        <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-30 rounded" style="height:500px; width: 70%;" />
+        <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
+        </a>
+    </div>
+<?php } ?>
+
                                         </div>
                                     </div>
 
