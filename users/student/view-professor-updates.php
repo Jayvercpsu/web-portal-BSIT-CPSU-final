@@ -84,6 +84,11 @@ if ($professor_id) {
                         // Get the total number of likes for the post
                         $like_count_query = mysqli_query($con, "SELECT COUNT(*) AS total_likes FROM like_reactions WHERE post_id = '{$row['id']}'");
                         $like_count = mysqli_fetch_assoc($like_count_query)['total_likes'];
+
+                        // Fetch total number of comments for the current post
+                        $comment_count_query = mysqli_query($con, "SELECT COUNT(*) AS total_comments FROM student_comments WHERE post_id = '{$row['id']}'");
+                        $comment_count = mysqli_fetch_assoc($comment_count_query)['total_comments'];
+
                     ?>
                         <br><br>
 
@@ -130,7 +135,7 @@ if ($professor_id) {
 
                                         <!-- Centered Comment Button -->
                                         <button type="button" class="btn btn-link btn-lg comment-btn mx-auto" onclick="toggleComments(<?php echo $row['id']; ?>)">
-                                            <i class="fas fa-comment-alt me-2"></i>Comment
+                                            <i class="fas fa-comment-alt me-2"></i>Comment (<?php echo $comment_count; ?>)
                                         </button>
 
                                         <!-- Right Side (Share Button) -->
@@ -140,27 +145,43 @@ if ($professor_id) {
                                     </div>
                                 </div>
 
+
                                 <!-- Comments Section (Visible when comment button is clicked) -->
                                 <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="display: none;">
-                                    <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>">
-                                        <!-- Comments will be dynamically inserted here -->
-                                    </div>
-
                                     <!-- Student Comment Form -->
                                     <?php if ($_SESSION['role'] === 'student') : ?>
                                         <textarea class="form-control comment-textarea" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
-                                        <button type="button" class="btn btn-custom mt-2" id="submitComment-<?php echo $row['id']; ?>" onclick="submitStudentComment(<?php echo $row['id']; ?>)">Post Comment</button>
+                                        <button type="button" class="btn btn-custom mt-2" onclick="submitStudentComment(<?php echo $row['id']; ?>)">Post Comment</button>
                                     <?php else : ?>
                                         <p>You must be a student to post a comment.</p>
                                     <?php endif; ?>
+
+                                    <!-- Comments List -->
+                                    <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>">
+                                        <!-- Comments will be dynamically loaded here -->
+                                    </div>
                                 </div>
 
+
                                 <script>
-                                    // Toggle the visibility of the comments section
                                     function toggleComments(postId) {
                                         var commentSection = document.getElementById('comments-' + postId);
-                                        // Toggle visibility
-                                        commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
+                                        if (commentSection.style.display === 'none') {
+                                            commentSection.style.display = 'block';
+
+                                            // Load comments via AJAX
+                                            var xhr = new XMLHttpRequest();
+                                            xhr.open("POST", "fetch_comments.php", true);
+                                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                            xhr.onreadystatechange = function() {
+                                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                                    document.getElementById('comment-list-' + postId).innerHTML = xhr.responseText;
+                                                }
+                                            };
+                                            xhr.send("post_id=" + postId);
+                                        } else {
+                                            commentSection.style.display = 'none';
+                                        }
                                     }
 
                                     // Submit a student comment
@@ -172,28 +193,17 @@ if ($professor_id) {
                                             return;
                                         }
 
-                                        // Get the user ID and role (only students can comment)
-                                        var userId = <?php echo $_SESSION['user_id']; ?>; // Get user ID from session
-                                        var userRole = <?php echo json_encode($_SESSION['role']); ?>; // Get user role
-
-                                        if (userRole !== 'student') {
-                                            alert("You must be a student to post a comment.");
-                                            return;
-                                        }
-
-                                        // Make an AJAX request to store the comment in the database
                                         var xhr = new XMLHttpRequest();
                                         xhr.open("POST", "submit_student_comment.php", true);
                                         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                                         xhr.onreadystatechange = function() {
                                             if (xhr.readyState == 4 && xhr.status == 200) {
-                                                // Update the comment list with the new comment
-                                                document.getElementById('comment-list-' + postId).innerHTML = xhr.responseText;
-                                                // Clear the comment textarea
+                                                // Reload comments after posting
+                                                toggleComments(postId);
                                                 document.getElementById('commentText-' + postId).value = "";
                                             }
                                         };
-                                        xhr.send("post_id=" + postId + "&user_id=" + userId + "&comment=" + encodeURIComponent(commentText));
+                                        xhr.send("post_id=" + postId + "&user_id=" + <?php echo $_SESSION['user_id']; ?> + "&comment=" + encodeURIComponent(commentText));
                                     }
                                 </script>
 
