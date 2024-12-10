@@ -239,7 +239,7 @@ $query = mysqli_query($con, "
                                             <!-- Media -->
                                             <?php if (!empty($row['image'])) { ?>
                                                 <div class="bg-image hover-overlay ripple rounded-0" data-mdb-ripple-color="light">
-                                                    <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-30 rounded" style="height:500px; width: 7    0%; " />
+                                                    <img src="./assets/professors_updates/<?php echo htmlentities($row['image']); ?>" class="w-30 rounded" style="height:500px; width: 70%;" />
                                                     <a href="#!">
                                                         <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                                                     </a>

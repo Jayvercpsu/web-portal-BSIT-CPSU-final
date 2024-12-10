@@ -111,7 +111,7 @@
 
         <!-- Sidebar Links with Icons -->
         <a href="edit-profile.php" class="w3-bar-item w3-button"><i class="fa fa-user-circle"></i> Edit Account</a>
-        <a href="my-instructors.php" class="w3-bar-item w3-button"><i class="fa fa-users"></i> My Instructors</a>
+        <a href="my-professors.php" class="w3-bar-item w3-button"><i class="fa fa-users"></i> My Professors</a>
         <!-- <a href="my-subjects.php" class="w3-bar-item w3-button"><i class="fa fa-book"></i> My Subjects</a> -->
         <a href="#" data-toggle="modal" data-target="#logoutModal" class="w3-bar-item w3-button"><i class="fa fa-sign-out"></i> Logout</a>
     </div>

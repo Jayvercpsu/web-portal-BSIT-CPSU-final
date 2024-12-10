@@ -64,6 +64,7 @@
     </div> <!-- .page-banner -->
 
 
+
     <!-- Services Section -->
     <div class="bg-light">
         <div class="page-section py-3 mt-md-n5 custom-index">
@@ -74,7 +75,7 @@
                             <div class="circle-shape">
                                 <span class="mai-chatbubbles-outline"></span>
                             </div>
-                            <p><span>Chat</span> with IT Experts</p>
+                            <p><span>Hands-on</span> Experience</p>
                         </div>
                     </div>
                     <div class="col-md-4 py-3 py-md-0">
@@ -82,7 +83,7 @@
                             <div class="circle-shape">
                                 <span class="mai-shield-checkmark"></span>
                             </div>
-                            <p><span>Secure</span> Systems</p>
+                            <p><span>Global</span> Career Opportunities </p>
                         </div>
                     </div>
                     <div class="col-md-4 py-3 py-md-0">

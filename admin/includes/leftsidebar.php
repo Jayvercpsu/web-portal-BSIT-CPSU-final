@@ -35,15 +35,13 @@
                     </ul>
                 </li>
 
+
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> All Professors </span> <span class="menu-arrow"></span></a>
-                    <ul class="list-unstyled">
-                        <li><a href="all-professors.php">All Professors</a></li>
-                        <li><a href="assign-professors.php">Assign Professors</a></li>
-                    </ul>
+                    <a href="all-professors.php" class="waves-effect"><i class="fa fa-users"></i> <span> All Professors </span> </a>
                 </li>
 
-                
+
+
                 <li>
                     <a href="all-students.php" class="waves-effect"><i class="fa fa-users" aria-hidden="true"></i> <span> All Students </span></a>
                 </li>
