@@ -66,7 +66,7 @@
                 </li>
 
                 <!-- New Menu Items -->
-                <li>
+                <!-- <li>
                     <a href="curriculum.php" class="waves-effect"><i class="mdi mdi-book"></i> <span> Curriculum </span></a>
                 </li>
                 <li>
@@ -77,7 +77,7 @@
                 </li>
                 <li>
                     <a href="library.php" class="waves-effect"><i class="mdi mdi-library"></i> <span> Library </span></a>
-                </li>
+                </li> -->
 
             </ul>
         </div>
