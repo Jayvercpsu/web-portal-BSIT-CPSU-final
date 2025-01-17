@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2025 at 03:23 AM
+-- Generation Time: Jan 17, 2025 at 04:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -97,8 +97,16 @@ CREATE TABLE `like_reactions` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
+  `reaction_type` enum('like') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `like_reactions`
+--
+
+INSERT INTO `like_reactions` (`id`, `user_id`, `post_id`, `reaction_type`, `created_at`) VALUES
+(6, 65, 9, 'like', '2025-01-17 03:02:34');
 
 -- --------------------------------------------------------
 
@@ -134,7 +142,30 @@ CREATE TABLE `professors_post` (
   `user_id` int(11) NOT NULL,
   `PostText` text DEFAULT NULL,
   `PostImage` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `likes` int(11) DEFAULT 0,
+  `comments_count` int(11) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `professors_post`
+--
+
+INSERT INTO `professors_post` (`id`, `user_id`, `PostText`, `PostImage`, `created_at`, `likes`, `comments_count`) VALUES
+(9, 67, 'sample', '6789ca6d891fe.jpg', '2025-01-17 02:51:45', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `professor_comments`
+--
+
+CREATE TABLE `professor_comments` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment_text` text NOT NULL,
+  `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -165,6 +196,13 @@ CREATE TABLE `student_comments` (
   `comment_text` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_comments`
+--
+
+INSERT INTO `student_comments` (`id`, `post_id`, `user_id`, `comment_text`, `created_at`) VALUES
+(1, 9, 65, 'hi', '2025-01-17 03:02:53');
 
 -- --------------------------------------------------------
 
@@ -372,8 +410,8 @@ INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `year`, `pr
 (61, 'Mariel Paz Cababa', 'marielcababa8@gmail.com', '123', 'student', '4th Year', './assets/profile-images/profile_673c19b5744711.31414063.jpg', '2024-11-18 03:54:13', 'Unassigned'),
 (62, 'sample sample', 'sample@gmail.com', '123', 'student', '1st Year', './assets/profile-images/default-profile.png', '2024-11-19 06:56:07', 'Unassigned'),
 (63, 'Jayco Sample', 'jayco@gmail.com', '123', 'student', '4th Year', './assets/profile-images/default-profile.png', '2024-11-19 12:59:11', 'Unassigned'),
-(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', 'student', '4th Year', './assets/profile-images/default-profile.png', '2025-01-17 01:52:09', 'Unassigned'),
-(67, 'Dexter G. Dandan', 'dandan@gmail.com', '123', 'professor', '', './assets/profile-images/default-profile.png', '2025-01-17 02:18:01', '4th Year');
+(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', 'student', '4th Year', './assets/profile-images/profile_6789c86c8d6e23.02200248.jpg', '2025-01-17 01:52:09', 'Unassigned'),
+(67, 'Dexter G. Dandan', 'dandan@gmail.com', '123', 'professor', '', '6789c45c2fcfc.jpg', '2025-01-17 02:18:01', '4th Year');
 
 --
 -- Indexes for dumped tables
@@ -404,8 +442,7 @@ ALTER TABLE `info`
 --
 ALTER TABLE `like_reactions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `post_id` (`post_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `professors`
@@ -419,6 +456,14 @@ ALTER TABLE `professors`
 --
 ALTER TABLE `professors_post`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `professor_comments`
+--
+ALTER TABLE `professor_comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_id` (`post_id`),
   ADD KEY `user_id` (`user_id`);
 
 --
@@ -520,7 +565,7 @@ ALTER TABLE `info`
 -- AUTO_INCREMENT for table `like_reactions`
 --
 ALTER TABLE `like_reactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `professors`
@@ -532,7 +577,13 @@ ALTER TABLE `professors`
 -- AUTO_INCREMENT for table `professors_post`
 --
 ALTER TABLE `professors_post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `professor_comments`
+--
+ALTER TABLE `professor_comments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `second_year`
@@ -544,7 +595,7 @@ ALTER TABLE `second_year`
 -- AUTO_INCREMENT for table `student_comments`
 --
 ALTER TABLE `student_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbladmin`
@@ -602,14 +653,20 @@ ALTER TABLE `users`
 -- Constraints for table `like_reactions`
 --
 ALTER TABLE `like_reactions`
-  ADD CONSTRAINT `like_reactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `like_reactions_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `professors_post` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `like_reactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `professors_post`
 --
 ALTER TABLE `professors_post`
   ADD CONSTRAINT `professors_post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `professor_comments`
+--
+ALTER TABLE `professor_comments`
+  ADD CONSTRAINT `professor_comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `professors_post` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `professor_comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `student_comments`
