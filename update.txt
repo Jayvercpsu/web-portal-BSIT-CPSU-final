@@ -8,3 +8,18 @@ Professors - NewsFeed ✅
 Student - after logged in, can view all the update of the 1st year nga under sya sa instructor 
         - if the students are 1st year / 4th year must directly go to the corresponding year nga 
           na-a tanang update sa 1st year or 4th year where he/she belong on that particular year  
+
+
+
+
+final grade inquries
+
+features Professors 
+button Grade inquries
+option - 1st year to 4th year 
+under in the the option 1st year to 4th year can able to view all registered students where he/she belong 
+- can able to input final grade of all the students then submit all the grades then store in database 
+
+features students
+buttons view final grades confedential account only
+the grades atutomaitcall view in the content of the view final grades

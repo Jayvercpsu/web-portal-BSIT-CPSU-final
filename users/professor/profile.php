@@ -138,5 +138,5 @@ if (isset($_POST['update_profile_image'])) {
         </div>
     </div>
 
-    <?php include('includes/footer.php'); ?>
+    <?php include('includes/footer.php'); ?> 
 </div>

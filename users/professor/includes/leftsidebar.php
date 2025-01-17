@@ -21,7 +21,7 @@
        
                 <!-- Students Section -->
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> Students </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> Grade Inquiry </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="students-1st-year.php">1st Year</a></li>
                         <li><a href="students-2nd-year.php">2nd Year</a></li>
@@ -31,6 +31,10 @@
                 </li>
 
 
+                <!-- Profile -->
+                <li class="has_sub">
+                    <a href="input_grade.php" class="waves-effect"><i class="fas fa-user-circle"></i> <span> Grade inquiries </span> </a>
+                </li>
                 <!-- Profile -->
                 <li class="has_sub">
                     <a href="profile.php" class="waves-effect"><i class="fas fa-user-circle"></i> <span> Profile </span> </a>
