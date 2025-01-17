@@ -25,7 +25,7 @@ $year_level = $student['year'];  // Get the student's year level
 // Fetch professors who match the student's year level from the users table
 $query = mysqli_query($con, "SELECT * FROM users WHERE year_level = '$year_level' AND role = 'professor'");
 
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
