@@ -1,11 +1,11 @@
- <?php
-    // session_start();
-    // include('includes/config.php');
-    // //Genrating CSRF Token
+<?php
+    session_start();
+    include('includes/config.php');
+    //Genrating CSRF Token
     if (empty($_SESSION['token'])) {
         $_SESSION['token'] = bin2hex(random_bytes(32));
     }
-
+ 
     if (isset($_POST['submit'])) {
         //Verifying CSRF Token
         if (!empty($_POST['csrftoken'])) {
@@ -44,6 +44,8 @@
 
 
     ?>
+
+
  <!DOCTYPE html>
 
  <html lang="en">
@@ -79,7 +81,9 @@
  <body>
 
      <!-- Navigation -->
-     <?php include('includes/header.php'); ?>
+     <?php include('includes/header-news-details.php'); ?>
+
+     
      <!-- Page Content -->
      <div class="container-fluid">
          <div class="row" style="margin-top: 4%">
