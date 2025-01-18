@@ -75,7 +75,23 @@ if ($professor_id) {
                 } else {
                     while ($row = mysqli_fetch_array($query)) {
                         // Set profile image path
-                        $profileImagePath = !empty($row['profile_image']) ? '../professor/assets/profile-images/' . htmlentities($row['profile_image']) : '../professor/assets/profile-images/default-profile.png';
+                        if (!empty($row['profile_image'])) {
+                            // Remove './assets/profile-images/' if it exists in the database value
+                            $cleaned_profile_image = str_replace('./assets/profile-images/', '', $row['profile_image']);
+                            $profileImagePath = '../professor/assets/profile-images/' . htmlentities($cleaned_profile_image);
+                        } else {
+                            // Use default profile image
+                            $profileImagePath = '../professor/assets/profile-images/default-profile.png';
+                        }
+
+
+                        // Check if the file exists on the server
+                        if (!file_exists(realpath($profileImagePath))) {
+                            // If the file doesn't exist, fall back to the default image
+                            $profileImagePath = '../professor/assets/profile-images/default-profile.png';
+                            echo '<pre>File does not exist. Using default profile image.</pre>';
+                        }
+
 
                         // Check if the user has liked this post
                         $like_check_query = mysqli_query($con, "SELECT * FROM like_reactions WHERE user_id = '$user_id' AND post_id = '{$row['id']}'");
@@ -171,7 +187,7 @@ if ($professor_id) {
                                     </button>
                                 </div>
 
-                         
+
 
                                 <script>
                                     const commentOffsets = {}; // To track offsets for each post ID
