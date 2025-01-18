@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 18, 2025 at 08:42 AM
+-- Generation Time: Jan 18, 2025 at 09:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,6 @@ CREATE TABLE `first_year` (
 --
 
 INSERT INTO `first_year` (`id`, `full_name`, `email`, `password`, `created_at`, `profile_image`) VALUES
-(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', '2025-01-18 05:37:49', './assets/profile-images/profile_678b3a4c5026d7.12747738.png'),
 (66, 'sample sample', 'sample@gmail.com', '123', '2024-11-19 06:56:07', './assets/profile-images/profile_678b3c9b359a08.80142314.png');
 
 -- --------------------------------------------------------
@@ -65,7 +64,8 @@ CREATE TABLE `fourth_year` (
 
 INSERT INTO `fourth_year` (`id`, `full_name`, `email`, `password`, `created_at`, `profile_image`) VALUES
 (61, 'Mariel Paz Cababa', 'marielcababa8@gmail.com', '123', '2024-11-19 04:53:09', './assets/profile-images/profile_678b4237ca03e9.61890923.png'),
-(62, 'Jayco Sample', 'jayco@gmail.com', '123', '2024-11-19 12:59:11', './assets/profile-images/default-profile.png');
+(62, 'Jayco Sample', 'jayco@gmail.com', '123', '2024-11-19 12:59:11', './assets/profile-images/default-profile.png'),
+(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', '2025-01-18 07:48:36', './assets/profile-images/profile_678b3a4c5026d7.12747738.png');
 
 -- --------------------------------------------------------
 
@@ -223,7 +223,7 @@ CREATE TABLE `student_grades` (
 --
 
 INSERT INTO `student_grades` (`id`, `user_id`, `grade`, `date_added`) VALUES
-(68, 61, '79', '2025-01-18 08:36:31'),
+(68, 61, '73', '2025-01-18 09:01:51'),
 (70, 62, '83', '2025-01-18 08:37:29'),
 (71, 65, '96', '2025-01-18 08:36:05'),
 (72, 66, '78', '2025-01-18 08:36:05');
@@ -434,8 +434,8 @@ INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `year`, `pr
 (61, 'Mariel Paz Cababa', 'marielcababa8@gmail.com', '123', 'student', '4th Year', './assets/profile-images/profile_678b4237ca03e9.61890923.png', '2024-11-18 03:54:13', 'Unassigned'),
 (62, 'sample sample', 'sample@gmail.com', '123', 'student', '1st Year', './assets/profile-images/profile_678b3c9b359a08.80142314.png', '2024-11-19 06:56:07', 'Unassigned'),
 (63, 'Jayco Sample', 'jayco@gmail.com', '123', 'student', '4th Year', './assets/profile-images/default-profile.png', '2024-11-19 12:59:11', 'Unassigned'),
-(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', 'student', '1st Year', './assets/profile-images/profile_678b3a4c5026d7.12747738.png', '2025-01-17 01:52:09', 'Unassigned'),
-(67, 'Dexter G. Dandan', 'dandan@gmail.com', '123', 'professor', '', '6789c45c2fcfc.jpg', '2025-01-17 02:18:01', '4th Year'),
+(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', 'student', '4th Year', './assets/profile-images/profile_678b3a4c5026d7.12747738.png', '2025-01-17 01:52:09', 'Unassigned'),
+(67, 'Dexter G. Dandan', 'dandan@gmail.com', '123', 'professor', '', '678b61e9b5a36.jpg', '2025-01-17 02:18:01', '4th Year'),
 (68, 'dino', 'dino@gmail.com', '123', 'professor', '', './assets/profile-images/default-profile.png', '2025-01-18 05:18:10', 'Unassigned');
 
 --
