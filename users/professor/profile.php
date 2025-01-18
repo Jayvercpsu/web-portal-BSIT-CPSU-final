@@ -19,10 +19,26 @@ if (!$professor) {
     $error = "Unable to fetch profile details. Please contact the administrator.";
 }
 
+// Synchronize the professors table: Add missing entries
+$sync_query = "
+    INSERT INTO professors (id, full_name, email, profile_image, year_level)
+    SELECT u.id, u.full_name, u.email, 
+           IFNULL(u.profile_image, './assets/profile-images/default-profile.png') AS profile_image, 
+           IFNULL(u.year_level, 'Unassigned') AS year_level
+    FROM users u
+    WHERE u.role = 'professor'
+    ON DUPLICATE KEY UPDATE
+        full_name = VALUES(full_name),
+        email = VALUES(email),
+        profile_image = VALUES(profile_image),
+        year_level = VALUES(year_level)
+";
+mysqli_query($con, $sync_query);
+
 // Update profile image
 if (isset($_POST['update_profile_image'])) {
-    $profile_image = $professor['profile_image'];
-    $default_image_path = "./assets/profile-images/default-profile.png";
+    $current_image = $professor['profile_image'];
+    $default_image_path = "./assets/profile-images/default-profile.png"; // Full path for default image
     $image_folder = './assets/profile-images/';
 
     // Ensure the directory exists
@@ -36,20 +52,33 @@ if (isset($_POST['update_profile_image'])) {
         $valid_extensions = array("jpg", "jpeg", "png", "gif");
 
         if (in_array($extension, $valid_extensions)) {
-            // Generate a unique filename
-            $profile_image = uniqid() . "." . $extension;
-            $target_path = $image_folder . $profile_image;
+            // Generate a unique filename with the desired format
+            $unique_id = uniqid();
+            $profile_image = "profile_" . $unique_id . "." . $extension;
+            $target_path = $image_folder . $profile_image; // Full file path
 
+            // Delete the old profile image if it's not the default
+            if (!empty($current_image) && $current_image !== $default_image_path) {
+                $old_image_path = $current_image; // Full path is already saved in DB
+                if (file_exists($old_image_path)) {
+                    unlink($old_image_path);
+                }
+            }
+
+            // Upload the new image
             if (move_uploaded_file($_FILES["profile_image"]["tmp_name"], $target_path)) {
-                // Update the database
-                $update_users_query = "UPDATE users SET profile_image = '$profile_image' WHERE id = '$professor_id' AND role = 'professor'";
-                $update_professors_query = "UPDATE professors SET profile_image = '$profile_image' WHERE id = '$professor_id'";
+                // Save the full path in the database
+                $profile_image_db = $target_path; // Full path to save
+
+                // Update the database in both users and professors tables
+                $update_users_query = "UPDATE users SET profile_image = '$profile_image_db' WHERE id = '$professor_id' AND role = 'professor'";
+                $update_professors_query = "UPDATE professors SET profile_image = '$profile_image_db' WHERE id = '$professor_id'";
 
                 if (mysqli_query($con, $update_users_query) && mysqli_query($con, $update_professors_query)) {
                     $msg = "Profile image updated successfully!";
-                    $professor['profile_image'] = $profile_image;
+                    $professor['profile_image'] = $profile_image_db;
                 } else {
-                    $error = "Failed to update profile image in the database.";
+                    $error = "Failed to update profile image in the database: " . mysqli_error($con);
                 }
             } else {
                 $error = "Failed to upload the profile image. Please check folder permissions.";
@@ -58,19 +87,28 @@ if (isset($_POST['update_profile_image'])) {
             $error = "Invalid file format. Only JPG, JPEG, PNG, and GIF are allowed.";
         }
     } else {
-        // Use default profile image if no file is uploaded
-        $update_users_query = "UPDATE users SET profile_image = '$default_image_path' WHERE id = '$professor_id' AND role = 'professor'";
-        $update_professors_query = "UPDATE professors SET profile_image = '$default_image_path' WHERE id = '$professor_id'";
+        // If no new file is uploaded, revert to default image
+        $profile_image_db = $default_image_path;
+
+        // Update the database in both users and professors tables
+        $update_users_query = "UPDATE users SET profile_image = '$profile_image_db' WHERE id = '$professor_id' AND role = 'professor'";
+        $update_professors_query = "UPDATE professors SET profile_image = '$profile_image_db' WHERE id = '$professor_id'";
 
         if (mysqli_query($con, $update_users_query) && mysqli_query($con, $update_professors_query)) {
-            $msg = "Default profile image assigned.";
-            $professor['profile_image'] = $default_image_path;
+            $msg = "Profile image reverted to default successfully!";
+            $professor['profile_image'] = $profile_image_db;
         } else {
-            $error = "Failed to assign the default profile image.";
+            $error = "Failed to update the profile image to default: " . mysqli_error($con);
         }
     }
 }
 ?>
+
+
+
+
+
+
 
 <!-- HTML -->
 <?php include('includes/topheader.php'); ?>
@@ -81,6 +119,8 @@ if (isset($_POST['update_profile_image'])) {
     <div class="content">
         <div class="container">
             <div class="row">
+
+
                 <div class="col-xs-12">
                     <div class="page-title-box">
                         <h4 class="page-title">My Profile</h4>
@@ -104,6 +144,8 @@ if (isset($_POST['update_profile_image'])) {
                 </div>
             <?php } ?>
 
+
+
             <?php if ($professor) { ?>
                 <!-- Display user details -->
                 <div class="user-profile">
@@ -120,23 +162,28 @@ if (isset($_POST['update_profile_image'])) {
                         <button type="submit" name="update_details" class="btn btn-primary">Update Details</button>
                     </form>
                 </div>
-
                 <!-- Profile image section -->
                 <form method="POST" enctype="multipart/form-data" class="mt-3">
                     <div class="form-group">
                         <label for="profile_image">Profile Image</label>
                         <input type="file" name="profile_image" class="form-control">
                         <?php
-                        $profile_image = !empty($professor['profile_image']) ? './assets/profile-images/' . htmlentities($professor['profile_image']) : './assets/profile-images/default-profile.png';
+                        // Use the full path directly from the database
+                        $profile_image = !empty($professor['profile_image'])
+                            ? htmlentities($professor['profile_image'])
+                            : './assets/profile-images/default-profile.png';
                         ?>
                         <img src="<?php echo $profile_image; ?>" alt="Profile Image" style="width: 100px; height: 100px; margin-top: 10px;">
-                
                     </div>
                     <button type="submit" name="update_profile_image" class="btn btn-primary">Update Profile Image</button>
                 </form>
+
+
+
+
             <?php } ?>
         </div>
     </div>
 
-    <?php include('includes/footer.php'); ?> 
+    <?php include('includes/footer.php'); ?>
 </div>

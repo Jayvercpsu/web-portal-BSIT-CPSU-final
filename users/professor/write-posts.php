@@ -183,16 +183,21 @@ $query = mysqli_query($con, "
                 <div class="row justify-content-center">
 
                     <?php include('includes/newsfeed/newsfeed-addpost.php') ?>
-
                     <?php
                     // Fetch posts made by the logged-in professor
                     $query = mysqli_query($con, "
-                    SELECT pp.id, pp.PostText as content, pp.PostImage as image, pp.created_at, u.full_name, u.profile_image 
-                    FROM professors_post pp
-                    INNER JOIN users u ON pp.user_id = u.id
-                    WHERE u.id = '$user_id'
-                    ORDER BY pp.created_at DESC
-                ");
+    SELECT 
+        pp.id, 
+        pp.PostText AS content, 
+        pp.PostImage AS image, 
+        pp.created_at, 
+        u.full_name, 
+        u.profile_image 
+    FROM professors_post pp
+    INNER JOIN users u ON pp.user_id = u.id
+    WHERE u.id = '$user_id'
+    ORDER BY pp.created_at DESC
+");
 
                     $rowcount = mysqli_num_rows($query);
 
@@ -203,13 +208,11 @@ $query = mysqli_query($con, "
                         </div>
                         <?php
                     } else {
-                        while ($row = mysqli_fetch_array($query)) {
-                            // Set profile image path
+                        while ($row = mysqli_fetch_assoc($query)) {
+                            // Use the profile_image directly from the database, or fallback to the default image
                             $profileImagePath = !empty($row['profile_image'])
-                                ? './assets/profile-images/' . htmlentities($row['profile_image'])
+                                ? htmlentities($row['profile_image'])
                                 : './assets/profile-images/default-profile.png';
-
-
 
                             // Check if the user has liked this post
                             $like_check_query = mysqli_query($con, "SELECT * FROM like_reactions WHERE user_id = '$user_id' AND post_id = '{$row['id']}'");
@@ -217,11 +220,11 @@ $query = mysqli_query($con, "
 
                             // Get the total number of likes for the post
                             $like_count_query = mysqli_query($con, "SELECT COUNT(*) AS total_likes FROM like_reactions WHERE post_id = '{$row['id']}'");
-                            $like_count = mysqli_fetch_assoc($like_count_query)['total_likes'];
+                            $like_count = mysqli_fetch_assoc($like_count_query)['total_likes'] ?? 0;
 
                             // Fetch total number of comments for the current post
                             $comment_count_query = mysqli_query($con, "SELECT COUNT(*) AS total_comments FROM student_comments WHERE post_id = '{$row['id']}'");
-                            $comment_count = mysqli_fetch_assoc($comment_count_query)['total_comments'];
+                            $comment_count = mysqli_fetch_assoc($comment_count_query)['total_comments'] ?? 0;
                         ?>
                             <br><br>
 

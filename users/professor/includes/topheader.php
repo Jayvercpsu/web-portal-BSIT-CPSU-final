@@ -1,6 +1,5 @@
 <?php 
 
-
 $professor_id = $_SESSION['user_id'] ?? null;  // Ensure user ID exists in the session
 $msg = $error = "";
 
@@ -17,19 +16,17 @@ if ($professor_id) {
         $row = mysqli_fetch_assoc($result);
         $full_name = $row['full_name'] ?? 'Guest';
 
-        // If profile image exists, use it; otherwise, fallback to default
-        $profile_image_path = $row['profile_image'] ? './assets/profile-images/' . $row['profile_image'] : './assets/profile-images/default-profile.png';
+        // Directly use the `profile_image` from the database if it exists, otherwise fallback to default
+        $profile_image = !empty($row['profile_image']) ? $row['profile_image'] : './assets/profile-images/default-profile.png';
 
-        // Check if the file exists
-        if (!file_exists($profile_image_path)) {
+        // Check if the file exists for custom images (optional, for debugging purposes)
+        if (!file_exists($profile_image)) {
             $profile_image = './assets/profile-images/default-profile.png';  // Fallback to default if file does not exist
-        } else {
-            $profile_image = $profile_image_path;
         }
     }
 }
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="en">
 <head>
