@@ -63,7 +63,7 @@
                         <li><a href="unapprove-comment.php">Waiting for Approval </a></li>
                         <li><a href="manage-comments.php">Approved Comments</a></li>
                     </ul>
-                </li>
+                </li> 
 
                 <!-- New Menu Items -->
                 <!-- <li>
