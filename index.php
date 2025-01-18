@@ -163,7 +163,7 @@ include('includes/config.php');
                     <p class="text-white mb-4">
                         At CPSU, the Bachelor of Science in Information Technology program equips students with the skills and knowledge to lead in a technology-driven world. From software development to networking, our curriculum fosters innovation and problem-solving in the field of IT.
                     </p>
-                    <a href="#courses" class="btn btn-primary">Discover Courses</a>
+                    <a href="news.php" class="btn btn-primary">Explore Updates</a>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
                     <div class="img-place custom-img-1">
@@ -255,7 +255,7 @@ include('includes/config.php');
 
         <!-- Join Now Button Section -->
         <div class="text-center mb-5  wow fadeInUp">
-            <a href="#" class="btn btn-violet text-white btn-lg">Join Now</a>
+            <a href="./users/login.php" class="btn btn-violet text-white btn-lg">Join Now</a>
         </div>
     </div>
 
@@ -329,68 +329,68 @@ include('includes/config.php');
 
 
                     <div class="col-lg-10 mt-5">
-    <h1 class="text-center mb-5 wow fadeInUp">Meet Our Instructors</h1>
-    <div class="row justify-content-center">
-        <?php
-        // Query to fetch up to 3 professors from the database
-        $query = "SELECT full_name, profile_image, role FROM users WHERE role = 'professor' LIMIT 3";
-        $result = mysqli_query($con, $query);
+                        <h1 class="text-center mb-5 wow fadeInUp">Meet Our Instructors</h1>
+                        <div class="row justify-content-center">
+                            <?php
+                            // Query to fetch up to 3 professors from the database
+                            $query = "SELECT full_name, profile_image, role FROM users WHERE role = 'professor' LIMIT 3";
+                            $result = mysqli_query($con, $query);
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $full_name = htmlspecialchars($row['full_name']); // Sanitize output
-                $profile_image = $row['profile_image']; // Get image from the database
-                $role = htmlspecialchars($row['role']); // Sanitize role
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $full_name = htmlspecialchars($row['full_name']); // Sanitize output
+                                    $profile_image = $row['profile_image']; // Get image from the database
+                                    $role = htmlspecialchars($row['role']); // Sanitize role
 
-                // Remove './assets/profile-images/' prefix if it exists
-                if (strpos($profile_image, './assets/profile-images/') === 0) {
-                    $profile_image = str_replace('./assets/profile-images/', '', $profile_image);
-                }
+                                    // Remove './assets/profile-images/' prefix if it exists
+                                    if (strpos($profile_image, './assets/profile-images/') === 0) {
+                                        $profile_image = str_replace('./assets/profile-images/', '', $profile_image);
+                                    }
 
-                // Construct the absolute path for `file_exists()`
-                $absolute_path = __DIR__ . "/users/professor/assets/profile-images/" . $profile_image;
+                                    // Construct the absolute path for `file_exists()`
+                                    $absolute_path = __DIR__ . "/users/professor/assets/profile-images/" . $profile_image;
 
-                // Construct the relative path for the HTML output
-                $image_path = (!empty($profile_image) && file_exists($absolute_path))
-                    ? "./users/professor/assets/profile-images/" . $profile_image
-                    : "./users/professor/assets/profile-images/default-profile.png";
+                                    // Construct the relative path for the HTML output
+                                    $image_path = (!empty($profile_image) && file_exists($absolute_path))
+                                        ? "./users/professor/assets/profile-images/" . $profile_image
+                                        : "./users/professor/assets/profile-images/default-profile.png";
 
-                // Debugging (Optional): Log the image path
-                echo "<script>console.log('Image Path Used: " . addslashes($image_path) . "');</script>";
-        ?>
-                <div class="col-md-6 col-lg-4 wow zoomIn">
-                    <div class="card-doctor">
-                        <div class="header">
-                            <!-- Dynamically load the instructor's profile image -->
-                            <img src="<?php echo htmlentities($image_path); ?>" alt="<?php echo $full_name; ?>" class="img-fluid">
-                            <div class="meta">
-                                <a href="https://facebook.com" target="_blank" class="text-dark">
-                                    <i class="fab fa-facebook-f"></i>
-                                </a>
-                                <a href="https://www.messenger.com/" target="_blank" class="text-dark">
-                                    <i class="fab fa-facebook-messenger"></i>
-                                </a>
-                            </div>
+                                    // Debugging (Optional): Log the image path
+                                    echo "<script>console.log('Image Path Used: " . addslashes($image_path) . "');</script>";
+                            ?>
+                                    <div class="col-md-6 col-lg-4 wow zoomIn">
+                                        <div class="card-doctor">
+                                            <div class="header">
+                                                <!-- Dynamically load the instructor's profile image -->
+                                                <img src="<?php echo htmlentities($image_path); ?>" alt="<?php echo $full_name; ?>" class="img-fluid">
+                                                <div class="meta">
+                                                    <a href="https://facebook.com" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-f"></i>
+                                                    </a>
+                                                    <a href="https://www.messenger.com/" target="_blank" class="text-dark">
+                                                        <i class="fab fa-facebook-messenger"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="body">
+                                                <!-- Dynamically load the instructor's name and role -->
+                                                <p class="text-xl mb-0"><?php echo $full_name; ?></p>
+                                                <span class="text-sm text-grey"><?php echo ucfirst($role); ?></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                                }
+                            } else {
+                                echo "<p class='text-center text-danger'>No instructors found.</p>";
+                            }
+                            ?>
                         </div>
-                        <div class="body">
-                            <!-- Dynamically load the instructor's name and role -->
-                            <p class="text-xl mb-0"><?php echo $full_name; ?></p>
-                            <span class="text-sm text-grey"><?php echo ucfirst($role); ?></span>
+                        <!-- Move the "Show More" button below the grid -->
+                        <div class="text-center mt-4">
+                            <a href="instructor.php" class="btn btn-primary wow fadeInUp">Show More</a>
                         </div>
                     </div>
-                </div>
-        <?php
-            }
-        } else {
-            echo "<p class='text-center text-danger'>No instructors found.</p>";
-        }
-        ?>
-    </div>
-    <!-- Move the "Show More" button below the grid -->
-    <div class="text-center mt-4">
-        <a href="instructor.php" class="btn btn-primary wow fadeInUp">Show More</a>
-    </div>
-</div>
 
 
 

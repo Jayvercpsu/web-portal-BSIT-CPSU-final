@@ -51,65 +51,65 @@ include('includes/config.php'); // Include database connection
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="row">
-                    <?php
-// Query to fetch all users with the role of professor
-$query = "SELECT full_name, profile_image FROM users WHERE role = 'professor'";
-$result = mysqli_query($con, $query);
+                        <?php
+                        // Query to fetch all users with the role of professor
+                        $query = "SELECT full_name, profile_image FROM users WHERE role = 'professor'";
+                        $result = mysqli_query($con, $query);
 
-if (mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $full_name = htmlspecialchars($row['full_name']); // Sanitize output
-        $profile_image = $row['profile_image']; // Get image directly from the database
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $full_name = htmlspecialchars($row['full_name']); // Sanitize output
+                                $profile_image = $row['profile_image']; // Get image directly from the database
 
-        // Remove './assets/profile-images/' prefix if it exists
-        if (strpos($profile_image, './assets/profile-images/') === 0) {
-            $profile_image = str_replace('./assets/profile-images/', '', $profile_image);
-        }
+                                // Remove './assets/profile-images/' prefix if it exists
+                                if (strpos($profile_image, './assets/profile-images/') === 0) {
+                                    $profile_image = str_replace('./assets/profile-images/', '', $profile_image);
+                                }
 
-        // Construct the absolute path for `file_exists()`
-        $absolute_path = __DIR__ . "/users/professor/assets/profile-images/" . $profile_image;
+                                // Construct the absolute path for `file_exists()`
+                                $absolute_path = __DIR__ . "/users/professor/assets/profile-images/" . $profile_image;
 
-        // Debug: Log the absolute path being checked
-        echo "<script>console.log('Absolute Path Checked: " . addslashes($absolute_path) . "');</script>";
+                                // Debug: Log the absolute path being checked
+                                echo "<script>console.log('Absolute Path Checked: " . addslashes($absolute_path) . "');</script>";
 
-        // Construct the relative path for the HTML output
-        $image_path = (!empty($profile_image) && file_exists($absolute_path))
-            ? "./users/professor/assets/profile-images/" . $profile_image
-            : "./users/professor/assets/profile-images/default-profile.png";
+                                // Construct the relative path for the HTML output
+                                $image_path = (!empty($profile_image) && file_exists($absolute_path))
+                                    ? "./users/professor/assets/profile-images/" . $profile_image
+                                    : "./users/professor/assets/profile-images/default-profile.png";
 
-        // Debug: Log the final image path used
-        echo "<script>console.log('Image Path Used: " . addslashes($image_path) . "');</script>";
+                                // Debug: Log the final image path used
+                                echo "<script>console.log('Image Path Used: " . addslashes($image_path) . "');</script>";
 
-        // PHP error log for missing file
-        if (!file_exists($absolute_path)) {
-            error_log("File not found: " . $absolute_path);
-        }
-?>
-        <div class="col-md-6 col-lg-4 wow zoomIn">
-            <div class="card-doctor">
-                <div class="header">
-                    <img src="<?php echo htmlentities($image_path); ?>" alt="<?php echo $full_name; ?>" class="img-fluid">
-                    <div class="meta">
-                        <a href="https://facebook.com" target="_blank" class="text-dark">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="https://www.messenger.com/" target="_blank" class="text-dark">
-                            <i class="fab fa-facebook-messenger"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="body">
-                    <p class="text-xl mb-0"><?php echo $full_name; ?></p>
-                    <span class="text-sm text-grey">Professor</span>
-                </div>
-            </div>
-        </div>
-<?php
-    }
-} else {
-    echo "<p class='text-center text-danger'>No professors found.</p>";
-}
-?>
+                                // PHP error log for missing file
+                                if (!file_exists($absolute_path)) {
+                                    error_log("File not found: " . $absolute_path);
+                                }
+                        ?>
+                                <div class="col-md-6 col-lg-4 wow zoomIn">
+                                    <div class="card-doctor">
+                                        <div class="header">
+                                            <img src="<?php echo htmlentities($image_path); ?>" alt="<?php echo $full_name; ?>" class="img-fluid">
+                                            <div class="meta">
+                                                <a href="https://facebook.com" target="_blank" class="text-dark">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                                <a href="https://www.messenger.com/" target="_blank" class="text-dark">
+                                                    <i class="fab fa-facebook-messenger"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="body">
+                                            <p class="text-xl mb-0"><?php echo $full_name; ?></p>
+                                            <span class="text-sm text-grey">Professor</span>
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php
+                            }
+                        } else {
+                            echo "<p class='text-center text-danger'>No professors found.</p>";
+                        }
+                        ?>
 
 
                     </div>

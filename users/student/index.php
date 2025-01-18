@@ -164,7 +164,7 @@
                     <p class="text-white mb-4">
                         At CPSU, the Bachelor of Science in Information Technology program equips students with the skills and knowledge to lead in a technology-driven world. From software development to networking, our curriculum fosters innovation and problem-solving in the field of IT.
                     </p>
-                    <a href="#courses" class="btn btn-primary">Discover Courses</a>
+                    <a href="news.php" class="btn btn-primary">Explore Updates</a>
                 </div>
                 <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
                     <div class="img-place custom-img-1">
@@ -255,9 +255,9 @@
         </div>
 
         <!-- Join Now Button Section -->
-        <div class="text-center mb-5  wow fadeInUp">
-            <a href="#" class="btn btn-violet text-white btn-lg">Join Now</a>
-        </div>
+        <!-- <div class="text-center mb-5  wow fadeInUp"> -->
+        <!-- <a href="../login.php" class="btn btn-violet text-white btn-lg">Join Now</a>
+        </div> -->
     </div>
 
     <!-- Custom Bootstrap Violet Button Styling -->
