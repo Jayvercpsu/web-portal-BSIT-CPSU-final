@@ -31,10 +31,9 @@
                 </li>
 
 
-                <!-- Profile -->
-                <li class="has_sub">
-                    <a href="input_grade.php" class="waves-effect"><i class="fas fa-user-circle"></i> <span> Grade inquiries </span> </a>
-                </li>
+             
+
+
                 <!-- Profile -->
                 <li class="has_sub">
                     <a href="profile.php" class="waves-effect"><i class="fas fa-user-circle"></i> <span> Profile </span> </a>
