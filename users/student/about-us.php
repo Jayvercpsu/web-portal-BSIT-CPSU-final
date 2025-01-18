@@ -156,60 +156,7 @@
 
 
 
-                        <div class="col-lg-10 mt-5">
-                            <h1 class="text-center mb-5 wow fadeInUp">Meet Our Instructors</h1>
-                            <div class="row justify-content-center">
-                                <div class="col-md-6 col-lg-4 wow zoomIn">
-                                    <div class="card-doctor">
-                                        <div class="header">
-                                            <img src="../../assets/faculty_image/dandan.jpg" alt="">
-                                            <div class="meta">
-                                                <a href="#"><span class="mai-call"></span></a>
-                                                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-                                            </div>
-                                        </div>
-                                        <div class="body">
-                                            <p class="text-xl mb-0">Dexter G. Dandan</p>
-                                            <span class="text-sm text-grey">Program Head</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 wow zoomIn">
-                                    <div class="card-doctor">
-                                        <div class="header">
-                                            <img src="../../assets/faculty_image/deliza.jpg" alt="">
-                                            <div class="meta">
-                                                <a href="#"><span class="mai-call"></span></a>
-                                                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-                                            </div>
-                                        </div>
-                                        <div class="body">
-                                            <p class="text-xl mb-0">Deliza Grace Delgado</p>
-                                            <span class="text-sm text-grey">Instructor</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-lg-4 wow zoomIn">
-                                    <div class="card-doctor">
-                                        <div class="header">
-                                            <img src="../../assets/faculty_image/clint.jpg" alt="">
-                                            <div class="meta">
-                                                <a href="#"><span class="mai-call"></span></a>
-                                                <a href="#"><span class="mai-logo-whatsapp"></span></a>
-                                            </div>
-                                        </div>
-                                        <div class="body">
-                                            <p class="text-xl mb-0">Clint Clarido</p>
-                                            <span class="text-sm text-grey">Instructor</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="instructor.php" class="btn btn-primary wow fadeInUp">Show More</a>
-                            </div>
-                        </div>
-
-
-
+                  
                     </div>
                 </div>
             </div>
