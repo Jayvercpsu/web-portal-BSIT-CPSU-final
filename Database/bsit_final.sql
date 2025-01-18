@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2025 at 04:54 AM
+-- Generation Time: Jan 18, 2025 at 08:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `first_year` (
 --
 
 INSERT INTO `first_year` (`id`, `full_name`, `email`, `password`, `created_at`, `profile_image`) VALUES
-(62, 'sample sample', 'sample@gmail.com', '123', '2024-11-19 06:56:07', './assets/profile-images/default-profile.png');
+(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', '2025-01-18 05:37:49', './assets/profile-images/profile_678b3a4c5026d7.12747738.png'),
+(66, 'sample sample', 'sample@gmail.com', '123', '2024-11-19 06:56:07', './assets/profile-images/profile_678b3c9b359a08.80142314.png');
 
 -- --------------------------------------------------------
 
@@ -63,9 +64,8 @@ CREATE TABLE `fourth_year` (
 --
 
 INSERT INTO `fourth_year` (`id`, `full_name`, `email`, `password`, `created_at`, `profile_image`) VALUES
-(61, 'Mariel Paz Cababa', 'marielcababa8@gmail.com', '123', '2024-11-19 04:53:09', './assets/profile-images/profile_673c19b5744711.31414063.jpg'),
-(62, 'Jayco Sample', 'jayco@gmail.com', '123', '2024-11-19 12:59:11', './assets/profile-images/default-profile.png'),
-(63, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', '2025-01-17 01:52:09', './assets/profile-images/default-profile.png');
+(61, 'Mariel Paz Cababa', 'marielcababa8@gmail.com', '123', '2024-11-19 04:53:09', './assets/profile-images/profile_678b4237ca03e9.61890923.png'),
+(62, 'Jayco Sample', 'jayco@gmail.com', '123', '2024-11-19 12:59:11', './assets/profile-images/default-profile.png');
 
 -- --------------------------------------------------------
 
@@ -129,7 +129,8 @@ CREATE TABLE `professors` (
 --
 
 INSERT INTO `professors` (`id`, `full_name`, `email`, `password`, `created_at`, `profile_image`, `year_level`) VALUES
-(30, 'Dexter G. Dandan', 'dandan@gmail.com', '123', '2025-01-17 02:18:01', NULL, '4th Year');
+(30, 'Dexter G. Dandan', 'dandan@gmail.com', '123', '2025-01-17 02:18:01', NULL, '4th Year'),
+(31, 'dino', 'dino@gmail.com', '123', '2025-01-18 05:18:10', NULL, 'Unassigned');
 
 -- --------------------------------------------------------
 
@@ -203,6 +204,29 @@ CREATE TABLE `student_comments` (
 
 INSERT INTO `student_comments` (`id`, `post_id`, `user_id`, `comment_text`, `created_at`) VALUES
 (1, 9, 65, 'hi', '2025-01-17 03:02:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_grades`
+--
+
+CREATE TABLE `student_grades` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `grade` varchar(10) NOT NULL,
+  `date_added` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_grades`
+--
+
+INSERT INTO `student_grades` (`id`, `user_id`, `grade`, `date_added`) VALUES
+(68, 61, '79', '2025-01-18 08:36:31'),
+(70, 62, '83', '2025-01-18 08:37:29'),
+(71, 65, '96', '2025-01-18 08:36:05'),
+(72, 66, '78', '2025-01-18 08:36:05');
 
 -- --------------------------------------------------------
 
@@ -330,9 +354,9 @@ CREATE TABLE `tblposts` (
 INSERT INTO `tblposts` (`id`, `PostTitle`, `CategoryId`, `SubCategoryId`, `PostDetails`, `PostingDate`, `UpdationDate`, `Is_Active`, `PostUrl`, `PostImage`, `viewCounter`, `postedBy`, `lastUpdatedBy`) VALUES
 (1, 'Team India on top as Bangladesh two wickets away from getting bowled out', 5, 4, '<p>Team India were humbled 2-1 by a resurgent Bangladesh team in the three-match ODI series which the visitors managed to end on a high thanks to Ishan Kishanâ€™s record double century. The Indian cricket team will now want to switch gears to prepare themselves for red-ball cricket as the first Test against Bangladesh gets underway in Chattogram on Wednesday (December 14). India will resume on 278/6 on Day 2 of the first Test on Thursday (December 15).</p><p>The Indian side will be led by KL Rahul with regular skipper Rohit Sharma ruled out after dislocating his thumb in the second ODI against Bangladesh last week. Shubman Gill is expected to take Rohitâ€™s place at the top of the order alongside stand-in skipper Rahul.<br></p><p>Bangladesh, on the other hand, will be led by veteran all-rounder Shakib al Hasan with Tamim Iqbal missing both the ODI and the Test series with injury. The home side will have their task cut out against the world No. 2-ranked Test side India as they eye first-ever Test match win over them.</p><p>India have promised to play aggressive cricket, much like Englandâ€™s â€˜Bazballâ€™ model which has powered them to a Test series win over Babar Azamâ€™s Pakistan. India need win at least 5 of the next 6 upcoming Tests, which includes the next two Test matches against Bangladesh to assure them of a qualification spot in the World Test Championships final next year.</p><p>The Indian side is injury-hit with the likes of Mohammed Shami and Ravindra Jadeja also ruled out with injury apart from skipper Rohit. It will be interesting to see if Jaydev Unadkat will make a return to Test cricket after a gap of 12 years. Mohammed Siraj and Umesh Yadav will be expected the carry the pace-bowling load while Ravichandran Ashwin and Kuldeep Yadav will team up in the spin bowling department.</p><p>Check all the LIVE Scores and Updates from Day 1 of 1st Test between India and Bangladesh here.</p>', '2022-12-15 18:08:34', '2024-11-17 05:57:22', 1, 'Team-India-on-top-as-Bangladesh-two-wickets-away-from-getting-bowled-out', '1167610aa17b0813233fe82d99403e41.jpg', 26, 'admin', NULL),
 (2, 'Creative Christmas gift ideas for kids', 3, 8, '<p>With Christmas, a few weeks from now, planning a gift for your kids can be a task quite challenging. Worry not! We have a few ideas for all the parents who are looking for those creative gifts to make their kids Xmas merry.<br></p><div><br></div><p>Being unprepared for Christmas is the very last thing you want. Start looking for presents now, or at the very least start thinking about ideas, rather than waiting until the last minute and this guide is your saviour.<br></p>', '2022-12-15 18:14:00', '2024-11-17 06:01:53', 1, 'Creative-Christmas-gift-ideas-for-kids', '646c8915fc1096c12b679108e7022df9.jpg', 53, 'admin', NULL),
-(3, 'Petrol prices still high in your city? Centre blames THESE for costly fuel', 4, 9, '<p>The minister said, currently the petrol price in India is one of the lowest. He said the oil marketing companies together suffered losses of Rs 27,276 crore due to high prices of crude in international markets.</p><p><br></p><p>Six states - West Bengal, Tamil Nadu, Andhra Pradesh, Telengana, Kerala, and Jharkhand - have not reduced the VAT, he said amidst vocal protests by the opposition members. The minister said, currently the petrol price in India is one of the lowest.&nbsp;</p>', '2022-12-15 18:16:46', '2022-12-15 18:29:46', 1, 'Petrol-prices-still-high-in-your-city?-Centre-blames-THESE-for-costly-fuel', 'c1ae896415041d9173d4935145243c14.jpg', 1, 'admin', NULL),
-(4, 'Lionel Messi to Kylian Mbappe: Race to FIFA World Cup 2022 Golden Boot, in PICS', 5, 5, '<p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p><br></p>', '2022-12-15 18:22:51', '2024-11-17 05:53:43', 1, 'Lionel-Messi-to-Kylian-Mbappe:-Race-to-FIFA-World-Cup-2022-Golden-Boot,-in-PICS', 'cefb64713b6ae016047d3bcd8a38e1cc.jpg', 18, 'admin', NULL),
-(5, 'Twitter suspends journalists from NYT, Washington Post and others covering Elon Musk: Report', 2, 11, 'The Washington Posts Drew Harwell, alongside other banned reporters, was able to participate in a Twitter Spaces audio session while under suspension, exposing a loophole in Twitter’s enforcement.\r\n\r\n\r\nTwitter Inc. suspended the accounts of upstart rival service Mastodon and several prominent journalists covering the social network’s billionaire owner Elon Musk.\r\n\r\nLate Thursday, reporters from publications including the Washington Post, the New York Times, Mashable and CNN were listed as blocked and their tweets were no longer visible, with the companys standard notice saying it suspends accounts that violate the Twitter rules.\r\n\r\nAlso affected was sports and political commentator Keith Olbermann. Musk said Olbermann will be subject to a 7-day suspension for doxxing. In a separate tweet, he alleged the suspended journalists had posted his exact real-time location, describing the information as basically assassination coordinates.', '2022-12-16 11:34:26', '2024-11-17 07:08:09', 1, 'Twitter-suspends-journalists-from-NYT,-Washington-Post-and-others-covering-Elon-Musk:-Report', 'd7c9faa1953eebd19b2ae47f7f201858.jpg', 110, 'admin', 'admin'),
+(3, 'Petrol prices still high in your city? Centre blames THESE for costly fuel', 4, 9, '<p>The minister said, currently the petrol price in India is one of the lowest. He said the oil marketing companies together suffered losses of Rs 27,276 crore due to high prices of crude in international markets.</p><p><br></p><p>Six states - West Bengal, Tamil Nadu, Andhra Pradesh, Telengana, Kerala, and Jharkhand - have not reduced the VAT, he said amidst vocal protests by the opposition members. The minister said, currently the petrol price in India is one of the lowest.&nbsp;</p>', '2022-12-15 18:16:46', '2025-01-18 03:21:01', 1, 'Petrol-prices-still-high-in-your-city?-Centre-blames-THESE-for-costly-fuel', 'c1ae896415041d9173d4935145243c14.jpg', 2, 'admin', NULL),
+(4, 'Lionel Messi to Kylian Mbappe: Race to FIFA World Cup 2022 Golden Boot, in PICS', 5, 5, '<p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p>The FIFA World Cup 2022 final are set with Lionel Messis Argentina set to take on Kylian Mbappe France at the Lusail Stadium on Sunday (December 18). Messi and Mbappe, teammates at PSG, are also in the race to win the FIFA World Cup 2022 Golden Boot award as well. In these collection of pictures, we take a look at players in race to win Golden Boot award this year.</p><p><br></p>', '2022-12-15 18:22:51', '2025-01-18 03:20:56', 1, 'Lionel-Messi-to-Kylian-Mbappe:-Race-to-FIFA-World-Cup-2022-Golden-Boot,-in-PICS', 'cefb64713b6ae016047d3bcd8a38e1cc.jpg', 19, 'admin', NULL),
+(5, 'Twitter suspends journalists from NYT, Washington Post and others covering Elon Musk: Report', 2, 11, 'The Washington Posts Drew Harwell, alongside other banned reporters, was able to participate in a Twitter Spaces audio session while under suspension, exposing a loophole in Twitter’s enforcement.\r\n\r\n\r\nTwitter Inc. suspended the accounts of upstart rival service Mastodon and several prominent journalists covering the social network’s billionaire owner Elon Musk.\r\n\r\nLate Thursday, reporters from publications including the Washington Post, the New York Times, Mashable and CNN were listed as blocked and their tweets were no longer visible, with the companys standard notice saying it suspends accounts that violate the Twitter rules.\r\n\r\nAlso affected was sports and political commentator Keith Olbermann. Musk said Olbermann will be subject to a 7-day suspension for doxxing. In a separate tweet, he alleged the suspended journalists had posted his exact real-time location, describing the information as basically assassination coordinates.', '2022-12-16 11:34:26', '2025-01-18 03:13:08', 1, 'Twitter-suspends-journalists-from-NYT,-Washington-Post-and-others-covering-Elon-Musk:-Report', 'd7c9faa1953eebd19b2ae47f7f201858.jpg', 111, 'admin', 'admin'),
 (6, 'sample IT & Programming', 7, 12, '&nbsp;sample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree text&nbsp;sample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree textsample coding heree text', '2024-11-16 05:33:47', '2024-11-17 07:06:46', 1, 'sample-IT-&-Programming', '6696a49433d2098daf680ecc647ca3c1.jpg', 75, 'admin', 'admin');
 
 -- --------------------------------------------------------
@@ -407,11 +431,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `year`, `profile_image`, `created_at`, `year_level`) VALUES
-(61, 'Mariel Paz Cababa', 'marielcababa8@gmail.com', '123', 'student', '4th Year', './assets/profile-images/profile_673c19b5744711.31414063.jpg', '2024-11-18 03:54:13', 'Unassigned'),
-(62, 'sample sample', 'sample@gmail.com', '123', 'student', '1st Year', './assets/profile-images/default-profile.png', '2024-11-19 06:56:07', 'Unassigned'),
+(61, 'Mariel Paz Cababa', 'marielcababa8@gmail.com', '123', 'student', '4th Year', './assets/profile-images/profile_678b4237ca03e9.61890923.png', '2024-11-18 03:54:13', 'Unassigned'),
+(62, 'sample sample', 'sample@gmail.com', '123', 'student', '1st Year', './assets/profile-images/profile_678b3c9b359a08.80142314.png', '2024-11-19 06:56:07', 'Unassigned'),
 (63, 'Jayco Sample', 'jayco@gmail.com', '123', 'student', '4th Year', './assets/profile-images/default-profile.png', '2024-11-19 12:59:11', 'Unassigned'),
-(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', 'student', '4th Year', './assets/profile-images/profile_6789c86c8d6e23.02200248.jpg', '2025-01-17 01:52:09', 'Unassigned'),
-(67, 'Dexter G. Dandan', 'dandan@gmail.com', '123', 'professor', '', '6789c45c2fcfc.jpg', '2025-01-17 02:18:01', '4th Year');
+(65, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '123', 'student', '1st Year', './assets/profile-images/profile_678b3a4c5026d7.12747738.png', '2025-01-17 01:52:09', 'Unassigned'),
+(67, 'Dexter G. Dandan', 'dandan@gmail.com', '123', 'professor', '', '6789c45c2fcfc.jpg', '2025-01-17 02:18:01', '4th Year'),
+(68, 'dino', 'dino@gmail.com', '123', 'professor', '', './assets/profile-images/default-profile.png', '2025-01-18 05:18:10', 'Unassigned');
 
 --
 -- Indexes for dumped tables
@@ -482,6 +507,12 @@ ALTER TABLE `student_comments`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `student_grades`
+--
+ALTER TABLE `student_grades`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbladmin`
 --
 ALTER TABLE `tbladmin`
@@ -547,13 +578,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `first_year`
 --
 ALTER TABLE `first_year`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `fourth_year`
 --
 ALTER TABLE `fourth_year`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `info`
@@ -571,7 +602,7 @@ ALTER TABLE `like_reactions`
 -- AUTO_INCREMENT for table `professors`
 --
 ALTER TABLE `professors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `professors_post`
@@ -589,13 +620,19 @@ ALTER TABLE `professor_comments`
 -- AUTO_INCREMENT for table `second_year`
 --
 ALTER TABLE `second_year`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `student_comments`
 --
 ALTER TABLE `student_comments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `student_grades`
+--
+ALTER TABLE `student_grades`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `tbladmin`
@@ -637,13 +674,13 @@ ALTER TABLE `tblsubcategory`
 -- AUTO_INCREMENT for table `third_year`
 --
 ALTER TABLE `third_year`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- Constraints for dumped tables
