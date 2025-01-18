@@ -26,7 +26,14 @@ if (!$student) {
 date_default_timezone_set('Asia/Kuala_Lumpur');
 $formatted_created_at = date("F j, Y g:i a", strtotime($student['created_at']));
 
-$profileImage = $student['profile_image'] ?: './assets/profile-images/default-profile.png';
+// Set the default profile image if none exists in the database
+$profileImage = !empty($student['profile_image']) ? $student['profile_image'] : './assets/profile-images/default-profile.png';
+
+// Ensure the profile image path is valid and exists on the server
+if (!file_exists($profileImage)) {
+    $profileImage = './assets/profile-images/default-profile.png';
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $full_name = htmlspecialchars($_POST['full_name'], ENT_QUOTES, 'UTF-8');
@@ -61,12 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Keep old password if no new password is provided
-    $hashed_password = empty($password) ? $student['password'] : $password; // Store plain password if provided
-
+    if (empty($password)) {
+        $hashed_password = $student['password']; // Use the existing hashed password
+    } else {
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Hash the new password
+    }
 
     // Begin transaction for profile and year transition updates
     $con->begin_transaction();
     try {
+        // Update user data in the `users` table
         $update_query = "UPDATE users SET full_name = ?, email = ?, profile_image = ?, year = ?, password = ? WHERE id = ?";
         $stmt = $con->prepare($update_query);
         $stmt->bind_param("sssssi", $full_name, $email, $profileImage, $year, $hashed_password, $user_id);
@@ -80,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             '4th Year' => 'fourth_year'
         ];
 
-        // If year has changed, move data
+        // If the year has changed, move the student to the correct year table
         if ($student['year'] != $year) {
             // Remove from old year table
             if (isset($year_tables[$student['year']])) {
@@ -100,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->execute();
             }
         } else {
-            // Update in the same year table
+            // If the year hasn't changed, update in the current year table
             if (isset($year_tables[$year])) {
                 $current_year_table = $year_tables[$year];
                 $update_year_query = "UPDATE $current_year_table SET full_name = ?, email = ?, profile_image = ?, password = ? WHERE id = ?";
@@ -110,15 +121,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
+        // Commit the transaction
         $con->commit();
         header("Location: edit-profile.php?update=success");
         exit();
     } catch (Exception $e) {
+        // Rollback transaction in case of error
         $con->rollback();
         echo "Error updating profile: " . $e->getMessage();
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -158,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="row">
                 <!-- Left Profile Section -->
                 <div class="col-md-4 text-white text-center py-4 rounded-left" style="background-color: #6a0dad; border-right: 2px solid #6a0dad;">
-                    <img class="rounded-circle mt-4 border border-white" src="<?php echo htmlentities($profileImage); ?>" alt="Profile Image" width="150" height="150">
+                    <img id="image-preview" class="rounded-circle mt-4 border border-white" src="<?php echo htmlentities($profileImage); ?>" alt="Profile Image" width="150" height="150">
                     <h5 class="mt-3"><?php echo htmlentities($student['full_name']); ?></h5>
                     <p><?php echo htmlentities($student['email']); ?></p>
                     <p>Year: <?php echo htmlentities($student['year']); ?></p>
@@ -228,10 +242,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             reader.onload = function(e) {
                 var previewImage = document.getElementById('image-preview');
                 previewImage.src = e.target.result;
-                previewImage.classList.remove('d-none');
+                previewImage.classList.remove('d-none'); // Show the image once loaded
             };
             reader.readAsDataURL(event.target.files[0]);
         });
+
 
         // Toggle password visibility
         function togglePassword() {

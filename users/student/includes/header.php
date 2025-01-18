@@ -7,9 +7,12 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
 
     // Fetch the student's data from the users table
-    $query = "SELECT full_name, profile_image FROM users WHERE id = '$user_id'";
-    $result = mysqli_query($con, $query);
-    $student = mysqli_fetch_assoc($result);
+    $query = "SELECT full_name, profile_image FROM users WHERE id = ?";
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $student = $result->fetch_assoc();
 
     // Check if student data exists
     if (!$student) {
@@ -17,21 +20,38 @@ if (isset($_SESSION['user_id'])) {
         exit();
     }
 
-    // Set default profile image if none is set
-    $profileImage = $student['profile_image'];
-    if (empty($profileImage)) {
-        $profileImage = './assets/profile-images/default-profile.png'; // Default image path
+    // Set the path for the default profile image
+    $defaultImage = './assets/profile-images/default-profile.png';
+
+    // Determine the correct profile image path
+    if (!empty($student['profile_image'])) {
+        $profileImage = $student['profile_image'];
+        
+        // Handle relative path correction if needed
+        if (!file_exists($profileImage)) {
+            $profileImage = './assets/profile-images/' . basename($student['profile_image']); // Add default path prefix
+        }
+
+        // If the image still doesn't exist, revert to default
+        if (!file_exists($profileImage)) {
+            $profileImage = $defaultImage;
+        }
+    } else {
+        // Use the default profile image if no image is set in the database
+        $profileImage = $defaultImage;
     }
 
     // Get the full name of the user
     $full_name = $student['full_name'];
 } else {
+    // Set default values for guests
     $full_name = "Guest";
     $profileImage = './assets/profile-images/default-profile.png'; // Default image path for guest
 }
+
 ?>
 
-
+<!-- Your HTML for the Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
     <div class="container">
         <!-- BSIT Logo and Name (Visible on all screen sizes) -->
@@ -67,16 +87,13 @@ if (isset($_SESSION['user_id'])) {
                 <!-- Profile Section -->
                 <li class="nav-item dropdown">
                     <button class="btn btn-link nav-link text-dark p-0 border-0" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <!-- Profile Image -->
                         <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="Profile" class="rounded-circle" width="40" height="40">
                     </button>
                     <div class="dropdown-menu dropdown-menu-left" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="#"><strong>Hi <?php echo htmlspecialchars($full_name); ?></strong></a>
                         <div class="dropdown-divider"></div>
-                        <!-- <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> My account</a> -->
                         <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> My account</a>
-                        <!-- <a class="dropdown-item" href="my-instructors.php"><i class="fa fa-users"></i> My Instructors</a>
-                        <a class="dropdown-item" href="my-subjects.php"><i class="fa fa-book"></i> My Subjects</a> -->
-
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
@@ -96,20 +113,13 @@ if (isset($_SESSION['user_id'])) {
             }
         </style>
 
-
         <!-- CPSU Text and Logo (Visible on large screens only) -->
         <div class="navbar-brand d-lg-flex align-items-center d-none d-lg-flex">
             <h1 class="mb-0" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">CPSU</h1>
             <img src="../../admin/assets/images/cpsu_logo.png" height="65" alt="CPSU Logo" class="ml-2">
         </div>
-
-
     </div>
 </nav>
-
-
-
-
 
 <!-- Logout Confirmation Modal -->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
