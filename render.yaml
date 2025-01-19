@@ -6,5 +6,5 @@ services:
     region: oregon
     branch: main
     buildCommand: ""  # No build command needed for a PHP-only app
-    startCommand: php -S 0.0.0.0:10000 -t public  # Adjust if your public folder is different
+    startCommand: php -S 0.0.0.0:10000  # Start PHP server in the root directory
     healthCheckPath: /
