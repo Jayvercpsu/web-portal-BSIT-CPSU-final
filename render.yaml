@@ -1,3 +1,5 @@
+blueprintName: web-portal-bsit-cpsu
+
 services:
   - name: php-web-app
     type: web
