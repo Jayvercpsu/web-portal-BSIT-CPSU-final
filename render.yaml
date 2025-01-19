@@ -1,10 +1,10 @@
 services:
-  - name: my-service
+  - name: php-web-app
     type: web
-    env: node
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    env: php
     plan: free
     region: oregon
     branch: main
+    buildCommand: ""
+    startCommand: php -S 0.0.0.0:10000 -t public
     healthCheckPath: /
