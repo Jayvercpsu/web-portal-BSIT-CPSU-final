@@ -1,7 +1,6 @@
 services:
   - name: php-web-app
     type: web
-    env: php
     plan: free
     region: oregon
     branch: main
