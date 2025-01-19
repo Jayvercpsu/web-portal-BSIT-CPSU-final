@@ -5,6 +5,6 @@ services:
     plan: free
     region: oregon
     branch: main
-    buildCommand: ""
-    startCommand: php -S 0.0.0.0:10000 -t public
+    buildCommand: ""  # No build command needed for a PHP-only app
+    startCommand: php -S 0.0.0.0:10000 -t public  # Adjust if your public folder is different
     healthCheckPath: /
