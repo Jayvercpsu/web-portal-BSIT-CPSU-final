@@ -1,1 +1,10 @@
-
+services:
+  - name: my-service
+    type: web
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    plan: free
+    region: oregon
+    branch: main
+    healthCheckPath: /
