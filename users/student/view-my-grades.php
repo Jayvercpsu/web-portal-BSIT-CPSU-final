@@ -5,23 +5,34 @@ session_start();
 // Include the database connection file
 include('includes/config.php');
 
-// Ensure the user is logged in
+// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$student_id = $_SESSION['user_id'];
+// Get the user_id from session
+$user_id = $_SESSION['user_id'];
 
-// Fetch grades for the logged-in student
-$query = "SELECT grade, date_added 
-          FROM student_grades 
-          WHERE user_id = '$student_id'
-          ORDER BY date_added DESC";
+// Prepare the query to fetch grades for the logged-in user
+$query = "SELECT grade, date_added FROM student_grades WHERE user_id = ? ORDER BY date_added DESC";
 
-$result = mysqli_query($con, $query);
-$grades = mysqli_fetch_all($result, MYSQLI_ASSOC);
+if ($stmt = $con->prepare($query)) {
+    // Bind the user_id as a parameter
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
 
+    // Fetch the result
+    $result = $stmt->get_result();
+    $grades = $result->fetch_all(MYSQLI_ASSOC);
+
+    $stmt->close();
+} else {
+    die("Database query failed: " . $con->error);
+}
+
+// Close the database connection
+$con->close();
 ?>
 
 <!DOCTYPE html>
