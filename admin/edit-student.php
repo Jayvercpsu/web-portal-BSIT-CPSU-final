@@ -19,7 +19,7 @@ if (isset($_GET['email'])) {
         exit;
     }
 
-    // Determine current year by checking year tables
+    $current_password = $student['password']; // Store existing hashed password
     $current_year = '';
     $year_tables = [
         '1st Year' => 'first_year',
@@ -27,6 +27,8 @@ if (isset($_GET['email'])) {
         '3rd Year' => 'third_year',
         '4th Year' => 'fourth_year'
     ];
+
+    // Determine current year by checking year tables
     foreach ($year_tables as $year => $table) {
         $year_stmt = $con->prepare("SELECT * FROM $table WHERE email = ?");
         $year_stmt->bind_param('s', $email);
@@ -42,34 +44,50 @@ if (isset($_GET['email'])) {
         $full_name = $_POST['full_name'];
         $new_email = $_POST['email'];
         $new_year = $_POST['year'];
-        $new_password = $_POST['password'];
+        $new_password = $_POST['password']; // User's input
         $new_year_table = $year_tables[$new_year];
 
-        // Update in the users table
-        $update_stmt = $con->prepare("UPDATE users SET full_name = ?, email = ?, password = ?, year = ? WHERE email = ?");
-        $update_stmt->bind_param('sssss', $full_name, $new_email, $new_password, $new_year, $email);
-        if ($update_stmt->execute()) {
+        // Hash new password only if provided
+        $hashed_password = (!empty($new_password)) ? password_hash($new_password, PASSWORD_DEFAULT) : $current_password;
+
+        // Start transaction
+        mysqli_begin_transaction($con);
+
+        try {
+            // Update in the users table
+            $update_stmt = $con->prepare("UPDATE users SET full_name = ?, email = ?, password = ?, year = ? WHERE email = ?");
+            $update_stmt->bind_param('sssss', $full_name, $new_email, $hashed_password, $new_year, $email);
+            if (!$update_stmt->execute()) {
+                throw new Exception("Error updating student in users table: " . $con->error);
+            }
 
             // Remove from the current year table
             if ($current_year) {
                 $delete_stmt = $con->prepare("DELETE FROM $current_year WHERE email = ?");
                 $delete_stmt->bind_param('s', $email);
-                $delete_stmt->execute();
+                if (!$delete_stmt->execute()) {
+                    throw new Exception("Error removing student from previous year table: " . $con->error);
+                }
             }
 
             // Insert into the new year table
             $insert_stmt = $con->prepare("INSERT INTO $new_year_table (full_name, email, password, created_at) 
                                           VALUES (?, ?, ?, NOW()) 
                                           ON DUPLICATE KEY UPDATE full_name = ?, password = ?");
-            $insert_stmt->bind_param('sssss', $full_name, $new_email, $new_password, $full_name, $new_password);
-            if ($insert_stmt->execute()) {
-                echo "<script>alert('Student updated successfully');</script>";
-                echo "<script>window.location.href = 'all-students.php';</script>";
-            } else {
-                echo "<script>alert('Error inserting student into the new year table');</script>";
+            $insert_stmt->bind_param('sssss', $full_name, $new_email, $hashed_password, $full_name, $hashed_password);
+            if (!$insert_stmt->execute()) {
+                throw new Exception("Error inserting student into the new year table: " . $con->error);
             }
-        } else {
-            echo "<script>alert('Error updating student in the users table');</script>";
+
+            // Commit transaction
+            mysqli_commit($con);
+
+            echo "<script>alert('Student updated successfully');</script>";
+            echo "<script>window.location.href = 'all-students.php';</script>";
+        } catch (Exception $e) {
+            // Rollback transaction on error
+            mysqli_rollback($con);
+            echo "<script>alert('Transaction failed: " . $e->getMessage() . "');</script>";
         }
     }
 } else {
@@ -77,6 +95,7 @@ if (isset($_GET['email'])) {
     echo "<script>window.location.href = 'all-students.php';</script>";
 }
 ?>
+
 
 <?php include('includes/topheader.php'); ?>
 <?php include('includes/leftsidebar.php'); ?>

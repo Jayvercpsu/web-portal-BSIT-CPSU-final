@@ -2,15 +2,15 @@
 session_start();
 include('includes/config.php');
 
-// Check if the user is logged in and has a valid user_id in the session
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
+// Ensure user is logged in
+if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-// Fetch the student's data from the users table
+$user_id = $_SESSION['user_id'];
+
+// Fetch user data
 $query = "SELECT id, full_name, email, password, created_at, profile_image, year FROM users WHERE id = ?";
 $stmt = $con->prepare($query);
 $stmt->bind_param("i", $user_id);
@@ -19,27 +19,32 @@ $result = $stmt->get_result();
 $student = $result->fetch_assoc();
 
 if (!$student) {
-    echo "Student data not found.";
+    echo "User data not found.";
     exit();
 }
 
+// Set timezone & format date
 date_default_timezone_set('Asia/Kuala_Lumpur');
 $formatted_created_at = date("F j, Y g:i a", strtotime($student['created_at']));
 
-// Set the default profile image if none exists in the database
+// Set default profile image
 $profileImage = !empty($student['profile_image']) ? $student['profile_image'] : './assets/profile-images/default-profile.png';
-
-// Ensure the profile image path is valid and exists on the server
 if (!file_exists($profileImage)) {
     $profileImage = './assets/profile-images/default-profile.png';
 }
 
-
+// Handle form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $full_name = htmlspecialchars($_POST['full_name'], ENT_QUOTES, 'UTF-8');
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $year = $_POST['year'];
     $password = $_POST['password'];
+    
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Error: Invalid email format.";
+        exit();
+    }
 
     // Check for duplicate email
     $check_email_query = "SELECT id FROM users WHERE email = ? AND id != ?";
@@ -56,7 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handle profile image upload
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == UPLOAD_ERR_OK) {
         $target_dir = "./assets/profile-images/";
-        $file_extension = pathinfo($_FILES["profile_image"]["name"], PATHINFO_EXTENSION);
+        $file_extension = strtolower(pathinfo($_FILES["profile_image"]["name"], PATHINFO_EXTENSION));
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (!in_array($file_extension, $allowed_extensions)) {
+            echo "Error: Only JPG, JPEG, PNG, and GIF files are allowed.";
+            exit();
+        }
+
+        if ($_FILES["profile_image"]["size"] > 2 * 1024 * 1024) { // 2MB limit
+            echo "Error: File size exceeds 2MB.";
+            exit();
+        }
+
         $unique_file_name = $target_dir . uniqid('profile_', true) . '.' . $file_extension;
 
         if (move_uploaded_file($_FILES["profile_image"]["tmp_name"], $unique_file_name)) {
@@ -68,22 +85,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Keep old password if no new password is provided
-    if (empty($password)) {
-        $hashed_password = $student['password']; // Use the existing hashed password
-    } else {
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Hash the new password
-    }
+    $hashed_password = empty($password) ? $student['password'] : password_hash($password, PASSWORD_DEFAULT);
 
-    // Begin transaction for profile and year transition updates
+    // Begin transaction
     $con->begin_transaction();
     try {
-        // Update user data in the `users` table
+        // Update users table
         $update_query = "UPDATE users SET full_name = ?, email = ?, profile_image = ?, year = ?, password = ? WHERE id = ?";
         $stmt = $con->prepare($update_query);
         $stmt->bind_param("sssssi", $full_name, $email, $profileImage, $year, $hashed_password, $user_id);
         $stmt->execute();
 
-        // Define year tables
+        // Year tables mapping
         $year_tables = [
             '1st Year' => 'first_year',
             '2nd Year' => 'second_year',
@@ -91,9 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             '4th Year' => 'fourth_year'
         ];
 
-        // If the year has changed, move the student to the correct year table
+        // Handle year transition
         if ($student['year'] != $year) {
-            // Remove from old year table
             if (isset($year_tables[$student['year']])) {
                 $old_year_table = $year_tables[$student['year']];
                 $delete_query = "DELETE FROM $old_year_table WHERE id = ?";
@@ -102,7 +114,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->execute();
             }
 
-            // Add to new year table
             if (isset($year_tables[$year])) {
                 $new_year_table = $year_tables[$year];
                 $insert_query = "INSERT INTO $new_year_table (id, full_name, email, profile_image, password) VALUES (?, ?, ?, ?, ?)";
@@ -111,7 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->execute();
             }
         } else {
-            // If the year hasn't changed, update in the current year table
             if (isset($year_tables[$year])) {
                 $current_year_table = $year_tables[$year];
                 $update_year_query = "UPDATE $current_year_table SET full_name = ?, email = ?, profile_image = ?, password = ? WHERE id = ?";
@@ -121,12 +131,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
 
-        // Commit the transaction
+        // Commit transaction
         $con->commit();
         header("Location: edit-profile.php?update=success");
         exit();
     } catch (Exception $e) {
-        // Rollback transaction in case of error
+        // Rollback transaction on error
         $con->rollback();
         echo "Error updating profile: " . $e->getMessage();
     }

@@ -7,7 +7,8 @@ ini_set('display_errors', 1);
 if (isset($_POST['submit'])) {
     $full_name = mysqli_real_escape_string($con, $_POST['full_name']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
+    $password = $_POST['password']; // No need for mysqli_real_escape_string since we hash it
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
     $created_at = date("Y-m-d H:i:s");
     $role = 'professor'; // Define role for users table
 
@@ -26,14 +27,16 @@ if (isset($_POST['submit'])) {
 
         try {
             // Insert into professors table
-            $query_professor = mysqli_query($con, "INSERT INTO professors (full_name, email, password, created_at) VALUES ('$full_name', '$email', '$password', '$created_at')");
-            if (!$query_professor) {
+            $query_professor = mysqli_prepare($con, "INSERT INTO professors (full_name, email, password, created_at) VALUES (?, ?, ?, ?)");
+            mysqli_stmt_bind_param($query_professor, "ssss", $full_name, $email, $hashed_password, $created_at);
+            if (!mysqli_stmt_execute($query_professor)) {
                 throw new Exception("Error inserting into professors table: " . mysqli_error($con));
             }
 
             // Insert into users table
-            $query_user = mysqli_query($con, "INSERT INTO users (full_name, email, password, role, created_at) VALUES ('$full_name', '$email', '$password', '$role', '$created_at')");
-            if (!$query_user) {
+            $query_user = mysqli_prepare($con, "INSERT INTO users (full_name, email, password, role, created_at) VALUES (?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($query_user, "sssss", $full_name, $email, $hashed_password, $role, $created_at);
+            if (!mysqli_stmt_execute($query_user)) {
                 throw new Exception("Error inserting into users table: " . mysqli_error($con));
             }
 
@@ -50,6 +53,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 
 <?php include('includes/topheader.php'); ?>
 <?php include('includes/leftsidebar.php'); ?>

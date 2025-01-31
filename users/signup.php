@@ -6,6 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fullName = mysqli_real_escape_string($con, $_POST['fullName']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Hashing password
     $role = mysqli_real_escape_string($con, $_POST['role']);
     $year = isset($_POST['year']) ? mysqli_real_escape_string($con, $_POST['year']) : null;
 
@@ -38,12 +39,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('This email is already registered. Please use a different email.');</script>";
     } else {
         if ($role === 'student') {
-            $sql = "INSERT INTO $table (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
+            $sql = "INSERT INTO $table (full_name, email, password) VALUES ('$fullName', '$email', '$hashedPassword')";
         } elseif ($role === 'professor') {
-            $sql = "INSERT INTO professors (full_name, email, password) VALUES ('$fullName', '$email', '$password')";
+            $sql = "INSERT INTO professors (full_name, email, password) VALUES ('$fullName', '$email', '$hashedPassword')";
         }
 
-        $userSql = "INSERT INTO users (full_name, email, password, role, year) VALUES ('$fullName', '$email', '$password', '$role', '$year')";
+        $userSql = "INSERT INTO users (full_name, email, password, role, year) VALUES ('$fullName', '$email', '$hashedPassword', '$role', '$year')";
 
         if (mysqli_query($con, $sql) && mysqli_query($con, $userSql)) {
             $sessionQuery = $role === 'professor'
@@ -67,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

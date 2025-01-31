@@ -7,15 +7,22 @@ if (isset($_POST['submit'])) {
     $full_name = mysqli_real_escape_string($con, $_POST['full_name']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $year = mysqli_real_escape_string($con, $_POST['year']);
-    $password = mysqli_real_escape_string($con, $_POST['password']);
+    $password = $_POST['password']; // No need to escape since it will be hashed
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Hash the password
     $created_at = date('Y-m-d H:i:s');
 
-    // Insert into the users table
-    $user_query = "INSERT INTO users (full_name, email, role, year, password, created_at) 
-                   VALUES ('$full_name', '$email', 'student', '$year', '$password', '$created_at')";
-    
-    if (mysqli_query($con, $user_query)) {
-        // Insert into the respective year table
+    // Start transaction
+    mysqli_begin_transaction($con);
+
+    try {
+        // Insert into the users table
+        $user_query = mysqli_prepare($con, "INSERT INTO users (full_name, email, role, year, password, created_at) VALUES (?, ?, 'student', ?, ?, ?)");
+        mysqli_stmt_bind_param($user_query, "sssss", $full_name, $email, $year, $hashed_password, $created_at);
+        if (!mysqli_stmt_execute($user_query)) {
+            throw new Exception("Error adding student to users table: " . mysqli_error($con));
+        }
+
+        // Determine the correct year table
         $year_table = "";
         switch ($year) {
             case '1st Year':
@@ -31,28 +38,29 @@ if (isset($_POST['submit'])) {
                 $year_table = 'fourth_year';
                 break;
             default:
-                // Rollback by deleting from users table
-                mysqli_query($con, "DELETE FROM users WHERE email = '$email'");
-                echo "<script>alert('Invalid year selected');</script>";
-                exit;
+                throw new Exception("Invalid year selected");
         }
 
-        // Insert the student's details into the respective year table including the password
-        $year_query = "INSERT INTO $year_table (full_name, email, password, created_at) 
-                       VALUES ('$full_name', '$email', '$password', '$created_at')";
-        if (mysqli_query($con, $year_query)) {
-            echo "<script>alert('Student added successfully');</script>";
-            echo "<script>window.location.href = 'all-students.php';</script>";
-        } else {
-            // Rollback by deleting from users table
-            mysqli_query($con, "DELETE FROM users WHERE email = '$email'");
-            echo "<script>alert('Error adding student to year table');</script>";
+        // Insert into the respective year table
+        $year_query = mysqli_prepare($con, "INSERT INTO $year_table (full_name, email, password, created_at) VALUES (?, ?, ?, ?)");
+        mysqli_stmt_bind_param($year_query, "ssss", $full_name, $email, $hashed_password, $created_at);
+        if (!mysqli_stmt_execute($year_query)) {
+            throw new Exception("Error adding student to year table: " . mysqli_error($con));
         }
-    } else {
-        echo "<script>alert('Error adding student to users table');</script>";
+
+        // Commit transaction
+        mysqli_commit($con);
+
+        echo "<script>alert('Student added successfully');</script>";
+        echo "<script>window.location.href = 'all-students.php';</script>";
+    } catch (Exception $e) {
+        // Rollback transaction on error
+        mysqli_rollback($con);
+        echo "<script>alert('Transaction failed: " . $e->getMessage() . "');</script>";
     }
 }
 ?>
+
 
 <?php include('includes/topheader.php'); ?>
 <?php include('includes/leftsidebar.php'); ?>
