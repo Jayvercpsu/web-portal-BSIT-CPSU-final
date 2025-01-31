@@ -28,7 +28,7 @@
 
                 <!-- Students Section -->
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> Grade Inquiry </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 1st Sem </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="students-1st-year.php">1st Year</a></li>
                         <li><a href="students-2nd-year.php">2nd Year</a></li>
@@ -36,6 +36,26 @@
                         <li><a href="students-4th-year.php">4th Year</a></li>
                     </ul>
                 </li>
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 2nd Sem </span> <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="students-1st-year.php">1st Year</a></li>
+                        <li><a href="students-2nd-year.php">2nd Year</a></li>
+                        <li><a href="students-3rd-year.php">3rd Year</a></li>
+                        <li><a href="students-4th-year.php">4th Year</a></li>
+                    </ul>
+                </li>
+
+<!-- 
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> Grade Inquiry </span> <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="students-1st-year.php">1st Year</a></li>
+                        <li><a href="students-2nd-year.php">2nd Year</a></li>
+                        <li><a href="students-3rd-year.php">3rd Year</a></li>
+                        <li><a href="students-4th-year.php">4th Year</a></li>
+                    </ul>
+                </li> -->
 
 
 
