@@ -18,7 +18,14 @@
                 <li class="has_sub">
                     <a href="write-posts.php" class="waves-effect"><i class="fa fa-user"></i> <span> Newsfeed </span> </a>
                 </li>
-       
+
+                <li class="has_sub">
+                    <a href="add-subject.php" class="waves-effect">
+                        <i class="fas fa-book"></i> <span> Add Subject </span>
+                    </a>
+                </li>
+
+
                 <!-- Students Section -->
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> Grade Inquiry </span> <span class="menu-arrow"></span></a>
@@ -31,7 +38,7 @@
                 </li>
 
 
-             
+
 
 
                 <!-- Profile -->
