@@ -86,8 +86,8 @@
                             }
                         }
 
-                      // Fetch students with role 'student' and year '4th Year'
-$students_query = mysqli_query($con, "
+                        // Fetch students with role 'student' and year '4th Year'
+                        $students_query = mysqli_query($con, "
 SELECT u.id AS student_id, u.full_name, u.profile_image, u.created_at, 
        fs.grade, fs.subject_id, fs.professor_id, 
        s.subject_name, p.full_name AS professor_name
@@ -99,7 +99,7 @@ WHERE u.role = 'student'
   AND u.year = '4th Year'
 ORDER BY u.id ASC
 ");
-$first_sem_students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
+                        $first_sem_students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
 
 
                         // Fetch professors & subjects
@@ -109,225 +109,240 @@ $first_sem_students = mysqli_fetch_all($students_query, MYSQLI_ASSOC);
                         ?>
 
 
-<?php include('includes/topheader.php'); ?>
-<?php include('includes/leftsidebar.php'); ?>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
-
-<div class="content-page">
-    <div class="content">
-        <div class="container">
-            <h4>1st Semester Students</h4>
-            <table id="firstSemesterTable" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Profile Image</th>
-                        <th>Student Name</th>
-                        <th>Grade</th>
-                        <th>Subject</th>
-                        <th>Professor</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($first_sem_students as $student) { ?>
-                        <tr>
-                            <td>
-                                <img src="<?php echo (!empty($student['profile_image']) && file_exists('../student/assets/profile-images/' . basename($student['profile_image'])))
-                                                ? '../student/assets/profile-images/' . basename($student['profile_image'])
-                                                : '../student/assets/profile-images/default-profile.png'; ?>"
-                                    alt="Profile Image" style="width: 50px; height: 50px;">
-                            </td>
-                            <td><?php echo htmlentities($student['full_name']); ?></td>
-                            <td>
-                                <?php if (!empty($student['grade'])) { ?>
-                                    <span><?php echo $student['grade']; ?></span>
-                                <?php } else { ?>
-                                    <input type="number" class="form-control grade-input"
-                                        data-student-id="<?php echo $student['student_id']; ?>">
-                                <?php } ?>
-                            </td>
-                            <td>
-                                <?php if (!empty($student['subject_name'])) { ?>
-                                    <span><?php echo $student['subject_name']; ?></span>
-                                <?php } else { ?>
-                                    <select class="form-control subject-select" data-student-id="<?php echo $student['student_id']; ?>">
-                                        <option value="">Select Subject</option>
-                                        <?php foreach ($subjects as $subject) { ?>
-                                            <option value="<?php echo $subject['id']; ?>"><?php echo $subject['subject_name']; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                <?php } ?>
-                            </td>
-                            <td>
-                                <?php if (!empty($student['professor_name'])) { ?>
-                                    <span><?php echo $student['professor_name']; ?></span>
-                                <?php } else { ?>
-                                    <select class="form-control professor-select" data-student-id="<?php echo $student['student_id']; ?>">
-                                        <option value="">Select Professor</option>
-                                        <?php foreach ($professors as $professor) { ?>
-                                            <option value="<?php echo $professor['id']; ?>"><?php echo $professor['full_name']; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                <?php } ?>
-                            </td>
-                            <td>
-                                <?php if (!empty($student['grade'])) { ?>
-                                    <button class="btn btn-primary btn-sm edit-grade-btn"
-                                        data-student-id="<?php echo $student['student_id']; ?>"
-                                        data-grade="<?php echo $student['grade']; ?>">
-                                        Edit
-                                    </button>
-
-                                    <form method="POST" action="students-4th-year.php" style="display:inline;">
-                                        <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="student_id" value="<?php echo $student['student_id']; ?>">
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this grade?');">
-                                            Remove
-                                        </button>
-                                    </form>
-                                <?php } else { ?>
-                                    <button class="btn btn-primary btn-sm submit-grade-btn"
-                                        data-student-id="<?php echo $student['student_id']; ?>">
-                                        Submit
-                                    </button>
-                                <?php } ?>
-                            </td>
+                        <?php include('includes/topheader.php'); ?>
+                        <?php include('includes/leftsidebar.php'); ?>
+                        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
 
 
-                        </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                        <div class="content-page">
+                            <div class="content">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="page-title-box">
+                                                <h4 class="page-title">Fourth Year Students</h4>
+                                                <ol class="breadcrumb p-0 m-0">
+                                                    <li><a href="#">Dashboard</a></li>
+                                                    <li class="active">Fourth Year Students</li>
+                                                </ol>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h4>1st Semester Students</h4>
+                                    <table id="firstSemesterTable" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Profile Image</th>
+                                                <th>Student Name</th>
+                                                <th>Grade</th>
+                                                <th>Subject</th>
+                                                <th>Professor</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($first_sem_students as $student) { ?>
+                                                <tr>
+                                                    <td>
+                                                        <img src="<?php echo (!empty($student['profile_image']) && file_exists('../student/assets/profile-images/' . basename($student['profile_image'])))
+                                                                        ? '../student/assets/profile-images/' . basename($student['profile_image'])
+                                                                        : '../student/assets/profile-images/default-profile.png'; ?>"
+                                                            alt="Profile Image" style="width: 50px; height: 50px;">
+                                                    </td>
+                                                    <td><?php echo htmlentities($student['full_name']); ?></td>
+                                                    <td>
+                                                        <?php if (!empty($student['grade'])) { ?>
+                                                            <span><?php echo $student['grade']; ?></span>
+                                                        <?php } else { ?>
+                                                            <input type="number" class="form-control grade-input"
+                                                                data-student-id="<?php echo $student['student_id']; ?>">
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if (!empty($student['subject_name'])) { ?>
+                                                            <span><?php echo $student['subject_name']; ?></span>
+                                                        <?php } else { ?>
+                                                            <select class="form-control subject-select" data-student-id="<?php echo $student['student_id']; ?>">
+                                                                <option value="">Select Subject</option>
+                                                                <?php foreach ($subjects as $subject) { ?>
+                                                                    <option value="<?php echo $subject['id']; ?>"><?php echo $subject['subject_name']; ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if (!empty($student['professor_name'])) { ?>
+                                                            <span><?php echo $student['professor_name']; ?></span>
+                                                        <?php } else { ?>
+                                                            <select class="form-control professor-select" data-student-id="<?php echo $student['student_id']; ?>">
+                                                                <option value="">Select Professor</option>
+                                                                <?php foreach ($professors as $professor) { ?>
+                                                                    <option value="<?php echo $professor['id']; ?>"><?php echo $professor['full_name']; ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if (!empty($student['grade'])) { ?>
+                                                            <button class="btn btn-primary btn-sm edit-grade-btn"
+                                                                data-student-id="<?php echo $student['student_id']; ?>"
+                                                                data-grade="<?php echo $student['grade']; ?>">
+                                                                Edit
+                                                            </button>
 
-<!-- Edit Grade Modal -->
-<div id="editGradeModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Edit Grade</h4>
-            </div>
-            <div class="modal-body">
-                <form id="editGradeForm">
-                    <input type="hidden" id="editStudentId">
-
-                    <label>Grade:</label>
-                    <input type="number" id="editGradeInput" class="form-control">
-
-                    <label>Subject:</label>
-                    <select id="editSubjectId" class="form-control">
-                        <?php foreach ($subjects as $subject) { ?>
-                            <option value="<?php echo $subject['id']; ?>"><?php echo $subject['subject_name']; ?></option>
-                        <?php } ?>
-                    </select>
-
-                    <label>Professor:</label>
-                    <select id="editProfessorId" class="form-control">
-                        <?php foreach ($professors as $professor) { ?>
-                            <option value="<?php echo $professor['id']; ?>"><?php echo $professor['full_name']; ?></option>
-                        <?php } ?>
-                    </select>
-
-                    <button type="button" class="btn btn-primary mt-2 save-grade-btn">Save Changes</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                                                            <form method="POST" action="students-4th-year.php" style="display:inline;">
+                                                                <input type="hidden" name="action" value="delete">
+                                                                <input type="hidden" name="student_id" value="<?php echo $student['student_id']; ?>">
+                                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this grade?');">
+                                                                    Remove
+                                                                </button>
+                                                            </form>
+                                                        <?php } else { ?>
+                                                            <button class="btn btn-primary btn-sm submit-grade-btn"
+                                                                data-student-id="<?php echo $student['student_id']; ?>">
+                                                                Submit
+                                                            </button>
+                                                        <?php } ?>
+                                                    </td>
 
 
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit Grade Modal -->
+                        <div id="editGradeModal" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit Grade</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="editGradeForm">
+                                            <input type="hidden" id="editStudentId">
+
+                                            <label>Grade:</label>
+                                            <input type="number" id="editGradeInput" class="form-control">
+
+                                            <label>Subject:</label>
+                                            <select id="editSubjectId" class="form-control">
+                                                <?php foreach ($subjects as $subject) { ?>
+                                                    <option value="<?php echo $subject['id']; ?>"><?php echo $subject['subject_name']; ?></option>
+                                                <?php } ?>
+                                            </select>
+
+                                            <label>Professor:</label>
+                                            <select id="editProfessorId" class="form-control">
+                                                <?php foreach ($professors as $professor) { ?>
+                                                    <option value="<?php echo $professor['id']; ?>"><?php echo $professor['full_name']; ?></option>
+                                                <?php } ?>
+                                            </select>
+
+                                            <button type="button" class="btn btn-primary mt-2 save-grade-btn">Save Changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
+
+                        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 
-<script>
-    $(document).ready(function() {
-        $('#firstSemesterTable').DataTable();
+                        <script>
+                            $(document).ready(function() {
+                                $('#firstSemesterTable').DataTable();
 
-        // Submit new grade (Add)
-        $(".submit-grade-btn").click(function() {
-            let student_id = $(this).data("student-id");
-            let grade = $(".grade-input[data-student-id='" + student_id + "']").val();
-            let subject_id = $(".subject-select[data-student-id='" + student_id + "']").val();
-            let professor_id = $(".professor-select[data-student-id='" + student_id + "']").val();
+                                // Submit new grade (Add)
+                                $(".submit-grade-btn").click(function() {
+                                    let student_id = $(this).data("student-id");
+                                    let grade = $(".grade-input[data-student-id='" + student_id + "']").val();
+                                    let subject_id = $(".subject-select[data-student-id='" + student_id + "']").val();
+                                    let professor_id = $(".professor-select[data-student-id='" + student_id + "']").val();
 
-            if (!grade || !subject_id || !professor_id) {
-                alert("Please enter a grade, select a subject, and select a professor.");
-                return;
-            }
+                                    if (!grade || !subject_id || !professor_id) {
+                                        alert("Please enter a grade, select a subject, and select a professor.");
+                                        return;
+                                    }
 
-            $.post("students-4th-year.php", {
-                action: "add_or_edit",
-                student_id: student_id,
-                grade: grade,
-                subject_id: subject_id,
-                professor_id: professor_id
-            }, function(response) {
-                let res = JSON.parse(response);
-                alert(res.message);
-                if (res.status === "success") location.reload();
-            });
-        });
+                                    $.post("students-4th-year.php", {
+                                        action: "add_or_edit",
+                                        student_id: student_id,
+                                        grade: grade,
+                                        subject_id: subject_id,
+                                        professor_id: professor_id
+                                    }, function(response) {
+                                        let res = JSON.parse(response);
+                                        alert(res.message);
+                                        if (res.status === "success") location.reload();
+                                    });
+                                });
 
-        // Open edit modal (Now includes Subject and Professor)
-        $(".edit-grade-btn").click(function() {
-            let student_id = $(this).data("student-id");
-            let grade = $(this).data("grade");
-            let subject_id = $(this).data("subject-id");
-            let professor_id = $(this).data("professor-id");
+                                // Open edit modal (Now includes Subject and Professor)
+                                $(".edit-grade-btn").click(function() {
+                                    let student_id = $(this).data("student-id");
+                                    let grade = $(this).data("grade");
+                                    let subject_id = $(this).data("subject-id");
+                                    let professor_id = $(this).data("professor-id");
 
-            $("#editStudentId").val(student_id);
-            $("#editGradeInput").val(grade);
-            $("#editSubjectId").val(subject_id);
-            $("#editProfessorId").val(professor_id);
+                                    $("#editStudentId").val(student_id);
+                                    $("#editGradeInput").val(grade);
+                                    $("#editSubjectId").val(subject_id);
+                                    $("#editProfessorId").val(professor_id);
 
-            $("#editGradeModal").modal("show");
-        });
+                                    $("#editGradeModal").modal("show");
+                                });
 
-        // Save edited grade, subject, and professor
-        $(".save-grade-btn").click(function() {
-            let student_id = $("#editStudentId").val();
-            let grade = $("#editGradeInput").val();
-            let subject_id = $("#editSubjectId").val();
-            let professor_id = $("#editProfessorId").val();
+                                // Save edited grade, subject, and professor
+                                $(".save-grade-btn").click(function() {
+                                    let student_id = $("#editStudentId").val();
+                                    let grade = $("#editGradeInput").val();
+                                    let subject_id = $("#editSubjectId").val();
+                                    let professor_id = $("#editProfessorId").val();
 
-            if (!grade || !subject_id || !professor_id) {
-                alert("Please enter a grade, select a subject, and select a professor.");
-                return;
-            }
+                                    if (!grade || !subject_id || !professor_id) {
+                                        alert("Please enter a grade, select a subject, and select a professor.");
+                                        return;
+                                    }
 
-            $.post("students-4th-year.php", {
-                action: "add_or_edit",
-                student_id: student_id,
-                grade: grade,
-                subject_id: subject_id,
-                professor_id: professor_id
-            }, function(response) {
-                let res = JSON.parse(response);
-                alert(res.message);
-                if (res.status === "success") location.reload();
-            });
-        });
+                                    $.post("students-4th-year.php", {
+                                        action: "add_or_edit",
+                                        student_id: student_id,
+                                        grade: grade,
+                                        subject_id: subject_id,
+                                        professor_id: professor_id
+                                    }, function(response) {
+                                        let res = JSON.parse(response);
+                                        alert(res.message);
+                                        if (res.status === "success") location.reload();
+                                    });
+                                });
 
-        // Delete grade
-        $(".delete-grade-btn").click(function() {
-            if (confirm("Are you sure you want to remove this grade?")) {
-                let student_id = $(this).data("student-id");
+                                // Delete grade
+                                $(".delete-grade-btn").click(function() {
+                                    if (confirm("Are you sure you want to remove this grade?")) {
+                                        let student_id = $(this).data("student-id");
 
-                $.post("students-4th-year.php", {
-                    action: "delete",
-                    student_id: student_id
-                }, function(response) {
-                    let res = JSON.parse(response);
-                    alert(res.message);
-                    if (res.status === "success") location.reload();
-                });
-            }
-        });
-    });
-</script>
+                                        $.post("students-4th-year.php", {
+                                            action: "delete",
+                                            student_id: student_id
+                                        }, function(response) {
+                                            let res = JSON.parse(response);
+                                            alert(res.message);
+                                            if (res.status === "success") location.reload();
+                                        });
+                                    }
+                                });
+                            });
+                        </script>
 
-<?php include('includes/footer.php'); ?>
+                        <?php include('includes/footer.php'); ?>
