@@ -1,135 +1,55 @@
 <head>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../../css/footer.css">
 </head>
 
-<footer class="footer-section">
+<footer class="footer-section" style="background-color: #000; color: #fff; padding-top: 30px; padding-bottom: 30px;">
     <div class="container">
-        <!-- Footer CTA Section -->
-        <div class="footer-cta pt-5 pb-5">
-            <div class="row">
-                <!-- Find Us Section -->
-                <div class="col-xl-4 col-md-4 mb-30">
-                    <div class="single-cta">
-                        <i class="fas fa-map-marker-alt footer-icon"></i>
-                        <div class="cta-text">
-                            <h4>Find us</h4>
-                            <span>San Carlos City, Negros Occidental, <br> Philippines</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Call Us Section -->
-                <div class="col-xl-4 col-md-4 mb-30">
-                    <div class="single-cta">
-                        <i class="fas fa-phone footer-icon"></i>
-                        <div class="cta-text">
-                            <h4>Call us</h4>
-                            <span>9876543210</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Mail Us Section -->
-                <div class="col-xl-4 col-md-4 mb-30">
-                    <div class="single-cta">
-                        <i class="far fa-envelope-open footer-icon"></i>
-                        <div class="cta-text">
-                            <h4>Mail us</h4>
-                            <span>mail@bsitcpsu.edu</span>
+        <div class="footer-con" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
+
+            <!-- Footer CTA Section -->
+            <div class="footer-cta" style="width: 100%; padding: 30px 0; flex: 1 1 30%; margin-bottom: 30px;">
+                <div class="single-cta" style="display: flex; align-items: center; margin-bottom: 20px;">
+                    <i class="fas fa-map-marker-alt" style="font-size: 30px; margin-right: 15px; color: #f79c42;"></i>
+                    <div class="cta-text">
+                        <h4 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Find Us</h4>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3891.345006405893!2d123.3578011!3d10.4477552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a93f4321fa90b3%3A0x5a32a445f78a1f2f!2sCentral%20Philippines%20State%20University%20-%20Don%20Justo%20V.%20Valmayor%20Campus!5e0!3m2!1sen!2sph!4v1620283063423!5m2!1sen!2sph"
+                                width="100%" height="250" style="border: 0; border-radius: 8px;" allowfullscreen="" loading="lazy"></iframe>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Footer Content Section -->
-        <div class="footer-content pt-5 pb-5">
-            <div class="row">
-                <!-- Footer Logo Section -->
-                <div class="col-xl-4 col-lg-4 mb-50">
-                    <div class="footer-widget">
-                        <div class="footer-logo">
-                            <a href="index.html"><img src="../../admin/assets/images/BSIT_name.webp" alt="Logo"></a>
-                        </div>
-                        <div class="footer-text">
-                            <p>Get your brand new website or app developed from our platform. We help in creating an online presence with fantastic user experience.</p>
-                        </div>
-                        <div class="footer-social-icon">
-                            <span>Follow Us</span>
-                            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="twitter"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
-                        </div>
+            <!-- Footer Content Section -->
+            <div class="footer-content" style="padding: 30px 0; flex: 1 1 30%; margin-bottom: 50px;">
+                <div class="footer-widget">
+                    <div class="footer-logo">
+                        <img src="admin/assets/images/BSIT_name.webp" alt="Logo" style="max-width: 200px; margin-bottom: 20px;">
                     </div>
-                </div>
-
-                <!-- Footer Menu Section -->
-                <div class="col-xl-2 col-lg-2 col-md-4 mb-50">
-                    <div class="footer-widget">
-                        <div class="footer-widget-heading">
-                            <h3>About Us</h3>
-                        </div>
-                        <ul class="footer-menu">
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Career</a></li>
-                        </ul>
+                    <div class="footer-text">
+                        <p style="font-size: 16px; margin-bottom: 15px;">Get your brand new website or app developed from our platform. We help in creating an online presence with fantastic user experience.</p>
                     </div>
-                </div>
-
-                <!-- Footer Menu Section -->
-                <div class="col-xl-2 col-lg-2 col-md-4 mb-50">
-                    <div class="footer-widget">
-                        <div class="footer-widget-heading">
-                            <h3>Services</h3>
-                        </div>
-                        <ul class="footer-menu">
-                            <li><a href="#">Web Design</a></li>
-                            <li><a href="#">App Development</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Footer Menu Section -->
-                <div class="col-xl-2 col-lg-2 col-md-4 mb-50">
-                    <div class="footer-widget">
-                        <div class="footer-widget-heading">
-                            <h3>Quick Links</h3>
-                        </div>
-                        <ul class="footer-menu">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                            <li><a href="FAQ.php">FAQ</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Subscribe Section -->
-                <div class="col-xl-2 col-lg-2 col-md-4 mb-50">
-                    <div class="footer-widget">
-                        <div class="footer-widget-heading">
-                            <h3>Subscribe</h3>
-                        </div>
-                        <div class="subscribe-form">
-                            <input type="email" placeholder="Enter your email">
-                            <button><i class="fa fa-paper-plane"></i></button>
-                        </div>
+                    <div class="footer-social-icon" style="display: flex; gap: 10px;">
+                        <span>Follow Us</span>
+                        <a href="https://web.facebook.com/CollegeofComputrStudies" class="facebook" style="font-size: 20px; color: #fff; transition: color 0.3s ease;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Copyright Section -->
-        <div class="copyright-area pt-5 pb-5">
-            <div class="container">
-                <div class="copyright-text">
-                    <p>&copy; 2024 CPSU BSIT - All Rights Reserved.</p>
-                </div>
-            </div>
+        <div class="copyright-area" style="background-color: #222; text-align: center; padding: 15px 0; font-size: 14px;">
+            <p>&copy; 2024 CPSU BSIT - All Rights Reserved.</p>
         </div>
     </div>
 
     <!-- Scroll to Top Button -->
-    <div class="scroll-to-top"><i class="fas fa-arrow-up"></i></div>
+    <div class="scroll-to-top" style="position: fixed; bottom: 30px; right: 30px; background-color: #6f42c1; color: #fff; padding: 15px; border-radius: 50%; cursor: pointer; transition: opacity 0.3s ease; z-index: 9999; display: none;">
+        <i class="fas fa-arrow-up" style="font-size: 20px;"></i>
+    </div>
 </footer>
 
 <script>
@@ -137,9 +57,9 @@
     window.addEventListener('scroll', function() {
         let scrollToTopBtn = document.querySelector('.scroll-to-top');
         if (document.documentElement.scrollTop > 100) {
-            scrollToTopBtn.classList.add('show');
+            scrollToTopBtn.style.display = 'block';  // Show button when scrolling down
         } else {
-            scrollToTopBtn.classList.remove('show');
+            scrollToTopBtn.style.display = 'none';   // Hide button when near the top
         }
     });
 
