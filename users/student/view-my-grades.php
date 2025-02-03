@@ -39,8 +39,9 @@ $query = "
     LEFT JOIN professors p ON ss.professor_id = p.id
     WHERE ss.student_id = ?
 
-    ORDER BY date_added DESC
+    ORDER BY FIELD(semester, 'First Semester', 'Second Semester'), date_added DESC
 ";
+
 
 $grades = [];
 if ($stmt = $con->prepare($query)) {
@@ -81,37 +82,39 @@ $con->close();
         <h2 class="text-center mb-4">Your Grades (Both Semesters)</h2>
 
         <?php if (!empty($grades)) { ?>
-            <table class="table table-bordered text-center">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Semester</th>
-                        <th>Subject</th>
-                        <th>Grade</th>
-                        <th>Instructor</th>
-                        <th>Date Recorded</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($grades as $grade_data) {
-                        $grade = htmlspecialchars($grade_data['grade']);
-                        $subject_name = htmlspecialchars($grade_data['subject_name']);
-                        $professor_name = !empty($grade_data['professor_name']) ? htmlspecialchars($grade_data['professor_name']) : 'Unknown';
-                        $date_added = htmlspecialchars(date("F j, Y, g:i A", strtotime($grade_data['date_added'])));
-                        $semester = htmlspecialchars($grade_data['semester']);
-
-                        // Determine the grade color
-                        $color = ($grade <= 75) ? 'red' : (($grade > 80) ? 'green' : 'black');
-                    ?>
+            <div class="table-responsive">
+                <table class="table table-bordered text-center">
+                    <thead class="thead-dark">
                         <tr>
-                            <td><?php echo $semester; ?></td>
-                            <td><?php echo $subject_name; ?></td>
-                            <td class="font-weight-bold" style="color: <?php echo $color; ?>;"><?php echo $grade; ?></td>
-                            <td><?php echo $professor_name; ?></td>
-                            <td><?php echo $date_added; ?></td>
+                            <th>Semester</th>
+                            <th>Subject</th>
+                            <th>Grade</th>
+                            <th>Instructor</th>
+                            <th>Date Recorded</th>
                         </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($grades as $grade_data) {
+                            $grade = htmlspecialchars($grade_data['grade']);
+                            $subject_name = htmlspecialchars($grade_data['subject_name']);
+                            $professor_name = !empty($grade_data['professor_name']) ? htmlspecialchars($grade_data['professor_name']) : 'Unknown';
+                            $date_added = htmlspecialchars(date("F j, Y, g:i A", strtotime($grade_data['date_added'])));
+                            $semester = htmlspecialchars($grade_data['semester']);
+
+                            // Determine the grade color
+                            $color = ($grade <= 75) ? 'red' : (($grade > 80) ? 'green' : 'black');
+                        ?>
+                            <tr>
+                                <td><?php echo $semester; ?></td>
+                                <td><?php echo $subject_name; ?></td>
+                                <td class="font-weight-bold" style="color: <?php echo $color; ?>;"><?php echo $grade; ?></td>
+                                <td><?php echo $professor_name; ?></td>
+                                <td><?php echo $date_added; ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
         <?php } else { ?>
             <div class="text-center">
                 <h1 class="display-4 text-danger">No grades available</h1>
