@@ -10,5 +10,6 @@ session_unset();
 session_destroy();
 
 // Redirect to login page
-echo '<script language="javascript">document.location = "../login.php";</script>';
-exit; // Ensure no further script execution
+header("Location: ../login.php");
+exit;
+?>

@@ -2,6 +2,13 @@
 session_start();
 include('includes/config.php');
 
+// Check if the user is logged in, if not, redirect to the login page
+if (!isset($_SESSION['user_id'])) {
+  header("Location: ../login.php");
+  exit; // Ensure no further script execution
+}
+
+
 // Sample Queries for Dashboard Content
 // Fetch the total number of students for each year level
 $total_first_year_query = "SELECT COUNT(*) as total_students FROM first_year";
@@ -102,69 +109,69 @@ $grades_distribution = mysqli_fetch_assoc($grades_distribution_result);
 
       <br>
       <div class="row">
-    <div class="col-md-12">
-        <div class="card">
+        <div class="col-md-12">
+          <div class="card">
             <div class="card-body">
-                <h4 class="card-title text-center">Student Population Per Year Level</h4>
-                <div id="studentsChart"></div>
+              <h4 class="card-title text-center">Student Population Per Year Level</h4>
+              <div id="studentsChart"></div>
             </div>
+          </div>
         </div>
-    </div>
-</div>
+      </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var options = {
+      <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          var options = {
             series: [{
-                name: "Total Students",
-                data: [
-                    <?php echo $total_first_year; ?>, 
-                    <?php echo $total_second_year; ?>, 
-                    <?php echo $total_third_year; ?>, 
-                    <?php echo $total_fourth_year; ?>
-                ]
+              name: "Total Students",
+              data: [
+                <?php echo $total_first_year; ?>,
+                <?php echo $total_second_year; ?>,
+                <?php echo $total_third_year; ?>,
+                <?php echo $total_fourth_year; ?>
+              ]
             }],
             chart: {
-                type: 'bar',
-                height: 350
+              type: 'bar',
+              height: 350
             },
             plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '50%',
-                    endingShape: 'rounded'
-                },
+              bar: {
+                horizontal: false,
+                columnWidth: '50%',
+                endingShape: 'rounded'
+              },
             },
             dataLabels: {
-                enabled: true
+              enabled: true
             },
             stroke: {
-                show: true,
-                width: 2,
-                colors: ['transparent']
+              show: true,
+              width: 2,
+              colors: ['transparent']
             },
             xaxis: {
-                categories: ["1st Year", "2nd Year", "3rd Year", "4th Year"],
+              categories: ["1st Year", "2nd Year", "3rd Year", "4th Year"],
             },
             fill: {
-                opacity: 1
+              opacity: 1
             },
             colors: ['#007bff', '#17a2b8', '#ffc107', '#28a745'], // Bootstrap colors
             tooltip: {
-                y: {
-                    formatter: function (val) {
-                        return val + " students";
-                    }
+              y: {
+                formatter: function(val) {
+                  return val + " students";
                 }
+              }
             }
-        };
+          };
 
-        var chart = new ApexCharts(document.querySelector("#studentsChart"), options);
-        chart.render();
-    });
-</script>
+          var chart = new ApexCharts(document.querySelector("#studentsChart"), options);
+          chart.render();
+        });
+      </script>
 
-      
+
       <?php include('includes/footer.php'); ?>
 
     </div>
