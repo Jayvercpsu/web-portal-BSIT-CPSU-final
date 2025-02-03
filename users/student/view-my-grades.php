@@ -23,19 +23,28 @@ if ($student_id === null) {
     die("Error: Student not found or not authorized.");
 }
 
-// Fetch grades with subjects and professor names
+// Fetch grades from both first and second semester
 $query = "
-    SELECT fs.grade, fs.date_added, s.subject_name, p.full_name AS professor_name
+    SELECT fs.grade, fs.date_added, s.subject_name, p.full_name AS professor_name, 'First Semester' AS semester
     FROM first_semester_students fs
     JOIN subjects s ON fs.subject_id = s.id
     LEFT JOIN professors p ON fs.professor_id = p.id
     WHERE fs.student_id = ?
-    ORDER BY fs.date_added DESC
+
+    UNION
+
+    SELECT ss.grade, ss.date_added, s.subject_name, p.full_name AS professor_name, 'Second Semester' AS semester
+    FROM second_semester_students ss
+    JOIN subjects s ON ss.subject_id = s.id
+    LEFT JOIN professors p ON ss.professor_id = p.id
+    WHERE ss.student_id = ?
+
+    ORDER BY date_added DESC
 ";
 
 $grades = [];
 if ($stmt = $con->prepare($query)) {
-    $stmt->bind_param("i", $student_id);
+    $stmt->bind_param("ii", $student_id, $student_id);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
@@ -69,12 +78,13 @@ $con->close();
         </a>
 
         <!-- Main Content -->
-        <h2 class="text-center mb-4">Your Grades</h2>
+        <h2 class="text-center mb-4">Your Grades (Both Semesters)</h2>
 
         <?php if (!empty($grades)) { ?>
             <table class="table table-bordered text-center">
                 <thead class="thead-dark">
                     <tr>
+                        <th>Semester</th>
                         <th>Subject</th>
                         <th>Grade</th>
                         <th>Instructor</th>
@@ -87,11 +97,13 @@ $con->close();
                         $subject_name = htmlspecialchars($grade_data['subject_name']);
                         $professor_name = !empty($grade_data['professor_name']) ? htmlspecialchars($grade_data['professor_name']) : 'Unknown';
                         $date_added = htmlspecialchars(date("F j, Y, g:i A", strtotime($grade_data['date_added'])));
+                        $semester = htmlspecialchars($grade_data['semester']);
 
                         // Determine the grade color
                         $color = ($grade <= 75) ? 'red' : (($grade > 80) ? 'green' : 'black');
                     ?>
                         <tr>
+                            <td><?php echo $semester; ?></td>
                             <td><?php echo $subject_name; ?></td>
                             <td class="font-weight-bold" style="color: <?php echo $color; ?>;"><?php echo $grade; ?></td>
                             <td><?php echo $professor_name; ?></td>
