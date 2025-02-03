@@ -29,23 +29,25 @@
                 <!-- Students Section -->
                 <!-- 1st sem -->
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 1st Sem </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 1st Sem Grades </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="students-1st-year.php">1st Year</a></li>
-                        <li><a href="students-2nd-year.php">2nd Year</a></li>
-                        <li><a href="students-3rd-year.php">3rd Year</a></li>
-                        <li><a href="students-4th-year.php">4th Year</a></li>
+                        <li><a href="students-1st-year.php"><i class="fa fa-university"></i> 1st Year</a></li>
+                        <li><a href="students-2nd-year.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
+                        <li><a href="students-3rd-year.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
+                        <li><a href="students-4th-year.php"><i class="fa  fa-user-graduate"></i> 4th Year</a></li>
                     </ul>
                 </li>
 
+
                 <!-- 2nd sem -->
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 2nd Sem </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 2nd Sem Grades </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="2ndsem-1st-year.php">1st Year</a></li>
-                        <li><a href="2ndsem-2nd-year.php">2nd Year</a></li>
-                        <li><a href="2ndsem-3rd-year.php">3rd Year</a></li>
-                        <li><a href="2ndsem-4th-year.php">4th Year</a></li>
+                        <li><a href="2ndsem-1st-year.php"><i class="fa fa-university"></i> 1st Year</a></li>
+                        <li><a href="2ndsem-2nd-year.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
+                        <li><a href="2ndsem-3rd-year.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
+                        <li><a href="2ndsem-4th-year.php"><i class="fa fa-user-graduate"></i> 4th Year</a></li>
+
                     </ul>
                 </li>
 

@@ -63,49 +63,110 @@ $grades_distribution = mysqli_fetch_assoc($grades_distribution_result);
       <!-- Dashboard Stats Cards -->
       <div class="row">
         <div class="col-md-3">
-          <div class="card text-center bg-primary text-white">
-            <div class="card-body">
-              <h4 class="card-title">First Year</h4>
-              <h3><?php echo $total_first_year; ?></h3>
-              <i class="mdi mdi-account-group mdi-48px"></i>
+          <div class="card text-center bg-primary text-white mb-4 p-3">
+            <div class="card-body" style="padding: 20px">
+              <h4 class="card-title text-white">First Year</h4>
+              <h3 class="text-white"><?php echo $total_first_year; ?></h3>
+              <i class="mdi mdi-account-group mdi-48px text-white"></i>
             </div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="card text-center bg-info text-white">
-            <div class="card-body">
-              <h4 class="card-title">Second Year</h4>
-              <h3><?php echo $total_second_year; ?></h3>
-              <i class="mdi mdi-account-group mdi-48px"></i>
+          <div class="card text-center bg-info text-white mb-4 p-3">
+            <div class="card-body" style="padding: 20px">
+              <h4 class="card-title text-white">Second Year</h4>
+              <h3 class="text-white"><?php echo $total_second_year; ?></h3>
+              <i class="mdi mdi-account-group mdi-48px text-white"></i>
             </div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="card text-center bg-warning text-white">
-            <div class="card-body">
-              <h4 class="card-title">Third Year</h4>
-              <h3><?php echo $total_third_year; ?></h3>
-              <i class="mdi mdi-account-group mdi-48px"></i>
+          <div class="card text-center bg-warning text-white mb-4 p-3">
+            <div class="card-body" style="padding: 20px">
+              <h4 class="card-title text-white">Third Year</h4>
+              <h3 class="text-white"><?php echo $total_third_year; ?></h3>
+              <i class="mdi mdi-account-group mdi-48px text-white"></i>
             </div>
           </div>
         </div>
         <div class="col-md-3">
-          <div class="card text-center bg-success text-white">
-            <div class="card-body">
-              <h4 class="card-title">Fourth Year</h4>
-              <h3><?php echo $total_fourth_year; ?></h3>
-              <i class="mdi mdi-account-group mdi-48px"></i>
+          <div class="card text-center bg-success text-white mb-4 p-3">
+            <div class="card-body" style="padding: 20px">
+              <h4 class="card-title text-white">Fourth Year</h4>
+              <h3 class="text-white"><?php echo $total_fourth_year; ?></h3>
+              <i class="mdi mdi-account-group mdi-48px text-white"></i>
             </div>
           </div>
         </div>
       </div>
 
-       <br>
+      <br>
+      <div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Student Population Per Year Level</h4>
+                <div id="studentsChart"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var options = {
+            series: [{
+                name: "Total Students",
+                data: [
+                    <?php echo $total_first_year; ?>, 
+                    <?php echo $total_second_year; ?>, 
+                    <?php echo $total_third_year; ?>, 
+                    <?php echo $total_fourth_year; ?>
+                ]
+            }],
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '50%',
+                    endingShape: 'rounded'
+                },
+            },
+            dataLabels: {
+                enabled: true
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: ["1st Year", "2nd Year", "3rd Year", "4th Year"],
+            },
+            fill: {
+                opacity: 1
+            },
+            colors: ['#007bff', '#17a2b8', '#ffc107', '#28a745'], // Bootstrap colors
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " students";
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#studentsChart"), options);
+        chart.render();
+    });
+</script>
+
+      
       <?php include('includes/footer.php'); ?>
 
     </div>
   </div>
 </div>
-
- 
