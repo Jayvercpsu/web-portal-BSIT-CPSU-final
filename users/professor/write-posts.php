@@ -186,18 +186,18 @@ $query = mysqli_query($con, "
                     <?php
                     // Fetch posts made by the logged-in professor
                     $query = mysqli_query($con, "
-    SELECT 
-        pp.id, 
-        pp.PostText AS content, 
-        pp.PostImage AS image, 
-        pp.created_at, 
-        u.full_name, 
-        u.profile_image 
-    FROM professors_post pp
-    INNER JOIN users u ON pp.user_id = u.id
-    WHERE u.id = '$user_id'
-    ORDER BY pp.created_at DESC
-");
+                        SELECT 
+                            pp.id, 
+                            pp.PostText AS content, 
+                            pp.PostImage AS image, 
+                            pp.created_at, 
+                            u.full_name, 
+                            u.profile_image 
+                        FROM professors_post pp
+                        INNER JOIN users u ON pp.user_id = u.id
+                        WHERE u.id = '$user_id'
+                        ORDER BY pp.created_at DESC
+                    ");
 
                     $rowcount = mysqli_num_rows($query);
 
@@ -304,109 +304,193 @@ $query = mysqli_query($con, "
                                             <button type="button" class="btn btn-link btn-lg comment-btn" onclick="toggleComments(<?php echo $row['id']; ?>)">
                                                 <i class="fas fa-comment-alt me-2"></i>Comment (<?php echo $comment_count; ?>)
                                             </button>
-                                            <button type="button" class="btn btn-link btn-lg">
-                                                <i class="fas fa-share me-2"></i>Share
-                                            </button>
+
                                         </div>
                                     </div>
 
                                     <!-- Comments Section -->
                                     <div class="comments-section" id="comments-<?php echo $row['id']; ?>" style="display: none; padding: 15px; background-color: #f8f9fa;">
-                                        <textarea class="form-control mt-3" id="commentText-<?php echo $row['id']; ?>" rows="3" placeholder="Write a comment..."></textarea>
-                                        <div class="comment-list" id="comment-list-<?php echo $row['id']; ?>"></div>
-                                        <button type="button" class="btn btn-primary mt-2" onclick="submitProfessorComment(<?php echo $row['id']; ?>)">Post Comment</button>
-                                        <button type="button" class="btn btn-link load-more-comments" id="loadMore-<?php echo $row['id']; ?>" onclick="loadMoreComments(<?php echo $row['id']; ?>)">
-                                            Load More Comments
+                                        <!-- Comment Input Box -->
+                                        <div class="d-flex align-items-start mb-3">
+                                            <img src="<?php echo $profileImagePath; ?>" class="rounded-circle me-2" alt="User Avatar" style="width: 40px; height: 40px;">
+                                            <textarea class="form-control" id="commentText-<?php echo $row['id']; ?>" rows="2" placeholder="Write a comment..."></textarea>
+                                        </div>
+
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="submitProfessorComment(<?php echo $row['id']; ?>)">
+                                            Post Comment
+                                        </button>
+                                        <button type="button" class="btn btn-secondary btn-sm" onclick="hideComments(<?php echo $row['id']; ?>)">
+                                            Hide Comments
                                         </button>
 
-                                        <button type="button" class="btn btn-secondary mt-2" onclick="hideComments(<?php echo $row['id']; ?>)">Hide Comments</button>
+                                        <!-- Displayed Comments -->
+                                        <div class="comment-list mt-3" id="comment-list-<?php echo $row['id']; ?>"></div>
+
+                                        <button type="button" class="btn btn-link load-more-comments mt-2" id="loadMore-<?php echo $row['id']; ?>" onclick="loadMoreComments(<?php echo $row['id']; ?>)">
+                                            Load More Comments
+                                        </button>
                                     </div>
+                                    <style>
+                                    .comment-item {
+    transition: all 0.3s ease-in-out;
+    border-left: 4px solid #007bff;
+    padding-left: 10px;
+}
 
+.comment-item:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment-item p {
+    font-size: 14px;
+}
+
+.btn-light {
+    border: none;
+}
+
+.btn-light:hover {
+    background-color: #f0f0f0;
+}
+
+.comment-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.comment-input {
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+                                    </style>
                                     <script>
-                                        const commentOffsets = {}; // Track offsets for each post ID
+                           const commentOffsets = {}; // Tracks the number of loaded comments per post
+const loadedComments = {}; // Tracks unique comment IDs to prevent duplicates
 
-                                        function toggleComments(postId) {
-                                            const commentsSection = document.getElementById(`comments-${postId}`);
-                                            commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
-                                        }
+function toggleComments(postId) {
+    const commentsSection = document.getElementById(`comments-${postId}`);
+    const commentList = document.getElementById(`comment-list-${postId}`);
 
-                                        function hideComments(postId) {
-                                            const commentsSection = document.getElementById(`comments-${postId}`);
-                                            commentsSection.style.display = 'none';
-                                        }
+    if (commentsSection.style.display === 'none' || commentsSection.style.display === '') {
+        commentsSection.style.display = 'block';
 
-                                        function loadMoreComments(postId) {
-                                            const button = document.getElementById(`loadMore-${postId}`);
-                                            const commentList = document.getElementById(`comment-list-${postId}`);
+        if (!loadedComments[postId]) {
+            loadedComments[postId] = new Set();
+            commentList.innerHTML = ''; // Clear previous comments
+            commentOffsets[postId] = 0; // Reset offset
+            loadMoreComments(postId);
+        }
+    } else {
+        commentsSection.style.display = 'none';
+    }
+}
 
-                                            if (!commentOffsets[postId]) commentOffsets[postId] = 0;
+function hideComments(postId) {
+    document.getElementById(`comments-${postId}`).style.display = 'none';
+}
 
-                                            const offset = commentOffsets[postId];
-                                            const limit = 5;
+function loadMoreComments(postId) {
+    const button = document.getElementById(`loadMore-${postId}`);
+    const commentList = document.getElementById(`comment-list-${postId}`);
 
-                                            button.disabled = true;
-                                            button.innerHTML = 'Loading...';
+    if (!commentOffsets[postId]) commentOffsets[postId] = 0;
+    if (!loadedComments[postId]) loadedComments[postId] = new Set();
 
-                                            fetch('fetch_comments.php', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/x-www-form-urlencoded'
-                                                    },
-                                                    body: `post_id=${postId}&offset=${offset}`
-                                                })
-                                                .then(response => response.text())
-                                                .then(data => {
-                                                    if (data.trim()) {
-                                                        commentList.insertAdjacentHTML('beforeend', data);
-                                                        commentOffsets[postId] += limit;
+    const offset = commentOffsets[postId];
+    const limit = 5;
 
-                                                        if (data.split('<div class="comment').length - 1 < limit) {
-                                                            button.style.display = 'none';
-                                                        } else {
-                                                            button.disabled = false;
-                                                            button.innerHTML = 'Load More Comments';
-                                                        }
-                                                    } else {
-                                                        button.style.display = 'none';
-                                                    }
-                                                })
-                                                .catch(error => {
-                                                    console.error('Error loading comments:', error);
-                                                    button.disabled = false;
-                                                    button.innerHTML = 'Load More Comments';
-                                                });
-                                        }
+    button.disabled = true;
+    button.innerHTML = 'Loading...';
 
-                                        function submitProfessorComment(postId) {
-                                            const commentText = document.getElementById(`commentText-${postId}`).value;
+    fetch('fetch_comments.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `post_id=${postId}&offset=${offset}`
+    })
+    .then(response => response.json()) // Expect JSON response
+    .then(data => {
+        if (data.comments && data.comments.length > 0) {
+            data.comments.forEach(comment => {
+                if (!loadedComments[postId].has(comment.id)) {
+                    loadedComments[postId].add(comment.id);
 
-                                            if (commentText.trim() === '') {
-                                                alert('Comment cannot be empty!');
-                                                return;
-                                            }
+                    // Append older comments at the bottom
+                    commentList.insertAdjacentHTML('beforeend', getCommentHTML(comment));
+                }
+            });
 
-                                            fetch('submit_professor_comment.php', {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/x-www-form-urlencoded'
-                                                    },
-                                                    body: `post_id=${postId}&comment=${encodeURIComponent(commentText)}`
-                                                })
-                                                .then(response => response.text())
-                                                .then(data => {
-                                                    if (data === 'success') {
-                                                        document.getElementById(`commentText-${postId}`).value = '';
-                                                        document.getElementById(`comment-list-${postId}`).innerHTML = '';
-                                                        commentOffsets[postId] = 0;
-                                                        loadMoreComments(postId);
-                                                    } else {
-                                                        console.error('Error submitting comment:', data);
-                                                    }
-                                                })
-                                                .catch(error => {
-                                                    console.error('Error:', error);
-                                                });
-                                        }
+            commentOffsets[postId] += limit;
+
+            if (data.comments.length < limit) {
+                button.style.display = 'none';
+            } else {
+                button.disabled = false;
+                button.innerHTML = 'Load More Comments';
+            }
+        } else {
+            button.style.display = 'none';
+        }
+    })
+    .catch(error => {
+        console.error('Error loading comments:', error);
+        button.disabled = false;
+        button.innerHTML = 'Load More Comments';
+    });
+}
+
+function submitProfessorComment(postId) {
+    const commentText = document.getElementById(`commentText-${postId}`).value.trim();
+
+    if (commentText === '') {
+        alert('Comment cannot be empty!');
+        return;
+    }
+
+    fetch('submit_professor_comment.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `post_id=${postId}&comment=${encodeURIComponent(commentText)}`
+    })
+    .then(response => response.json()) // Expect JSON response
+    .then(data => {
+        if (data.status === 'success') {
+            const commentList = document.getElementById(`comment-list-${postId}`);
+
+            // Add new comment at the top
+            commentList.insertAdjacentHTML('afterbegin', getCommentHTML(data.comment));
+
+            // Store new comment ID to avoid duplication
+            loadedComments[postId].add(data.comment.id);
+
+            // Clear input field
+            document.getElementById(`commentText-${postId}`).value = '';
+        } else {
+            console.error('Error:', data);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Generate HTML structure for a comment
+function getCommentHTML(comment) {
+    return `
+        <div class="comment-item p-3 mb-2 rounded shadow-sm bg-white">
+            <div class="d-flex align-items-center">
+                <img src="${comment.profile_image}" class="rounded-circle me-2" style="width: 40px; height: 40px;">
+                <div>
+                    <strong>${comment.full_name}</strong>
+                    <small class="text-muted d-block">${comment.created_at}</small>
+                </div>
+            </div>
+            <p class="mt-2 text-dark">${comment.comment_text}</p>
+        </div>
+    `;
+}
+
+
                                     </script>
 
                             </section>
@@ -416,6 +500,8 @@ $query = mysqli_query($con, "
             </div>
         </div>
         <!-- End Newsfeed Posts -->
+
+
         <!-- AJAX to Toggle the Like Button -->
         <script>
             function toggleLike(postId) {

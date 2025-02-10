@@ -140,23 +140,16 @@ if ($professor_id) {
 
                                 <!-- Reactions Section -->
                                 <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-center border-top border-bottom mb-4">
-                                        <!-- Left Side (Like Button and Count) -->
-                                        <div class="d-flex align-items-center">
-                                            <button type="button" class="btn btn-link btn-lg" id="likeBtn-<?php echo $row['id']; ?>" onclick="toggleLike(<?php echo $row['id']; ?>)">
-                                                <i class="fas fa-thumbs-up me-2" id="likeIcon-<?php echo $row['id']; ?>"></i>Like
-                                            </button>
-                                            <span id="likeCount-<?php echo $row['id']; ?>" class="like-count mx-2"><?php echo $like_count; ?></span>
-                                        </div>
-
-                                        <!-- Centered Comment Button -->
-                                        <button type="button" class="btn btn-link btn-lg comment-btn mx-auto" onclick="toggleComments(<?php echo $row['id']; ?>)">
-                                            <i class="fas fa-comment-alt me-2"></i>Comment (<?php echo $comment_count; ?>)
+                                    <div class="d-flex justify-content-center align-items-center border-top border-bottom mb-4 gap-3">
+                                        <!-- Like Button -->
+                                        <button type="button" class="btn btn-link btn-lg" id="likeBtn-<?php echo $row['id']; ?>" onclick="toggleLike(<?php echo $row['id']; ?>)">
+                                            <i class="fas fa-thumbs-up me-2" id="likeIcon-<?php echo $row['id']; ?>"></i>Like <span id="likeCount-<?php echo $row['id']; ?>" class="like-count mx-2"><?php echo $like_count; ?></span>
                                         </button>
 
-                                        <!-- Right Side (Share Button) -->
-                                        <button type="button" class="btn btn-link btn-lg" style="text-align: right;">
-                                            <i class="fas fa-share me-2"></i>Share
+
+                                        <!-- Comment Button -->
+                                        <button type="button" class="btn btn-link btn-lg comment-btn" onclick="toggleComments(<?php echo $row['id']; ?>)">
+                                            <i class="fas fa-comment-alt me-2"></i>Comment (<?php echo $comment_count; ?>)
                                         </button>
                                     </div>
                                 </div>
@@ -192,66 +185,101 @@ if ($professor_id) {
                                 <script>
                                     const commentOffsets = {}; // To track offsets for each post ID
 
-                                    function loadMoreComments(postId) {
-                                        const button = document.getElementById(`loadMore-${postId}`);
-                                        const commentList = document.getElementById(`comment-list-${postId}`);
+// Toggle comments
+function toggleComments(postId) {
+    var commentSection = document.getElementById('comments-' + postId);
+    var commentList = document.getElementById('comment-list-' + postId);
+    var loadMoreButton = document.getElementById(`loadMore-${postId}`);
 
-                                        // Initialize offset if not already set
-                                        if (!commentOffsets[postId]) commentOffsets[postId] = 0;
+    if (commentSection.style.display === 'none' || commentList.innerHTML.trim() === '') {
+        commentSection.style.display = 'block';
 
-                                        const offset = commentOffsets[postId];
-                                        const limit = 5; // Same limit as in the backend
+        // Reset offset when toggling comments
+        commentOffsets[postId] = 0;
 
-                                        button.disabled = true; // Prevent multiple clicks
-                                        button.innerHTML = 'Loading...';
+        // Clear previous comments before loading to prevent duplicates
+        commentList.innerHTML = '';
 
-                                        fetch('fetch_comments.php', {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                                },
-                                                body: `post_id=${postId}&offset=${offset}`
-                                            })
-                                            .then(response => response.text()) // Parse as plain text because comments are HTML
-                                            .then(data => {
-                                                if (data.trim()) {
-                                                    // Append comments
-                                                    commentList.insertAdjacentHTML('beforeend', data);
+        fetchComments(postId, true); // Load initial comments
+    } else {
+        commentSection.style.display = 'none';
+    }
+}
 
-                                                    // Update offset
-                                                    commentOffsets[postId] += limit;
+// Fetch comments via AJAX
+function fetchComments(postId, reset = false) {
+    const commentList = document.getElementById(`comment-list-${postId}`);
+    const button = document.getElementById(`loadMore-${postId}`);
 
-                                                    // Check if there are fewer comments returned than the limit (no more comments)
-                                                    if (data.split('<div class="comment').length - 1 < limit) {
-                                                        button.style.display = 'none'; // Hide the button if no more comments
-                                                    } else {
-                                                        button.disabled = false;
-                                                        button.innerHTML = 'Load More Comments';
-                                                    }
-                                                } else {
-                                                    button.style.display = 'none'; // Hide button if no more comments
-                                                }
-                                            })
-                                            .catch(error => {
-                                                console.error('Error loading comments:', error);
-                                                button.disabled = false;
-                                                button.innerHTML = 'Load More Comments';
-                                            });
-                                    }
+    if (reset) commentOffsets[postId] = 0; // Reset offset on first load
 
-                                    function toggleComments(postId) {
-                                        const commentsSection = document.getElementById(`comments-${postId}`);
-                                        const toggleButton = document.getElementById(`toggleComments-${postId}`);
+    const offset = commentOffsets[postId];
+    const limit = 5;
 
-                                        if (commentsSection.style.display === 'none') {
-                                            commentsSection.style.display = 'block';
-                                            toggleButton.textContent = 'Hide Comments';
-                                        } else {
-                                            commentsSection.style.display = 'none';
-                                            toggleButton.textContent = 'Show Comments';
-                                        }
-                                    }
+    button.disabled = true;
+    button.innerHTML = 'Loading...';
 
+    fetch('fetch_comments.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `post_id=${postId}&offset=${offset}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.trim()) {
+            if (reset) {
+                commentList.innerHTML = data; // Replace old comments on reset
+            } else {
+                commentList.insertAdjacentHTML('beforeend', data); // Append new comments
+            }
+
+            commentOffsets[postId] += limit; // Update offset
+
+            // Hide "Load More" button if no more comments
+            if (data.split('<div class="comment').length - 1 < limit) {
+                button.style.display = 'none';
+            } else {
+                button.disabled = false;
+                button.innerHTML = 'Load More Comments';
+            }
+        } else {
+            button.style.display = 'none';
+        }
+    })
+    .catch(error => {
+        console.error('Error loading comments:', error);
+        button.disabled = false;
+        button.innerHTML = 'Load More Comments';
+    });
+}
+
+// Load more comments
+function loadMoreComments(postId) {
+    fetchComments(postId, false);
+}
+
+// Submit a student comment
+function submitStudentComment(postId) {
+    var commentText = document.getElementById('commentText-' + postId).value;
+
+    if (commentText.trim() === "") {
+        alert("Please enter a comment.");
+        return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "submit_student_comment.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById('commentText-' + postId).value = "";
+            toggleComments(postId); // Reload comments after posting
+        }
+    };
+    xhr.send("post_id=" + postId + "&user_id=" + <?php echo $_SESSION['user_id']; ?> + "&comment=" + encodeURIComponent(commentText));
+}
+
+                                
                                     function hideComments(postId) {
                                         const commentsSection = document.getElementById(`comments-${postId}`);
                                         const toggleButton = document.getElementById(`toggleComments-${postId}`);
@@ -259,56 +287,7 @@ if ($professor_id) {
                                         commentsSection.style.display = 'none';
                                         toggleButton.textContent = 'Show Comments';
                                     }
-                                </script>
-
-
-
-
-
-
-
-                                <script>
-                                    function toggleComments(postId) {
-                                        var commentSection = document.getElementById('comments-' + postId);
-                                        if (commentSection.style.display === 'none') {
-                                            commentSection.style.display = 'block';
-
-                                            // Load comments via AJAX
-                                            var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "fetch_comments.php", true);
-                                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                            xhr.onreadystatechange = function() {
-                                                if (xhr.readyState == 4 && xhr.status == 200) {
-                                                    document.getElementById('comment-list-' + postId).innerHTML = xhr.responseText;
-                                                }
-                                            };
-                                            xhr.send("post_id=" + postId);
-                                        } else {
-                                            commentSection.style.display = 'none';
-                                        }
-                                    }
-
-                                    // Submit a student comment
-                                    function submitStudentComment(postId) {
-                                        var commentText = document.getElementById('commentText-' + postId).value;
-
-                                        if (commentText.trim() === "") {
-                                            alert("Please enter a comment.");
-                                            return;
-                                        }
-
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open("POST", "submit_student_comment.php", true);
-                                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                        xhr.onreadystatechange = function() {
-                                            if (xhr.readyState == 4 && xhr.status == 200) {
-                                                // Reload comments after posting
-                                                toggleComments(postId);
-                                                document.getElementById('commentText-' + postId).value = "";
-                                            }
-                                        };
-                                        xhr.send("post_id=" + postId + "&user_id=" + <?php echo $_SESSION['user_id']; ?> + "&comment=" + encodeURIComponent(commentText));
-                                    }
+                            
                                 </script>
 
 
