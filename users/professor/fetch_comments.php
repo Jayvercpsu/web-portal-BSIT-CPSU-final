@@ -21,8 +21,8 @@ if (isset($_POST['post_id'])) {
         $comments[] = [
             "id" => $row['id'],
             "full_name" => htmlentities($row['full_name']),
-            "profile_image" => !empty($row['profile_image']) 
-                ? '../student/' . htmlentities($row['profile_image']) 
+            "profile_image" => !empty($row['profile_image'])
+                ? '../student/' . htmlentities($row['profile_image'])
                 : '../student/assets/profile-images/default-profile.png',
             "comment_text" => nl2br(htmlentities($row['comment_text'])),
             "created_at" => htmlentities($row['created_at'])
@@ -31,4 +31,3 @@ if (isset($_POST['post_id'])) {
 
     echo json_encode(["comments" => $comments]);
 }
-?>

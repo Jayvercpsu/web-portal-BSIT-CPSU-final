@@ -53,4 +53,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "error: Failed to post comment.";
     }
 }
-?>

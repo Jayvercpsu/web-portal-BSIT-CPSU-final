@@ -23,8 +23,8 @@ if (isset($_POST['post_id'])) {
 
     if (mysqli_num_rows($query) > 0) {
         while ($row = mysqli_fetch_assoc($query)) {
-            $profileImage = !empty($row['profile_image']) 
-                ? '/bsit_final/users/student/assets/profile-images/' . basename($row['profile_image']) 
+            $profileImage = !empty($row['profile_image'])
+                ? '/bsit_final/users/student/assets/profile-images/' . basename($row['profile_image'])
                 : '/assets/profile-images/default-profile.png';
 
             echo '
@@ -43,4 +43,3 @@ if (isset($_POST['post_id'])) {
         echo '<p class="text-muted">No comments yet. Be the first to comment!</p>';
     }
 }
-?>

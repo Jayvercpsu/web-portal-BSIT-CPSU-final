@@ -185,101 +185,103 @@ if ($professor_id) {
                                 <script>
                                     const commentOffsets = {}; // To track offsets for each post ID
 
-// Toggle comments
-function toggleComments(postId) {
-    var commentSection = document.getElementById('comments-' + postId);
-    var commentList = document.getElementById('comment-list-' + postId);
-    var loadMoreButton = document.getElementById(`loadMore-${postId}`);
+                                    // Toggle comments
+                                    function toggleComments(postId) {
+                                        var commentSection = document.getElementById('comments-' + postId);
+                                        var commentList = document.getElementById('comment-list-' + postId);
+                                        var loadMoreButton = document.getElementById(`loadMore-${postId}`);
 
-    if (commentSection.style.display === 'none' || commentList.innerHTML.trim() === '') {
-        commentSection.style.display = 'block';
+                                        if (commentSection.style.display === 'none' || commentList.innerHTML.trim() === '') {
+                                            commentSection.style.display = 'block';
 
-        // Reset offset when toggling comments
-        commentOffsets[postId] = 0;
+                                            // Reset offset when toggling comments
+                                            commentOffsets[postId] = 0;
 
-        // Clear previous comments before loading to prevent duplicates
-        commentList.innerHTML = '';
+                                            // Clear previous comments before loading to prevent duplicates
+                                            commentList.innerHTML = '';
 
-        fetchComments(postId, true); // Load initial comments
-    } else {
-        commentSection.style.display = 'none';
-    }
-}
+                                            fetchComments(postId, true); // Load initial comments
+                                        } else {
+                                            commentSection.style.display = 'none';
+                                        }
+                                    }
 
-// Fetch comments via AJAX
-function fetchComments(postId, reset = false) {
-    const commentList = document.getElementById(`comment-list-${postId}`);
-    const button = document.getElementById(`loadMore-${postId}`);
+                                    // Fetch comments via AJAX
+                                    function fetchComments(postId, reset = false) {
+                                        const commentList = document.getElementById(`comment-list-${postId}`);
+                                        const button = document.getElementById(`loadMore-${postId}`);
 
-    if (reset) commentOffsets[postId] = 0; // Reset offset on first load
+                                        if (reset) commentOffsets[postId] = 0; // Reset offset on first load
 
-    const offset = commentOffsets[postId];
-    const limit = 5;
+                                        const offset = commentOffsets[postId];
+                                        const limit = 5;
 
-    button.disabled = true;
-    button.innerHTML = 'Loading...';
+                                        button.disabled = true;
+                                        button.innerHTML = 'Loading...';
 
-    fetch('fetch_comments.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `post_id=${postId}&offset=${offset}`
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data.trim()) {
-            if (reset) {
-                commentList.innerHTML = data; // Replace old comments on reset
-            } else {
-                commentList.insertAdjacentHTML('beforeend', data); // Append new comments
-            }
+                                        fetch('fetch_comments.php', {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                                },
+                                                body: `post_id=${postId}&offset=${offset}`
+                                            })
+                                            .then(response => response.text())
+                                            .then(data => {
+                                                if (data.trim()) {
+                                                    if (reset) {
+                                                        commentList.innerHTML = data; // Replace old comments on reset
+                                                    } else {
+                                                        commentList.insertAdjacentHTML('beforeend', data); // Append new comments
+                                                    }
 
-            commentOffsets[postId] += limit; // Update offset
+                                                    commentOffsets[postId] += limit; // Update offset
 
-            // Hide "Load More" button if no more comments
-            if (data.split('<div class="comment').length - 1 < limit) {
-                button.style.display = 'none';
-            } else {
-                button.disabled = false;
-                button.innerHTML = 'Load More Comments';
-            }
-        } else {
-            button.style.display = 'none';
-        }
-    })
-    .catch(error => {
-        console.error('Error loading comments:', error);
-        button.disabled = false;
-        button.innerHTML = 'Load More Comments';
-    });
-}
+                                                    // Hide "Load More" button if no more comments
+                                                    if (data.split('<div class="comment').length - 1 < limit) {
+                                                        button.style.display = 'none';
+                                                    } else {
+                                                        button.disabled = false;
+                                                        button.innerHTML = 'Load More Comments';
+                                                    }
+                                                } else {
+                                                    button.style.display = 'none';
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error('Error loading comments:', error);
+                                                button.disabled = false;
+                                                button.innerHTML = 'Load More Comments';
+                                            });
+                                    }
 
-// Load more comments
-function loadMoreComments(postId) {
-    fetchComments(postId, false);
-}
+                                    // Load more comments
+                                    function loadMoreComments(postId) {
+                                        fetchComments(postId, false);
+                                    }
 
-// Submit a student comment
-function submitStudentComment(postId) {
-    var commentText = document.getElementById('commentText-' + postId).value;
+                                    // Submit a student comment
+                                    function submitStudentComment(postId) {
+                                        var commentText = document.getElementById('commentText-' + postId).value;
 
-    if (commentText.trim() === "") {
-        alert("Please enter a comment.");
-        return;
-    }
+                                        if (commentText.trim() === "") {
+                                            alert("Please enter a comment.");
+                                            return;
+                                        }
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "submit_student_comment.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById('commentText-' + postId).value = "";
-            toggleComments(postId); // Reload comments after posting
-        }
-    };
-    xhr.send("post_id=" + postId + "&user_id=" + <?php echo $_SESSION['user_id']; ?> + "&comment=" + encodeURIComponent(commentText));
-}
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open("POST", "submit_student_comment.php", true);
+                                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                                document.getElementById('commentText-' + postId).value = "";
+                                                toggleComments(postId); // Reload comments after posting
+                                            }
+                                        };
+                                        xhr.send("post_id=" + postId + "&user_id=" + <?php echo $_SESSION['user_id']; ?> + "&comment=" + encodeURIComponent(commentText));
+                                    }
 
-                                
+
                                     function hideComments(postId) {
                                         const commentsSection = document.getElementById(`comments-${postId}`);
                                         const toggleButton = document.getElementById(`toggleComments-${postId}`);
@@ -287,7 +289,6 @@ function submitStudentComment(postId) {
                                         commentsSection.style.display = 'none';
                                         toggleButton.textContent = 'Show Comments';
                                     }
-                            
                                 </script>
 
 

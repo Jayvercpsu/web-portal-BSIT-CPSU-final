@@ -331,152 +331,155 @@ $query = mysqli_query($con, "
                                         </button>
                                     </div>
                                     <style>
-                                    .comment-item {
-    transition: all 0.3s ease-in-out;
-    border-left: 4px solid #007bff;
-    padding-left: 10px;
-}
+                                        .comment-item {
+                                            transition: all 0.3s ease-in-out;
+                                            border-left: 4px solid #007bff;
+                                            padding-left: 10px;
+                                        }
 
-.comment-item:hover {
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+                                        .comment-item:hover {
+                                            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                                        }
 
-.comment-item p {
-    font-size: 14px;
-}
+                                        .comment-item p {
+                                            font-size: 14px;
+                                        }
 
-.btn-light {
-    border: none;
-}
+                                        .btn-light {
+                                            border: none;
+                                        }
 
-.btn-light:hover {
-    background-color: #f0f0f0;
-}
+                                        .btn-light:hover {
+                                            background-color: #f0f0f0;
+                                        }
 
-.comment-list {
-    max-height: 400px;
-    overflow-y: auto;
-}
+                                        .comment-list {
+                                            max-height: 400px;
+                                            overflow-y: auto;
+                                        }
 
-.comment-input {
-    border-radius: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    width: 100%;
-}
-
+                                        .comment-input {
+                                            border-radius: 20px;
+                                            padding: 10px;
+                                            border: 1px solid #ccc;
+                                            width: 100%;
+                                        }
                                     </style>
                                     <script>
-                           const commentOffsets = {}; // Tracks the number of loaded comments per post
-const loadedComments = {}; // Tracks unique comment IDs to prevent duplicates
+                                        const commentOffsets = {}; // Tracks the number of loaded comments per post
+                                        const loadedComments = {}; // Tracks unique comment IDs to prevent duplicates
 
-function toggleComments(postId) {
-    const commentsSection = document.getElementById(`comments-${postId}`);
-    const commentList = document.getElementById(`comment-list-${postId}`);
+                                        function toggleComments(postId) {
+                                            const commentsSection = document.getElementById(`comments-${postId}`);
+                                            const commentList = document.getElementById(`comment-list-${postId}`);
 
-    if (commentsSection.style.display === 'none' || commentsSection.style.display === '') {
-        commentsSection.style.display = 'block';
+                                            if (commentsSection.style.display === 'none' || commentsSection.style.display === '') {
+                                                commentsSection.style.display = 'block';
 
-        if (!loadedComments[postId]) {
-            loadedComments[postId] = new Set();
-            commentList.innerHTML = ''; // Clear previous comments
-            commentOffsets[postId] = 0; // Reset offset
-            loadMoreComments(postId);
-        }
-    } else {
-        commentsSection.style.display = 'none';
-    }
-}
+                                                if (!loadedComments[postId]) {
+                                                    loadedComments[postId] = new Set();
+                                                    commentList.innerHTML = ''; // Clear previous comments
+                                                    commentOffsets[postId] = 0; // Reset offset
+                                                    loadMoreComments(postId);
+                                                }
+                                            } else {
+                                                commentsSection.style.display = 'none';
+                                            }
+                                        }
 
-function hideComments(postId) {
-    document.getElementById(`comments-${postId}`).style.display = 'none';
-}
+                                        function hideComments(postId) {
+                                            document.getElementById(`comments-${postId}`).style.display = 'none';
+                                        }
 
-function loadMoreComments(postId) {
-    const button = document.getElementById(`loadMore-${postId}`);
-    const commentList = document.getElementById(`comment-list-${postId}`);
+                                        function loadMoreComments(postId) {
+                                            const button = document.getElementById(`loadMore-${postId}`);
+                                            const commentList = document.getElementById(`comment-list-${postId}`);
 
-    if (!commentOffsets[postId]) commentOffsets[postId] = 0;
-    if (!loadedComments[postId]) loadedComments[postId] = new Set();
+                                            if (!commentOffsets[postId]) commentOffsets[postId] = 0;
+                                            if (!loadedComments[postId]) loadedComments[postId] = new Set();
 
-    const offset = commentOffsets[postId];
-    const limit = 5;
+                                            const offset = commentOffsets[postId];
+                                            const limit = 5;
 
-    button.disabled = true;
-    button.innerHTML = 'Loading...';
+                                            button.disabled = true;
+                                            button.innerHTML = 'Loading...';
 
-    fetch('fetch_comments.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `post_id=${postId}&offset=${offset}`
-    })
-    .then(response => response.json()) // Expect JSON response
-    .then(data => {
-        if (data.comments && data.comments.length > 0) {
-            data.comments.forEach(comment => {
-                if (!loadedComments[postId].has(comment.id)) {
-                    loadedComments[postId].add(comment.id);
+                                            fetch('fetch_comments.php', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: `post_id=${postId}&offset=${offset}`
+                                                })
+                                                .then(response => response.json()) // Expect JSON response
+                                                .then(data => {
+                                                    if (data.comments && data.comments.length > 0) {
+                                                        data.comments.forEach(comment => {
+                                                            if (!loadedComments[postId].has(comment.id)) {
+                                                                loadedComments[postId].add(comment.id);
 
-                    // Append older comments at the bottom
-                    commentList.insertAdjacentHTML('beforeend', getCommentHTML(comment));
-                }
-            });
+                                                                // Append older comments at the bottom
+                                                                commentList.insertAdjacentHTML('beforeend', getCommentHTML(comment));
+                                                            }
+                                                        });
 
-            commentOffsets[postId] += limit;
+                                                        commentOffsets[postId] += limit;
 
-            if (data.comments.length < limit) {
-                button.style.display = 'none';
-            } else {
-                button.disabled = false;
-                button.innerHTML = 'Load More Comments';
-            }
-        } else {
-            button.style.display = 'none';
-        }
-    })
-    .catch(error => {
-        console.error('Error loading comments:', error);
-        button.disabled = false;
-        button.innerHTML = 'Load More Comments';
-    });
-}
+                                                        if (data.comments.length < limit) {
+                                                            button.style.display = 'none';
+                                                        } else {
+                                                            button.disabled = false;
+                                                            button.innerHTML = 'Load More Comments';
+                                                        }
+                                                    } else {
+                                                        button.style.display = 'none';
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error loading comments:', error);
+                                                    button.disabled = false;
+                                                    button.innerHTML = 'Load More Comments';
+                                                });
+                                        }
 
-function submitProfessorComment(postId) {
-    const commentText = document.getElementById(`commentText-${postId}`).value.trim();
+                                        function submitProfessorComment(postId) {
+                                            const commentText = document.getElementById(`commentText-${postId}`).value.trim();
 
-    if (commentText === '') {
-        alert('Comment cannot be empty!');
-        return;
-    }
+                                            if (commentText === '') {
+                                                alert('Comment cannot be empty!');
+                                                return;
+                                            }
 
-    fetch('submit_professor_comment.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `post_id=${postId}&comment=${encodeURIComponent(commentText)}`
-    })
-    .then(response => response.json()) // Expect JSON response
-    .then(data => {
-        if (data.status === 'success') {
-            const commentList = document.getElementById(`comment-list-${postId}`);
+                                            fetch('submit_professor_comment.php', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                                    },
+                                                    body: `post_id=${postId}&comment=${encodeURIComponent(commentText)}`
+                                                })
+                                                .then(response => response.json()) // Expect JSON response
+                                                .then(data => {
+                                                    if (data.status === 'success') {
+                                                        const commentList = document.getElementById(`comment-list-${postId}`);
 
-            // Add new comment at the top
-            commentList.insertAdjacentHTML('afterbegin', getCommentHTML(data.comment));
+                                                        // Add new comment at the top
+                                                        commentList.insertAdjacentHTML('afterbegin', getCommentHTML(data.comment));
 
-            // Store new comment ID to avoid duplication
-            loadedComments[postId].add(data.comment.id);
+                                                        // Store new comment ID to avoid duplication
+                                                        loadedComments[postId].add(data.comment.id);
 
-            // Clear input field
-            document.getElementById(`commentText-${postId}`).value = '';
-        } else {
-            console.error('Error:', data);
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
+                                                        // Clear input field
+                                                        document.getElementById(`commentText-${postId}`).value = '';
+                                                    } else {
+                                                        console.error('Error:', data);
+                                                    }
+                                                })
+                                                .catch(error => console.error('Error:', error));
+                                        }
 
-// Generate HTML structure for a comment
-function getCommentHTML(comment) {
-    return `
+                                        // Generate HTML structure for a comment
+                                        function getCommentHTML(comment) {
+                                            return `
         <div class="comment-item p-3 mb-2 rounded shadow-sm bg-white">
             <div class="d-flex align-items-center">
                 <img src="${comment.profile_image}" class="rounded-circle me-2" style="width: 40px; height: 40px;">
@@ -488,9 +491,7 @@ function getCommentHTML(comment) {
             <p class="mt-2 text-dark">${comment.comment_text}</p>
         </div>
     `;
-}
-
-
+                                        }
                                     </script>
 
                             </section>

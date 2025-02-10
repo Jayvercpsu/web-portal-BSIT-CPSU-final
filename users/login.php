@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </p>
             <p class="signup-link">
                 <a href="../index.php" style="color: white;">Back Home</a> |
-                <a href="#" style="color: white;">Forgot Password?</a>
+                <a href="./auth/forgot-password.php" style="color: white;">Forgot Password?</a>
             </p>
         </form>
     </div>
