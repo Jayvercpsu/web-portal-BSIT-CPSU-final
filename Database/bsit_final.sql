@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2025 at 06:45 AM
+-- Generation Time: Feb 15, 2025 at 03:35 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,9 +45,10 @@ CREATE TABLE `first_semester_students` (
 INSERT INTO `first_semester_students` (`id`, `student_id`, `grade`, `subject_id`, `professor_id`, `semester`, `date_added`, `full_name`) VALUES
 (81, 76, 11.00, 8, 69, '1st Semester', '0000-00-00 00:00:00', 'Joel primr algadipe'),
 (82, 73, 75.00, 8, 69, '1st Semester', '0000-00-00 00:00:00', 'jayco Primor jayco'),
-(83, 70, 100.00, 8, 69, '1st Semester', '0000-00-00 00:00:00', 'Jayver Primor Algadipe'),
+(83, 70, 90.00, 8, 69, '1st Semester', '0000-00-00 00:00:00', 'Jayver Primor Algadipe'),
 (84, 77, 70.00, 8, 69, '1st Semester', '0000-00-00 00:00:00', 'Jb'),
-(85, 78, 33.00, 8, 69, '1st Semester', '2025-01-31 07:41:07', 'jose');
+(85, 78, 33.00, 8, 69, '1st Semester', '2025-01-31 07:41:07', 'jose'),
+(86, 79, 75.00, 8, 69, '1st Semester', '2025-02-02 23:49:43', 'Kim Carlo Salimbagat');
 
 -- --------------------------------------------------------
 
@@ -93,7 +94,8 @@ CREATE TABLE `fourth_year` (
 
 INSERT INTO `fourth_year` (`id`, `full_name`, `email`, `password`, `created_at`, `profile_image`, `semester`) VALUES
 (67, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '$2y$10$97j.mogH71KkA0Bf8rtHzecSsOn1Bqcx1JR0T.MLf8iEGomsN0hMy', '2025-01-31 03:52:17', './assets/profile-images/default-profile.png', ''),
-(68, 'jayco Primor jayco', 'jaycomanguilimotan896@gmail.com', '$2y$10$0EqaqZRDmHyr.z5bsLKBJOxW6mCsoYFBf5N41tGYO6.t489BHJx8i', '2025-01-30 21:12:17', './assets/profile-images/default-profile.png', '');
+(68, 'jayco Primor jayco', 'jaycomanguilimotan896@gmail.com', '$2y$10$0EqaqZRDmHyr.z5bsLKBJOxW6mCsoYFBf5N41tGYO6.t489BHJx8i', '2025-01-30 21:12:17', './assets/profile-images/default-profile.png', ''),
+(77, 'Kim Carlo Salimbagat', 'kim@gmail.com', '$2y$10$93ovf8Diateos2TJ4uzt6eK0QozKSBF75MMt8FgyQjFlp967GEFii', '2025-02-03 06:48:51', './assets/profile-images/default-profile.png', '');
 
 -- --------------------------------------------------------
 
@@ -150,8 +152,8 @@ CREATE TABLE `professors` (
 --
 
 INSERT INTO `professors` (`id`, `full_name`, `email`, `password`, `created_at`, `profile_image`, `year_level`) VALUES
-(69, 'dino', 'dino@gmail.com', '$2y$10$Xa8yVkVAnSHU6TKOmxVwbeLuLPWT2mTpB2L8g/gV9E5bYfV80gfzq', '2025-01-31 03:57:54', './assets/profile-images/default-profile.png', 'Unassigned'),
-(73, 'Dandan', 'dandan@gmail.com', '$2y$10$j.rN6WsJxtUn4Qg5IU2yw.dFbW/maiDw63n.6TSBYCVMzx8.sGZ5S', '2025-01-31 14:17:01', NULL, 'Unassigned');
+(69, 'dino', 'dino@gmail.com', '$2y$10$Xa8yVkVAnSHU6TKOmxVwbeLuLPWT2mTpB2L8g/gV9E5bYfV80gfzq', '2025-01-31 03:57:54', './assets/profile-images/default-profile.png', '4th Year'),
+(73, 'Dandan', 'dandan@gmail.com', '$2y$10$j.rN6WsJxtUn4Qg5IU2yw.dFbW/maiDw63n.6TSBYCVMzx8.sGZ5S', '2025-01-31 14:17:01', NULL, '4th Year');
 
 -- --------------------------------------------------------
 
@@ -169,6 +171,13 @@ CREATE TABLE `professors_post` (
   `comments_count` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `professors_post`
+--
+
+INSERT INTO `professors_post` (`id`, `user_id`, `PostText`, `PostImage`, `created_at`, `likes`, `comments_count`) VALUES
+(11, 71, 'sample', '67a9dd24105c5.jpg', '2025-02-10 11:04:04', 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -182,6 +191,13 @@ CREATE TABLE `professor_comments` (
   `comment_text` text NOT NULL,
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `professor_comments`
+--
+
+INSERT INTO `professor_comments` (`id`, `post_id`, `user_id`, `comment_text`, `created_at`) VALUES
+(1, 11, 71, 'hello', '2025-02-10 19:50:36');
 
 -- --------------------------------------------------------
 
@@ -205,9 +221,10 @@ CREATE TABLE `second_semester_students` (
 --
 
 INSERT INTO `second_semester_students` (`id`, `student_id`, `grade`, `subject_id`, `professor_id`, `semester`, `date_added`, `full_name`) VALUES
-(1, 70, 12.00, 8, 69, '2nd Semester', '2025-02-02 21:58:42', 'Jayver Primor Algadipe'),
+(1, 70, 97.00, 8, 69, '2nd Semester', '0000-00-00 00:00:00', 'Jayver Primor Algadipe'),
 (2, 73, 80.00, 8, 69, '2nd Semester', '2025-02-02 22:05:59', 'jayco Primor jayco'),
-(3, 77, 90.00, 8, 69, '2nd Semester', '2025-02-02 22:10:21', 'Jb');
+(3, 77, 90.00, 8, 69, '2nd Semester', '2025-02-02 22:10:21', 'Jb'),
+(4, 79, 80.00, 8, 69, '2nd Semester', '0000-00-00 00:00:00', 'Kim Carlo Salimbagat');
 
 -- --------------------------------------------------------
 
@@ -244,6 +261,15 @@ CREATE TABLE `student_comments` (
   `comment_text` text NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_comments`
+--
+
+INSERT INTO `student_comments` (`id`, `post_id`, `user_id`, `comment_text`, `created_at`) VALUES
+(2, 11, 70, 'hello Goodeveninf!', '2025-02-10 11:06:19'),
+(3, 11, 70, 'asdad', '2025-02-10 11:23:23'),
+(4, 11, 73, 'hello', '2025-02-10 11:33:21');
 
 -- --------------------------------------------------------
 
@@ -495,13 +521,14 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `role`, `year`, `profile_image`, `created_at`, `year_level`) VALUES
-(70, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '$2y$10$EqRfVQvbC6SXiL0RabyecO4eMCBIbT0pT2X7U3AdgEkw2Sl0.swdW', 'student', '4th Year', './assets/profile-images/default-profile.png', '2025-01-31 03:52:17', 'Unassigned'),
-(71, 'dino', 'dino@gmail.com', '$2y$10$ZQWPHohP7Z0hYLhnkZ3TMOl6qpMtv/ueqLjBNpa284rHM7h8HBsIy', 'professor', '', './assets/profile-images/default-profile.png', '2025-01-31 03:57:54', 'Unassigned'),
+(70, 'Jayver Primor Algadipe', 'jayjayzjpa@gmail.com', '$2y$10$sdoID8Xd7Jhe5Ww2Q6xVDefuaY5HCZS.4mp4Ejy6tDmdir3fRjyJO', 'student', '4th Year', './assets/profile-images/default-profile.png', '2025-01-31 03:52:17', 'Unassigned'),
+(71, 'dino', 'dino@gmail.com', '$2y$10$ZQWPHohP7Z0hYLhnkZ3TMOl6qpMtv/ueqLjBNpa284rHM7h8HBsIy', 'professor', '', './assets/profile-images/default-profile.png', '2025-01-31 03:57:54', '4th Year'),
 (73, 'jayco Primor jayco', 'jaycomanguilimotan896@gmail.com', '$2y$10$0EqaqZRDmHyr.z5bsLKBJOxW6mCsoYFBf5N41tGYO6.t489BHJx8i', 'student', '4th Year', './assets/profile-images/default-profile.png', '2025-01-30 21:12:17', 'Unassigned'),
-(75, 'Dandan', 'dandan@gmail.com', '$2y$10$j.rN6WsJxtUn4Qg5IU2yw.dFbW/maiDw63n.6TSBYCVMzx8.sGZ5S', 'professor', '', './assets/profile-images/default-profile.png', '2025-01-31 14:17:01', 'Unassigned'),
+(75, 'Dandan', 'dandan@gmail.com', '$2y$10$j.rN6WsJxtUn4Qg5IU2yw.dFbW/maiDw63n.6TSBYCVMzx8.sGZ5S', 'professor', '', './assets/profile-images/default-profile.png', '2025-01-31 14:17:01', '4th Year'),
 (76, 'Joel primr algadipe', 'joel@gmail.com', '$2y$10$KiwmFtiJ68IMiu1dFFymQO.z0Gt0DQ9h8uXDLAAxk2brsAGmZUcV6', 'student', '1st Year', './assets/profile-images/default-profile.png', '2025-01-31 14:17:35', 'Unassigned'),
 (77, 'Jb', 'jb@gmail.com', '$2y$10$XZo3oW7FkqbqhXiRjVd2IO6Txd8YOMOCChKFJ5ubWZQ0.aLMY/mrW', 'student', '2nd Year', './assets/profile-images/default-profile.png', '2025-01-31 14:38:45', 'Unassigned'),
-(78, 'jose', 'jose@gmail.com', '$2y$10$ACNs.WFt4Q5r62F9aHmouOMfOJsMx4fLqLLAvm6LM54njC6OkJlrm', 'student', '3rd Year', './assets/profile-images/default-profile.png', '2025-01-31 14:39:17', 'Unassigned');
+(78, 'jose', 'jose@gmail.com', '$2y$10$ACNs.WFt4Q5r62F9aHmouOMfOJsMx4fLqLLAvm6LM54njC6OkJlrm', 'student', '3rd Year', './assets/profile-images/default-profile.png', '2025-01-31 14:39:17', 'Unassigned'),
+(79, 'Kim Carlo Salimbagat', 'kim@gmail.com', '$2y$10$93ovf8Diateos2TJ4uzt6eK0QozKSBF75MMt8FgyQjFlp967GEFii', 'student', '4th Year', './assets/profile-images/default-profile.png', '2025-02-03 06:48:51', 'Unassigned');
 
 --
 -- Indexes for dumped tables
@@ -667,7 +694,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `first_semester_students`
 --
 ALTER TABLE `first_semester_students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `first_year`
@@ -679,7 +706,7 @@ ALTER TABLE `first_year`
 -- AUTO_INCREMENT for table `fourth_year`
 --
 ALTER TABLE `fourth_year`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `info`
@@ -691,7 +718,7 @@ ALTER TABLE `info`
 -- AUTO_INCREMENT for table `like_reactions`
 --
 ALTER TABLE `like_reactions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `professors`
@@ -703,19 +730,19 @@ ALTER TABLE `professors`
 -- AUTO_INCREMENT for table `professors_post`
 --
 ALTER TABLE `professors_post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `professor_comments`
 --
 ALTER TABLE `professor_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `second_semester_students`
 --
 ALTER TABLE `second_semester_students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `second_year`
@@ -727,7 +754,7 @@ ALTER TABLE `second_year`
 -- AUTO_INCREMENT for table `student_comments`
 --
 ALTER TABLE `student_comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `student_grades`
@@ -787,7 +814,7 @@ ALTER TABLE `third_year`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- Constraints for dumped tables
