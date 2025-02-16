@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Set the default index file
+DirectoryIndex index.php
+
+# Other rules can go here
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ $1.php [L]

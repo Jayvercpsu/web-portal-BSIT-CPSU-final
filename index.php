@@ -451,7 +451,7 @@ include('includes/config.php');
                             </div>
                         </div>
                     <?php } ?>
-                </div> 
+                </div>
 
                 <!-- Show More Button -->
                 <div class="col-md-12 text-center">

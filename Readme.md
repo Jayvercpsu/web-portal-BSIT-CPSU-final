@@ -33,12 +33,12 @@ CPSU BSIT Web Portal in PHP Design and Development by j-aldev
 8.  After setting up all these, go to the URL “http://localhost/[ PROJECT_FOLDER_NAME ]/“ <br/>
 9.  All the login details are provided inside the project folder, check that out and enter them in order to use it. <br/>
 
-And there you have it, a full setup of Basic CPSU BSIT Web Portal System in PHP MySQL. For this particular PHP project, PHP Version 5.6.3 or 7.4.12 is required because it’s well tested on both. So, users with the latest PHP version (greater than 7.4.12) might face various errors while operating it. As a result, you’ll need to downgrade your PHP version (only if you’re using the latest version) at the moment. Download Free Basic CPSU BSIT Web Portal System Project in PHP MySQL with Source Code. So, this employee system is a quick simple PHP project for all the beginners as well as the intermediate level that broads vast knowledge into such web applications. In conclusion, this whole PHP project with free source code is an absolute project and a meaningful way for the users to learn and explore more about it.
-
 ## Aditional Info
 
 Database Name: bsit_final
 
 Username: admin <br/>
+ 
 
-Password: Watch Youtube ( Video )
+ - **Command to connect to the MySQL server**:
+1. `mysql -h kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com -u iwbih7e9i4ko5whu -puoab8qpujs8v4hky ldvkpn5fi7uw9vtr`
