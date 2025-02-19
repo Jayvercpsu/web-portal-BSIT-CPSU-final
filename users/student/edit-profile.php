@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $year = $_POST['year'];
     $password = $_POST['password'];
-    
+
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo "Error: Invalid email format.";
@@ -69,8 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
 
-        if ($_FILES["profile_image"]["size"] > 2 * 1024 * 1024) { // 2MB limit
-            echo "Error: File size exceeds 2MB.";
+        if ($_FILES["profile_image"]["size"] > 50 * 1024 * 1024) { // 50MB limit
+            echo "Error: File size exceeds 50MB.";
             exit();
         }
 

@@ -129,7 +129,7 @@ $subjects = mysqli_fetch_all(mysqli_query($con, "SELECT * FROM subjects"), MYSQL
                     </div>
                 </div>
             </div>
-            <h4>1st Semester Students</h4>
+            <h4>2nd Semester Students</h4>
             <table id="secondSemesterTable" class="table table-bordered">
                 <thead>
                     <tr>
