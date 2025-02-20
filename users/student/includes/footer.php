@@ -25,7 +25,7 @@
             <div class="footer-content" style="padding: 30px 0; flex: 1 1 30%; margin-bottom: 50px;">
                 <div class="footer-widget">
                     <div class="footer-logo">
-                        <img src="admin/assets/images/BSIT_name.webp" alt="Logo" style="max-width: 200px; margin-bottom: 20px;">
+                        <img src="../../admin/assets/images/BSIT_name.webp" alt="Logo" style="max-width: 200px; margin-bottom: 20px;">
                     </div>
                     <div class="footer-text">
                         <p style="font-size: 16px; margin-bottom: 15px;">Get your brand new website or app developed from our platform. We help in creating an online presence with fantastic user experience.</p>
@@ -42,7 +42,7 @@
 
         <!-- Copyright Section -->
         <div class="copyright-area" style="background-color: #222; text-align: center; padding: 15px 0; font-size: 14px;">
-            <p>&copy; 2024 CPSU BSIT - All Rights Reserved.</p>
+            <p>&copy; 2025 CPSU BSIT - All Rights Reserved.</p>
         </div>
     </div>
 

@@ -158,7 +158,7 @@
 
     <div class="page-section pb-0" id="about">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row align-items-center" style="padding-bottom: 40px;">
                 <div class="col-lg-6 py-3 wow fadeInUp">
                     <h1>Welcome to the CPSU BSIT Program</h1>
                     <p class="text-white mb-4">
@@ -172,6 +172,59 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+
+
+    <div class="page-section bg-light" id="news">
+        <div class="container">
+            <h1 class="text-center text-dark wow fadeInUp">Latest News</h1>
+            <div class="row mt-5">
+                <?php
+                // Limit to 3 posts for the homepage
+                $pageno = isset($_GET['pageno']) ? $_GET['pageno'] : 1;
+                $no_of_records_per_page = 3;  // Show only 3 posts initially
+                $offset = ($pageno - 1) * $no_of_records_per_page;
+
+                // Fetch total rows and calculate the total pages
+                $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
+                $result = mysqli_query($con, $total_pages_sql);
+                $total_rows = mysqli_fetch_array($result)[0];
+                $total_pages = ceil($total_rows / $no_of_records_per_page);
+
+                // Fetch the posts
+                $query = mysqli_query($con, "SELECT tblposts.id AS pid, tblposts.PostTitle AS posttitle, tblposts.PostImage, tblcategory.CategoryName AS category, tblcategory.id AS cid, tblsubcategory.Subcategory AS subcategory, tblposts.PostDetails AS postdetails, tblposts.PostingDate AS postingdate, tblposts.PostUrl AS url FROM tblposts LEFT JOIN tblcategory ON tblcategory.id = tblposts.CategoryId LEFT JOIN tblsubcategory ON tblsubcategory.SubCategoryId = tblposts.SubCategoryId WHERE tblposts.Is_Active = 1 ORDER BY tblposts.id DESC LIMIT $offset, $no_of_records_per_page");
+
+                // Loop through the posts and display them
+                while ($row = mysqli_fetch_array($query)) {
+                ?>
+                    <div class="col-md-6">
+                        <div class="card mb-4 border-0">
+                            <img class="card-img-top" src="../../admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" height="200px">
+                            <div class="card-body">
+                                <p class="m-0">
+                                    <!-- Category -->
+                                    <a class="badge bg-dark text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
+                                    <!-- Subcategory -->
+                                    <a class="badge bg-warning text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
+                                </p>
+                                <p class="m-0"><small>Posted on <?php echo htmlentities($row['postingdate']); ?></small></p>
+                                <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="card-title text-decoration-none text-dark">
+                                    <h5 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div>
+
+            <!-- Show More Button -->
+            <div class="col-md-12 text-center">
+                <a href="news.php" class="btn btn-primary">Show More</a>
+            </div>
+
+
         </div>
     </div>
 
@@ -398,70 +451,6 @@
             </div>
         </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="page-section bg-light" id="news">
-            <div class="container">
-                <h1 class="text-center text-dark wow fadeInUp">Latest News</h1>
-                <div class="row mt-5">
-                    <?php
-                    // Limit to 3 posts for the homepage
-                    $pageno = isset($_GET['pageno']) ? $_GET['pageno'] : 1;
-                    $no_of_records_per_page = 3;  // Show only 3 posts initially
-                    $offset = ($pageno - 1) * $no_of_records_per_page;
-
-                    // Fetch total rows and calculate the total pages
-                    $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
-                    $result = mysqli_query($con, $total_pages_sql);
-                    $total_rows = mysqli_fetch_array($result)[0];
-                    $total_pages = ceil($total_rows / $no_of_records_per_page);
-
-                    // Fetch the posts
-                    $query = mysqli_query($con, "SELECT tblposts.id AS pid, tblposts.PostTitle AS posttitle, tblposts.PostImage, tblcategory.CategoryName AS category, tblcategory.id AS cid, tblsubcategory.Subcategory AS subcategory, tblposts.PostDetails AS postdetails, tblposts.PostingDate AS postingdate, tblposts.PostUrl AS url FROM tblposts LEFT JOIN tblcategory ON tblcategory.id = tblposts.CategoryId LEFT JOIN tblsubcategory ON tblsubcategory.SubCategoryId = tblposts.SubCategoryId WHERE tblposts.Is_Active = 1 ORDER BY tblposts.id DESC LIMIT $offset, $no_of_records_per_page");
-
-                    // Loop through the posts and display them
-                    while ($row = mysqli_fetch_array($query)) {
-                    ?>
-                        <div class="col-md-6">
-                            <div class="card mb-4 border-0">
-                                <img class="card-img-top" src="../../admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" height="200px">
-                                <div class="card-body">
-                                    <p class="m-0">
-                                        <!-- Category -->
-                                        <a class="badge bg-dark text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
-                                        <!-- Subcategory -->
-                                        <a class="badge bg-warning text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
-                                    </p>
-                                    <p class="m-0"><small>Posted on <?php echo htmlentities($row['postingdate']); ?></small></p>
-                                    <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="card-title text-decoration-none text-dark">
-                                        <h5 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h5>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
-
-                <!-- Show More Button -->
-                <div class="col-md-12 text-center">
-                    <a href="news.php" class="btn btn-primary">Show More</a>
-                </div>
-
-
-            </div>
-        </div>
-
-
 
 
         <!-- Static -->

@@ -42,7 +42,7 @@
 
         <!-- Copyright Section -->
         <div class="copyright-area" style="background-color: #222; text-align: center; padding: 15px 0; font-size: 14px;">
-            <p>&copy; 2024 CPSU BSIT - All Rights Reserved.</p>
+            <p>&copy; 2025 CPSU BSIT - All Rights Reserved.</p>
         </div>
     </div>
 
