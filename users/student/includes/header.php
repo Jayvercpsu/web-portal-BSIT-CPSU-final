@@ -95,7 +95,7 @@ if (isset($_SESSION['user_id'])) {
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="edit-profile.php"><i class="fa fa-edit"></i> My account</a>
                         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <i class="fas fa-sign-out-alt"></i> Logout
+                            <i class="fas fa-sign-out-alt"></i> Logout 
                         </a>
                     </div>
                 </li>

@@ -148,102 +148,195 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
+    <title>Student - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+        href="vendor/fontawesome-free/css/all.min.css"
+        rel="stylesheet"
+        type="text/css" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
 </head>
 
-<body class="bg-light">
-    <?php include('includes/sidebar-account.php') ?>
+<body id="page-top">
 
 
-    <!-- Success alert if profile updated -->
-    <?php if (isset($_GET['update']) && $_GET['update'] == 'success'): ?>
-        <script>
-            alert("Profile updated successfully!");
-        </script>
-    <?php endif; ?>
 
-    <div class="d-flex">
-        <!-- Main Profile Content -->
-        <div class="container mt-5 p-4 bg-white shadow rounded flex-grow-1">
-            <a href="index.php" class="d-flex align-items-center text-decoration-none p-2 rounded-lg back-link" style="color: #6a0dad;">
-                <i class="fa fa-long-arrow-left mr-2" style="font-size: 20px;"></i>
-                <span class="font-weight-bold">Back to home page</span>
-            </a>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <?php include('includes/sidebar-dashboard.php'); ?>
 
-            <style>
-                span:hover {
-                    text-decoration: underline;
-                }
-            </style>
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
 
-            <div class="row">
-                <!-- Left Profile Section -->
-                <div class="col-md-4 text-white text-center py-4 rounded-left" style="background-color: #6a0dad; border-right: 2px solid #6a0dad;">
-                    <img id="image-preview" class="rounded-circle mt-4 border border-white" src="<?php echo htmlentities($profileImage); ?>" alt="Profile Image" width="150" height="150">
-                    <h5 class="mt-3"><?php echo htmlentities($student['full_name']); ?></h5>
-                    <p><?php echo htmlentities($student['email']); ?></p>
-                    <p>Year: <?php echo htmlentities($student['year']); ?></p>
-                    <p><?php echo htmlentities($formatted_created_at); ?></p>
-                </div>
+                    <!-- Navbar Title or Section Link -->
+                    <div class="ml-auto">
+                        <span class="navbar-text font-weight-bold" style="font-size: 1.2rem;">
+                            Edit Account
+                        </span>
+                    </div>
+                </nav>
+                <!-- End of Topbar -->
 
-                <!-- Right Edit Section -->
-                <div class="col-md-8">
-                    <div class="py-4">
-                        <!-- Back to Profile Link -->
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5>Edit Profile</h5>
+
+
+            </div>
+            <!-- End of Main Content -->
+
+
+            <!-- Success alert if profile updated -->
+            <?php if (isset($_GET['update']) && $_GET['update'] == 'success'): ?>
+                <script>
+                    alert("Profile updated successfully!");
+                </script>
+            <?php endif; ?>
+
+            <div class="d-flex">
+                <!-- Main Profile Content -->
+                <div class="container bg-white shadow rounded flex-grow-1">
+                    <a href="index.php" class="d-flex align-items-center text-decoration-none p-2 rounded-lg back-link" style="color: #6a0dad;">
+                        <i class="fa fa-long-arrow-left mr-2" style="font-size: 20px;"></i>
+                        <span class="font-weight-bold">Back to home page</span>
+                    </a>
+
+                    <style>
+                        span:hover {
+                            text-decoration: underline;
+                        }
+                    </style>
+
+                    <div class="row">
+                        <!-- Left Profile Section -->
+                        <div class="col-md-4 text-white text-center py-4 rounded-left shadow-lg"
+                            style="background: linear-gradient(135deg, #6a0dad, #8a2be2); border-right: 3px solid #8a2be2;">
+                            <!-- Profile Image -->
+                            <img id="image-preview"
+                                class="rounded-circle mt-3 border border-3 border-white shadow-sm"
+                                src="<?php echo htmlentities($profileImage); ?>"
+                                alt="Profile Image"
+                                width="150"
+                                height="150">
+
+                            <!-- User Details -->
+                            <h4 class="mt-3 fw-bold"><?php echo htmlentities($student['full_name']); ?></h4>
+                            <p class="mb-1 text-light fw-semibold"><?php echo htmlentities($student['email']); ?></p>
+                            <p class="mb-1 text-light"><strong>Year:</strong> <?php echo htmlentities($student['year']); ?></p>
+                            <p class="small text-white-50"><?php echo htmlentities($formatted_created_at); ?></p>
                         </div>
 
-                        <!-- Form Section -->
-                        <form method="POST" enctype="multipart/form-data">
-                            <!-- Full Name -->
-                            <div class="form-group">
-                                <label for="full_name" class="font-weight-bold" style="color: black;">Full Name:</label>
-                                <input type="text" id="full_name" class="form-control" name="full_name" value="<?php echo htmlentities($student['full_name']); ?>" required>
-                            </div>
+                        <!-- Right Edit Section -->
+                        <!-- Right Edit Section -->
+                        <div class="col-md-8">
+                            <div class="p-4 shadow-lg rounded bg-white">
+                                <!-- Edit Profile Header -->
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h4 class="fw-bold text-dark">Edit Profile</h4>
+                                </div>
 
-                            <!-- Email -->
-                            <div class="form-group">
-                                <label for="email" class="font-weight-bold" style="color: black;">Email:</label>
-                                <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlentities($student['email']); ?>" required>
-                            </div>
+                                <!-- Form Section -->
+                                <form method="POST" enctype="multipart/form-data">
+                                    <!-- Full Name -->
+                                    <div class="form-group mb-3">
+                                        <label for="full_name" class="fw-semibold text-dark">Full Name:</label>
+                                        <input type="text" id="full_name" class="form-control rounded-pill px-3 py-2" name="full_name" value="<?php echo htmlentities($student['full_name']); ?>" required>
+                                    </div>
 
-                            <!-- Profile Image -->
-                            <div class="form-group">
-                                <label for="profile_image" class="font-weight-bold" style="color: black;">Profile Image:</label>
-                                <input type="file" id="profile_image" class="form-control" name="profile_image">
-                                <div class="small text-muted">Leave blank if you don't want to change your image.</div>
-                            </div>
+                                    <!-- Email -->
+                                    <div class="form-group mb-3">
+                                        <label for="email" class="fw-semibold text-dark">Email:</label>
+                                        <input type="email" id="email" class="form-control rounded-pill px-3 py-2" name="email" value="<?php echo htmlentities($student['email']); ?>" required>
+                                    </div>
 
-                            <!-- Year Selection -->
-                            <div class="form-group">
-                                <label for="year" class="font-weight-bold" style="color: black;">Year:</label>
-                                <select name="year" class="form-control" required>
-                                    <option value="1st Year" <?php echo $student['year'] == '1st Year' ? 'selected' : ''; ?>>1st Year</option>
-                                    <option value="2nd Year" <?php echo $student['year'] == '2nd Year' ? 'selected' : ''; ?>>2nd Year</option>
-                                    <option value="3rd Year" <?php echo $student['year'] == '3rd Year' ? 'selected' : ''; ?>>3rd Year</option>
-                                    <option value="4th Year" <?php echo $student['year'] == '4th Year' ? 'selected' : ''; ?>>4th Year</option>
-                                </select>
-                            </div>
+                                    <!-- Profile Image -->
+                                    <div class="form-group mb-3">
+                                        <label for="profile_image" class="fw-semibold text-dark">Profile Image:</label>
+                                        <input type="file" id="profile_image" class="form-control rounded-pill px-3 py-2" name="profile_image">
+                                        <div class="small text-muted mt-1">Leave blank if you don't want to change your image.</div>
+                                    </div>
 
-                            <!-- Password -->
-                            <div class="form-group">
-                                <label for="password" class="font-weight-bold" style="color: black;">Password:</label>
-                                <input type="password" id="password" class="form-control" name="password">
-                                <div class="small text-muted">Leave blank if you don't want to change your password.</div>
-                            </div>
+                                    <!-- Year Selection -->
+                                    <div class="form-group mb-3">
+                                        <label for="year" class="fw-semibold text-dark">Year:</label>
+                                        <select name="year" class="form-control rounded-pill px-3 py-2" required>
+                                            <option value="1st Year" <?php echo $student['year'] == '1st Year' ? 'selected' : ''; ?>>1st Year</option>
+                                            <option value="2nd Year" <?php echo $student['year'] == '2nd Year' ? 'selected' : ''; ?>>2nd Year</option>
+                                            <option value="3rd Year" <?php echo $student['year'] == '3rd Year' ? 'selected' : ''; ?>>3rd Year</option>
+                                            <option value="4th Year" <?php echo $student['year'] == '4th Year' ? 'selected' : ''; ?>>4th Year</option>
+                                        </select>
+                                    </div>
 
-                            <button type="submit" class="btn btn-primary btn-block mt-4" style="background-color: #6a0dad;">Save Changes</button>
-                        </form>
+                                    <!-- Password -->
+                                    <div class="form-group mb-3">
+                                        <label for="password" class="fw-semibold text-dark">Password:</label>
+                                        <input type="password" id="password" class="form-control rounded-pill px-3 py-2" name="password">
+                                        <div class="small text-muted mt-1">Leave blank if you don't want to change your password.</div>
+                                    </div>
+
+                                    <!-- Save Button -->
+                                    <button type="submit" class="btn btn-primary w-100 py-2 mt-3 rounded-pill" style="background-color: #6a0dad; border: none;">
+                                        Save Changes
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
+
+            <?php include('includes/sidebar-footer.php'); ?>
+
+
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/chart-area-demo.js"></script>
+    <script src="js/demo/chart-pie-demo.js"></script>
 
     <script>
         // Image preview functionality

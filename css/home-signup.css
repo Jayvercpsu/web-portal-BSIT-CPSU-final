@@ -4,10 +4,10 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-color: #000;
+    background-image: url('https://static.vecteezy.com/system/resources/previews/000/549/810/original/vector-abstract-technology-background-technology-digital-world-of-business-information-futuristic-blue-virtual-graphic-interface.jpg');
     animation: fadeIn 1s ease-in;
     font-family: monospace;
-    color: white;
+    color: white; 
 }
 
 @keyframes fadeIn {

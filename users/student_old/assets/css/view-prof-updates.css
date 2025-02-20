@@ -1,0 +1,97 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.bg-custom {
+  background-color: #4b0082;
+}
+
+.btn-custom {
+  background-color: #4b0082;
+  color: white;
+}
+
+.btn-custom:hover {
+  background-color: #6a0dad;
+}
+
+.comment-btn {
+  color: #4b0082;
+  font-weight: bold;
+}
+
+.comment-btn:hover {
+  color: #6a0dad;
+}
+
+.comments-section {
+  padding: 15px;
+  background-color: #f8f9fa;
+}
+
+.comment-textarea {
+  border-radius: 15px;
+  resize: none;
+}
+
+.newsfeed-container {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.post-content {
+  text-align: center;
+  margin: auto;
+}
+
+.comment-list {
+  margin-bottom: 15px;
+}
+
+.comment {
+  margin-bottom: 10px;
+  color: #4b0082;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-body img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.card-body .text-muted {
+  margin-top: -6px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post-header img {
+  margin-right: 10px;
+}
+
+.card-body .btn-link {
+  font-size: 18px;
+}
+
+/* like reactions css */
+/* Add hover effect for buttons */
+.btn-link:hover {
+  color: #6a0dad;
+  /* Change to your preferred hover color */
+  text-decoration: none;
+}
+
+/* Optional: Add hover effect to icons */
+.fas:hover {
+  transform: scale(1.1);
+  /* Slightly increase icon size */
+  transition: transform 0.2s ease-in-out;
+}
