@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
 <div class="left side-menu">
     <div class="sidebar-inner slimscrollleft">
 
@@ -10,7 +12,7 @@
                     <a href="dashboard.php" class="waves-effect"><i class="mdi mdi-view-dashboard"></i> <span> Dashboard </span> </a>
                 </li>
 
-                <li class="has_sub">
+                <!-- <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-format-list-bulleted"></i> <span> Category </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="add-category.php">Add Category</a></li>
@@ -24,10 +26,10 @@
                         <li><a href="add-subcategory.php">Add Sub Category</a></li>
                         <li><a href="manage-subcategories.php">Manage Sub Category</a></li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-newspaper"></i> <span> Posts (News) </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-newspaper"></i> <span> Posts Updates </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="add-post.php">Add Posts</a></li>
                         <li><a href="manage-posts.php">Manage Posts</a></li>
@@ -36,18 +38,41 @@
                 </li>
 
 
+
+
                 <li class="has_sub">
-                    <a href="all-professors.php" class="waves-effect"><i class="fa fa-users"></i> <span> All Professors </span> </a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-edit"></i> <span> Create ID </span> <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="add-subcategory.php">Add Student ID</a></li>
+                        <li><a href="manage-subcategories.php">Manage Student ID</a></li>
+                    </ul>
+                </li>
+
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 1st Sem Grades </span> <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="students-1st-year.php"><i class="fa fa-university"></i> 1st Year</a></li>
+                        <li><a href="students-2nd-year.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
+                        <li><a href="students-3rd-year.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
+                        <li><a href="students-4th-year.php"><i class="fa  fa-user-graduate"></i> 4th Year</a></li>
+                    </ul>
                 </li>
 
 
+                <!-- 2nd sem -->
+                <li class="has_sub">
+                    <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 2nd Sem Grades </span> <span class="menu-arrow"></span></a>
+                    <ul class="list-unstyled">
+                        <li><a href="2ndsem-1st-year.php"><i class="fa fa-university"></i> 1st Year</a></li>
+                        <li><a href="2ndsem-2nd-year.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
+                        <li><a href="2ndsem-3rd-year.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
+                        <li><a href="2ndsem-4th-year.php"><i class="fa fa-user-graduate"></i> 4th Year</a></li>
 
-                <li>
-                    <a href="all-students.php" class="waves-effect"><i class="fa fa-users" aria-hidden="true"></i> <span> All Students </span></a>
+                    </ul>
                 </li>
+  
 
-
-
+                <!-- 
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="ti ti-files"></i> <span> CMS </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
@@ -63,7 +88,7 @@
                         <li><a href="unapprove-comment.php">Waiting for Approval </a></li>
                         <li><a href="manage-comments.php">Approved Comments</a></li>
                     </ul>
-                </li> 
+                </li>  -->
 
                 <!-- New Menu Items -->
                 <!-- <li>

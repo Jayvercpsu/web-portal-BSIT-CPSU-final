@@ -26,14 +26,14 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="instructor.php"><i class="fa fa-users"></i> Instructors</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link text-dark" href="news.php"><i class="fa fa-newspaper-o"></i> News</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="contact-us.php"><i class="fa fa-phone"></i> Contact us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="users/login.php"><i class="fa fa-user"></i> Join</a>
+                    <a class="nav-link text-dark" href="users/grade_inquiry/input-student-id.php"><i class="fa fa-user"></i> Grade Inquiry</a>
                 </li>
             </ul>
         </div>

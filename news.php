@@ -29,7 +29,7 @@ include('includes/config.php');
 
     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
 
-    <link rel="stylesheet" href="./assets/css/theme.css"> 
+    <link rel="stylesheet" href="./assets/css/theme.css">
 
 
 
@@ -53,7 +53,7 @@ include('includes/config.php');
                 <nav aria-label="Breadcrumb">
                     <br><br>
                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-                        <li class="breadcrumb-item"><a  style="color: violet;" href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a style="color: violet;" href="index.html">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">News</li>
                     </ol>
                 </nav>
@@ -80,58 +80,8 @@ include('includes/config.php');
                 <h4 class="widget-title mb-4">Today <span>Highlight</span></h4>
                 <!-- Blog Post -->
                 <div class="row">
-                    <div class="owl-carousel owl-theme" id="slider">
-                        <div class="card mb-4 border-0">
-                            <img class="card-img-top" src="admin/assets/images/01.jpg" alt="" width="100%">
-                            <div class="card-body">
-                                <p class="m-0">
-                                    <!--category-->
-                                    <a class="badge bg-dark text-decoration-none link-light" href="#" style="color:#fff">Sports</a>
-                                    <!--Subcategory--->
-                                    <a class="badge bg-warning text-decoration-none link-light" style="color:#fff">Sports</a>
-                                </p>
-                                <p class="m-0"><small> Posted on 2022-11-11 00:20:09</small></p>
-                                <a href="#" class="card-title text-decoration-none text-dark">
-                                    <h5 class="card-title">FIFA World Cup 2022: Semi-final 1, England vs New Zealand Who Said What</h5>
-                                </a>
-                                <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                            </div>
-                        </div>
-                        <div class="card mb-4 border-0">
-                            <img class="card-img-top" src="admin/postimages/8bc5c30be91dca9d07c1db858c60e39f.jpg" alt="" width="100%">
-                            <div class="card-body">
-                                <p class="m-0">
-                                    <!--category-->
-                                    <a class="badge bg-dark text-decoration-none link-light" href="#" style="color:#fff">Sports</a>
-                                    <!--Subcategory--->
-                                    <a class="badge bg-warning text-decoration-none link-light" style="color:#fff">Sports</a>
-                                </p>
-                                <p class="m-0"><small> Posted on 2022-11-11 00:20:09</small></p>
-                                <a href="#" class="card-title text-decoration-none text-dark">
-                                    <h5 class="card-title">T20 World Cup 2022: Semi-final 1, England vs New Zealand Who Said What</h5>
-                                </a>
-                                <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                            </div>
-                        </div>
-                        <div class="card mb-4 border-0">
-                            <img class="card-img-top" src="admin/postimages/8bc5c30be91dca9d07c1db858c60e39f.jpg" alt="" width="100%">
-                            <div class="card-body">
-                                <p class="m-0">
-                                    <!--category-->
-                                    <a class="badge bg-dark text-decoration-none link-light" href="#" style="color:#fff">Sports</a>
-                                    <!--Subcategory--->
-                                    <a class="badge bg-warning text-decoration-none link-light" style="color:#fff">Sports</a>
-                                </p>
-                                <p class="m-0"><small> Posted on 2022-11-11 00:20:09</small></p>
-                                <a href="#" class="card-title text-decoration-none text-dark">
-                                    <h5 class="card-title">T20 World Cup 2022: Semi-final 1, England vs New Zealand Who Said What</h5>
-                                </a>
-                                <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                            </div>
-                        </div>
-                    </div>
 
-                    
+
                     <?php
                     if (isset($_GET['pageno'])) {
                         $pageno = $_GET['pageno'];
@@ -212,6 +162,9 @@ include('includes/config.php');
 
     </div>
     <!-- /.row -->
+
+
+    
     </div>
     <!-- /.container -->
     <!-- Footer -->
@@ -223,7 +176,7 @@ include('includes/config.php');
 
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
 
-    <script src="./assets/vendor/wow/wow.min.js"></script>
+    <script src="./assets/vendor/wow/wow.min.js"></script>  
 
     <script src="./assets/js/theme.js"></script>
     <script>

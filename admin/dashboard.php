@@ -131,78 +131,12 @@ if (strlen($_SESSION['login']) == 0) {
                         </div>
                     </a>
 
-                    <a href="manage-professors.php">
-                        <div class="col-lg-2 col-md-2 col-sm-6">
-                            <div class="card-box widget-box-one text-center">
-                                <i class="mdi mdi-school widget-one-icon"></i>
-                                <div class="wigdet-one-content">
-                                    <p class="m-0 text-secondary" title="Statistics">Professors</p>
-                                    <?php
-                                    $query = mysqli_query($con, "SELECT * FROM professors");
-                                    $countProfessors = mysqli_num_rows($query);
-                                    ?>
-                                    <h2><?php echo htmlentities($countProfessors); ?></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+         
 
 
 
 
 
-
-                    <a href="manage-categories.php">
-                        <div class="col-lg-2 col-md-2 col-sm-6">
-                            <div class="card-box widget-box-one text-center">
-                                <i class="mdi mdi-chart-areaspline widget-one-icon"></i>
-                                <div class="wigdet-one-content">
-                                    <p class="m-0 text-secondary" title="Statistics">Categories Listed</p>
-                                    <?php $query = mysqli_query($con, "select * from tblcategory where Is_Active=1");
-                                    $countcat = mysqli_num_rows($query);
-                                    ?>
-                                    <h2><?php echo htmlentities($countcat); ?> <small></small></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-
-
-
-
-
-                    <!-- end col -->
-                    <a href="manage-posts.php">
-                        <div class="col-lg-2 col-md-2 col-sm-6">
-                            <div class="card-box widget-box-one text-center">
-                                <i class="mdi mdi-layers widget-one-icon"></i>
-                                <div class="wigdet-one-content">
-                                    <p class="m-0 text-secondary" title="User This Month">Live News</p>
-                                    <?php $query = mysqli_query($con, "select * from tblposts where Is_Active=1");
-                                    $countposts = mysqli_num_rows($query);
-                                    ?>
-                                    <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="manage-subcategories.php">
-                        <div class="col-lg-4 col-md-4 col-sm-6">
-                            <div class="card-box widget-box-one text-center">
-                                <i class="mdi mdi-layers widget-one-icon"></i>
-                                <div class="wigdet-one-content">
-                                    <p class="m-0 text-secondary" title="User This Month">Listed Subcategories</p>
-                                    <?php $query = mysqli_query($con, "select * from tblsubcategory where Is_Active=1");
-                                    $countsubcat = mysqli_num_rows($query);
-                                    ?>
-                                    <h2><?php echo htmlentities($countsubcat); ?> <small></small></h2>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end col -->
-                    </a>
 
                 </div>
                 <!-- end row -->
@@ -223,48 +157,7 @@ if (strlen($_SESSION['login']) == 0) {
                </div>
                </a> -->
                 </div>
-                <div class="col-sm-12">
-                    <div class="card-box">
-                        <h2>Recent News Post</h2>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="example">
-                                <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Category</th>
-                                        <th>Subcategory</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <?php
-                                    $query = mysqli_query($con, "select tblposts.id as postid,tblposts.PostTitle as title,tblcategory.CategoryName as category,tblsubcategory.Subcategory as subcategory from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join tblsubcategory on tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 ");
-                                    $rowcount = mysqli_num_rows($query);
-                                    if ($rowcount == 0) {
-                                    ?>
-                                        <tr>
-                                            <td colspan="4" align="center">
-                                                <h3 style="color:red">No record found</h3>
-                                            </td>
-                                        <tr>
-                                            <?php
-                                        } else {
-                                            while ($row = mysqli_fetch_array($query)) {
-                                            ?>
-                                        <tr>
-                                            <td><?php echo htmlentities($row['title']); ?></td>
-                                            <td><?php echo htmlentities($row['category']) ?></td>
-                                            <td><?php echo htmlentities($row['subcategory']) ?></td>
-
-                                        </tr>
-                                <?php }
-                                        } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+              
             </div>
             <!-- container -->
         </div>

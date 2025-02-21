@@ -23,12 +23,12 @@
     <hr class="sidebar-divider" />
 
     <!-- Nav Item - My Professors -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" href="my-professors.php">
             <i class="fas fa-fw fa-table"></i>
             <span>My Professors</span>
         </a>
-    </li>
+    </li> -->
 
     <!-- Nav Item - View My Grades -->
     <li class="nav-item">
