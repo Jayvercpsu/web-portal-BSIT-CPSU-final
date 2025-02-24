@@ -1,10 +1,10 @@
-<div id="grade-form" style="display:none;">
-    <h4 class="text-center" id="form-title"></h4>
+<div id="grade-form-4th" style="display:none;">
+    <h4 class="text-center" id="form-title-4th"></h4>
     <form method="post">
-        <input type="hidden" name="student_id" id="selected_student_id">
-        <input type="hidden" name="student_name" id="selected_student_name">
-        <input type="hidden" name="student_year" id="selected_student_year">
-        <input type="hidden" name="semester" id="selected_semester"> <!-- ✅ Ensure Semester is Passed -->
+        <input type="hidden" name="student_id" id="selected_student_id_4th">
+        <input type="hidden" name="student_name" id="selected_student_name_4th">
+        <input type="hidden" name="student_year" id="selected_student_year_4th">
+        <input type="hidden" name="semester" id="selected_semester_4th"> 
 
         <table class="table table-bordered">
             <thead>
@@ -17,13 +17,13 @@
                     <th>Pre-Req</th>
                 </tr>
             </thead>
-            <tbody id="grade-table-body">
+            <tbody id="grade-table-body-4th">
                 <!-- Data will be inserted via JS -->
             </tbody>
         </table>
 
         <button type="submit" class="btn btn-success" name="submit_grades">Submit Grades</button>
-    </form>
+    </form> 
 </div>
 
 <!-- ✅ JavaScript: Handle 4th Year Course Display & Ensure Semester is Passed -->
@@ -35,11 +35,11 @@
         var studentName = document.querySelector("#student_id option:checked").text;
 
         if (semester && studentYear === "4th Year") {
-            document.getElementById("form-title").innerText = "FOURTH YEAR " + semester.toUpperCase();
-            document.getElementById("selected_semester").value = semester; 
-            document.getElementById("selected_student_id").value = studentId;
-            document.getElementById("selected_student_name").value = studentName;
-            document.getElementById("selected_student_year").value = studentYear;
+            document.getElementById("form-title-4th").innerText = "FOURTH YEAR " + semester.toUpperCase();
+            document.getElementById("selected_semester_4th").value = semester;
+            document.getElementById("selected_student_id_4th").value = studentId;
+            document.getElementById("selected_student_name_4th").value = studentName;
+            document.getElementById("selected_student_year_4th").value = studentYear;
 
             var courses = {
                 "1st Sem": [{ course_no: "PCIT-14", title: "Practicum", unit: 6, pre_req: "4th Year" }],
@@ -51,7 +51,7 @@
                 ]
             };
 
-            var tbody = document.getElementById("grade-table-body");
+            var tbody = document.getElementById("grade-table-body-4th");
             tbody.innerHTML = "";
             courses[semester].forEach(course => {
                 tbody.innerHTML += `<tr>
@@ -64,9 +64,9 @@
                 </tr>`;
             });
 
-            document.getElementById("grade-form").style.display = "block";
+            document.getElementById("grade-form-4th").style.display = "block";
         } else {
-            document.getElementById("grade-form").style.display = "none";
+            document.getElementById("grade-form-4th").style.display = "none";
         }
     });
 </script>
