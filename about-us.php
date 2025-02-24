@@ -31,8 +31,7 @@ include('includes/config.php');
 
     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
 
-    <link rel="stylesheet" href="./assets/css/theme.css">
-    <link rel="stylesheet" href="css/home-page.css">
+    <link rel="stylesheet" href="./assets/css/theme.css"> 
 </head>
 
 <body>
@@ -60,40 +59,7 @@ include('includes/config.php');
         </div> <!-- .banner-section -->
     </div> <!-- .page-banner -->
 
-
-    <!-- Services Section -->
-    <div class="bg-light">
-        <div class="page-section py-3 mt-md-n5 custom-index">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-4 py-3 py-md-0">
-                        <div class="card-service wow fadeInUp">
-                            <div class="circle-shape">
-                                <span class="mai-chatbubbles-outline"></span>
-                            </div>
-                            <p><span>Hands-on</span> Experience</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 py-3 py-md-0">
-                        <div class="card-service wow fadeInUp">
-                            <div class="circle-shape">
-                                <span class="mai-shield-checkmark"></span>
-                            </div>
-                            <p><span>Global</span> Career Opportunities </p>
-                        </div>
-                    </div>
-                    <div class="col-md-4 py-3 py-md-0">
-                        <div class="card-service wow fadeInUp">
-                            <div class="circle-shape">
-                                <span class="mai-basket"></span>
-                            </div>
-                            <p><span>Innovative</span> Solutions</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+ 
 
 
 

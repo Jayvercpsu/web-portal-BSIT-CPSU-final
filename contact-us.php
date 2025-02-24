@@ -47,10 +47,10 @@
                      <br><br>
                      <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
                          <li class="breadcrumb-item"><a style="color: violet;" href="index.html">Home</a></li>
-                         <li class="breadcrumb-item active" aria-current="page">News</li>
+                         <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
                      </ol>
                  </nav>
-                 <h1 class="font-weight-normal">News</h1>
+                 <h1 class="font-weight-normal">Contact Us</h1>
              </div> <!-- .container -->
          </div> <!-- .banner-section -->
      </div> <!-- .page-banner -->

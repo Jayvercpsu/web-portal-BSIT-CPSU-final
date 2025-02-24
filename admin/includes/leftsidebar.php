@@ -43,18 +43,22 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-edit"></i> <span> Create ID </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="add-subcategory.php">Add Student ID</a></li>
-                        <li><a href="manage-subcategories.php">Manage Student ID</a></li>
+                        <li><a href="add-student-id.php">Add Student ID</a></li>
+                        <li><a href="manage-student-id.php">Manage Student ID</a></li>
                     </ul>
+                </li>
+
+                <li class="has_sub">
+                    <a href="add-student-grade.php" class="waves-effect"><i class="fa fa-user"></i> <span> Add Student Grades </span> </a>
                 </li>
 
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 1st Sem Grades </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="students-1st-year.php"><i class="fa fa-university"></i> 1st Year</a></li>
-                        <li><a href="students-2nd-year.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
-                        <li><a href="students-3rd-year.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
-                        <li><a href="students-4th-year.php"><i class="fa  fa-user-graduate"></i> 4th Year</a></li>
+                        <li><a href="1stsem-1st-year-grades.php"><i class="fa fa-university"></i> 1st Year</a></li>
+                        <li><a href="1stsem-2nd-year-grades.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
+                        <li><a href="1stsem-3rd-year-grades.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
+                        <li><a href="1stsem-4th-year-grades.php"><i class="fa fa-user-graduate"></i> 4th Year</a></li>
                     </ul>
                 </li>
 
@@ -63,14 +67,14 @@
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 2nd Sem Grades </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="2ndsem-1st-year.php"><i class="fa fa-university"></i> 1st Year</a></li>
-                        <li><a href="2ndsem-2nd-year.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
-                        <li><a href="2ndsem-3rd-year.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
-                        <li><a href="2ndsem-4th-year.php"><i class="fa fa-user-graduate"></i> 4th Year</a></li>
+                        <li><a href="2ndsem-1st-year-grades.php"><i class="fa fa-university"></i> 1st Year</a></li>
+                        <li><a href="2ndsem-2nd-year-grades.php"><i class="fa fa-chalkboard-teacher"></i> 2nd Year</a></li>
+                        <li><a href="2ndsem-3rd-year-grades.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
+                        <li><a href="2ndsem-4th-year-grades.php"><i class="fa fa-user-graduate"></i> 4th Year</a></li>
 
                     </ul>
                 </li>
-  
+
 
                 <!-- 
                 <li class="has_sub">

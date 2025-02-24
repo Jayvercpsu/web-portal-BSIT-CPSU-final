@@ -2,8 +2,8 @@
     <div class="container">
         <!-- BSIT Logo and Name -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="admin/assets/images/bsit_logo.png" height="65" alt="BSIT Logo">
-            <img src="admin/assets/images/BSIT_name.webp" alt="BSIT Name" class="ml-2"
+            <img src="../../admin/assets/images/bsit_logo.png" height="65" alt="BSIT Logo">
+            <img src="../../admin/assets/images/BSIT_name.webp" alt="BSIT Name" class="ml-2"
                 style="height: 65px; width: auto;"
                 onload="this.style.height = window.innerWidth < 992 ? '50px' : '65px';">
         </a>
@@ -19,7 +19,7 @@
             <ul class="navbar-nav">
                 <!-- Home with Hover Dropdown -->
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="index.php"><i class="fa fa-home"></i> Home</a>
+                    <a class="nav-link text-dark" href="../../index.php"><i class="fa fa-home"></i> Home</a>
                 </li>
 
 
@@ -27,12 +27,12 @@
 
                 <!-- Grade Inquiry with Hover Dropdown -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="users/grade_inquiry/input-student-id.php" id="gradeInquiryDropdown" role="button">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="gradeInquiryDropdown" role="button">
                         <i class="fa fa-user"></i> Grade Inquiry
                     </a>
                     <div class="dropdown-menu" aria-labelledby="gradeInquiryDropdown">
-                        <a class="dropdown-item" href="users/grade_inquiry/input-student-id.php">Enter Student ID</a>
-                        <a class="dropdown-item" href="users/grade_inquiry/view-results.php">View Results</a>
+                        <a class="dropdown-item" href="../users/grade_inquiry/input-student-id.php">Enter Student ID</a>
+                        <a class="dropdown-item" href="../users/grade_inquiry/view-results.php">View Results</a>
                     </div>
                 </li>
 
@@ -43,9 +43,9 @@
                         <i class="fa fa-info-circle"></i> More Info
                     </a>
                     <div class="dropdown-menu" aria-labelledby="moreInfoDropdown">
-                        <a class="dropdown-item" href="about-us.php"><i class="fa fa-info-circle"></i> About</a>
-                        <a class="dropdown-item" href="instructor.php"><i class="fa fa-users"></i> Instructors</a>
-                        <a class="dropdown-item" href="contact-us.php"><i class="fa fa-envelope"></i> Contact</a>
+                        <a class="dropdown-item" href="../../about-us.php"><i class="fa fa-info-circle"></i> About</a>
+                        <a class="dropdown-item" href="../../instructor.php"><i class="fa fa-users"></i> Instructors</a>
+                        <a class="dropdown-item" href="../../contact-us.php"><i class="fa fa-envelope"></i> Contact</a>
                     </div>
                 </li>
 
@@ -55,7 +55,7 @@
         <!-- CPSU Logo & Name -->
         <div class="navbar-brand d-lg-flex align-items-center d-none d-lg-flex">
             <h1 class="mb-0" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">CPSU</h1>
-            <img src="admin/assets/images/cpsu_logo.png" height="65" alt="CPSU Logo" class="ml-2">
+            <img src="../../admin/assets/images/cpsu_logo.png" height="65" alt="CPSU Logo" class="ml-2">
         </div>
     </div>
 </nav>
