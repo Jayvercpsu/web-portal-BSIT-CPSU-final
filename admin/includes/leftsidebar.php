@@ -33,7 +33,6 @@
                     <ul class="list-unstyled">
                         <li><a href="add-post.php">Add Posts</a></li>
                         <li><a href="manage-posts.php">Manage Posts</a></li>
-                        <li><a href="trash-posts.php">Trash Posts</a></li>
                     </ul>
                 </li>
 

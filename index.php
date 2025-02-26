@@ -2,6 +2,8 @@
 session_start();
 include('includes/config.php');
 
+// Fetch the latest posts from the database
+$query = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, postedBy FROM tblposts WHERE Is_Active=1 ORDER BY id DESC LIMIT 5");
 
 ?>
 
@@ -23,15 +25,10 @@ include('includes/config.php');
     <link rel="stylesheet" href="css/icons.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
-
     <link rel="stylesheet" href="./assets/css/maicons.css">
-
     <link rel="stylesheet" href="./assets/css/bootstrap.css">
-
     <link rel="stylesheet" href="./assets/vendor/owl-carousel/css/owl.carousel.css">
-
     <link rel="stylesheet" href="./assets/vendor/animate/animate.css">
-
     <link rel="stylesheet" href="./assets/css/theme.css">
     <link rel="stylesheet" href="css/home-page.css">
 
@@ -48,304 +45,16 @@ include('includes/config.php');
     <?php include('includes/header.php'); ?>
 
 
-    <!-- Bootstrap Carousel -->
-    <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="3000">
-        <div class="carousel-inner">
-
-            <!-- First Slide -->
-            <div class="carousel-item active">
-                <div class="page-hero bg-image overlay-dark" style="background-image: url('images/sample_bsit.jpg');">
-                    <div class="hero-section d-flex align-items-center">
-                        <div class="container text-center text-white wow zoomIn mt-5">
-                            <span class="subhead d-block mb-2 fs-5">CPSU BSIT Department</span>
-                            <h1 class="display-5 fw-bold">Empowering Future IT Professionals</h1>
-                            <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Second Slide -->
-            <div class="carousel-item">
-                <div class="page-hero bg-image overlay-dark" style="background-image: url('images/sample2.jpg');">
-                    <div class="hero-section d-flex align-items-center">
-                        <div class="container text-center text-white wow zoomIn mt-5">
-                            <span class="subhead d-block mb-2 fs-5">Innovating Education</span>
-                            <h1 class="display-5 fw-bold">Shaping Tomorrow's Leaders</h1>
-                            <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Third Slide -->
-            <div class="carousel-item">
-                <div class="page-hero bg-image overlay-dark" style="background-image: url('images/whole.jpg');">
-                    <div class="hero-section d-flex align-items-center">
-                        <div class="container text-center text-white wow zoomIn mt-5">
-                            <span class="subhead d-block mb-2 fs-5">A New Era of Technology</span>
-                            <h1 class="display-5 fw-bold">Leading the Digital Transformation</h1>
-                            <a href="about-us.php" class="btn btn-primary mt-4 px-5 py-2">Learn More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Carousel Controls -->
-        <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
-
-
-    <!-- Initialize Carousel (Optional for extra control) -->
-    <script>
-        $(document).ready(function() {
-            $('#carouselExample').carousel({
-                interval: 3000 // Slide every 5 seconds
-            });
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-    <!-- <div class="page-section pb-0" id="about">
-        <div class="container">
-            <div class="row align-items-center" style="padding-bottom: 40px;">
-                <div class="col-lg-6 py-3 wow fadeInUp">
-                    <h1>Welcome to the CPSU BSIT Program</h1>
-                    <p class="text-white mb-4">
-                        At CPSU, the Bachelor of Science in Information Technology program equips students with the skills and knowledge to lead in a technology-driven world. From software development to networking, our curriculum fosters innovation and problem-solving in the field of IT.
-                    </p>
-                    <a href="news.php" class="btn btn-primary">Explore Updates</a>
-                </div>
-                <div class="col-lg-6 wow fadeInRight" data-wow-delay="400ms">
-                    <div class="img-place custom-img-1">
-                        <img src="images/sample2.jpg" alt="CPSU Students">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+    <?php include('includes/carousel_index.php') ?>
 
     <?php include('includes/latest_news_start.php') ?>
 
-    <div class="row" style="margin-top: 4%">
 
-        <!-- Blog Entries Column -->
-        <div class="col-md-2 mt-4">
-
-        </div>
-        <div class="col-md-7">
-            <h2 class="mb-4 fw-bold">Today Highlight</h2>
-            <!-- Blog Post -->
-            <div class="row">
-
-
-                <?php
-                if (isset($_GET['pageno'])) {
-                    $pageno = $_GET['pageno'];
-                } else {
-                    $pageno = 1;
-                }
-                $no_of_records_per_page = 8;
-                $offset = ($pageno - 1) * $no_of_records_per_page;
-
-
-                $total_pages_sql = "SELECT COUNT(*) FROM tblposts";
-                $result = mysqli_query($con, $total_pages_sql);
-                $total_rows = mysqli_fetch_array($result)[0];
-                $total_pages = ceil($total_rows / $no_of_records_per_page);
-
-
-                $query = mysqli_query($con, "select tblposts.id as pid,tblposts.PostTitle as posttitle,tblposts.PostImage,tblcategory.CategoryName as category,tblcategory.id as cid,tblsubcategory.Subcategory as subcategory,tblposts.PostDetails as postdetails,tblposts.PostingDate as postingdate,tblposts.PostUrl as url from tblposts left join tblcategory on tblcategory.id=tblposts.CategoryId left join  tblsubcategory on  tblsubcategory.SubCategoryId=tblposts.SubCategoryId where tblposts.Is_Active=1 order by tblposts.id desc  LIMIT $offset, $no_of_records_per_page");
-                while ($row = mysqli_fetch_array($query)) {
-                ?>
-                    <div class="col-md-6">
-                        <div class="card mb-4 border-0">
-                            <img class="card-img-top" src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" alt="<?php echo htmlentities($row['posttitle']); ?>" height="200px">
-                            <div class="card-body">
-                                <p class="m-0">
-                                    <!--category-->
-                                    <a class="badge bg-dark text-decoration-none link-light" href="category.php?catid=<?php echo htmlentities($row['cid']) ?>" style="color:#fff"><?php echo htmlentities($row['category']); ?></a>
-                                    <!--Subcategory--->
-                                    <a class="badge bg-warning text-decoration-none link-light" style="color:#fff"><?php echo htmlentities($row['subcategory']); ?></a>
-                                </p>
-                                <p class="m-0"><small> Posted on <?php echo htmlentities($row['postingdate']); ?></small></p>
-                                <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="card-title text-decoration-none text-dark">
-                                    <h5 class="card-title"><?php echo htmlentities($row['posttitle']); ?></h5>
-                                </a>
-                                <!-- <a href="news-details.php?nid=<?php echo htmlentities($row['pid']) ?>" class="">Read More &rarr;</a> -->
-                            </div>
-                        </div>
-                    </div>
-                <?php } ?>
-                <div class="col-md-12">
-
-
-                    <!-- Pagination -->
-                    <!-- <ul class="pagination justify-content-center mb-4">
-                            <li class="page-item"><a href="?pageno=1"  class="page-link border-0">First</a></li>
-                            <li class="<?php if ($pageno <= 1) {
-                                            echo 'disabled';
-                                        } ?> page-item">
-                            <a href="<?php if ($pageno <= 1) {
-                                            echo '#';
-                                        } else {
-                                            echo "?pageno=" . ($pageno - 1);
-                                        } ?>" class="page-link border-0">Prev</a>
-                            </li>
-                            <li class="<?php if ($pageno >= $total_pages) {
-                                            echo 'disabled';
-                                        } ?> page-item">
-                            <a href="<?php if ($pageno >= $total_pages) {
-                                            echo '#';
-                                        } else {
-                                            echo "?pageno=" . ($pageno + 1);
-                                        } ?> " class="page-link border-0">Next</a>
-                            </li>
-                            <li class="page-item"><a href="?pageno=<?php echo $total_pages; ?>" class="page-link border-0">Last</a></li>
-                            </ul> -->
-                </div>
+   
 
 
 
-
-
-
-            </div>
-
-        </div>
-        <!-- Sidebar Widgets Column -->
-        <?php include('includes/sidebar.php'); ?>
-    </div>
-
-
-
-    <div class="container" id="about">
-        <!-- Key Features of the BSIT Program Section -->
-        <div class="text-center mb-5" style="margin-top: 10%;">
-            <h2 class="text-white wow fadeInRight">Key Features of the BSIT Program</h2>
-        </div>
-
-        <div class="row mb-4">
-            <!-- Industry-Oriented Curriculum -->
-            <div class="col-md-4 mb-4  wow fadeInLeft">
-                <div class="card h-100 shadow border border-violet">
-                    <div class="card-body bg-black text-white rounded">
-                        <h5 class="card-title text-violet">Industry-Oriented Curriculum</h5>
-                        <p class="card-text">The curriculum is designed to address the latest trends and technologies in IT, ensuring that students are job-ready upon graduation.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hands-on Learning -->
-            <div class="col-md-4 mb-4  wow fadeInDown">
-                <div class="card h-100 shadow border border-violet">
-                    <div class="card-body bg-black text-white rounded">
-                        <h5 class="card-title text-violet">Hands-on Learning</h5>
-                        <p class="card-text">With state-of-the-art laboratories and technology-driven resources, students gain practical experience through real-world projects, internships, and laboratory sessions.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skilled Faculty -->
-            <div class="col-md-4 mb-4  wow fadeInRight">
-                <div class="card h-100 shadow border border-violet">
-                    <div class="card-body bg-black text-white rounded">
-                        <h5 class="card-title text-violet">Skilled Faculty</h5>
-                        <p class="card-text">The department boasts a team of highly qualified and experienced faculty members who are committed to the academic growth and development of students.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Why Choose BSIT at CPSU Section -->
-        <div class="py-5">
-            <div class="text-center mb-5 wow fadeInLeft">
-                <h2 class="text-white">Why Choose BSIT at CPSU?</h2>
-            </div>
-            <div class="row">
-                <!-- Modern Infrastructure -->
-                <div class="col-md-4 mb-4  wow fadeInLeft">
-                    <div class="card h-100 shadow border border-violet">
-                        <div class="card-body bg-black text-white rounded">
-                            <h5 class="card-title text-violet">Modern Infrastructure</h5>
-                            <p class="card-text">Access to well-equipped computer labs and the latest software tools.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Career Opportunities -->
-                <div class="col-md-4 mb-4  wow fadeInDown">
-                    <div class="card h-100 shadow border border-violet">
-                        <div class="card-body bg-black text-white rounded">
-                            <h5 class="card-title text-violet">Career Opportunities</h5>
-                            <p class="card-text">Strong partnerships with top tech companies for internships and job placements.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Support -->
-                <div class="col-md-4 mb-4  wow fadeInRight">
-                    <div class="card h-100 shadow border border-violet">
-                        <div class="card-body bg-black text-white rounded">
-                            <h5 class="card-title text-violet">Student Support</h5>
-                            <p class="card-text">Our department offers mentorship, academic advising, and career counseling services to help students achieve their academic and professional goals.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Join Now Button Section -->
-        <div class="text-center mb-5  wow fadeInUp">
-            <a href="./users/login.php" class="btn btn-violet text-white btn-lg">Join Now</a>
-        </div>
-    </div>
-
-    <!-- Custom Bootstrap Violet Button Styling -->
-    <style>
-        .btn-violet {
-            background-color: #6f42c1;
-            border-color: #6f42c1;
-        }
-
-        .btn-violet:hover {
-            background-color: #5a2a9b;
-            border-color: #5a2a9b;
-        }
-
-        .text-violet {
-            color: #6f42c1;
-        }
-
-        .bg-black {
-            background-color: #000000;
-        }
-
-        /* Adding violet border to each card */
-        .card {
-            border: 2px solid #6f42c1;
-            /* Violet border */
-        }
-    </style>
-
-
-
+    <?php include('includes/key_features.php') ?>
 
 
 
@@ -394,42 +103,7 @@ include('includes/config.php');
                 </div>
             </div>
 
-
-
-
-            <!-- Static -->
-            <div class="col-md-12 p-0 Tops">
-                <div class="py-5">
-                    <!-- Adjusted row with gap -->
-                    <div class="row d-flex justify-content-center text-center gy-4 gap-4">
-                        <!-- Vision Section -->
-                        <div class="col-md-3 text-center wow fadeInLeft" data-wow-delay="0.2s">
-                            <img src="admin/assets/images/vision.jpg" alt="Vision" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                            <h5 class="text-white">Vision</h5>
-                            <p class="text-white">Our vision is to create a better future through innovation and excellence.</p>
-                        </div>
-                        <!-- Mission Section -->
-                        <div class="col-md-3 text-center wow fadeInUp" data-wow-delay="0.2s">
-                            <img src="admin/assets/images/mission.jpg" alt="Mission" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                            <h5 class="text-white">Mission</h5>
-                            <p class="text-white">Our mission is to empower individuals by providing exceptional learning opportunities.</p>
-                        </div>
-                        <!-- Objectives Section -->
-                        <div class="col-md-3 text-center wow fadeInRight" data-wow-delay="0.2s">
-                            <img src="admin/assets/images/objectives.jpg" alt="Objectives" class="img-fluid rounded shadow-sm mb-2" draggable="false">
-                            <h5 class="text-white">Objectives</h5>
-                            <p class="text-white">Our objectives include fostering creativity, leadership, and a passion for learning.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
-
+            <?php include('includes/vis&mis.php') ?>
 
             <!-- Responsive Map Section -->
             <div class="maps-container wow fadeInUp">
@@ -449,11 +123,8 @@ include('includes/config.php');
             <?php include('includes/footer.php'); ?>
 
             <script src="./assets/js/jquery-3.5.1.min.js"></script>
-
             <script src="./assets/js/bootstrap.bundle.min.js"></script>
-
             <script src="./assets/vendor/wow/wow.min.js"></script>
-
             <script src="./assets/js/theme.js"></script>
             <!-- jQuery & Owl Carousel -->
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -489,8 +160,5 @@ include('includes/config.php');
                     });
                 });
             </script>
-
 </body>
-
-
 </html>
