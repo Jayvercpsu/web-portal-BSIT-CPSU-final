@@ -1,17 +1,17 @@
 <!-- Top Header (Black Section) -->
 <div class="top-header bg-dark text-white py-2">
-    <div class="container d-flex justify-content-between align-items-center">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
 
         <!-- Left Side: School Logo & Name -->
         <div class="d-flex align-items-center">
-            <img src="admin/assets/images/cpsu_logo.png" height="40" alt="BSIT Logo">
+            <img src="admin/assets/images/cpsu_logo.png" height="40" alt="CPSU Logo">
             <span class="ml-2 font-weight-bold">CPSU</span>
-            <span class="text-muted mx-2">|</span>
-            <span class="small">Central Philippine State University San Carlos Campus.</span>
+            <span class="text-muted mx-2 d-none d-md-inline">|</span>
+            <span class="small d-none d-md-inline">Central Philippine State University San Carlos Campus.</span>
         </div>
 
         <!-- Right Side: Date & Facebook Icon -->
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center mt-2 mt-md-0">
             <span class="small"><i class="fa fa-calendar"></i> <span id="live-date"></span></span>
             <span class="ml-3">Follow Us:</span>
             <a href="#" class="text-white ml-2"><i class="fab fa-facebook"></i></a>
@@ -22,11 +22,11 @@
 
 <!-- Main Navigation (White Section) -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container d-flex align-items-center justify-content-between">
+    <div class="container">
 
         <!-- Left: CPSU Logo & VNHS Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="admin/assets/images/bsit_logo.png" height="50" alt="CPSU Logo">
+            <img src="admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo">
             <span class="ml-2 text-primary font-weight-bold" style="font-size: 24px;">BSIT</span>
             <span class="text-muted ml-1" style="letter-spacing: 2px;">Web Portal</span>
         </a>
@@ -68,43 +68,60 @@
             </ul>
         </div>
 
-       <!-- Right: Current Time & Search Icon -->
-<div class="d-flex align-items-center">
-    <span class="text-dark mr-3">
-        <i class="fa fa-clock"></i> <span id="current-time"></span>
-    </span> 
-</div>
-
-<script>
-    function updateTime() {
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById('current-time').textContent = timeString;
-    }
-    
-    // Update time every second
-    setInterval(updateTime, 1000);
-    
-    // Initialize time immediately
-    updateTime();
-</script>
-
+        <!-- Right: Current Time -->
+        <div class="d-flex align-items-center mt-2 mt-lg-0">
+            <span class="text-dark mr-3">
+                <i class="fa fa-clock"></i> <span id="current-time"></span>
+            </span> 
+        </div>
 
     </div>
 </nav>
 
+<!-- JavaScript to Update Date and Time -->
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        // Format current time
+        const timeString = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('current-time').textContent = timeString;
 
+        // Format current date
+        const options = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
+        document.getElementById('live-date').innerText = now.toLocaleDateString('en-US', options);
+    }
 
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+</script>
+
+<!-- Responsive Styling -->
 <style>
     /* Top Header (Black Section) */
     .top-header {
         font-size: 14px;
     }
 
-    /* Main Navigation (White Section) */
-    .navbar-light.bg-light {
-        padding: 10px 0;
-        font-size: 16px;
+    /* Make sure items wrap properly */
+    @media (max-width: 767px) {
+        .top-header .d-flex {
+            flex-wrap: wrap;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .top-header div {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .navbar-nav {
+            text-align: center;
+        }
+
+        .navbar-nav .nav-item {
+            margin-bottom: 10px;
+        }
     }
 
     /* Navbar Links */
@@ -120,19 +137,11 @@
         color: #007bff;
     }
 
-    /* Weather Widget */
-    .weather-widget {
-        font-size: 14px;
-    }
-
-    /* Search Icon */
-    .search-icon i {
-        font-size: 18px;
-        transition: 0.3s;
-    }
-
-    .search-icon:hover i {
-        color: #007bff;
+    /* Responsive Font Sizes */
+    @media (max-width: 576px) {
+        .navbar-brand span {
+            font-size: 20px !important;
+        }
     }
 </style>
 
