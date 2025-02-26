@@ -53,7 +53,7 @@ if (strlen($_SESSION['login']) == 0) {
                             </thead>
                             <tbody>
                                 <?php
-                                $query = mysqli_query($con, "SELECT DISTINCT student_id, student_name FROM tblgrades WHERE student_year='2nd Year' AND semester='2nd Sem' ORDER BY student_name ASC");
+                                $query = mysqli_query($con, "SELECT DISTINCT student_id, student_name FROM tblgrades WHERE student_year='2nd Year' AND semester='1st Sem' ORDER BY student_name ASC");
                                 $cnt = 1;
                                 while ($row = mysqli_fetch_array($query)) {
                                 ?>
@@ -62,7 +62,7 @@ if (strlen($_SESSION['login']) == 0) {
                                         <td><?php echo htmlentities($row['student_id']); ?></td>
                                         <td><?php echo htmlentities($row['student_name']); ?></td>
                                         <td>
-                                            <a href="view-grades-2ndsem-2nd-year.php?student_id=<?php echo htmlentities($row['student_id']); ?>" class="btn btn-info btn-sm">
+                                            <a href="view-grades-1stsem-2nd-year.php?student_id=<?php echo htmlentities($row['student_id']); ?>" class="btn btn-info btn-sm">
                                                 View Grades
                                             </a>
                                         </td>

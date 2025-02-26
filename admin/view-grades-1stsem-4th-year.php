@@ -28,7 +28,7 @@ if (strlen($_SESSION['login']) == 0) {
         } else {
             echo "<script>alert('Error deleting grade.');</script>";
         }
-        echo "<script>window.location.href='view-grades-4th-year.php?student_id=$student_id';</script>";
+        echo "<script>window.location.href='view-grades-1stsem-4th-year.php?student_id=$student_id';</script>";
         exit();
     }
 

@@ -31,8 +31,7 @@
                         <i class="fa fa-user"></i> Grade Inquiry
                     </a>
                     <div class="dropdown-menu" aria-labelledby="gradeInquiryDropdown">
-                        <a class="dropdown-item" href="../users/grade_inquiry/input-student-id.php">Enter Student ID</a>
-                        <a class="dropdown-item" href="../users/grade_inquiry/view-results.php">View Results</a>
+                        <a class="dropdown-item" href="input-student-id.php">Enter Student ID</a>
                     </div>
                 </li>
 

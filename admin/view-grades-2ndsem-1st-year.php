@@ -46,11 +46,11 @@ if (strlen($_SESSION['login']) == 0) {
             echo "<script>alert('Error updating grade.');</script>";
         }
         echo "<script>window.location.href='view-grades-2ndsem-1st-year.php?student_id=$student_id';</script>";
-        exit();
+        exit(); 
     }
 
     // Fetch grades for 1st Semester
-    $query_grades = mysqli_query($con, "SELECT * FROM tblgrades WHERE student_id='$student_id' AND semester='1st Sem'");
+    $query_grades = mysqli_query($con, "SELECT * FROM tblgrades WHERE student_id='$student_id' AND semester='2nd Sem'");
 ?>
 
 <?php include('includes/topheader.php'); ?>
@@ -72,7 +72,7 @@ if (strlen($_SESSION['login']) == 0) {
                 <div class="col-sm-12">
                     <div class="card-box">
                         <table class="table table-bordered">
-                            <thead>
+                            <thead> 
                                 <tr>
                                     <th>Course No.</th>
                                     <th>Descriptive Title</th>

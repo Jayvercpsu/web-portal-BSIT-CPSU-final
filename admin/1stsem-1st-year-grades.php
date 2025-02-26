@@ -67,7 +67,7 @@ if (strlen($_SESSION['login']) == 0) {
                                             </a>
                                         </td>
                                     </tr>
-                                <?php $cnt++; } ?>
+                                <?php $cnt++; } ?> 
                             </tbody> 
                         </table>
 

@@ -22,14 +22,27 @@ if (strlen($_SESSION['login']) == 0) {
                     </div>
                 </div>
 
+                <!-- Success or Error Message -->
+                <?php if (isset($_SESSION['success'])) { ?>
+                    <div class="alert alert-success">
+                        <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
+                    </div>
+                <?php } ?>
+
+                <?php if (isset($_SESSION['error'])) { ?>
+                    <div class="alert alert-danger">
+                        <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+                    </div>
+                <?php } ?>
+
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="card-box">
                             <h4 class="m-t-0 header-title"><b>All Student IDs</b></h4>
                             <hr>
 
-                            <table class="table table-bordered">
-                                <thead>
+                            <table class="table table-hover table-bordered">
+                                <thead class="table-dark">
                                     <tr>
                                         <th>#</th>
                                         <th>Student ID</th>
@@ -51,9 +64,8 @@ if (strlen($_SESSION['login']) == 0) {
                                             <td><?php echo htmlentities($row['student_year']); ?></td>
                                             <td>
                                                 <a href="edit-student-id.php?id=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">Edit</a>
-                                                <a href="delete-student-id.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                                                <a href="javascript:void(0);" onclick="confirmDelete(<?php echo $row['id']; ?>)" class="btn btn-danger btn-sm">Delete</a>
                                             </td>
-
                                         </tr>
                                     <?php $cnt++;
                                     } ?>
@@ -69,5 +81,13 @@ if (strlen($_SESSION['login']) == 0) {
 
         <?php include('includes/footer.php'); ?>
     </div>
+
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Are you sure you want to delete this student and all their grades?")) {
+                window.location.href = "delete-student-id.php?id=" + id;
+            }
+        }
+    </script>
 
 <?php } ?>
