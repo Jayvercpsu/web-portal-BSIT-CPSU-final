@@ -1,99 +1,140 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
-    <div class="container">
-        <!-- BSIT Logo and Name -->
+<!-- Top Header (Black Section) -->
+<div class="top-header bg-dark text-white py-2">
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <!-- Left Side: School Logo & Name -->
+        <div class="d-flex align-items-center">
+            <img src="../../admin/assets/images/cpsu_logo.png" height="40" alt="BSIT Logo">
+            <span class="ml-2 font-weight-bold">CPSU</span>
+            <span class="text-muted mx-2">|</span>
+            <span class="small">Central Philippine State University San Carlos Campus.</span>
+        </div>
+
+        <!-- Right Side: Date & Facebook Icon -->
+        <div class="d-flex align-items-center">
+            <span class="small"><i class="fa fa-calendar"></i> <span id="live-date"></span></span>
+            <span class="ml-3">Follow Us:</span>
+            <a href="#" class="text-white ml-2"><i class="fab fa-facebook"></i></a>
+        </div>
+
+    </div>
+</div>
+
+<!-- Main Navigation (White Section) -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container d-flex align-items-center justify-content-between">
+
+        <!-- Left: CPSU Logo & VNHS Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="../../admin/assets/images/bsit_logo.png" height="65" alt="BSIT Logo">
-            <img src="../../admin/assets/images/BSIT_name.webp" alt="BSIT Name" class="ml-2"
-                style="height: 65px; width: auto;"
-                onload="this.style.height = window.innerWidth < 992 ? '50px' : '65px';">
+            <img src="../../admin/assets/images/bsit_logo.png" height="50" alt="CPSU Logo">
+            <span class="ml-2 text-primary font-weight-bold" style="font-size: 24px;">BSIT</span>
+            <span class="text-muted ml-1" style="letter-spacing: 2px;">Web Portal</span>
         </a>
 
-        <!-- Toggler for Mobile View -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <!-- Toggler Button for Mobile -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navbar Links -->
+        <!-- Navbar Links (Your Current Menu) -->
         <div class="collapse navbar-collapse justify-content-center" id="navbarResponsive">
             <ul class="navbar-nav">
-                <!-- Home with Hover Dropdown -->
+                <!-- Home -->
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="../../index.php"><i class="fa fa-home"></i> Home</a>
                 </li>
 
-
-
-
-                <!-- Grade Inquiry with Hover Dropdown -->
+                <!-- Grade Inquiry Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="gradeInquiryDropdown" role="button">
                         <i class="fa fa-user"></i> Grade Inquiry
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="gradeInquiryDropdown">
+                    <div class="dropdown-menu">
                         <a class="dropdown-item" href="input-student-id.php">Enter Student ID</a>
                     </div>
                 </li>
 
-
-                <!-- More Info with About & Instructors -->
+                <!-- More Info Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="moreInfoDropdown" role="button">
                         <i class="fa fa-info-circle"></i> More Info
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="moreInfoDropdown">
+                    <div class="dropdown-menu">
                         <a class="dropdown-item" href="../../about-us.php"><i class="fa fa-info-circle"></i> About</a>
-                        <a class="dropdown-item" href="../../instructor.php"><i class="fa fa-users"></i> Instructors</a>
+                        <a class="dropdown-item" href="../../vis_mis.php"><i class="fa fa-users"></i> Vision and Mission</a>
                         <a class="dropdown-item" href="../../contact-us.php"><i class="fa fa-envelope"></i> Contact</a>
                     </div>
                 </li>
-
             </ul>
         </div>
 
-        <!-- CPSU Logo & Name -->
-        <div class="navbar-brand d-lg-flex align-items-center d-none d-lg-flex">
-            <h1 class="mb-0" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">CPSU</h1>
-            <img src="../../admin/assets/images/cpsu_logo.png" height="65" alt="CPSU Logo" class="ml-2">
+        <!-- Right: Weather & Search Icon -->
+        <div class="d-flex align-items-center">
+            <span class="weather-widget text-dark mr-3">
+                <i class="fa fa-cloud-sun"></i> <span id="weather">31°C</span> NEW YORK
+            </span>
+            <a href="#" class="search-icon text-dark"><i class="fa fa-search"></i></a>
         </div>
+
     </div>
 </nav>
 
 
+
 <style>
-    /* Enable dropdown on hover for desktop */
-    @media (min-width: 992px) {
-        .nav-item.dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0;
-        }
-
-        /* Smooth dropdown animation */
-        .dropdown-menu {
-            transition: all 0.3s ease-in-out;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-        }
-
-        .nav-item.dropdown:hover .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+    /* Top Header (Black Section) */
+    .top-header {
+        font-size: 14px;
     }
 
-    /* Ensure dropdowns work on mobile (click) */
-    @media (max-width: 991px) {
-        .dropdown-menu {
-            display: none;
-        }
+    /* Main Navigation (White Section) */
+    .navbar-light.bg-light {
+        padding: 10px 0;
+        font-size: 16px;
+    }
 
-        .dropdown.show .dropdown-menu {
-            display: block;
-        }
+    /* Navbar Links */
+    .navbar-nav .nav-item {
+        margin: 0 10px;
+    }
+
+    .navbar-nav .nav-link {
+        transition: color 0.3s;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #007bff;
+    }
+
+    /* Weather Widget */
+    .weather-widget {
+        font-size: 14px;
+    }
+
+    /* Search Icon */
+    .search-icon i {
+        font-size: 18px;
+        transition: 0.3s;
+    }
+
+    .search-icon:hover i {
+        color: #007bff;
     }
 </style>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const dateElement = document.getElementById("live-date");
+        const options = {
+            weekday: 'long',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        };
+        dateElement.innerText = new Date().toLocaleDateString('en-US', options);
+    });
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
