@@ -12,18 +12,16 @@ if (strlen($_SESSION['login']) == 0) {
         $student_year = mysqli_real_escape_string($con, $_POST['student_year'] ?? '');
         $semester = mysqli_real_escape_string($con, $_POST['semester'] ?? '');
 
-        // ✅ Prevents empty field submission
         if (empty($student_id) || empty($student_name) || empty($student_year) || empty($semester)) {
             $error = "Error: Missing Required Fields. Ensure all fields are selected.";
         } else {
-            // ✅ Check if form data exists before proceeding
             if (!isset($_POST['course_no']) || !isset($_POST['descriptive_title']) || !isset($_POST['grade']) || !isset($_POST['unit']) || !isset($_POST['pre_req'])) {
                 $error = "Error: Missing form data. Please ensure all fields are filled.";
             } else {
                 $courses = $_POST['course_no'];
                 $descriptions = $_POST['descriptive_title'];
                 $grades = $_POST['grade'];
-                $res = $_POST['re'] ?? []; // ✅ Prevent undefined array
+                $res = $_POST['re'] ?? [];
                 $units = $_POST['unit'];
                 $pre_reqs = $_POST['pre_req'];
 
@@ -54,7 +52,6 @@ if (strlen($_SESSION['login']) == 0) {
         }
     }
 ?>
-
 
 <?php include('includes/topheader.php'); ?>
 <?php include('includes/leftsidebar.php'); ?>
@@ -98,14 +95,14 @@ if (strlen($_SESSION['login']) == 0) {
 
                             <div class="form-group col-md-6">
                                 <label>Student</label>
-                                <select class="form-control" name="student_id" id="student_id" required>
+                                <select class="form-control" name="student_id" id="student_id" disabled required>
                                     <option value="">Select Student</option>
                                 </select>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label>Semester</label>
-                                <select class="form-control" name="semester" id="semester" required>
+                                <select class="form-control" name="semester" id="semester" disabled required>
                                     <option value="">Select Semester</option>
                                     <option value="1st Sem">1st Semester</option>
                                     <option value="2nd Sem">2nd Semester</option>
@@ -113,7 +110,7 @@ if (strlen($_SESSION['login']) == 0) {
                             </div>
                         </form>
 
-                        <!-- Forms for 1st and 2nd Year -->
+                        <!-- Forms for Each Year Level -->
                         <div id="1st-year-container" class="year-form" style="display:none;">
                             <?php include('forms/1st-year-form.php'); ?>
                         </div>
@@ -122,7 +119,6 @@ if (strlen($_SESSION['login']) == 0) {
                             <?php include('forms/2nd-year-form.php'); ?>
                         </div>
 
-                        <!-- Forms for 3rd and 4th Year -->
                         <div id="3rd-year-container" class="year-form" style="display:none;">
                             <?php include('forms/3rd-year-form.php'); ?>
                         </div>
@@ -142,40 +138,46 @@ if (strlen($_SESSION['login']) == 0) {
 </div>
 
 <script>
-    document.getElementById("student_year").addEventListener("change", function () {
-        var selectedYear = this.value;
-        var studentDropdown = document.getElementById("student_id");
+document.addEventListener("DOMContentLoaded", function () {
+    const studentYearSelect = document.getElementById("student_year");
+    const studentIdSelect = document.getElementById("student_id");
+    const semesterSelect = document.getElementById("semester");
 
-        studentDropdown.innerHTML = '<option value="">Select Student</option>';
+    studentYearSelect.addEventListener("change", function () {
+        let selectedYear = this.value;
+        studentIdSelect.innerHTML = '<option value="">Loading...</option>';
+        studentIdSelect.disabled = true;
+        semesterSelect.disabled = true;
 
-        fetch('fetch-students.php?year=' + selectedYear)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(student => {
-                    var option = document.createElement("option");
-                    option.value = student.student_id;
-                    option.textContent = student.student_name;
-                    studentDropdown.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching students:', error));
+        if (selectedYear !== "") {
+            fetch('fetch-students.php?year=' + selectedYear)
+                .then(response => response.json())
+                .then(data => {
+                    studentIdSelect.innerHTML = '<option value="">Select Student</option>';
+                    data.forEach(student => {
+                        let option = document.createElement("option");
+                        option.value = student.student_id;
+                        option.textContent = student.student_name;
+                        studentIdSelect.appendChild(option);
+                    });
+                    studentIdSelect.disabled = false;
+                })
+                .catch(error => console.error('Error fetching students:', error));
+        } else {
+            studentIdSelect.innerHTML = '<option value="">Select Student</option>';
+            studentIdSelect.disabled = true;
+        }
 
-        // Hide all forms first
-        document.querySelectorAll('.year-form').forEach(form => {
-            form.style.display = 'none';
-        });
-
-        // Show only the selected year form
-        if (selectedYear === "1st Year") {
-            document.getElementById("1st-year-container").style.display = "block";
-        } else if (selectedYear === "2nd Year") {
-            document.getElementById("2nd-year-container").style.display = "block";
-        } else if (selectedYear === "3rd Year") {
-            document.getElementById("3rd-year-container").style.display = "block";
-        } else if (selectedYear === "4th Year") {
-            document.getElementById("4th-year-container").style.display = "block";
+        document.querySelectorAll('.year-form').forEach(form => form.style.display = 'none');
+        if (selectedYear) {
+            document.getElementById(`${selectedYear.replace(' ', '-').toLowerCase()}-container`).style.display = "block";
         }
     });
+
+    studentIdSelect.addEventListener("change", function () {
+        semesterSelect.disabled = this.value === "";
+    });
+});
 </script>
 
 <?php } ?>

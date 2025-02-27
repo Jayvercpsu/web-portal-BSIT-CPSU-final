@@ -59,17 +59,17 @@ if (strlen($_SESSION['login']) == 0) {
                             <form method="post">
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Student ID</label>
-                                    <input type="number" class="form-control" name="student_id" required>
+                                    <input type="number" class="form-control" name="student_id" id="student_id" required>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Student Name</label>
-                                    <input type="text" class="form-control" name="student_name" required>
+                                    <input type="text" class="form-control" name="student_name" id="student_name" disabled required>
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Year Level</label>
-                                    <select class="form-control" name="student_year" required>
+                                    <select class="form-control" name="student_year" id="student_year" disabled required>
                                         <option value="">Select Year Level</option>
                                         <option value="1st Year">1st Year</option>
                                         <option value="2nd Year">2nd Year</option>
@@ -84,6 +84,9 @@ if (strlen($_SESSION['login']) == 0) {
                                     </button>
                                 </div>
                             </form>
+
+
+
                         </div>
                     </div>
                 </div>
@@ -93,5 +96,28 @@ if (strlen($_SESSION['login']) == 0) {
 
         <?php include('includes/footer.php'); ?>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const studentIdInput = document.getElementById('student_id');
+            const studentNameInput = document.getElementById('student_name');
+            const studentYearSelect = document.getElementById('student_year');
+
+            studentIdInput.addEventListener("input", function() {
+                if (this.value.trim() !== "") {
+                    studentNameInput.disabled = false;
+                } else {
+                    studentNameInput.disabled = true;
+                    studentYearSelect.disabled = true;
+                    studentNameInput.value = "";
+                    studentYearSelect.value = "";
+                }
+            });
+
+            studentNameInput.addEventListener("input", function() {
+                studentYearSelect.disabled = this.value.trim() === "";
+            });
+        });
+    </script>
 
 <?php } ?>
