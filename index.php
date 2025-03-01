@@ -4,7 +4,8 @@ include('includes/config.php');
 
 // Fetch the latest posts from the database
 $query = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, postedBy FROM tblposts WHERE Is_Active=1 ORDER BY id DESC");
-
+$query = mysqli_query($con, "SELECT PostTitle, PostDetails, PostImage FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC LIMIT 5");
+$first = true; 
 ?>
 
 
@@ -49,13 +50,12 @@ $query = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, poste
 
     <?php include('includes/latest_news_start.php') ?>
 
-
     <?php include('includes/main_news.php') ?>
 
     <?php include('includes/key_features.php') ?>
 
     <?php include('includes/about-us.php') ?>
-    
+
     <?php include('includes/vis&mis.php') ?>
 
     <!-- Responsive Map Section -->
