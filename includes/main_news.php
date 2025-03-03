@@ -71,7 +71,7 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
         <!-- Right Section: Sidebar -->
         <div class="col-lg-4">
 
-            <h4 class="mb-3 fw-bold">Latest News</h4>
+            <h4 class="mb-3 fw-bold">Latest Post</h4>
             <div class="list-group latest-news-list">
                 <?php while ($sidePost = mysqli_fetch_array($sidePostsQuery)) { ?>
                     <a href="view-post.php?id=<?php echo htmlentities($sidePost['id']); ?>"
