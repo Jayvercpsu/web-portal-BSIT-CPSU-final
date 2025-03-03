@@ -2,11 +2,16 @@
 session_start();
 include('includes/config.php');
 
-// Fetch the latest posts from the database
-$query = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, postedBy FROM tblposts WHERE Is_Active=1 ORDER BY id DESC");
-$query = mysqli_query($con, "SELECT PostTitle, PostDetails, PostImage FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC LIMIT 5");
-$first = true; 
+// Fetch the latest 5 active posts
+$query = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostImage, PostingDate FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
+
+if (!$query) {
+    die("Query failed: " . mysqli_error($con));
+}
+
+$first = true;  
 ?>
+
 
 
 <!DOCTYPE html>

@@ -9,7 +9,7 @@ $secondPostQuery = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostIm
 $secondPost = mysqli_fetch_array($secondPostQuery);
 
 // Fetch the next latest 5 posts for the sidebar
-$sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC LIMIT 6");
+$sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
 ?>
 
 <div class="container my-5">

@@ -1,38 +1,46 @@
-<!-- Latest News Start -->
+<?php if (!isset($query)) { die("Query not set."); } ?>
 <div class="container-fluid latest-news py-2 bg-white">
     <div class="container py-2">
         <h2 class="mb-4 text-dark fw-bold">Latest News</h2>
         <div class="latest-news-carousel owl-carousel owl-theme">
-            <?php while ($row = mysqli_fetch_array($query)) { ?>
-                <div class="latest-news-item">
-                    <div class="bg-light rounded shadow-sm">
-                        <div class="rounded-circle overflow-hidden latest-news-img-container">
-                            <img src="admin/postimages/<?php echo htmlentities($row['PostImage']); ?>" 
-                                 class="img-fluid latest-news-img" 
-                                 alt="<?php echo htmlentities($row['PostTitle']); ?>">
-                        </div>
-                        <div class="d-flex flex-column p-4">
-                            <a href="view-post.php?id=<?php echo htmlentities($row['id']); ?>" 
-                               class="h4 text-dark text-decoration-none latest-news-title">
-                               <?php echo htmlentities($row['PostTitle']); ?>
+            <?php
+            mysqli_data_seek($query, 0); // Reset the query pointer
+            while ($row = mysqli_fetch_assoc($query)) {
+                $title = strip_tags($row['PostTitle']);
+                $details = strip_tags($row['PostDetails']);
+            ?>
+            <div class="latest-news-item">
+                <div class="bg-light rounded shadow-sm card-equal">
+                    <div class="rounded-circle overflow-hidden latest-news-img-container">
+                        <img src="admin/postimages/<?php echo htmlspecialchars($row['PostImage']); ?>" 
+                             class="img-fluid" 
+                             alt="<?php echo $title; ?>">
+                    </div>
+                    <div class="p-4 d-flex flex-column h-100">
+                        <a href="view-post.php?id=<?php echo $row['id']; ?>" class="h4 text-dark text-decoration-none latest-news-title">
+                            <?php echo $title; ?>
+                        </a>
+                        <p class="text-black flex-grow-1" style="color:black">
+                            <?php echo substr($details, 0, 100); ?>...
+                        </p>
+                        <small class="text-muted">
+                            <i class="fas fa-calendar-alt"></i> 
+                            <?php echo date("M d, Y", strtotime($row['PostingDate'])); ?>
+                        </small>
+                        <div class="mt-3 mt-auto">
+                            <a href="view-post.php?id=<?php echo $row['id']; ?>" class="btn btn-primary px-4 py-2">
+                                Read More
                             </a>
-                            <div class="d-flex justify-content-between">
-                                <a href="#" class="small text-muted">
-                                    <i class="fa fa-user me-1"></i> Posted by Admin
-                                </a>
-                                <small class="text-muted">
-                                    <i class="fas fa-calendar-alt me-1"></i> 
-                                    <?php echo date("M d, Y", strtotime($row['PostingDate'])); ?>
-                                </small>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
             <?php } ?>
         </div>
     </div>
 </div>
-<!-- Latest News End -->
+
+
 
 <!-- Include Owl Carousel -->
 <link rel="stylesheet" href="assets/vendor/owl-carousel/css/owl.carousel.css">
@@ -59,6 +67,7 @@
 
 <!-- Latest News Styling -->
 <style>
+    
     /* Ensure smooth hover effect */
     .latest-news-item {
         transition: transform 0.3s ease-in-out;
@@ -67,30 +76,50 @@
     .latest-news-item:hover {
         transform: scale(1.05);
     }
+    .latest-news-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}.latest-news-item {
+    display: flex;
+    height: 100%; /* Full height for each item */
+}
 
-    /* Circular Image Styling */
-    .latest-news-img-container {
-        width: 150px; 
-        height: 150px; 
-        margin: 15px auto;
-        border-radius: 50%;
-        overflow: hidden;
-        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    }
+.card-equal {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Force the card to be the same height */
+    min-height: 450px; /* Set minimum height for all cards */
+}
 
-    /* Make images circular */
-    .latest-news-img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease-in-out;
-    }
+.p-4 {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Make content stretch to fill available space */
+}
 
-    /* Image hover effect */
-    .latest-news-img-container:hover {
-        transform: scale(1.1);
-        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    }
+.mt-auto {
+    margin-top: auto; /* Push Read More button to the bottom */
+}
+
+.latest-news-img-container {
+    width: 150px; 
+    height: 150px; 
+    margin: 15px auto;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.latest-news-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+ 
 
     /* Title hover effect */
     .latest-news-title:hover {
