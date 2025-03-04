@@ -1,29 +1,33 @@
 <?php
 include('includes/config.php');
+session_start();
 
-// Get post ID from URL
 $postid = intval($_GET['id']);
 
-if ($postid) {
-    // Increment view counter (only once per session)
-    if (!isset($_SESSION["viewed_$postid"])) {
-        $updateViews = mysqli_query($con, "UPDATE tblposts SET viewCounter = viewCounter + 1 WHERE id = '$postid'");
-        $_SESSION["viewed_$postid"] = true;
+if ($postid > 0) {
+    $sessionKey = "viewed_$postid";
+    if (!isset($_SESSION[$sessionKey])) {
+        $updateViews = mysqli_query($con, "UPDATE tblposts SET viewCounter = viewCounter + 1 WHERE id = $postid");
+        if ($updateViews) {
+            $_SESSION[$sessionKey] = true; // Set session to avoid duplicate views
+        }
     }
 }
 
-// Fetch post details
-$query = mysqli_query($con, "SELECT * FROM tblposts WHERE id = '$postid' AND Is_Active = 1");
+$query = mysqli_query($con, "SELECT * FROM tblposts WHERE id = $postid AND Is_Active = 1");
 $post = mysqli_fetch_array($query);
 
-// Redirect if post not found
 if (!$post) {
     header("Location: index.php");
     exit();
 }
 
 $postDetails = strip_tags($post['PostDetails']);
-$postDetails = substr($postDetails, 0, 200) . "...";
+$images = explode(",", $post['PostImage']);
+
+// Fetch updated viewCounter after increment
+$latestPostQuery = mysqli_query($con, "SELECT viewCounter FROM tblposts WHERE id = '$postid'");
+$latestPost = mysqli_fetch_array($latestPostQuery);
 
 // Fetch related posts
 $relatedQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts WHERE id != '$postid' AND Is_Active = 1 ORDER BY RAND()");
@@ -31,6 +35,7 @@ $relatedQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblpost
 // Fetch latest posts for sidebar
 $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
 ?>
+
 
 <head>
     <meta charset="utf-8">
@@ -44,6 +49,8 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/view-post.css">
+
 </head>
 
 <body>
@@ -52,49 +59,89 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
 
     <div class="container my-5">
         <div class="row">
-           
-        <!-- Left Section -->
+
+            <!-- Left Section -->
             <div class="col-lg-9">
-            <div class="card shadow-sm p-4">
-    <button class="btn btn-sm btn-outline-secondary mb-3" onclick="goBack()">← Back</button>
-    <h2 class="fw-bold"><?php echo htmlentities($post['PostTitle']); ?></h2>
+                <div class="card shadow-sm p-4">
+                    <button class="btn btn-sm btn-outline-secondary mb-3" onclick="goBack()">← Back</button>
+                    <h2 class="fw-bold"><?php echo htmlentities($post['PostTitle']); ?></h2>
+                    <p class="text-muted">
+                        <i class="fa fa-user"></i> Admin |
+                        <i class="fa fa-clock"></i> <?php echo date("M d, Y h:i A", strtotime($post['PostingDate'])); ?> |
+                        <i class="fas fa-eye"></i> <?php echo htmlentities($post['viewCounter']); ?> Views
 
-    <p class="text-muted">
-        <i class="fa fa-user"></i> Admin &nbsp;|&nbsp;
-        <i class="fa fa-clock"></i> <?php echo date("M d, Y h:i A", strtotime($post['PostingDate'])); ?> &nbsp;|&nbsp;
-        <i class="fas fa-eye"></i> <?php echo htmlentities($post['viewCounter']); ?> Views
-    </p>
-
-    <img src="admin/postimages/<?php echo htmlentities($post['PostImage']); ?>" class="img-fluid rounded mb-4">
-
-    <!-- Post Details with Read More -->
-    <div class="post-details">
-        <div class="post-content">
-            <?php echo nl2br(htmlentities($post['PostDetails'])); ?>
-        </div>
-        <div class="btn-container">
-            <button id="toggle" class="btn btn-outline-primary btn-sm">Read More</button>
-        </div>
-    </div>
-</div>
+                    </p>
 
 
+                    <div id="postCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Carousel Indicators -->
+                        <div class="carousel-indicators">
+                            <?php foreach ($images as $index => $image) { ?>
+                                <button type="button" data-target="#postCarousel"
+                                    data-slide-to="<?php echo $index; ?>"
+                                    class="<?php echo $index == 0 ? 'active' : ''; ?>"></button>
+                            <?php } ?>
+                        </div>
 
-                <!-- Related Posts -->
+                        <!-- Carousel Images -->
+                        <div class="carousel-inner">
+                            <?php foreach ($images as $index => $image) { ?>
+                                <div class="carousel-item <?php echo $index == 0 ? 'active' : ''; ?>">
+                                    <img src="admin/postimages/<?php echo htmlentities($image); ?>" class="d-block w-100 rounded zoom-image" alt="Post Image">
+                                </div>
+                            <?php } ?>
+                        </div>
+
+                        <!-- Navigation Arrows -->
+                        <button class="carousel-control-prev" type="button" data-target="#postCarousel" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+
+                        <button class="carousel-control-next" type="button" data-target="#postCarousel" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+
+
+                    <!-- Post Details -->
+                    <div class="post-details mt-4">
+                        <div class="post-content">
+                            <?php echo $postDetails; ?>
+                        </div>
+                        <div class="btn-container">
+                            <button id="toggle" class="btn btn-outline-primary btn-sm">Read More</button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
                 <h3 class="mt-5 fw-bold">Related Posts</h3>
                 <div class="row">
-                    <?php while ($related = mysqli_fetch_array($relatedQuery)) { ?>
+                    <?php
+                    while ($related = mysqli_fetch_array($relatedQuery)) {
+                        $images = explode(",", $related['PostImage']); // Split images by commas
+                        $firstImage = trim($images[0]); // Get the first image only
+                    ?>
                         <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="admin/postimages/<?php echo htmlentities($related['PostImage']); ?>" class="card-img-top">
-                                <div class="card-body">
-                                    <h6><?php echo htmlentities($related['PostTitle']); ?></h6>
-                                    <a href="view-post.php?id=<?php echo htmlentities($related['id']); ?>" class="btn btn-primary btn-sm">Read More</a>
+                            <div class="card shadow-sm h-100 d-flex flex-column">
+                                <div class="rounded overflow-hidden">
+                                    <img src="admin/postimages/<?php echo htmlentities($firstImage); ?>" class="card-img-top zoom-image" style="height: 200px; object-fit: cover;">
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="fw-bold mb-2"><?php echo htmlentities($related['PostTitle']); ?></h6>
+                                    <a href="view-post.php?id=<?php echo htmlentities($related['id']); ?>" class="btn btn-primary btn-sm mt-auto">Read More</a>
                                 </div>
                             </div>
                         </div>
                     <?php } ?>
                 </div>
+
+
             </div>
 
 
@@ -102,15 +149,22 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
             <div class="col-lg-3">
                 <h4 class="fw-bold">Latest Posts</h4>
                 <ul class="list-group latest-posts-scroll">
-                    <?php while ($latest = mysqli_fetch_array($latestQuery)) { ?>
+                    <?php
+                    while ($latest = mysqli_fetch_array($latestQuery)) {
+                        $images = explode(",", $latest['PostImage']); // Split images by commas
+                        $firstImage = trim($images[0]); // Get the first image only
+                    ?>
                         <li class="list-group-item">
-                            <a href="view-post.php?id=<?php echo htmlentities($latest['id']); ?>" class="d-flex align-items-center">
-                                <img src="admin/postimages/<?php echo htmlentities($latest['PostImage']); ?>" style="width: 80px; height: 60px;" class="me-3 rounded">
-                                <?php echo htmlentities($latest['PostTitle']); ?>
+                            <a href="view-post.php?id=<?php echo htmlentities($latest['id']); ?>" class="d-flex align-items-center text-decoration-none text-dark">
+                                <div class="rounded overflow-hidden me-3" style="width: 80px; height: 60px; border: 1px solid #ddd;">
+                                    <img src="admin/postimages/<?php echo htmlentities($firstImage); ?>" class="img-fluid w-100 h-100 zoom-image" style="object-fit: cover;">
+                                </div>
+                                <span class="fw-semibold"><?php echo htmlentities($latest['PostTitle']); ?></span>
                             </a>
                         </li>
                     <?php } ?>
                 </ul>
+
 
                 <!-- Quick Links -->
                 <h4 class="mt-4 fw-bold">Quick Links</h4>
@@ -134,128 +188,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
             window.history.back();
         }
     </script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .post-content {
-    overflow: hidden;
-    max-height: 150px; /* Initially show 6 lines approximately */
-    line-height: 1.6; /* Adjust line spacing */
-    transition: max-height 0.6s ease-in-out;
-}
 
-.post-content.open {
-    max-height: 1000px; /* Large height to reveal full content */
-}
-
-.btn-container {
-    margin-top: 10px;
-}
-
-button {
-    cursor: pointer;
-    padding: 8px 12px;
-    font-size: 14px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background 0.3s ease-in-out;
-}
-
-button:hover {
-    background: #0056b3;
-}
-
-
-        .latest-posts-scroll {
-            max-height: 400px;
-            /* Fixed height for the sidebar */
-            overflow-y: auto;
-            /* Enable vertical scroll */
-            padding-right: 5px;
-            /* Prevent scrollbar overlap */
-        }
-
-        .latest-posts-scroll::-webkit-scrollbar {
-            width: 6px;
-            /* Customize scrollbar width */
-        }
-
-        .latest-posts-scroll::-webkit-scrollbar-thumb {
-            background: #007bff;
-            /* Scrollbar color */
-            border-radius: 10px;
-        }
-
-        .latest-posts-scroll::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            /* Track background */
-        }
-
-
-        .text-muted {
-            font-size: 14px;
-        }
-
-        .card {
-            border-radius: 10px;
-            background: white;
-            padding: 20px;
-        }
-
-        .latest-posts-list {
-            max-height: 400px;
-            /* Limit height */
-            overflow-y: auto;
-            /* Enable scrolling */
-        }
-
-
-        .list-group-item a {
-            text-decoration: none;
-            color: #333;
-            transition: 0.3s;
-        }
-
-        .list-group-item a:hover {
-            color: #007bff;
-        }
-
-        .list-group-item a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            /* Adds space between image and text */
-        }
-
-        .list-group-item img {
-            border-radius: 5px;
-        }
-
-        .card-title {
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        /* Hover Zoom Effect (Image only zooms inside the box) */
-        .image-container {
-            overflow: hidden;
-            border-radius: 10px;
-        }
-
-        .zoom-image {
-            transition: transform 0.3s ease-in-out;
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
-
-        .image-container:hover .zoom-image {
-            transform: scale(1.1);
-        }
-    </style>
 
     <?php include('includes/footer.php'); ?>
 
@@ -263,21 +196,50 @@ button:hover {
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function () {
-    $("#toggle").click(function () {
-        $(".post-content").toggleClass("open");
+    <script>
+        $(document).ready(function() {
+            $("#toggle").click(function() {
+                $(".post-content").toggleClass("open");
 
-        if ($(".post-content").hasClass("open")) {
-            $("#toggle").text("Read Less");
-        } else {
-            $("#toggle").text("Read More");
-        }
-    });
-});
-</script>
+                if ($(".post-content").hasClass("open")) {
+                    $("#toggle").text("Read Less");
+                } else {
+                    $("#toggle").text("Read More");
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#postCarousel').carousel({
+                interval: 3000, // Auto slide every 3 seconds
+                pause: 'hover', // Pause on hover
+                ride: 'carousel'
+            });
+
+            $(".carousel-control-prev, .carousel-control-next").click(function() {
+                $('#postCarousel').carousel('cycle');
+            });
+        });
+    </script>
 
 
+
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- Your Custom JS -->
+    <script>
+        $(document).ready(function() {
+            $('#postCarousel').carousel();
+        });
+    </script>
 
 </body>
 
