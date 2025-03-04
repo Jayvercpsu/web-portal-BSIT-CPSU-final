@@ -67,6 +67,34 @@ session_start();
                 padding: 20px;
             }
         }
+
+        #student-info {
+            transition: all 0.5s ease-in-out;
+        }
+        #countdown-timer {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    animation: pulse 1s infinite alternate;
+    transition: background-color 0.5s ease-in-out; /* Smooth transition effect */
+}
+
+#countdown-timer.red {
+    background-color: red !important;
+    color: white;
+    font-weight: bold;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0.8;
+        transform: scale(1.1);
+    }
+}
+
+
     </style>
 
 </head>
@@ -93,6 +121,10 @@ session_start();
 
     <!-- Page Content -->
     <div class="container my-5">
+        <div id="countdown-timer" class="text-center bg-primary text-white p-2 rounded" style="display:none; position: fixed; top: 20px; right: 20px; width: 100px; font-size: 20px; z-index: 999;">
+            20
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card card-custom shadow-lg mt-5 mb-5">
@@ -124,6 +156,15 @@ session_start();
     <!-- Grade Forms -->
     <div class="container">
         <div id="grade-forms">
+
+            <div class="container">
+                <div id="student-info" class="text-center mb-4" style="display:none;">
+                    <h4 id="student-name" class="text-primary"></h4>
+                    <h5 id="student-year" class="text-muted"></h5>
+                </div>
+            </div>
+
+
             <!-- 1st Semester -->
             <div id="grade-form-1st" style="display:none;">
                 <div class="card shadow-sm border-primary mb-4">
@@ -165,7 +206,6 @@ session_start();
                 return;
             }
 
-            // Fetch student year and grades
             fetch("fetch-student-grades.php?student_id=" + studentId)
                 .then(response => response.json())
                 .then(data => {
@@ -174,33 +214,66 @@ session_start();
                         return;
                     }
 
-                    document.getElementById("student_year").value = data.student_year;
+                    // Display Student Info
+                    document.getElementById("student-info").style.display = "block";
+                    document.getElementById("student-name").innerText = "Student Name: " + data.student_name;
+                    document.getElementById("student-year").innerText = "Year: " + data.student_year;
 
-                    // Show forms even if no grades are available
+                    // Show grade forms
                     document.getElementById("grade-form-1st").style.display = "block";
                     document.getElementById("grade-form-2nd").style.display = "block";
 
-                    // Reset messages and grade tables
+                    // Reset previous grades
                     document.getElementById("grades-1st").innerHTML = "";
                     document.getElementById("grades-2nd").innerHTML = "";
                     document.getElementById("no-grades-1st").style.display = "none";
                     document.getElementById("no-grades-2nd").style.display = "none";
 
-                    // Check and display grades
-                    if (Array.isArray(data.grades_1st) && data.grades_1st.length > 0) {
+                    // Display 1st Semester Grades
+                    if (data.grades_1st.length > 0) {
                         document.getElementById("grades-1st").innerHTML = generateGradeTable(data.grades_1st, "total-units-1st", "gwa-1st");
                     } else {
                         document.getElementById("no-grades-1st").style.display = "block";
                     }
 
-                    if (Array.isArray(data.grades_2nd) && data.grades_2nd.length > 0) {
+                    // Display 2nd Semester Grades
+                    if (data.grades_2nd.length > 0) {
                         document.getElementById("grades-2nd").innerHTML = generateGradeTable(data.grades_2nd, "total-units-2nd", "gwa-2nd");
                     } else {
                         document.getElementById("no-grades-2nd").style.display = "block";
                     }
+
+                    // Start Countdown Timer
+                    let timer = 20;
+                    document.getElementById("countdown-timer").style.display = "block";
+                    document.getElementById("countdown-timer").innerText = timer;
+
+                    let countdown = setInterval(() => {
+    timer--;
+    document.getElementById("countdown-timer").innerText = timer;
+
+    if (timer <= 10) {
+        document.getElementById("countdown-timer").classList.add("red");
+    }
+
+    if (timer <= 0) {
+        clearInterval(countdown);
+
+        // Reset everything after 20 seconds
+        document.getElementById("student-id-form").reset();
+        document.getElementById("student-info").style.display = "none";
+        document.getElementById("grade-form-1st").style.display = "none";
+        document.getElementById("grade-form-2nd").style.display = "none";
+        document.getElementById("countdown-timer").style.display = "none";
+        document.getElementById("countdown-timer").classList.remove("red"); // Reset timer color
+    }
+}, 1000); // 1000ms = 1 second
+
                 })
                 .catch(error => console.error("Error fetching student grades:", error));
         }
+
+
 
         // Function to generate the grade table dynamically
         function generateGradeTable(grades, totalUnitsId, gwaId) {
