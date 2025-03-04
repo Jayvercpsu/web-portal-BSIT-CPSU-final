@@ -41,4 +41,3 @@ echo json_encode([
     "grades_1st" => $grades_1st,
     "grades_2nd" => $grades_2nd
 ]);
-?>

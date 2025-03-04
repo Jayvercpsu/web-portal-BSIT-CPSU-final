@@ -2,8 +2,7 @@
 body {
   font-family: Arial, sans-serif;
   color: #ffffff;
-  /* White text for all sections */
-  background-color: #000000;
+  /* White text for all sections */ 
   /* Black background */
 }
 
@@ -40,7 +39,7 @@ body {
 }
 
 .card-service {
-  background-color: #000000;
+  
   /* Black background for cards */
   color: #ffffff;
   /* White text */
@@ -53,20 +52,19 @@ body {
   /* Violet highlight */
 }
 
-.card-doctor .body {
-  background-color: #000000;
+.card-doctor .body { 
   /* Match the black theme */
   color: #ffffff;
   /* White text */
 }
 
 .page-section.bg-light {
-  background-color: #000000;
+  
   /* Black background */
 }
 
 .form-control {
-  background-color: #000000;
+  
   /* Black input fields */
   color: #ffffff;
   /* White text */
@@ -80,7 +78,7 @@ body {
 }
 
 .custom-select {
-  background-color: #000000;
+  
   /* Black dropdowns */
   color: #ffffff;
   /* White text */

@@ -11,7 +11,7 @@ $secondPost = mysqli_fetch_array($secondPostQuery);
 $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
 ?>
 
-<div class="container my-5">
+<div class="container my-5" style="background-color:#f5f9f6; padding: 20px;">
     <div class="row">
         <!-- Left Section: Featured Post -->
         <div class="col-lg-8">
@@ -23,8 +23,8 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
                         class="img-fluid w-100 rounded zoom-image"
                         style="height: 450px; object-fit: cover;">
 
-                    <div class="position-absolute bottom-0 w-100 p-4 text-white" style="background: rgba(0,0,0,0.6);">
-                        <h2 class="fw-bold mb-2"><?php echo htmlentities($latestPost['PostTitle']); ?></h2>
+                    <div class="position-absolute bottom-0 w-100 p-4 text-dark" style="background-color:#f5f9f6; padding: 20px; opacity: .8;">
+                        <h2 class="fw-bold mb-2 text-dark"><?php echo htmlentities($latestPost['PostTitle']); ?></h2>
                         <p class="small mb-2">
                             <i class="fas fa-user"></i> Admin &nbsp;|&nbsp;
                             <i class="fas fa-clock"></i> <?php echo date("M d, Y", strtotime($latestPost['PostingDate'])); ?> &nbsp;|&nbsp;
@@ -32,7 +32,7 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
                         </p>
 
 
-                        <p class="small">
+                        <p class="small text-dark">
                             <?php echo substr(strip_tags($latestPost['PostDetails']), 0, 150) . '...'; ?>
                         </p>
                         <a href="view-post.php?id=<?php echo htmlentities($latestPost['id']); ?>" class="btn btn-primary btn-sm">Read More</a>
@@ -44,7 +44,7 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
             <?php if ($secondPost) {
                 $secondImages = explode(",", $secondPost['PostImage']);
                 $secondFirstImage = trim($secondImages[0]); ?>
-                <h3 class="mt-4 fw-bold">Top Story</h3>
+                <h3 class="mt-4 fw-bold text-dark">Top Story</h3>
                 <div class="card shadow-sm border-0 overflow-hidden">
                     <div class="row g-0">
                         <div class="col-md-4">
@@ -53,13 +53,13 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
                                 style="height: 180px; object-fit: cover;">
                         </div>
                         <div class="col-md-8 p-3 d-flex flex-column justify-content-center">
-                            <h5 class="fw-bold mb-2"><?php echo htmlentities($secondPost['PostTitle']); ?></h5>
+                            <h5 class="fw-bold mb-2 text-dark"><?php echo htmlentities($secondPost['PostTitle']); ?></h5>
                             <p class="small text-muted">
                                 <i class="fas fa-user"></i> Admin &nbsp;|&nbsp;
                                 <i class="fas fa-clock"></i> <?php echo date("M d, Y", strtotime($secondPost['PostingDate'])); ?> &nbsp;|&nbsp;
                                 <i class="fas fa-eye"></i> <?php echo htmlentities($secondPost['viewCounter']); ?> Views
                             </p>
-                            <p class="small">
+                            <p class="small text-dark">
                                 <?php echo substr(strip_tags($secondPost['PostDetails']), 0, 120) . '...'; ?>
                             </p>
                             <a href="view-post.php?id=<?php echo htmlentities($secondPost['id']); ?>" class="btn btn-primary btn-sm">Read More</a>
@@ -71,16 +71,16 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
 
         <!-- Sidebar -->
         <div class="col-lg-4">
-            <h4 class="fw-bold">Latest Posts</h4>
+            <h4 class="fw-bold text-dark">Latest Posts</h4>
             <div class="list-group latest-news-list">
                 <?php while ($sidePost = mysqli_fetch_array($sidePostsQuery)) {
                     $sideImages = explode(",", $sidePost['PostImage']);
                     $sideFirstImage = trim($sideImages[0]); ?>
-                    <a href="view-post.php?id=<?php echo htmlentities($sidePost['id']); ?>" class="list-group-item list-group-item-action d-flex align-items-center p-3 gap-3">
+                    <a href="view-post.php?id=<?php echo htmlentities($sidePost['id']); ?>" class="list-group-item list-group-item-action d-flex align-items-center p-3 gap-3" style="">
                         <div class="flex-shrink-0 rounded overflow-hidden" style="width: 80px; height: 60px;">
                             <img src="admin/postimages/<?php echo htmlentities($sideFirstImage); ?>" class="img-fluid w-100 h-100" style="object-fit: cover;">
                         </div>
-                        <div class="flex-grow-1">
+                        <div class="flex-grow-1 m-3">
                             <h6 class="mb-0 fw-semibold"><?php echo htmlentities($sidePost['PostTitle']); ?></h6>
                         </div>
                     </a>
@@ -88,7 +88,7 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
             </div>
 
             <!-- Quick Links -->
-            <h4 class="mt-4 fw-bold">Quick Links</h4>
+            <h4 class="mt-4 fw-bold text-dark">Quick Links</h4>
             <ul class="list-group shadow-sm">
                 <li class="list-group-item"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
                 <li class="list-group-item"><a href="about-us.php"><i class="fa fa-info-circle"></i> About Us</a></li>
@@ -149,7 +149,6 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
         bottom: 0;
         left: 0;
         right: 0;
-        background: rgba(0, 0, 0, 0.6);
         color: white;
         padding: 20px;
     }

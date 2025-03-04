@@ -75,15 +75,16 @@
                 </li>
 
 
-                <!-- 
+
                 <li class="has_sub">
-                    <a href="javascript:void(0);" class="waves-effect"><i class="ti ti-files"></i> <span> CMS </span> <span class="menu-arrow"></span></a>
+                    <a href="javascript:void(0);" class="waves-effect"><i class="ti ti-files"></i> <span> More Info </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="aboutus.php">About us</a></li>
                         <li><a href="contactus.php">Contact us</a></li>
                     </ul>
                 </li>
 
+                <!-- 
 
                 <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-comment-account-outline"></i> <span> Comments </span> <span class="menu-arrow"></span></a>
@@ -93,19 +94,7 @@
                     </ul>
                 </li>  -->
 
-                <!-- New Menu Items -->
-                <!-- <li>
-                    <a href="curriculum.php" class="waves-effect"><i class="mdi mdi-book"></i> <span> Curriculum </span></a>
-                </li>
-                <li>
-                    <a href="research.php" class="waves-effect"><i class="mdi mdi-flask"></i> <span> Research </span></a>
-                </li>
-                <li>
-                    <a href="extension.php" class="waves-effect"><i class="mdi mdi-human-handsup"></i> <span> Extension </span></a>
-                </li>
-                <li>
-                    <a href="library.php" class="waves-effect"><i class="mdi mdi-library"></i> <span> Library </span></a>
-                </li> -->
+
 
             </ul>
         </div>

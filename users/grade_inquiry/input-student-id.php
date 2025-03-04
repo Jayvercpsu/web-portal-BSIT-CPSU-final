@@ -71,30 +71,31 @@ session_start();
         #student-info {
             transition: all 0.5s ease-in-out;
         }
+
         #countdown-timer {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    animation: pulse 1s infinite alternate;
-    transition: background-color 0.5s ease-in-out; /* Smooth transition effect */
-}
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            animation: pulse 1s infinite alternate;
+            transition: background-color 0.5s ease-in-out;
+            /* Smooth transition effect */
+        }
 
-#countdown-timer.red {
-    background-color: red !important;
-    color: white;
-    font-weight: bold;
-}
+        #countdown-timer.red {
+            background-color: red !important;
+            color: white;
+            font-weight: bold;
+        }
 
-@keyframes pulse {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0.8;
-        transform: scale(1.1);
-    }
-}
+        @keyframes pulse {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
 
-
+            to {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
     </style>
 
 </head>
@@ -121,9 +122,45 @@ session_start();
 
     <!-- Page Content -->
     <div class="container my-5">
-        <div id="countdown-timer" class="text-center bg-primary text-white p-2 rounded" style="display:none; position: fixed; top: 20px; right: 20px; width: 100px; font-size: 20px; z-index: 999;">
+        <div id="countdown-timer" class="text-center bg-primary text-white p-2 rounded shadow-sm" style="display:none; position: fixed; top: 20px; right: 20px; width: 100px; font-size: 20px; z-index: 9999;">
             20
         </div>
+
+        <style>
+            #countdown-timer {
+                text-align: center;
+                padding: 10px;
+                border-radius: 8px;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+                /* Box Shadow for better front appearance */
+            }
+
+            #countdown-timer:hover {
+                transform: scale(1.1);
+                /* Zoom Effect on Hover */
+                opacity: 0.9;
+            }
+
+            @media (max-width: 768px) {
+                #countdown-timer {
+                    width: 80px;
+                    /* Smaller Width on Mobile */
+                    font-size: 16px;
+                    /* Smaller Font Size */
+                    top: 10px;
+                    /* Adjust Position */
+                    right: 10px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                #countdown-timer {
+                    width: 60px;
+                    font-size: 14px;
+                }
+            }
+        </style>
 
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -249,25 +286,25 @@ session_start();
                     document.getElementById("countdown-timer").innerText = timer;
 
                     let countdown = setInterval(() => {
-    timer--;
-    document.getElementById("countdown-timer").innerText = timer;
+                        timer--;
+                        document.getElementById("countdown-timer").innerText = timer;
 
-    if (timer <= 10) {
-        document.getElementById("countdown-timer").classList.add("red");
-    }
+                        if (timer <= 10) {
+                            document.getElementById("countdown-timer").classList.add("red");
+                        }
 
-    if (timer <= 0) {
-        clearInterval(countdown);
+                        if (timer <= 0) {
+                            clearInterval(countdown);
 
-        // Reset everything after 20 seconds
-        document.getElementById("student-id-form").reset();
-        document.getElementById("student-info").style.display = "none";
-        document.getElementById("grade-form-1st").style.display = "none";
-        document.getElementById("grade-form-2nd").style.display = "none";
-        document.getElementById("countdown-timer").style.display = "none";
-        document.getElementById("countdown-timer").classList.remove("red"); // Reset timer color
-    }
-}, 1000); // 1000ms = 1 second
+                            // Reset everything after 20 seconds
+                            document.getElementById("student-id-form").reset();
+                            document.getElementById("student-info").style.display = "none";
+                            document.getElementById("grade-form-1st").style.display = "none";
+                            document.getElementById("grade-form-2nd").style.display = "none";
+                            document.getElementById("countdown-timer").style.display = "none";
+                            document.getElementById("countdown-timer").classList.remove("red"); // Reset timer color
+                        }
+                    }, 1000); // 1000ms = 1 second
 
                 })
                 .catch(error => console.error("Error fetching student grades:", error));

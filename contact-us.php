@@ -56,26 +56,27 @@
      </div> <!-- .page-banner -->
 
 
-
      <!-- Page Content -->
-     <div class="container">
-
+     <div class="container my-5 py-5">
          <?php
             $pagetype = 'contactus';
-            $query = mysqli_query($con, "select PageTitle,Description from tblpages where PageName='$pagetype'");
+            $query = mysqli_query($con, "SELECT PageTitle, Description FROM tblpages WHERE PageName='$pagetype'");
             while ($row = mysqli_fetch_array($query)) { ?>
 
-             <h1 class="mt-5 mb-3 text-center  wow fadeInRight"><?php echo htmlentities($row['PageTitle']) ?></h1>
 
              <!-- Intro Content -->
-             <div class="row">
-
-                 <div class="col-lg-12  wow fadeInLeft" style="text-align: center;">
-
-                     <p><?php echo $row['Description']; ?></p>
+             <div class="row justify-content-center">
+                 <div class="col-lg-8 text-dark wow fadeInLeft bg-light shadow rounded  p-3">
+                     <!-- Page Title -->
+                     <h1 class="text-center wow fadeInRight text-dark font-weight-bold">
+                         <?php echo ($row['PageTitle']); ?>
+                     </h1>
+                     <p class="lead text-justify">
+                         <?php echo ($row['Description']); ?>
+                     </p>
                  </div>
              </div>
-             <!-- /.row -->
+
          <?php } ?>
      </div>
      <!-- /.container -->
@@ -87,11 +88,12 @@
 
 
 
+
      <div class="page-section">
          <div class="container">
-             <h1 class="text-center wow fadeInUp">Get In Touch</h1>
+             <h1 class="text-center wow fadeInUp text-dark">Get In Touch</h1>
              <form class="main-form">
-                 <div class="row mt-5">
+                 <div class="row">
                      <div class="col-12 col-sm-6 py-2 wow fadeInLeft">
                          <input type="text" class="form-control" placeholder="Full Name">
                      </div>
