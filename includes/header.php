@@ -47,7 +47,7 @@
         <div class="d-flex align-items-center">
             <span class="small text-dark mr-3"><i class="fa fa-calendar"></i> <span id="live-date"></span></span>
             <span class="mx-2 text-muted">|</span>
-            <a href="#" class="ml-2" style="color: #007bff; transition: color 0.3s, transform 0.3s;">
+            <a href="https://web.facebook.com/CollegeofComputrStudies" class="ml-2" style="color: #007bff; transition: color 0.3s, transform 0.3s;">
                 <i class="fab fa-facebook fa-lg"></i>
             </a>
         </div>
