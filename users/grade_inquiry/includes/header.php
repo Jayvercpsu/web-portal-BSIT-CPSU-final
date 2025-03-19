@@ -12,11 +12,11 @@
 
 
         <!-- Toggler Button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> -->
 
-        <!-- Navbar Links -->
+        <!-- Navbar Links
         <div class="collapse navbar-collapse justify-content-center" id="navbarResponsive">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -41,16 +41,45 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> -->
 
         <!-- Right Side: Date & Social Media -->
         <div class="d-flex align-items-center">
-            <span class="small text-dark mr-3"><i class="fa fa-calendar"></i> <span id="live-date"></span></span>
+            <span class="small text-dark mr-3">
+                <i class="fa fa-clock"></i> <span id="live-time"></span>
+            </span>
             <span class="mx-2 text-muted">|</span>
-            <a href="https://web.facebook.com/CollegeofComputrStudies" class="ml-2" style="color: #007bff; transition: color 0.3s, transform 0.3s;">
-                <i class="fab fa-facebook fa-lg"></i>
-            </a>
+            <span class="small text-dark mr-3">
+                <i class="fa fa-calendar"></i> <span id="live-date"></span>
+            </span>
         </div>
+
+        <script>
+            function updateTime() {
+                const now = new Date();
+
+                // Time (HH:MM:SS AM/PM)
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                document.getElementById('live-time').innerText = timeString;
+
+                // Date (Weekday, Month Day, Year)
+                const dateString = now.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                document.getElementById('live-date').innerText = dateString;
+            }
+
+            setInterval(updateTime, 1000); // Update every second
+            updateTime(); // Initial call
+        </script>
+
 
 
 

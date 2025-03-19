@@ -22,14 +22,14 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="index.php"><i class="fa fa-home"></i> Home</a>
                 </li>
-                <li class="nav-item dropdown">
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="gradeInquiryDropdown" role="button">
                         <i class="fa fa-user"></i> Grade Inquiry
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="users/grade_inquiry/input-student-id.php">Enter Student ID</a>
                     </div>
-                </li>
+                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-dark" href="#" id="moreInfoDropdown" role="button">
                         <i class="fa fa-info-circle"></i> More Info

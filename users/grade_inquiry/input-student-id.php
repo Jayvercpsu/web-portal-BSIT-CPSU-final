@@ -13,7 +13,7 @@ session_start();
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../images/favicon.png" type="image/x-icon">
 
-    <title>CPSU BSIT Web Portal | Grade Inquiry</title>
+    <title>CPSU | Grade Inquiry</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -96,6 +96,137 @@ session_start();
                 transform: scale(1.1);
             }
         }
+
+        #countdown-timer {
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            /* Box Shadow for better front appearance */
+        }
+
+        #countdown-timer:hover {
+            transform: scale(1.1);
+            /* Zoom Effect on Hover */
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            #countdown-timer {
+                width: 80px;
+                /* Smaller Width on Mobile */
+                font-size: 16px;
+                /* Smaller Font Size */
+                top: 10px;
+                /* Adjust Position */
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #countdown-timer {
+                width: 60px;
+                font-size: 14px;
+            }
+        }
+    </style>
+
+    <style>
+        body {
+            position: relative;
+            background-color: black;
+            /* Black background outside the image */
+            min-height: 100vh;
+            /* Ensure full height */
+            overflow-y: auto;
+            /* Enable scrolling */
+        }
+
+        /* Fixed, blurred background image */
+        body::before {
+            content: "";
+            position: fixed;
+            /* Keeps the background fixed */
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            /* Centers the image */
+            width: 30%;
+            /* Adjust image size */
+            height: 100%;
+            background: url('../../admin/assets/images/bsit_logo.png') no-repeat center center;
+            background-size: contain;
+            filter: blur(3px);
+            /* Soft blur for readability */
+            opacity: 0.5;
+            /* Reduce brightness */
+            z-index: -1;
+        }
+
+        /* Gradient overlay to improve contrast */
+        body::after {
+            content: "";
+            position: fixed;
+            /* Keeps the overlay fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
+            z-index: -2;
+        }
+
+        /* Floating label container */
+        .floating-label {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Input styling */
+        .floating-label input {
+            width: 100%;
+            padding: 12px 10px;
+            font-size: 16px;
+            border: 2px solid #ced4da;
+            border-radius: 8px;
+            outline: none;
+            background: transparent;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Label starts inside the input field */
+        .floating-label label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #6c757d;
+            transition: all 0.3s ease-in-out;
+            pointer-events: none;
+            background: white;
+            padding: 0 5px;
+        }
+
+        /* Move label when input is focused or has a value */
+        .floating-label input:focus+label,
+        .floating-label input:not(:placeholder-shown)+label {
+            top: 5px;
+            font-size: 14px;
+            color: #007bff;
+        }
+
+        /* Input focus effect */
+        .floating-label input:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Hide the default placeholder text */
+        .floating-label input::placeholder {
+            color: transparent;
+        }
     </style>
 
 </head>
@@ -105,62 +236,13 @@ session_start();
     <!-- Navigation -->
     <?php include('includes/header.php'); ?>
 
-    <div class="page-banner overlay-dark bg-image" style="background-image: url(../../images/sample_bsit.jpg);">
-        <div class="banner-section">
-            <div class="container text-center wow fadeInUp">
-                <nav aria-label="Breadcrumb">
-                    <br><br>
-                    <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-                        <li class="breadcrumb-item"><a style="color: violet;" href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Grade Inquiry</li>
-                    </ol>
-                </nav>
-                <h1 class="font-weight-normal">Input Student ID</h1>
-            </div>
-        </div>
-    </div>
 
     <!-- Page Content -->
     <div class="container my-5">
-        <div id="countdown-timer" class="text-center bg-primary text-white p-2 rounded shadow-sm" style="display:none; position: fixed; top: 20px; right: 20px; width: 100px; font-size: 20px; z-index: 9999;">
+        <div id="countdown-timer" class="text-center bg-primary text-white p-2 rounded shadow-sm"
+            style="display:none; position: fixed; top: 20px; right: 20px; width: 100px; font-size: 20px; z-index: 9999;">
             20
         </div>
-
-        <style>
-            #countdown-timer {
-                text-align: center;
-                padding: 10px;
-                border-radius: 8px;
-                transition: transform 0.3s ease, opacity 0.3s ease;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-                /* Box Shadow for better front appearance */
-            }
-
-            #countdown-timer:hover {
-                transform: scale(1.1);
-                /* Zoom Effect on Hover */
-                opacity: 0.9;
-            }
-
-            @media (max-width: 768px) {
-                #countdown-timer {
-                    width: 80px;
-                    /* Smaller Width on Mobile */
-                    font-size: 16px;
-                    /* Smaller Font Size */
-                    top: 10px;
-                    /* Adjust Position */
-                    right: 10px;
-                }
-            }
-
-            @media (max-width: 480px) {
-                #countdown-timer {
-                    width: 60px;
-                    font-size: 14px;
-                }
-            }
-        </style>
 
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -177,10 +259,12 @@ session_start();
                         <?php } ?>
 
                         <form id="student-id-form">
-                            <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="student_id" name="student_id" placeholder="Enter Student ID" required>
+                            <!-- Floating label container -->
+                            <div class="floating-label">
+                                <input type="number" class="form-control" id="student_id" name="student_id" placeholder=" " required>
+                                <label for="student_id">Enter Student ID</label>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="checkStudentID()">Check Grades</button>
+                            <button type="button" class="btn btn-primary w-100 mt-3" onclick="checkStudentID()">Check Grades</button>
                         </form>
 
                         <!-- Student Year Hidden Input -->
@@ -189,17 +273,22 @@ session_start();
                 </div>
             </div>
         </div>
+
+
     </div>
+
+
     <!-- Grade Forms -->
     <div class="container">
         <div id="grade-forms">
 
             <div class="container">
                 <div id="student-info" class="text-center mb-4" style="display:none;">
-                    <h4 id="student-name" class="text-primary"></h4>
-                    <h5 id="student-year" class="text-muted"></h5>
+                    <h4 id="student-name" class="bg-primary text-white px-4 py-2 rounded d-inline-block shadow-sm"></h4>
+                    <h5 id="student-year" class="badge bg-secondary mt-2 px-3 py-2 text-white"></h5>
                 </div>
             </div>
+
 
 
             <!-- 1st Semester -->
@@ -231,9 +320,6 @@ session_start();
     </div>
 
 
-
-    <!-- Footer -->
-    <?php include('includes/footer.php'); ?>
 
     <script>
         function checkStudentID() {
