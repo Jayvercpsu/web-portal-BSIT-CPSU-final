@@ -3,7 +3,7 @@
     <div class="container">
         <!-- Logo & Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="../../admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
+            <img src="../admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
             <div> <span class="mx-2 text-muted">|</span>
 
                 <span class="text-dark font-weight-bold" style="font-size: 20px; transition: color 0.3s;">College of Computer Studies</span>
@@ -42,6 +42,8 @@
                 </li>
             </ul>
         </div> -->
+<!-- Font Awesome (Latest Version) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
         <!-- Right Side: Date & Social Media -->
         <div class="d-flex align-items-center">
@@ -305,4 +307,4 @@
 
 <!-- Bootstrap JS & Popper.js (Already in Your Setup) -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
