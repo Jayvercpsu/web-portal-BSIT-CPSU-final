@@ -1,7 +1,7 @@
  <!DOCTYPE html>
  <html lang="en">
 
- 
+
  <head>
      <title>CPSU BSIT Web Portal | Admin</title>
      <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
@@ -51,13 +51,11 @@
              <div class="topbar-left">
 
 
-                 <a href="index.php" class="logo">
-                     <span>
-                         <img src="assets/images/bsit_logo.png" alt="" height="60">
-                         <img src="assets/images/BSIT_name.webp" alt="" height="60">
-                     </span>
-
+                 <a href="index.php" class="logo d-flex align-items-center text-decoration-none">
+                     <img src="assets/images/bsit_logo.png" alt="BSIT Logo" height="60" class="me-2">
+                     <span class="text-dark fw-bold fs-3 logo-text">BSIT</span>
                  </a>
+
 
              </div>
 

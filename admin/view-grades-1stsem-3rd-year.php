@@ -36,16 +36,15 @@ if (strlen($_SESSION['login']) == 0) {
     if (isset($_POST['update_grade'])) {
         $grade_id = $_POST['grade_id'];
         $new_grade = $_POST['grade'];
-        $new_re = $_POST['re'];
 
-        $update_query = mysqli_query($con, "UPDATE tblgrades SET grade='$new_grade', re='$new_re' WHERE id='$grade_id'");
+        $update_query = mysqli_query($con, "UPDATE tblgrades SET grade='$new_grade' WHERE id='$grade_id'");
 
         if ($update_query) {
             echo "<script>alert('Grade updated successfully!');</script>";
         } else {
             echo "<script>alert('Error updating grade.');</script>";
         }
-        echo "<script>window.location.href='view-grades-3rd-year.php?student_id=$student_id';</script>";
+        echo "<script>window.location.href='view-grades-1stsem-3rd-year.php?student_id=$student_id';</script>";
         exit();
     }
 
@@ -77,7 +76,7 @@ if (strlen($_SESSION['login']) == 0) {
                                     <th>Course No.</th>
                                     <th>Descriptive Title</th>
                                     <th>Grade</th>
-                                    <th>Re</th>
+                                    <th>Remarks</th>
                                     <th>Unit</th>
                                     <th>Pre-Req</th>
                                     <th>Action</th>
@@ -85,9 +84,17 @@ if (strlen($_SESSION['login']) == 0) {
                             </thead>
                             <tbody>
                                 <?php
-                                $total_units = 0;
                                 while ($row = mysqli_fetch_array($query_grades)) {
-                                    $total_units += $row['unit'];
+                                    $grade = intval($row['grade']);
+
+                                    // Determine remarks based on grade
+                                    if ($grade == 0 || $grade == null) {
+                                        $remarks = "<span class='text-muted'>No Grade</span>";
+                                    } elseif ($grade < 75) {
+                                        $remarks = "<span class='text-danger fw-bold'>Failed</span>";
+                                    } else {
+                                        $remarks = "<span class='text-success fw-bold'>Passed</span>";
+                                    }
                                 ?>
                                     <tr>
                                         <td><?php echo htmlentities($row['course_no']); ?></td>
@@ -95,11 +102,9 @@ if (strlen($_SESSION['login']) == 0) {
                                         <td>
                                             <form method="post">
                                                 <input type="hidden" name="grade_id" value="<?php echo $row['id']; ?>">
-                                                <input type="text" name="grade" class="form-control" value="<?php echo htmlentities($row['grade']); ?>" required>
+                                                <input type="number" name="grade" class="form-control grade-input" value="<?php echo htmlentities($row['grade']); ?>" min="0" max="100">
                                         </td>
-                                        <td>
-                                                <input type="text" name="re" class="form-control" value="<?php echo htmlentities($row['re']); ?>">
-                                        </td>
+                                        <td id="remarks-<?php echo $row['id']; ?>"><?php echo $remarks; ?></td>
                                         <td><?php echo htmlentities($row['unit']); ?></td>
                                         <td><?php echo htmlentities($row['pre_req']); ?></td>
                                         <td>
@@ -123,5 +128,23 @@ if (strlen($_SESSION['login']) == 0) {
 
     <?php include('includes/footer.php'); ?>
 </div>
+
+<script>
+    // Add event listeners to update remarks dynamically when editing grades
+    document.querySelectorAll(".grade-input").forEach(input => {
+        input.addEventListener("input", function() {
+            var grade = parseFloat(this.value);
+            var remarksCell = document.getElementById("remarks-" + this.closest("tr").querySelector("input[name='grade_id']").value);
+
+            if (!this.value || grade === 0) {
+                remarksCell.innerHTML = "<span class='text-muted'>No Grade</span>";
+            } else if (grade < 75) {
+                remarksCell.innerHTML = "<span class='text-danger fw-bold'>Failed</span>";
+            } else {
+                remarksCell.innerHTML = "<span class='text-success fw-bold'>Passed</span>";
+            }
+        });
+    });
+</script>
 
 <?php } ?>

@@ -398,64 +398,75 @@ session_start();
 
 
 
-        // Function to generate the grade table dynamically
-        function generateGradeTable(grades, totalUnitsId, gwaId) {
-            let totalUnits = 0;
-            let totalGradePoints = 0;
-            let hasValidGrades = false; // Check if at least one valid grade exists
+       // Function to generate the grade table dynamically
+function generateGradeTable(grades, totalUnitsId, gwaId) {
+    let totalUnits = 0;
+    let totalGradePoints = 0;
+    let hasValidGrades = false; // Check if at least one valid grade exists
 
-            let table = `
-        <table class="table table-hover table-striped table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>Course No.</th>
-                    <th>Descriptive Title</th>
-                    <th>Grade</th>
-                    <th>Re</th>
-                    <th>Unit</th>
-                    <th>Pre-Req</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-            grades.forEach(grade => {
-                let numericGrade = parseFloat(grade.grade); // Convert to number
-                let unitValue = parseFloat(grade.unit); // Convert to number
-
-                // If the grade is valid (a number), add it to GWA computation
-                if (!isNaN(numericGrade) && !isNaN(unitValue)) {
-                    totalGradePoints += numericGrade * unitValue;
-                    totalUnits += unitValue;
-                    hasValidGrades = true;
-                }
-
-                table += `
+    let table = `
+    <table class="table table-hover table-striped table-bordered">
+        <thead class="table-dark">
             <tr>
-                <td>${grade.course_no}</td>
-                <td>${grade.descriptive_title}</td>
-                <td>${grade.grade ? grade.grade : '-'}</td>
-                <td>${grade.re ? grade.re : '-'}</td>
-                <td>${grade.unit}</td>
-                <td>${grade.pre_req ? grade.pre_req : '-'}</td>
+                <th>Course No.</th>
+                <th>Descriptive Title</th>
+                <th>Grade</th>
+                <th>Remarks</th>
+                <th>Unit</th>
+                <th>Pre-Req</th>
             </tr>
-        `;
-            });
-
-            table += `</tbody></table>`;
-
-            // Compute GWA
-            let gwa = hasValidGrades ? (totalGradePoints / totalUnits).toFixed(2) : "N/A";
-
-            table += `
-        <div class="alert alert-info text-center">
-            <strong>Total Units:</strong> <span id="${totalUnitsId}">${totalUnits}</span> | 
-            <strong>General Weighted Average (GWA):</strong> <span id="${gwaId}">${gwa}</span>
-        </div>
+        </thead>
+        <tbody>
     `;
 
-            return table;
+    grades.forEach(grade => {
+        let numericGrade = parseFloat(grade.grade); // Convert to number
+        let unitValue = parseFloat(grade.unit); // Convert to number
+
+        // Determine Remarks
+        let remarks;
+        if (!grade.grade || numericGrade === 0) {
+            remarks = `<span class='text-muted'>No Grade</span>`;
+        } else if (numericGrade < 75) {
+            remarks = `<span class='text-danger fw-bold'>Failed</span>`;
+        } else {
+            remarks = `<span class='text-success fw-bold'>Passed</span>`;
         }
+
+        // If the grade is valid (a number), add it to GWA computation
+        if (!isNaN(numericGrade) && !isNaN(unitValue)) {
+            totalGradePoints += numericGrade * unitValue;
+            totalUnits += unitValue;
+            hasValidGrades = true;
+        }
+
+        table += `
+        <tr>
+            <td>${grade.course_no}</td>
+            <td>${grade.descriptive_title}</td>
+            <td>${grade.grade ? grade.grade : '-'}</td>
+            <td>${remarks}</td>
+            <td>${grade.unit}</td>
+            <td>${grade.pre_req ? grade.pre_req : '-'}</td>
+        </tr>
+        `;
+    });
+
+    table += `</tbody></table>`;
+
+    // Compute GWA
+    let gwa = hasValidGrades ? (totalGradePoints / totalUnits).toFixed(2) : "N/A";
+
+    table += `
+    <div class="alert alert-info text-center">
+        <strong>Total Units:</strong> <span id="${totalUnitsId}">${totalUnits}</span> | 
+        <strong>General Weighted Average (GWA):</strong> <span id="${gwaId}">${gwa}</span>
+    </div>
+    `;
+
+    return table;
+}
+
     </script>
 
 

@@ -175,15 +175,14 @@ if (isset($_POST['login'])) {
                 <div class="col-md-4">
                     <div class="wrapper-page">
                         <div class="m-t-40 account-pages">
-                            <div class="account-logo-box">
-                                <h2 class="text-uppercase">
-                                    <div class="logo">
-                                        <span class="d-inline-block"><img src="assets/images/bsit_logo.png" alt="" width="100px"></span>
-                                        <span class="d-inline-block mr-2"><img src="assets/images/BSIT_name.webp" alt="" width="350px"></span>
-                                    </div>
-                                </h2>
-                                <p>Please sign-in to your account and start the adventure</p>
+                            <div class="account-logo-box text-center my-4">
+                                <div class="logo">
+                                    <img src="assets/images/bsit_logo.png" alt="BSIT Logo" width="100" class="mb-2">
+                                </div>
+                                <h2 class="text-black fw-bold">BSIT</h2>
+                                <p class="text-muted">Please sign in to your account and start the adventure</p>
                             </div>
+
 
                             <div class="account-content">
                                 <form class="form-horizontal" method="post">

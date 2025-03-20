@@ -3,7 +3,7 @@ session_start();
 include('includes/config.php');
 error_reporting(0);
 
-if (strlen($_SESSION['login']) == 0) {
+if (strlen(string: $_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
@@ -53,131 +53,131 @@ if (strlen($_SESSION['login']) == 0) {
     }
 ?>
 
-<?php include('includes/topheader.php'); ?>
-<?php include('includes/leftsidebar.php'); ?>
+    <?php include('includes/topheader.php'); ?>
+    <?php include('includes/leftsidebar.php'); ?>
 
-<div class="content-page">
-    <div class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="page-title-box">
-                        <h4 class="page-title">Grade Entry</h4>
-                        <div class="clearfix"></div>
+    <div class="content-page">
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-title-box">
+                            <h4 class="page-title">Grade Entry</h4>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card-box">
-                        <h4 class="m-t-0 header-title"><b>Select Student & Semester</b></h4>
-                        <hr>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box">
+                            <h4 class="m-t-0 header-title"><b>Select Student & Semester</b></h4>
+                            <hr>
 
-                        <?php if (!empty($msg)) { ?>
-                            <div class="alert alert-success"><?php echo htmlentities($msg); ?></div>
-                        <?php } ?>
-                        <?php if (!empty($error)) { ?>
-                            <div class="alert alert-danger"><?php echo htmlentities($error); ?></div>
-                        <?php } ?>
+                            <?php if (!empty($msg)) { ?>
+                                <div class="alert alert-success"><?php echo htmlentities($msg); ?></div>
+                            <?php } ?>
+                            <?php if (!empty($error)) { ?>
+                                <div class="alert alert-danger"><?php echo htmlentities($error); ?></div>
+                            <?php } ?>
 
-                        <form method="post" id="gradeForm">
-                            <div class="form-group col-md-6">
-                                <label>Year Level</label>
-                                <select class="form-control" name="student_year" id="student_year" required>
-                                    <option value="">Select Year</option>
-                                    <option value="1st Year">1st Year</option>
-                                    <option value="2nd Year">2nd Year</option>
-                                    <option value="3rd Year">3rd Year</option>
-                                    <option value="4th Year">4th Year</option>
-                                </select>
+                            <form method="post" id="gradeForm">
+                                <div class="form-group col-md-6">
+                                    <label>Year Level</label>
+                                    <select class="form-control" name="student_year" id="student_year" required>
+                                        <option value="">Select Year</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Student</label>
+                                    <select class="form-control" name="student_id" id="student_id" disabled required>
+                                        <option value="">Select Student</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Semester</label>
+                                    <select class="form-control" name="semester" id="semester" disabled required>
+                                        <option value="">Select Semester</option>
+                                        <option value="1st Sem">1st Semester</option>
+                                        <option value="2nd Sem">2nd Semester</option>
+                                    </select>
+                                </div>
+                            </form>
+
+                            <!-- Forms for Each Year Level -->
+                            <div id="1st-year-container" class="year-form" style="display:none;">
+                                <?php include('forms/1st-year-form.php'); ?>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label>Student</label>
-                                <select class="form-control" name="student_id" id="student_id" disabled required>
-                                    <option value="">Select Student</option>
-                                </select>
+                            <div id="2nd-year-container" class="year-form" style="display:none;">
+                                <?php include('forms/2nd-year-form.php'); ?>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label>Semester</label>
-                                <select class="form-control" name="semester" id="semester" disabled required>
-                                    <option value="">Select Semester</option>
-                                    <option value="1st Sem">1st Semester</option>
-                                    <option value="2nd Sem">2nd Semester</option>
-                                </select>
+                            <div id="3rd-year-container" class="year-form" style="display:none;">
+                                <?php include('forms/3rd-year-form.php'); ?>
                             </div>
-                        </form>
 
-                        <!-- Forms for Each Year Level -->
-                        <div id="1st-year-container" class="year-form" style="display:none;">
-                            <?php include('forms/1st-year-form.php'); ?>
+                            <div id="4th-year-container" class="year-form" style="display:none;">
+                                <?php include('forms/4th-year-form.php'); ?>
+                            </div>
+
                         </div>
-
-                        <div id="2nd-year-container" class="year-form" style="display:none;">
-                            <?php include('forms/2nd-year-form.php'); ?>
-                        </div>
-
-                        <div id="3rd-year-container" class="year-form" style="display:none;">
-                            <?php include('forms/3rd-year-form.php'); ?>
-                        </div>
-
-                        <div id="4th-year-container" class="year-form" style="display:none;">
-                            <?php include('forms/4th-year-form.php'); ?>
-                        </div>
-
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
+
+        <?php include('includes/footer.php'); ?>
     </div>
 
-    <?php include('includes/footer.php'); ?>
-</div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const studentYearSelect = document.getElementById("student_year");
+            const studentIdSelect = document.getElementById("student_id");
+            const semesterSelect = document.getElementById("semester");
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const studentYearSelect = document.getElementById("student_year");
-    const studentIdSelect = document.getElementById("student_id");
-    const semesterSelect = document.getElementById("semester");
+            studentYearSelect.addEventListener("change", function() {
+                let selectedYear = this.value;
+                studentIdSelect.innerHTML = '<option value="">Loading...</option>';
+                studentIdSelect.disabled = true;
+                semesterSelect.disabled = true;
 
-    studentYearSelect.addEventListener("change", function () {
-        let selectedYear = this.value;
-        studentIdSelect.innerHTML = '<option value="">Loading...</option>';
-        studentIdSelect.disabled = true;
-        semesterSelect.disabled = true;
-
-        if (selectedYear !== "") {
-            fetch('fetch-students.php?year=' + selectedYear)
-                .then(response => response.json())
-                .then(data => {
+                if (selectedYear !== "") {
+                    fetch('fetch-students.php?year=' + selectedYear)
+                        .then(response => response.json())
+                        .then(data => {
+                            studentIdSelect.innerHTML = '<option value="">Select Student</option>';
+                            data.forEach(student => {
+                                let option = document.createElement("option");
+                                option.value = student.student_id;
+                                option.textContent = student.student_name;
+                                studentIdSelect.appendChild(option);
+                            });
+                            studentIdSelect.disabled = false;
+                        })
+                        .catch(error => console.error('Error fetching students:', error));
+                } else {
                     studentIdSelect.innerHTML = '<option value="">Select Student</option>';
-                    data.forEach(student => {
-                        let option = document.createElement("option");
-                        option.value = student.student_id;
-                        option.textContent = student.student_name;
-                        studentIdSelect.appendChild(option);
-                    });
-                    studentIdSelect.disabled = false;
-                })
-                .catch(error => console.error('Error fetching students:', error));
-        } else {
-            studentIdSelect.innerHTML = '<option value="">Select Student</option>';
-            studentIdSelect.disabled = true;
-        }
+                    studentIdSelect.disabled = true;
+                }
 
-        document.querySelectorAll('.year-form').forEach(form => form.style.display = 'none');
-        if (selectedYear) {
-            document.getElementById(`${selectedYear.replace(' ', '-').toLowerCase()}-container`).style.display = "block";
-        }
-    });
+                document.querySelectorAll('.year-form').forEach(form => form.style.display = 'none');
+                if (selectedYear) {
+                    document.getElementById(`${selectedYear.replace(' ', '-').toLowerCase()}-container`).style.display = "block";
+                }
+            });
 
-    studentIdSelect.addEventListener("change", function () {
-        semesterSelect.disabled = this.value === "";
-    });
-});
-</script>
+            studentIdSelect.addEventListener("change", function() {
+                semesterSelect.disabled = this.value === "";
+            });
+        });
+    </script>
 
 <?php } ?>

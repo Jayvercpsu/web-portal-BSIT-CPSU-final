@@ -12,7 +12,7 @@
                     <th>Course No.</th>
                     <th>Descriptive Title</th>
                     <th>Grade</th>
-                    <th>Re</th>
+                    <th>Remarks</th>
                     <th>Unit</th>
                     <th>Pre-Req</th>
                 </tr>
@@ -41,40 +41,130 @@
             document.getElementById("selected_student_year").value = studentYear;
 
             var courses = {
-                "1st Sem": [
-                    { course_no: "CCIT 06", title: "Applications Development and Emerging Technologies", unit: 3, pre_req: "" },
-                    { course_no: "PFIT 03", title: "Web System and Technology", unit: 3, pre_req: "PCIT 02" },
-                    { course_no: "PCIT 11", title: "System Architecture", unit: 3, pre_req: "PCIT 03" },
-                    { course_no: "PCIT 09", title: "Networking 2", unit: 3, pre_req: "PCIT 04" },
-                    { course_no: "PSIT 04", title: "Technopreneurship", unit: 3, pre_req: "" },
-                    { course_no: "PSIT 03", title: "IT Security and Management", unit: 3, pre_req: "CCIT 05" },
-                    { course_no: "GEC 9", title: "Life, Works and Writing of Dr. Jose Rizal", unit: 3, pre_req: "" }
+                "1st Sem": [{
+                        course_no: "CCIT 06",
+                        title: "Applications Development and Emerging Technologies",
+                        unit: 3,
+                        pre_req: ""
+                    },
+                    {
+                        course_no: "PFIT 03",
+                        title: "Web System and Technology",
+                        unit: 3,
+                        pre_req: "PCIT 02"
+                    },
+                    {
+                        course_no: "PCIT 11",
+                        title: "System Architecture",
+                        unit: 3,
+                        pre_req: "PCIT 03"
+                    },
+                    {
+                        course_no: "PCIT 09",
+                        title: "Networking 2",
+                        unit: 3,
+                        pre_req: "PCIT 04"
+                    },
+                    {
+                        course_no: "PSIT 04",
+                        title: "Technopreneurship",
+                        unit: 3,
+                        pre_req: ""
+                    },
+                    {
+                        course_no: "PSIT 03",
+                        title: "IT Security and Management",
+                        unit: 3,
+                        pre_req: "CCIT 05"
+                    },
+                    {
+                        course_no: "GEC 9",
+                        title: "Life, Works and Writing of Dr. Jose Rizal",
+                        unit: 3,
+                        pre_req: ""
+                    }
                 ],
-                "2nd Sem": [
-                    { course_no: "PCIT 12", title: "Information Assurance and Security 2", unit: 3, pre_req: "PCIT 07" },
-                    { course_no: "PCIT 13", title: "Capstone Project and Research 1", unit: 3, pre_req: "PCIT 07, CCIT 06" },
-                    { course_no: "PSIT 02", title: "Data Mining Methodology", unit: 3, pre_req: "" },
-                    { course_no: "PFIT 04", title: "Software Engineering", unit: 3, pre_req: "CCIT 06" },
-                    { course_no: "PSIT 05", title: "Regression Analysis", unit: 3, pre_req: "" },
-                    { course_no: "PFIT 06", title: "Business Process Management", unit: 3, pre_req: "" },
-                    { course_no: "SEMINAR", title: "Seminars", unit: 3, pre_req: "" }
+                "2nd Sem": [{
+                        course_no: "PCIT 12",
+                        title: "Information Assurance and Security 2",
+                        unit: 3,
+                        pre_req: "PCIT 07"
+                    },
+                    {
+                        course_no: "PCIT 13",
+                        title: "Capstone Project and Research 1",
+                        unit: 3,
+                        pre_req: "PCIT 07, CCIT 06"
+                    },
+                    {
+                        course_no: "PSIT 02",
+                        title: "Data Mining Methodology",
+                        unit: 3,
+                        pre_req: ""
+                    },
+                    {
+                        course_no: "PFIT 04",
+                        title: "Software Engineering",
+                        unit: 3,
+                        pre_req: "CCIT 06"
+                    },
+                    {
+                        course_no: "PSIT 05",
+                        title: "Regression Analysis",
+                        unit: 3,
+                        pre_req: ""
+                    },
+                    {
+                        course_no: "PFIT 06",
+                        title: "Business Process Management",
+                        unit: 3,
+                        pre_req: ""
+                    },
+                    {
+                        course_no: "SEMINAR",
+                        title: "Seminars",
+                        unit: 3,
+                        pre_req: ""
+                    }
                 ]
             };
 
             var tbody = document.getElementById("grade-table-body");
             tbody.innerHTML = "";
-            courses[semester].forEach(course => {
+            courses[semester].forEach((course, index) => {
                 tbody.innerHTML += `<tr>
-                    <td>${course.course_no}<input type="hidden" name="course_no[]" value="${course.course_no}"></td>
-                    <td>${course.title}<input type="hidden" name="descriptive_title[]" value="${course.title}"></td>
-                    <td><input type="text" name="grade[]" class="form-control" required></td>
-                    <td><input type="text" name="re[]" class="form-control"></td>
-                    <td>${course.unit}<input type="hidden" name="unit[]" value="${course.unit}"></td>
-                    <td>${course.pre_req}<input type="hidden" name="pre_req[]" value="${course.pre_req}"></td>
-                </tr>`;
+                <td>${course.course_no}<input type="hidden" name="course_no[]" value="${course.course_no}"></td>
+                <td>${course.title}<input type="hidden" name="descriptive_title[]" value="${course.title}"></td>
+                <td>
+                    <input type="number" name="grade[]" class="form-control grade-input" data-index="${index}" min="0" max="100">
+                </td>
+                <td id="remarks-${index}" class="text-center text-muted">No Grade</td>
+                <td>${course.unit}<input type="hidden" name="unit[]" value="${course.unit}"></td>
+                <td>${course.pre_req}<input type="hidden" name="pre_req[]" value="${course.pre_req}"></td>
+            </tr>`;
             });
 
             document.getElementById("grade-form").style.display = "block";
+
+            // Add event listeners for grade inputs to update remarks dynamically
+            document.querySelectorAll(".grade-input").forEach(input => {
+                input.addEventListener("input", function() {
+                    var index = this.getAttribute("data-index");
+                    var grade = parseFloat(this.value);
+                    var remarksCell = document.getElementById(`remarks-${index}`);
+
+                    if (!this.value || grade === 0) {
+                        remarksCell.textContent = "No Grade";
+                        remarksCell.className = "text-center text-muted";
+                    } else if (grade < 75) {
+                        remarksCell.textContent = "Failed";
+                        remarksCell.className = "text-center text-danger fw-bold";
+                    } else {
+                        remarksCell.textContent = "Passed";
+                        remarksCell.className = "text-center text-success fw-bold";
+                    }
+                });
+            });
         } else {
             document.getElementById("grade-form").style.display = "none";
         }

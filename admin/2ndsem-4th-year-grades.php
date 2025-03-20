@@ -9,14 +9,14 @@ if (strlen($_SESSION['login']) == 0) {
     // DELETE GRADE FUNCTIONALITY
     if (isset($_GET['delete_id'])) {
         $delete_id = intval($_GET['delete_id']);
-        $query = mysqli_query($con, "DELETE FROM tblgrades WHERE id='$delete_id'");
+        $query = mysqli_query($con, "DELETE FROM tblgrades WHERE student_id='$delete_id'");
 
         if ($query) {
-            echo "<script>alert('Grade deleted successfully!');</script>";
+            echo "<script>alert('Grades deleted successfully!');</script>";
         } else {
-            echo "<script>alert('Error deleting grade.');</script>";
+            echo "<script>alert('Error deleting grades.');</script>";
         }
-        echo "<script>window.location.href='1stsem-4th-year-grades.php';</script>";
+        echo "<script>window.location.href='2ndsem-4th-year-grades.php';</script>";
         exit();
     }
 ?>
@@ -64,6 +64,9 @@ if (strlen($_SESSION['login']) == 0) {
                                         <td>
                                             <a href="view-grades-2ndsem-4th-year.php?student_id=<?php echo htmlentities($row['student_id']); ?>" class="btn btn-info btn-sm">
                                                 View Grades
+                                            </a>
+                                            <a href="2ndsem-4th-year-grades.php?delete_id=<?php echo htmlentities($row['student_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student\'s grades?');">
+                                                Delete
                                             </a>
                                         </td>
                                     </tr>

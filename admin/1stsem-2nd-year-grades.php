@@ -2,21 +2,21 @@
 session_start();
 include('includes/config.php');
 error_reporting(0);
- 
+
 if (strlen($_SESSION['login']) == 0) {
     header('location:index.php');
 } else {
     // DELETE GRADE FUNCTIONALITY
     if (isset($_GET['delete_id'])) {
         $delete_id = intval($_GET['delete_id']);
-        $query = mysqli_query($con, "DELETE FROM tblgrades WHERE id='$delete_id'");
+        $query = mysqli_query($con, "DELETE FROM tblgrades WHERE student_id='$delete_id'");
 
         if ($query) {
-            echo "<script>alert('Grade deleted successfully!');</script>";
+            echo "<script>alert('Grades deleted successfully!');</script>";
         } else {
-            echo "<script>alert('Error deleting grade.');</script>";
+            echo "<script>alert('Error deleting grades.');</script>";
         }
-        echo "<script>window.location.href='2ndsem-2nd-year-grades.php';</script>";
+        echo "<script>window.location.href='1stsem-2nd-year-grades.php';</script>";
         exit();
     }
 ?>
@@ -30,7 +30,7 @@ if (strlen($_SESSION['login']) == 0) {
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-title-box">
-                        <h4 class="page-title">2nd Year - 2nd Semester Grades</h4>
+                        <h4 class="page-title">2nd Year - 1st Semester Grades</h4>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -65,9 +65,12 @@ if (strlen($_SESSION['login']) == 0) {
                                             <a href="view-grades-1stsem-2nd-year.php?student_id=<?php echo htmlentities($row['student_id']); ?>" class="btn btn-info btn-sm">
                                                 View Grades
                                             </a>
+                                            <a href="1stsem-2nd-year-grades.php?delete_id=<?php echo htmlentities($row['student_id']); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student\'s grades?');">
+                                                Delete
+                                            </a>
                                         </td>
                                     </tr>
-                                <?php $cnt++; } ?>
+                                <?php $cnt++; } ?> 
                             </tbody> 
                         </table>
 
