@@ -9,7 +9,7 @@ if (!$query) {
     die("Query failed: " . mysqli_error($con));
 }
 
-$first = true;  
+$first = true;
 ?>
 
 
@@ -44,14 +44,42 @@ $first = true;
 
 
 </head>
+<style>
+    /* Ensures the video covers the entire screen */
+    .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
 
-<body>
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ensures video fills the screen */
+    }
+</style>
 
-    <!-- Navigation -->
+<body class="position-relative">
+
     <?php include('includes/header.php'); ?>
 
-
     <?php include('includes/carousel_index.php') ?>
+
+
+    <!-- Full-Screen Video Background -->
+    <div class="video-container">
+        <video autoplay muted loop>
+            <source src="./assets/video-cpsu/cpsu.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+
 
     <?php include('includes/latest_news_start.php') ?>
 

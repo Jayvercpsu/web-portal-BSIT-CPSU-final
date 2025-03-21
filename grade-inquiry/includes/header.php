@@ -1,12 +1,12 @@
 <!-- Main Navigation (Enhanced Design) -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg shadow-sm text-white" style="background-color: #6a0dad; color: white;">
     <div class="container">
         <!-- Logo & Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="../admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
             <div> <span class="mx-2 text-muted">|</span>
 
-                <span class="text-dark font-weight-bold" style="font-size: 20px; transition: color 0.3s;">College of Computer Studies</span>
+                <span class="text-white font-weight-bold" style="font-size: 20px; transition: color 0.3s;">College of Computer Studies</span>
             </div>
         </a>
 
@@ -42,16 +42,16 @@
                 </li>
             </ul>
         </div> -->
-<!-- Font Awesome (Latest Version) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <!-- Font Awesome (Latest Version) -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
         <!-- Right Side: Date & Social Media -->
         <div class="d-flex align-items-center">
-            <span class="small text-dark mr-3">
+            <span class="small text-white mr-3">
                 <i class="fa fa-clock"></i> <span id="live-time"></span>
             </span>
             <span class="mx-2 text-muted">|</span>
-            <span class="small text-dark mr-3">
+            <span class="small text-white mr-3">
                 <i class="fa fa-calendar"></i> <span id="live-date"></span>
             </span>
         </div>
@@ -92,10 +92,7 @@
     a:hover i.fab.fa-facebook {
         color: #0056b3;
         transform: scale(1.2);
-    }
-</style>
-
-<style>
+    } 
     .navbar-nav .nav-link {
         position: relative;
         display: inline-block;

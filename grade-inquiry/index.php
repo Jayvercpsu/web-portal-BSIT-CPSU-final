@@ -130,52 +130,42 @@ session_start();
                 font-size: 14px;
             }
         }
-    </style>
 
-    <style>
         body {
             position: relative;
-            background-color: black;
-            /* Black background outside the image */
             min-height: 100vh;
-            /* Ensure full height */
             overflow-y: auto;
-            /* Enable scrolling */
+            background: black;
+            /* Fallback color */
         }
 
-        /* Fixed, blurred background image */
+        /* Blurred Background */
         body::before {
             content: "";
             position: fixed;
-            /* Keeps the background fixed */
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            /* Centers the image */
-            width: 30%;
-            /* Adjust image size */
-            height: 100%;
-            background: url('../admin/assets/images/bsit_logo.png') no-repeat center center;
-            background-size: contain;
-            filter: blur(3px);
-            /* Soft blur for readability */
-            opacity: 0.5;
-            /* Reduce brightness */
-            z-index: -1;
-        }
-
-        /* Gradient overlay to improve contrast */
-        body::after {
-            content: "";
-            position: fixed;
-            /* Keeps the overlay fixed */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9));
-            z-index: -2;
+            background: url('https://wallpaperaccess.com/full/1892753.jpg') no-repeat center center;
+            background-size: cover;
+            filter: blur(2px);
+            opacity: 0.9;
+            z-index: -1;
         }
+
+        /* Gradient Overlay for Better Readability */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
+            z-index: -1;
+        }
+
 
         /* Floating label container */
         .floating-label {
@@ -239,7 +229,7 @@ session_start();
 
     <!-- Page Content -->
     <div class="container my-5">
-        <div id="countdown-timer" class="text-center bg-primary text-white p-2 rounded shadow-sm"
+        <div id="countdown-timer" class="text-center bg-white text-dark p-2 rounded shadow-sm"
             style="display:none; position: fixed; top: 20px; right: 20px; width: 100px; font-size: 20px; z-index: 9999;">
             20
         </div>
@@ -398,13 +388,13 @@ session_start();
 
 
 
-       // Function to generate the grade table dynamically
-function generateGradeTable(grades, totalUnitsId, gwaId) {
-    let totalUnits = 0;
-    let totalGradePoints = 0;
-    let hasValidGrades = false; // Check if at least one valid grade exists
+        // Function to generate the grade table dynamically
+        function generateGradeTable(grades, totalUnitsId, gwaId) {
+            let totalUnits = 0;
+            let totalGradePoints = 0;
+            let hasValidGrades = false; // Check if at least one valid grade exists
 
-    let table = `
+            let table = `
     <table class="table table-hover table-striped table-bordered">
         <thead class="table-dark">
             <tr>
@@ -419,28 +409,28 @@ function generateGradeTable(grades, totalUnitsId, gwaId) {
         <tbody>
     `;
 
-    grades.forEach(grade => {
-        let numericGrade = parseFloat(grade.grade); // Convert to number
-        let unitValue = parseFloat(grade.unit); // Convert to number
+            grades.forEach(grade => {
+                let numericGrade = parseFloat(grade.grade); // Convert to number
+                let unitValue = parseFloat(grade.unit); // Convert to number
 
-        // Determine Remarks
-        let remarks;
-        if (!grade.grade || numericGrade === 0) {
-            remarks = `<span class='text-muted'>No Grade</span>`;
-        } else if (numericGrade < 75) {
-            remarks = `<span class='text-danger fw-bold'>Failed</span>`;
-        } else {
-            remarks = `<span class='text-success fw-bold'>Passed</span>`;
-        }
+                // Determine Remarks
+                let remarks;
+                if (!grade.grade || numericGrade === 0) {
+                    remarks = `<span class='text-muted'>No Grade</span>`;
+                } else if (numericGrade < 75) {
+                    remarks = `<span class='text-danger fw-bold'>Failed</span>`;
+                } else {
+                    remarks = `<span class='text-success fw-bold'>Passed</span>`;
+                }
 
-        // If the grade is valid (a number), add it to GWA computation
-        if (!isNaN(numericGrade) && !isNaN(unitValue)) {
-            totalGradePoints += numericGrade * unitValue;
-            totalUnits += unitValue;
-            hasValidGrades = true;
-        }
+                // If the grade is valid (a number), add it to GWA computation
+                if (!isNaN(numericGrade) && !isNaN(unitValue)) {
+                    totalGradePoints += numericGrade * unitValue;
+                    totalUnits += unitValue;
+                    hasValidGrades = true;
+                }
 
-        table += `
+                table += `
         <tr>
             <td>${grade.course_no}</td>
             <td>${grade.descriptive_title}</td>
@@ -450,23 +440,22 @@ function generateGradeTable(grades, totalUnitsId, gwaId) {
             <td>${grade.pre_req ? grade.pre_req : '-'}</td>
         </tr>
         `;
-    });
+            });
 
-    table += `</tbody></table>`;
+            table += `</tbody></table>`;
 
-    // Compute GWA
-    let gwa = hasValidGrades ? (totalGradePoints / totalUnits).toFixed(2) : "N/A";
+            // Compute GWA
+            let gwa = hasValidGrades ? (totalGradePoints / totalUnits).toFixed(2) : "N/A";
 
-    table += `
+            table += `
     <div class="alert alert-info text-center">
         <strong>Total Units:</strong> <span id="${totalUnitsId}">${totalUnits}</span> | 
         <strong>General Weighted Average (GWA):</strong> <span id="${gwaId}">${gwa}</span>
     </div>
     `;
 
-    return table;
-}
-
+            return table;
+        }
     </script>
 
 

@@ -53,7 +53,14 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
 
 </head>
 
-<body>
+<body style="
+    background-image: url('https://static.vecteezy.com/system/resources/previews/006/699/632/original/technology-connection-circuit-system-design-background-abstract-free-vector.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+">
+</body>
 
     <?php include('includes/header.php'); ?>
 
@@ -148,45 +155,45 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
 
             <!-- Sidebar -->
             <div class="col-lg-3">
-                <h4 class="fw-bold">Latest Posts</h4>
+                <h4 class="fw-bold text-white">Latest Posts</h4>
                 <ul class="list-group latest-posts-scroll">
-    <?php
-    while ($latest = mysqli_fetch_array($latestQuery)) {
-        $images = explode(",", $latest['PostImage']); // Split images by commas
-        $firstImage = trim($images[0]); // Get the first image only
-    ?>
-        <li class="list-group-item list-group-item-action p-3">
-            <a href="view-post.php?id=<?php echo htmlentities($latest['id']); ?>" class="d-flex align-items-center text-decoration-none gap-3">
-                <div class="flex-shrink-0 rounded overflow-hidden" style="width: 80px; height: 60px; border: 1px solid #ddd;">
-                    <img src="admin/postimages/<?php echo htmlentities($firstImage); ?>" class="img-fluid w-100 h-100" style="object-fit: cover;">
-                </div>
-                <div class="flex-grow-1">
-                    <h6 class="mb-0 fw-semibold"><?php echo htmlentities($latest['PostTitle']); ?></h6>
-                </div>
-            </a>
-        </li>
-    <?php } ?>
-</ul>
+                    <?php
+                    while ($latest = mysqli_fetch_array($latestQuery)) {
+                        $images = explode(",", $latest['PostImage']); // Split images by commas
+                        $firstImage = trim($images[0]); // Get the first image only
+                    ?>
+                        <li class="list-group-item list-group-item-action p-3">
+                            <a href="view-post.php?id=<?php echo htmlentities($latest['id']); ?>" class="d-flex align-items-center text-decoration-none gap-3">
+                                <div class="flex-shrink-0 rounded overflow-hidden" style="width: 80px; height: 60px; border: 1px solid #ddd;">
+                                    <img src="admin/postimages/<?php echo htmlentities($firstImage); ?>" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 fw-semibold"><?php echo htmlentities($latest['PostTitle']); ?></h6>
+                                </div>
+                            </a>
+                        </li>
+                    <?php } ?>
+                </ul>
 
 
 
 
-             <!-- Quick Links -->
-<h4 class="mt-4 fw-bold" style="color: #6f42c1;">Quick Links</h4>
-<ul class="list-group shadow-sm">
-    <li class="list-group-item">
-        <a href="index.php" class="quick-link"><i class="fa fa-home"></i> Home</a>
-    </li>
-    <li class="list-group-item">
-        <a href="about-us.php" class="quick-link"><i class="fa fa-info-circle"></i> About Us</a>
-    </li>
-    <li class="list-group-item">
-        <a href="contact-us.php" class="quick-link"><i class="fa fa-phone"></i> Contact</a>
-    </li>
-    <li class="list-group-item">
-        <a href="users/grade_inquiry/input-student-id.php" class="quick-link"><i class="fa fa-graduation-cap"></i> Grade Inquiry</a>
-    </li>
-</ul>
+                <!-- Quick Links -->
+                <h4 class="mt-4 fw-bold text-white">Quick Links</h4>
+                <ul class="list-group shadow-sm">
+                    <li class="list-group-item">
+                        <a href="index.php" class="quick-link"><i class="fa fa-home"></i> Home</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="about-us.php" class="quick-link"><i class="fa fa-info-circle"></i> About Us</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="contact-us.php" class="quick-link"><i class="fa fa-phone"></i> Contact</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="users/grade_inquiry/input-student-id.php" class="quick-link"><i class="fa fa-graduation-cap"></i> Grade Inquiry</a>
+                    </li>
+                </ul>
 
             </div>
 
@@ -196,7 +203,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
 
         </div>
     </div>
- 
+
 
     <script>
         function goBack() {

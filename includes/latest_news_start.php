@@ -1,9 +1,9 @@
 <?php if (!isset($query)) {
     die("Query not set.");
 } ?>
-<div class="container-fluid latest-news py-2 bg-white">
+<div class="container-fluid latest-news py-2">
     <div class="container py-2">
-        <h2 class="mb-4 text-dark fw-bold">Latest News</h2>
+        <h2 class="mb-4 text-white fw-bold">Latest News</h2>
         <div class="latest-news-carousel owl-carousel owl-theme">
             <?php
             mysqli_data_seek($query, 0); // Reset the query pointer
@@ -14,20 +14,20 @@
                 $firstImage = trim($images[0]); // Get only the first image
             ?>
                 <div class="latest-news-item">
-                    <div class="bg-light rounded shadow-sm card-equal">
+                    <div class=" rounded shadow-sm card-equal">
                         <div class="rounded-circle overflow-hidden latest-news-img-container">
                             <img src="admin/postimages/<?php echo $firstImage; ?>"
                                 class="img-fluid"
                                 alt="<?php echo $title; ?>">
                         </div>
                         <div class="p-4 d-flex flex-column h-100">
-                            <a href="view-post.php?id=<?php echo $row['id']; ?>" class="h4 text-dark text-decoration-none latest-news-title">
+                            <a href="view-post.php?id=<?php echo $row['id']; ?>" class="h4 text-white text-decoration-none latest-news-title">
                                 <?php echo $title; ?>
                             </a>
-                            <p class="text-black flex-grow-1" style="color: black;">
+                            <p class="text-white flex-grow-1">
                                 <?php echo substr($details, 0, 100); ?>...
                             </p>
-                            <small class="text-muted">
+                            <small class="text-white">
                                 <i class="fas fa-calendar-alt"></i>
                                 <?php echo date("M d, Y", strtotime($row['PostingDate'])); ?>
                             </small>
