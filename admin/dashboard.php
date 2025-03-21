@@ -51,15 +51,7 @@ if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
             <!-- end row -->
             <div class="row">
 
-
-
-
-
-
-
-
-
-                <a href="manage-first-year.php">
+                <a href="#">
                     <div class="col-lg-2 col-md-2 col-sm-6">
                         <div class="card-box widget-box-one text-center">
                             <i class="mdi mdi-account-group widget-one-icon"></i>
@@ -75,7 +67,7 @@ if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
                     </div>
                 </a>
 
-                <a href="manage-second-year.php">
+                <a href="#">
                     <div class="col-lg-2 col-md-2 col-sm-6">
                         <div class="card-box widget-box-one text-center">
                             <i class="mdi mdi-account-group widget-one-icon"></i>
@@ -91,7 +83,7 @@ if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
                     </div>
                 </a>
 
-                <a href="manage-third-year.php">
+                <a href="#">
                     <div class="col-lg-2 col-md-2 col-sm-6">
                         <div class="card-box widget-box-one text-center">
                             <i class="mdi mdi-account-group widget-one-icon"></i>
@@ -107,7 +99,7 @@ if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
                     </div>
                 </a>
 
-                <a href="manage-fourth-year.php">
+                <a href="#">
                     <div class="col-lg-2 col-md-2 col-sm-6">
                         <div class="card-box widget-box-one text-center">
                             <i class="mdi mdi-account-group widget-one-icon"></i>
@@ -123,48 +115,95 @@ if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
                     </div>
                 </a>
 
-                <a href="manage-users.php">
+                <a href="#">
                     <div class="col-lg-2 col-md-2 col-sm-6">
                         <div class="card-box widget-box-one text-center">
                             <i class="mdi mdi-account-multiple widget-one-icon"></i>
                             <div class="wigdet-one-content">
-                                <p class="m-0 text-secondary" title="Statistics">All Users</p>
+                                <p class="m-0 text-secondary" title="Statistics">All Students</p>
                                 <?php
-                                $query = mysqli_query($con, "SELECT * FROM users");
-                                $countUsers = mysqli_num_rows($query);
+                                $query = mysqli_query($con, "SELECT COUNT(*) AS total FROM users WHERE role = 'student'");
+                                $row = mysqli_fetch_assoc($query);
+                                $countStudents = $row['total'];
                                 ?>
-                                <h2><?php echo htmlentities($countUsers); ?></h2>
+                                <h2><?php echo htmlentities($countStudents); ?></h2>
                             </div>
                         </div>
                     </div>
                 </a>
 
+                <!-- Total Posts in tblposts -->
+                <a href="manage-posts.php">
+                    <div class="col-lg-2 col-md-2 col-sm-6">
+                        <div class="card-box widget-box-one text-center">
+                            <i class="mdi mdi-post-outline widget-one-icon"></i>
+                            <div class="wigdet-one-content">
+                                <p class="m-0 text-secondary" title="Statistics">Total Posts</p>
+                                <?php
+                                $query = mysqli_query($con, "SELECT COUNT(*) AS total FROM tblposts");
+                                $row = mysqli_fetch_assoc($query);
+                                $countPosts = $row['total'];
+                                ?>
+                                <h2><?php echo htmlentities($countPosts); ?></h2>
+                            </div>
+                        </div>
+                    </div>
+                </a>
 
-
-
-
-
-
+                <!-- Total Student IDs in tblstudents -->
+                <a href="manage-student-id.php">
+                    <div class="col-lg-2 col-md-2 col-sm-6">
+                        <div class="card-box widget-box-one text-center">
+                            <i class="mdi mdi-school widget-one-icon"></i>
+                            <div class="wigdet-one-content">
+                                <p class="m-0 text-secondary" title="Statistics">Total ID Students</p>
+                                <?php
+                                $query = mysqli_query($con, "SELECT COUNT(student_id) AS total FROM tblstudents");
+                                $row = mysqli_fetch_assoc($query);
+                                $countStudents = $row['total'];
+                                ?>
+                                <h2><?php echo htmlentities($countStudents); ?></h2>
+                            </div>
+                        </div>
+                    </div>
+                </a>
 
             </div>
             <!-- end row -->
 
-            <div class="row">
-                <!--  <a href="trash-posts.php">
-               <div class="col-lg-4 col-md-4 col-sm-6">
-                  <div class="card-box widget-box-one">
-                     <i class="mdi mdi-layers widget-one-icon"></i>
-                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-600 font-secondary text-overflow" title="User This Month">Trash News</p>
-                        <?php $query = mysqli_query($con, "select * from tblposts where Is_Active=0");
-                        $countposts = mysqli_num_rows($query);
-                        ?>
-                        <h2><?php echo htmlentities($countposts); ?> <small></small></h2>
-                     </div>
-                  </div>
-               </div>
-               </a> -->
-            </div>
+            <style>
+                .card-box {
+                    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                    border-radius: 10px;
+                    overflow: hidden;
+                }
+
+                .card-box:hover {
+                    transform: translateY(-8px);
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                }
+
+                .widget-one-icon {
+                    font-size: 3rem;
+                    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+                }
+
+                .card-box:hover .widget-one-icon {
+                    transform: scale(1.1);
+                    color: #007bff;
+                    /* Change icon color on hover */
+                }
+
+                .wigdet-one-content p {
+                    transition: color 0.3s ease-in-out;
+                }
+
+                .card-box:hover .wigdet-one-content p {
+                    color: #007bff;
+                    /* Change text color on hover */
+                }
+            </style>
+
 
         </div>
         <!-- container -->
