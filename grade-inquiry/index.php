@@ -135,7 +135,6 @@ session_start();
             position: relative;
             min-height: 100vh;
             overflow-y: auto;
-            background: black;
             /* Fallback color */
         }
 
@@ -147,7 +146,6 @@ session_start();
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://wallpaperaccess.com/full/1892753.jpg') no-repeat center center;
             background-size: cover;
             filter: blur(2px);
             opacity: 0.9;
@@ -162,7 +160,6 @@ session_start();
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8));
             z-index: -1;
         }
 
@@ -231,7 +228,7 @@ session_start();
     <div class="container my-5">
         <div id="countdown-timer" class="text-center bg-white text-dark p-2 rounded shadow-sm"
             style="display:none; position: fixed; top: 20px; right: 20px; width: 100px; font-size: 20px; z-index: 9999;">
-            20
+            60
         </div>
 
         <div class="row justify-content-center">
@@ -254,8 +251,23 @@ session_start();
                                 <input type="number" class="form-control" id="student_id" name="student_id" placeholder=" " required>
                                 <label for="student_id">Enter Student ID</label>
                             </div>
-                            <button type="button" class="btn btn-primary w-100 mt-3" onclick="checkStudentID()">Check Grades</button>
+                            <button type="button" class="btn w-100 mt-3 custom-btn" onclick="checkStudentID()">Check Grades</button>
                         </form>
+
+                        <style>
+                            .custom-btn {
+                                background-color: rgb(148, 76, 200);
+                                color: white;
+                                transition: background-color 0.3s ease-in-out;
+                            }
+
+                            .custom-btn:hover {
+                                background-color: rgb(68, 36, 91);
+                                /* Darker shade for hover effect */
+                                color: white;
+                            }
+                        </style>
+
 
                         <!-- Student Year Hidden Input -->
                         <input type="hidden" id="student_year">
@@ -274,8 +286,8 @@ session_start();
 
             <div class="container">
                 <div id="student-info" class="text-center mb-4" style="display:none;">
-                    <h4 id="student-name" class="bg-primary text-white px-4 py-2 rounded d-inline-block shadow-sm"></h4>
-                    <h5 id="student-year" class="badge bg-secondary mt-2 px-3 py-2 text-white"></h5>
+                    <h4 id="student-name" class="text-white px-4 py-2 rounded d-inline-block shadow-sm" style="background-color:rgb(148, 76, 200); color: white;"></h4>
+                    <h5 id="student-year" class="badge mt-2 px-3 py-2 text-white" style="background-color:rgb(148, 76, 200); color: white;"></h5>
                 </div>
             </div>
 
@@ -284,8 +296,8 @@ session_start();
             <!-- 1st Semester -->
             <div id="grade-form-1st" style="display:none;">
                 <div class="card shadow-sm border-primary mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="text-center">1st Semester Grades</h4>
+                    <div class="card-header text-white" style="background-color:rgb(148, 76, 200); color: white;">
+                        <h4 class="text-center">1st Semester Grades <span id="year-1st"></span></h4>
                     </div>
                     <div class="card-body">
                         <p class="text-center text-muted" id="no-grades-1st" style="display:none;">🚫 No grades released yet. Please wait.</p>
@@ -297,8 +309,8 @@ session_start();
             <!-- 2nd Semester -->
             <div id="grade-form-2nd" style="display:none;">
                 <div class="card shadow-sm border-success mb-4">
-                    <div class="card-header bg-success text-white">
-                        <h4 class="text-center">2nd Semester Grades</h4>
+                    <div class="card-header text-white" style="background-color:rgb(148, 76, 200); color: white;">
+                        <h4 class="text-center">2nd Semester Grades <span id="year-2nd"></span></h4>
                     </div>
                     <div class="card-body">
                         <p class="text-center text-muted" id="no-grades-2nd" style="display:none;">🚫 No grades released yet. Please wait.</p>
@@ -306,6 +318,24 @@ session_start();
                     </div>
                 </div>
             </div>
+
+            <script>
+                // Function to get the academic year (previous year - current year)
+                function getAcademicYear() {
+                    let currentYear = new Date().getFullYear();
+                    let prevYear = currentYear - 1;
+                    return `${prevYear}-${currentYear}`; // Example: 2024-2025
+                }
+
+                // Get the academic year
+                let academicYear = getAcademicYear();
+
+                // Append the academic year to both semester headers
+                document.getElementById("year-1st").textContent = `(${academicYear})`;
+                document.getElementById("year-2nd").textContent = `(${academicYear})`;
+            </script>
+
+
         </div>
     </div>
 
@@ -357,7 +387,7 @@ session_start();
                     }
 
                     // Start Countdown Timer
-                    let timer = 20;
+                    let timer = 60;
                     document.getElementById("countdown-timer").style.display = "block";
                     document.getElementById("countdown-timer").innerText = timer;
 

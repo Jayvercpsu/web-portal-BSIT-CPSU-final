@@ -1,6 +1,6 @@
 <!-- Main Navigation (Enhanced Design) -->
-<nav class="navbar navbar-expand-lg shadow-sm text-white" style="background-color: #6a0dad; color: white;">
-    <div class="container">
+<nav class="navbar navbar-expand-lg shadow-sm text-white" style="background-color:rgb(148, 76, 200); color: white;">
+    <div class="container"> 
         <!-- Logo & Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="../admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
