@@ -5,10 +5,8 @@ error_reporting(0);
 
 // Handle student deletion
 if (isset($_GET['delete'])) {
-    $email = mysqli_real_escape_string($con, $_GET['delete']);
-
-    // Delete student from users table
-    $query = "DELETE FROM users WHERE email = '$email'";
+    $student_id = mysqli_real_escape_string($con, $_GET['delete']);
+    $query = "DELETE FROM tblstudents WHERE student_id = '$student_id'";
     if (mysqli_query($con, $query)) {
         echo "<script>alert('Student deleted successfully');</script>";
         echo "<script>window.location.href = 'all-students.php';</script>";
@@ -16,12 +14,10 @@ if (isset($_GET['delete'])) {
         echo "<script>alert('Error deleting student');</script>";
     }
 }
- 
 
-// Fetch all students from the users table where the role is 'student'
-$query = "SELECT * FROM users WHERE role = 'student'";
+// Fetch all students from tblstudents
+$query = "SELECT * FROM tblstudents";
 $result = mysqli_query($con, $query);
-
 if (!$result) {
     die("Error fetching students: " . mysqli_error($con));
 }
@@ -30,93 +26,58 @@ if (!$result) {
 <?php include('includes/topheader.php'); ?>
 <?php include('includes/leftsidebar.php'); ?>
 
+<!-- DataTables CSS & JS CDN -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <!-- Start right Content here -->
 <div class="content-page">
     <div class="content">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="page-title-box">
-                        <h4 class="page-title">All Students</h4>
-                        <ol class="breadcrumb p-0 m-0">
-                            <li><a href="#">Admin</a></li>
-                            <li><a href="#">Students</a></li>
-                            <li class="active">All Students</li>
-                        </ol>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
+        <div class="container-fluid text-center"> <!-- Full-width container -->
+
+            <!-- Page Header -->
+            <h1 class="my-4">All Students</h1>
+
+            <!-- Filter Buttons -->
+            <div class="btn-group mb-4">
+                <button class="btn btn-primary filter-btn" data-year="all">All</button>
+                <button class="btn btn-success filter-btn" data-year="1st Year">1st Year</button>
+                <button class="btn btn-info filter-btn" data-year="2nd Year">2nd Year</button>
+                <button class="btn btn-warning filter-btn" data-year="3rd Year">3rd Year</button>
+                <button class="btn btn-danger filter-btn" data-year="4th Year">4th Year</button>
             </div>
 
-
-
-
-
+            <!-- Student Table -->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="demo-box m-t-20">
-                        <div class="m-b-30">
-                            <a href="add-student.php">
-                                <button class="btn btn-custom waves-effect waves-light btn-md">Add New Student</button>
-                            </a>
-                        </div>
-
-                        <div class="table-responsive">
-                            <table class="table m-0 table-bordered" id="example">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Full Name</th>
-                                        <th>Email</th>
-                                        <th>Year</th>
-                                        <th>Created At</th>
-                                        <th>Action</th>
+                    <div class="table-responsive">
+                        <table id="studentTable" class="table table-bordered table-hover text-center w-100">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Year</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <tr data-year="<?php echo $row['student_year']; ?>">
+                                        <td><?php echo $row['student_id']; ?></td>
+                                        <td><?php echo $row['student_name']; ?></td>
+                                        <td><?php echo $row['student_year']; ?></td>
+                                        <td>
+                                            <a href="all-students.php?delete=<?php echo $row['student_id']; ?>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Are you sure?')">
+                                                Delete
+                                            </a>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Fetch all students from the users table
-                                    $query = "SELECT u.id, u.full_name, u.email, u.created_at, 
-                                              CASE 
-                                                  WHEN y.email IS NOT NULL THEN 'first_year' 
-                                                  WHEN y2.email IS NOT NULL THEN 'second_year' 
-                                                  WHEN y3.email IS NOT NULL THEN 'third_year' 
-                                                  WHEN y4.email IS NOT NULL THEN 'fourth_year' 
-                                              END AS year
-                                              FROM users u
-                                              LEFT JOIN first_year y ON u.email = y.email
-                                              LEFT JOIN second_year y2 ON u.email = y2.email
-                                              LEFT JOIN third_year y3 ON u.email = y3.email
-                                              LEFT JOIN fourth_year y4 ON u.email = y4.email
-                                              WHERE u.role = 'student'";
-
-                                    $result = mysqli_query($con, $query);
-                                    $cnt = 1;
-
-                                    if (mysqli_num_rows($result) > 0) {
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                    ?>
-                                            <tr>
-                                                <td><?php echo $cnt++; ?></td>
-                                                <td><?php echo htmlspecialchars($row['full_name']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['email']); ?></td>
-                                                <td><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $row['year']))); ?></td>
-                                                <td><?php echo htmlspecialchars($row['created_at']); ?></td>
-                                                <td>
-                                                    <a href="edit-student.php?email=<?php echo $row['email']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                                                    <a href="delete-student.php?email=<?php echo $row['email']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student?');">Delete</a>
-                                                </td>
-                                            </tr>
-                                    <?php
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='6'>No students found.</td></tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                                <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -126,4 +87,51 @@ if (!$result) {
 </div>
 
 <?php include('includes/footer.php'); ?>
-</div>
+
+<!-- JavaScript for DataTables & Filtering -->
+<script>
+    $(document).ready(function() {
+        var table = $('#studentTable').DataTable(); // Initialize DataTable
+
+        $('.filter-btn').on('click', function() {
+            let year = $(this).data('year');
+            table.search(year === 'all' ? '' : year).draw(); // Use DataTables search instead of manually hiding rows
+        });
+    });
+</script>
+
+<!-- CSS for Full Width & Clean Design -->
+<style>
+    h1 {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .btn-group .btn {
+        margin: 5px;
+        font-size: 16px;
+    }
+
+    .table {
+        width: 100%;
+        /* Full width */
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
+
+    .table th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+</style>

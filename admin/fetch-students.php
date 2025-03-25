@@ -1,14 +1,19 @@
 <?php
 include('includes/config.php');
 
-$year = mysqli_real_escape_string($con, $_GET['year']);
+$searchTerm = isset($_GET['search']) ? mysqli_real_escape_string($con, $_GET['search']) : '';
 
-$query = mysqli_query($con, "SELECT student_id, student_name FROM tblstudents WHERE student_year='$year' ORDER BY student_name ASC");
+$query = "SELECT student_id, student_name FROM tblstudents WHERE student_name LIKE '%$searchTerm%' ORDER BY student_name ASC";
+$result = mysqli_query($con, $query);
 
 $students = [];
-while ($row = mysqli_fetch_assoc($query)) {
-    $students[] = $row;
+while ($row = mysqli_fetch_assoc($result)) {
+    $students[] = [
+        "id" => $row['student_id'],
+        "text" => $row['student_name']
+    ];
 }
 
+// ✅ Return JSON response
+header('Content-Type: application/json');
 echo json_encode($students);
-?>

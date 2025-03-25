@@ -3,181 +3,174 @@ session_start();
 include('includes/config.php');
 error_reporting(0);
 
-if (strlen(string: $_SESSION['login']) == 0) {
-    header('location:index.php');
-} else {
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
-        $student_id = mysqli_real_escape_string($con, $_POST['student_id'] ?? '');
-        $student_name = mysqli_real_escape_string($con, $_POST['student_name'] ?? '');
-        $student_year = mysqli_real_escape_string($con, $_POST['student_year'] ?? '');
-        $semester = mysqli_real_escape_string($con, $_POST['semester'] ?? '');
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
+    $student_id = mysqli_real_escape_string($con, $_POST['student_id'] ?? '');
 
-        if (empty($student_id) || empty($student_name) || empty($student_year) || empty($semester)) {
-            $error = "Error: Missing Required Fields. Ensure all fields are selected.";
+    if (empty($student_id)) {
+        echo json_encode(["status" => "error", "message" => "Please select a student."]);
+        exit();
+    }
+
+    if (!isset($_POST['course_no']) || !isset($_POST['descriptive_title']) || !isset($_POST['grade']) || !isset($_POST['unit']) || !isset($_POST['pre_req'])) {
+        echo json_encode(["status" => "error", "message" => "Missing form data. Ensure all fields are filled."]);
+        exit();
+    }
+
+    $courses = $_POST['course_no'];
+    $descriptions = $_POST['descriptive_title'];
+    $grades = $_POST['grade'];
+    $units = $_POST['unit'];
+    $pre_reqs = $_POST['pre_req'];
+
+    $allProcessed = true;
+
+    $stmt_insert = $con->prepare("INSERT INTO tblgrades (student_id, course_no, descriptive_title, grade, unit, pre_req) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt_update = $con->prepare("UPDATE tblgrades SET grade=? WHERE student_id=? AND course_no=?");
+
+    foreach ($courses as $index => $course_no) {
+        $desc = mysqli_real_escape_string($con, $descriptions[$index]);
+        $grade = !empty($grades[$index]) ? mysqli_real_escape_string($con, $grades[$index]) : NULL;
+        $unit = mysqli_real_escape_string($con, $units[$index]);
+        $pre_req = mysqli_real_escape_string($con, $pre_reqs[$index]);
+
+        // ✅ Check if grade already exists
+        $check_query = mysqli_query($con, "SELECT * FROM tblgrades WHERE student_id='$student_id' AND course_no='$course_no'");
+        if (mysqli_num_rows($check_query) > 0) {
+            // ✅ Update existing grade
+            $stmt_update->bind_param("sis", $grade, $student_id, $course_no);
+            $query = $stmt_update->execute();
         } else {
-            if (!isset($_POST['course_no']) || !isset($_POST['descriptive_title']) || !isset($_POST['grade']) || !isset($_POST['unit']) || !isset($_POST['pre_req'])) {
-                $error = "Error: Missing form data. Please ensure all fields are filled.";
-            } else {
-                $courses = $_POST['course_no'];
-                $descriptions = $_POST['descriptive_title'];
-                $grades = $_POST['grade'];
-                $res = $_POST['re'] ?? [];
-                $units = $_POST['unit'];
-                $pre_reqs = $_POST['pre_req'];
+            // ✅ Insert new grade
+            $stmt_insert->bind_param("isssis", $student_id, $course_no, $desc, $grade, $unit, $pre_req);
+            $query = $stmt_insert->execute();
+        }
 
-                $allInserted = true;
-
-                foreach ($courses as $index => $course_no) {
-                    $desc = $descriptions[$index];
-                    $grade = !empty($grades[$index]) ? $grades[$index] : NULL;
-                    $re = !empty($res[$index]) ? $res[$index] : NULL;
-                    $unit = $units[$index];
-                    $pre_req = $pre_reqs[$index];
-
-                    $query = mysqli_query($con, "INSERT INTO tblgrades(student_id, student_name, student_year, semester, course_no, descriptive_title, grade, re, unit, pre_req) 
-                    VALUES('$student_id', '$student_name', '$student_year', '$semester', '$course_no', '$desc', '$grade', '$re', '$unit', '$pre_req')");
-
-                    if (!$query) {
-                        $allInserted = false;
-                        error_log("SQL Error: " . mysqli_error($con));
-                    }
-                }
-
-                if ($allInserted) {
-                    $msg = "Grades for " . htmlentities($semester) . " successfully added!";
-                } else {
-                    $error = "Something went wrong. Please try again.";
-                }
-            }
+        if (!$query) {
+            $allProcessed = false;
         }
     }
+
+    $stmt_insert->close();
+    $stmt_update->close();
+
+    if ($allProcessed) {
+        echo json_encode(["status" => "success", "message" => "Grades successfully saved!"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Error saving some grades."]);
+    }
+}
 ?>
 
-    <?php include('includes/topheader.php'); ?>
-    <?php include('includes/leftsidebar.php'); ?>
 
-    <div class="content-page">
-        <div class="content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="page-title-box">
-                            <h4 class="page-title">Grade Entry</h4>
-                            <div class="clearfix"></div>
-                        </div>
+
+<?php include('includes/topheader.php'); ?>
+<?php include('includes/leftsidebar.php'); ?>
+
+<div class="content-page">
+    <div class="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Grade Entry</h4>
+                        <div class="clearfix"></div>
                     </div>
                 </div>
+            </div>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card-box">
-                            <h4 class="m-t-0 header-title"><b>Select Student & Semester</b></h4>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card shadow-lg border-0 rounded">
+                        <div class="card-body p-4">
+                            <h5 class="text-center font-weight-bold mb-3">Select Student</h5>
                             <hr>
 
+                            <!-- ✅ Success & Error Messages -->
                             <?php if (!empty($msg)) { ?>
-                                <div class="alert alert-success"><?php echo htmlentities($msg); ?></div>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <?php echo htmlentities($msg); ?>
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                </div>
                             <?php } ?>
                             <?php if (!empty($error)) { ?>
-                                <div class="alert alert-danger"><?php echo htmlentities($error); ?></div>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <?php echo htmlentities($error); ?>
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                </div>
                             <?php } ?>
 
+                            <!-- ✅ Include Select2 CSS -->
+                            <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+                            <!-- Student Selection -->
                             <form method="post" id="gradeForm">
-                                <div class="form-group col-md-6">
-                                    <label>Year Level</label>
-                                    <select class="form-control" name="student_year" id="student_year" required>
-                                        <option value="">Select Year</option>
-                                        <option value="1st Year">1st Year</option>
-                                        <option value="2nd Year">2nd Year</option>
-                                        <option value="3rd Year">3rd Year</option>
-                                        <option value="4th Year">4th Year</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label>Student</label>
-                                    <select class="form-control" name="student_id" id="student_id" disabled required>
-                                        <option value="">Select Student</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label>Semester</label>
-                                    <select class="form-control" name="semester" id="semester" disabled required>
-                                        <option value="">Select Semester</option>
-                                        <option value="1st Sem">1st Semester</option>
-                                        <option value="2nd Sem">2nd Semester</option>
+                                <div class="form-group">
+                                    <label class="font-weight-bold">Select Student</label>
+                                    <select class="form-control form-control-lg" name="student_id" id="student_id" required>
+                                        <option value="">Search and select a student...</option>
                                     </select>
                                 </div>
                             </form>
 
-                            <!-- Forms for Each Year Level -->
-                            <div id="1st-year-container" class="year-form" style="display:none;">
-                                <?php include('forms/1st-year-form.php'); ?>
-                            </div>
-
-                            <div id="2nd-year-container" class="year-form" style="display:none;">
-                                <?php include('forms/2nd-year-form.php'); ?>
-                            </div>
-
-                            <div id="3rd-year-container" class="year-form" style="display:none;">
-                                <?php include('forms/3rd-year-form.php'); ?>
-                            </div>
-
-                            <div id="4th-year-container" class="year-form" style="display:none;">
-                                <?php include('forms/4th-year-form.php'); ?>
-                            </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            <!-- ✅ Forms for 1st Year to 4th Year will be displayed here -->
+            <div id="grade-form-container"></div>
+
         </div>
-
-        <?php include('includes/footer.php'); ?>
     </div>
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const studentYearSelect = document.getElementById("student_year");
-            const studentIdSelect = document.getElementById("student_id");
-            const semesterSelect = document.getElementById("semester");
+<!-- ✅ Include jQuery & Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
-            studentYearSelect.addEventListener("change", function() {
-                let selectedYear = this.value;
-                studentIdSelect.innerHTML = '<option value="">Loading...</option>';
-                studentIdSelect.disabled = true;
-                semesterSelect.disabled = true;
+<script>
+$(document).ready(function() {
+    $("#student_id").select2({
+        placeholder: "Search and select a student...",
+        allowClear: true,
+        ajax: {
+            url: "fetch-students.php",
+            type: "GET",
+            dataType: "json",
+            delay: 250,
+            data: function(params) {
+                return { search: params.term };
+            },
+            processResults: function(data) {
+                return { results: data };
+            },
+            cache: true
+        }
+    });
 
-                if (selectedYear !== "") {
-                    fetch('fetch-students.php?year=' + selectedYear)
-                        .then(response => response.json())
-                        .then(data => {
-                            studentIdSelect.innerHTML = '<option value="">Select Student</option>';
-                            data.forEach(student => {
-                                let option = document.createElement("option");
-                                option.value = student.student_id;
-                                option.textContent = student.student_name;
-                                studentIdSelect.appendChild(option);
-                            });
-                            studentIdSelect.disabled = false;
-                        })
-                        .catch(error => console.error('Error fetching students:', error));
-                } else {
-                    studentIdSelect.innerHTML = '<option value="">Select Student</option>';
-                    studentIdSelect.disabled = true;
-                }
+    $('#student_id').on('change', function () {
+        let studentId = $(this).val();
+        let studentName = $("#student_id option:selected").text();
 
-                document.querySelectorAll('.year-form').forEach(form => form.style.display = 'none');
-                if (selectedYear) {
-                    document.getElementById(`${selectedYear.replace(' ', '-').toLowerCase()}-container`).style.display = "block";
+        if (studentId) {
+            $("#grade-form-container").html('<p class="text-center text-primary">Loading forms...</p>');
+
+            $.ajax({
+                url: "load-forms.php",
+                type: "POST",
+                data: { student_id: studentId, student_name: studentName },
+                success: function (response) {
+                    $("#grade-form-container").html(response);
+                    loadSavedGrades(studentId);
+                },
+                error: function () {
+                    $("#grade-form-container").html('<p class="text-center text-danger">Error loading forms.</p>');
                 }
             });
+        } else {
+            $("#grade-form-container").html('<p class="text-center text-muted">Please select a student.</p>');
+        }
+    });
 
-            studentIdSelect.addEventListener("change", function() {
-                semesterSelect.disabled = this.value === "";
-            });
-        });
-    </script>
-
-<?php } ?>
+});
+</script>

@@ -279,7 +279,6 @@ session_start();
 
     </div>
 
-
     <!-- Grade Forms -->
     <div class="container">
         <div id="grade-forms">

@@ -52,6 +52,10 @@
                 </li>
 
                 <li class="has_sub">
+                    <a href="all-students.php" class="waves-effect"><i class="fa fa-users"></i> <span> All Students </span> </a>
+                </li>
+
+                <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 1st Sem Grades </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="1stsem-1st-year-grades.php"><i class="fa fa-university"></i> 1st Year</a></li>

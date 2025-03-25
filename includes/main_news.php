@@ -92,8 +92,7 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
             <ul class="list-group shadow-sm">
                 <li class="list-group-item"><a href="index.php"><i class="fa fa-home"></i> Home</a></li>
                 <li class="list-group-item"><a href="about-us.php"><i class="fa fa-info-circle"></i> About Us</a></li>
-                <li class="list-group-item"><a href="contact-us.php"><i class="fa fa-phone"></i> Contact</a></li>
-                <li class="list-group-item"><a href="users/grade_inquiry/input-student-id.php"><i class="fa fa-graduation-cap"></i> Grade Inquiry</a></li>
+                <li class="list-group-item"><a href="contact-us.php"><i class="fa fa-phone"></i> Contact</a></li> 
             </ul>
         </div>
     </div>

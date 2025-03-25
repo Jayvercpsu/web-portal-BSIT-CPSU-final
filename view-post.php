@@ -190,10 +190,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
                     </li>
                     <li class="list-group-item">
                         <a href="contact-us.php" class="quick-link"><i class="fa fa-phone"></i> Contact</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="users/grade_inquiry/input-student-id.php" class="quick-link"><i class="fa fa-graduation-cap"></i> Grade Inquiry</a>
-                    </li>
+                    </li> 
                 </ul>
 
             </div>

@@ -10,7 +10,7 @@ if (!isset($_GET['student_id']) || empty($_GET['student_id'])) {
 
 $student_id = mysqli_real_escape_string($con, $_GET['student_id']);
 
-// Fetch student name and year
+// Fetch student info
 $query = mysqli_query($con, "SELECT student_name, student_year FROM tblstudents WHERE student_id='$student_id'");
 $student = mysqli_fetch_assoc($query);
 
@@ -19,18 +19,23 @@ if (!$student) {
     exit();
 }
 
-// Fetch grades for 1st Semester
-$query_grades_1st = mysqli_query($con, "SELECT * FROM tblgrades WHERE student_id='$student_id' AND semester='1st Sem'");
-$grades_1st = [];
-while ($row = mysqli_fetch_assoc($query_grades_1st)) {
-    $grades_1st[] = $row;
-}
+// Fetch all grades for the student (latest year first, 1st Sem before 2nd Sem)
+$query_grades = mysqli_query($con, "
+    SELECT * FROM tblgrades 
+    WHERE student_id='$student_id' 
+    ORDER BY student_year DESC, FIELD(semester, '1st Sem', '2nd Sem')
+");
 
-// Fetch grades for 2nd Semester
-$query_grades_2nd = mysqli_query($con, "SELECT * FROM tblgrades WHERE student_id='$student_id' AND semester='2nd Sem'");
-$grades_2nd = [];
-while ($row = mysqli_fetch_assoc($query_grades_2nd)) {
-    $grades_2nd[] = $row;
+$allGrades = [];
+while ($row = mysqli_fetch_assoc($query_grades)) {
+    $year = $row['student_year'];
+    $semester = $row['semester'];
+
+    if (!isset($allGrades[$year])) {
+        $allGrades[$year] = ["1st Sem" => [], "2nd Sem" => []];
+    }
+
+    $allGrades[$year][$semester][] = $row;
 }
 
 // Return JSON response
@@ -38,6 +43,6 @@ echo json_encode([
     "status" => "success",
     "student_name" => $student['student_name'],
     "student_year" => $student['student_year'],
-    "grades_1st" => $grades_1st,
-    "grades_2nd" => $grades_2nd
+    "grades" => $allGrades
 ]);
+?>
