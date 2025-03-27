@@ -1,6 +1,6 @@
 <div id="grade-form-1st">
     <h3 class="text-center">FIRST YEAR GRADE</h3>
-
+ 
     <form method="post" id="grade-entry-form">
         <input type="hidden" name="student_id" id="selected_student_id_1st">
         <input type="hidden" name="student_name" id="selected_student_name_1st">

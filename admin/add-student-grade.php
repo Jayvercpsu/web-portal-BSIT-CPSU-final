@@ -1,53 +1,69 @@
 <?php
 session_start();
 include('includes/config.php');
-error_reporting(0);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
-    $student_id = mysqli_real_escape_string($con, $_POST['student_id'] ?? '');
+    $student_id = $_POST['student_id'] ?? '';
 
+    // ✅ Validate student ID
     if (empty($student_id)) {
-        echo json_encode(["status" => "error", "message" => "Please select a student."]);
+        echo json_encode(["status" => "error", "message" => "Student ID is required."]);
         exit();
     }
 
-    if (!isset($_POST['course_no']) || !isset($_POST['descriptive_title']) || !isset($_POST['grade']) || !isset($_POST['unit']) || !isset($_POST['pre_req'])) {
+    // ✅ Check if student exists in `tblstudents` using `student_id`
+    $stmt_check_student = $con->prepare("SELECT student_id FROM tblstudents WHERE student_id = ?");
+    $stmt_check_student->bind_param("s", $student_id);
+    $stmt_check_student->execute();
+    $result = $stmt_check_student->get_result();
+
+    if ($result->num_rows === 0) {
+        echo json_encode(["status" => "error", "message" => "Student not found."]);
+        exit();
+    }
+    $stmt_check_student->close();
+
+    // ✅ Validate required fields
+    if (!isset($_POST['course_no'], $_POST['descriptive_title'], $_POST['grade'], $_POST['unit'], $_POST['pre_req'])) {
         echo json_encode(["status" => "error", "message" => "Missing form data. Ensure all fields are filled."]);
         exit();
     }
 
-    $courses = $_POST['course_no'];
-    $descriptions = $_POST['descriptive_title'];
-    $grades = $_POST['grade'];
-    $units = $_POST['unit'];
-    $pre_reqs = $_POST['pre_req'];
+    // ✅ Prepare SQL queries
+    $stmt_insert = $con->prepare("INSERT INTO tblgrades (student_id, course_no, descriptive_title, grade, unit, pre_req) 
+                                  VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt_update = $con->prepare("UPDATE tblgrades SET grade = ? WHERE student_id = ? AND course_no = ?");
 
     $allProcessed = true;
+    foreach ($_POST['course_no'] as $index => $course_no) {
+        $desc = $_POST['descriptive_title'][$index];
+        $grade = !empty($_POST['grade'][$index]) ? $_POST['grade'][$index] : NULL;
+        $unit = $_POST['unit'][$index];
+        $pre_req = $_POST['pre_req'][$index];
 
-    $stmt_insert = $con->prepare("INSERT INTO tblgrades (student_id, course_no, descriptive_title, grade, unit, pre_req) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt_update = $con->prepare("UPDATE tblgrades SET grade=? WHERE student_id=? AND course_no=?");
+        // ✅ Check if the grade already exists
+        $stmt_check_grade = $con->prepare("SELECT id FROM tblgrades WHERE student_id = ? AND course_no = ?");
+        $stmt_check_grade->bind_param("ss", $student_id, $course_no);
+        $stmt_check_grade->execute();
+        $result = $stmt_check_grade->get_result();
 
-    foreach ($courses as $index => $course_no) {
-        $desc = mysqli_real_escape_string($con, $descriptions[$index]);
-        $grade = !empty($grades[$index]) ? mysqli_real_escape_string($con, $grades[$index]) : NULL;
-        $unit = mysqli_real_escape_string($con, $units[$index]);
-        $pre_req = mysqli_real_escape_string($con, $pre_reqs[$index]);
-
-        // ✅ Check if grade already exists
-        $check_query = mysqli_query($con, "SELECT * FROM tblgrades WHERE student_id='$student_id' AND course_no='$course_no'");
-        if (mysqli_num_rows($check_query) > 0) {
-            // ✅ Update existing grade
-            $stmt_update->bind_param("sis", $grade, $student_id, $course_no);
+        if ($result->num_rows > 0) {
+            // ✅ Update grade if it exists
+            $stmt_update->bind_param("sss", $grade, $student_id, $course_no);
             $query = $stmt_update->execute();
         } else {
             // ✅ Insert new grade
-            $stmt_insert->bind_param("isssis", $student_id, $course_no, $desc, $grade, $unit, $pre_req);
+            $stmt_insert->bind_param("ssssss", $student_id, $course_no, $desc, $grade, $unit, $pre_req);
             $query = $stmt_insert->execute();
         }
 
         if (!$query) {
             $allProcessed = false;
         }
+
+        $stmt_check_grade->close();
     }
 
     $stmt_insert->close();
@@ -60,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
     }
 }
 ?>
+
+
 
 
 
@@ -142,35 +160,34 @@ $(document).ready(function() {
                 return { search: params.term };
             },
             processResults: function(data) {
-                return { results: data };
+                return {
+                    results: data
+                };
             },
             cache: true
         }
     });
 
-    $('#student_id').on('change', function () {
+    $('#student_id').on('change', function() {
         let studentId = $(this).val();
-        let studentName = $("#student_id option:selected").text();
 
         if (studentId) {
-            $("#grade-form-container").html('<p class="text-center text-primary">Loading forms...</p>');
+            $("#grade-form-container").html('<p class="text-center text-primary">Loading...</p>');
 
             $.ajax({
                 url: "load-forms.php",
                 type: "POST",
-                data: { student_id: studentId, student_name: studentName },
-                success: function (response) {
+                data: { student_id: studentId },
+                success: function(response) {
                     $("#grade-form-container").html(response);
-                    loadSavedGrades(studentId);
                 },
-                error: function () {
-                    $("#grade-form-container").html('<p class="text-center text-danger">Error loading forms.</p>');
+                error: function() {
+                    $("#grade-form-container").html('<p class="text-center text-danger">Error loading data.</p>');
                 }
             });
         } else {
             $("#grade-form-container").html('<p class="text-center text-muted">Please select a student.</p>');
         }
     });
-
 });
 </script>

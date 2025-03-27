@@ -279,7 +279,6 @@ session_start();
 
     </div>
 
-    <!-- Grade Forms -->
     <div class="container">
         <div id="grade-forms">
 
@@ -290,202 +289,107 @@ session_start();
                 </div>
             </div>
 
+            <!-- Semester Grade Sections -->
+            <?php
+            $years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+            $semesters = ["1st Semester", "2nd Semester"];
 
-
-            <!-- 1st Semester -->
-            <div id="grade-form-1st" style="display:none;">
-                <div class="card shadow-sm border-primary mb-4">
-                    <div class="card-header text-white" style="background-color:rgb(148, 76, 200); color: white;">
-                        <h4 class="text-center">1st Semester Grades <span id="year-1st"></span></h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center text-muted" id="no-grades-1st" style="display:none;">🚫 No grades released yet. Please wait.</p>
-                        <div id="grades-1st"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2nd Semester -->
-            <div id="grade-form-2nd" style="display:none;">
-                <div class="card shadow-sm border-success mb-4">
-                    <div class="card-header text-white" style="background-color:rgb(148, 76, 200); color: white;">
-                        <h4 class="text-center">2nd Semester Grades <span id="year-2nd"></span></h4>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-center text-muted" id="no-grades-2nd" style="display:none;">🚫 No grades released yet. Please wait.</p>
-                        <div id="grades-2nd"></div>
-                    </div>
-                </div>
-            </div>
+            foreach ($years as $yIndex => $year) {
+                foreach ($semesters as $sIndex => $semester) {
+                    $divId = "grades-" . ($yIndex + 1) . "-" . ($sIndex + 1);
+                    $noGradesId = "no-grades-" . ($yIndex + 1) . "-" . ($sIndex + 1);
+                    echo "<div id='$divId'></div>";
+                    echo "<p id='$noGradesId' style='display:none;'>🚫 No grades released yet.</p>";
+                }
+            }
+            ?>
 
             <script>
-                // Function to get the academic year (previous year - current year)
                 function getAcademicYear() {
                     let currentYear = new Date().getFullYear();
-                    let prevYear = currentYear - 1;
-                    return `${prevYear}-${currentYear}`; // Example: 2024-2025
+                    return `${currentYear - 1}-${currentYear}`;
                 }
 
-                // Get the academic year
-                let academicYear = getAcademicYear();
-
-                // Append the academic year to both semester headers
-                document.getElementById("year-1st").textContent = `(${academicYear})`;
-                document.getElementById("year-2nd").textContent = `(${academicYear})`;
-            </script>
-
-
-        </div>
-    </div>
-
-
-
-    <script>
-        function checkStudentID() {
-            var studentId = document.getElementById("student_id").value.trim();
-            if (studentId === "") {
-                alert("Please enter a valid Student ID.");
-                return;
-            }
-
-            fetch("fetch-student-grades.php?student_id=" + studentId)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === "error") {
-                        alert(data.message);
+                function checkStudentID() {
+                    var studentId = document.getElementById("student_id").value.trim();
+                    if (studentId === "") {
+                        alert("Please enter a valid Student ID.");
                         return;
                     }
 
-                    // Display Student Info
-                    document.getElementById("student-info").style.display = "block";
-                    document.getElementById("student-name").innerText = "Student Name: " + data.student_name;
-                    document.getElementById("student-year").innerText = "Year: " + data.student_year;
+                    fetch("fetch-student-grades.php?student_id=" + studentId)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === "error") {
+                                alert(data.message);
+                                return;
+                            }
 
-                    // Show grade forms
-                    document.getElementById("grade-form-1st").style.display = "block";
-                    document.getElementById("grade-form-2nd").style.display = "block";
+                            document.getElementById("student-info").style.display = "block";
+                            document.getElementById("student-name").innerText = "Student Name: " + data.student_name;
+                            document.getElementById("student-year").innerText = data.student_year;
 
-                    // Reset previous grades
-                    document.getElementById("grades-1st").innerHTML = "";
-                    document.getElementById("grades-2nd").innerHTML = "";
-                    document.getElementById("no-grades-1st").style.display = "none";
-                    document.getElementById("no-grades-2nd").style.display = "none";
+                            let years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+                            let semesters = ["1st Sem", "2nd Sem"];
 
-                    // Display 1st Semester Grades
-                    if (data.grades_1st.length > 0) {
-                        document.getElementById("grades-1st").innerHTML = generateGradeTable(data.grades_1st, "total-units-1st", "gwa-1st");
-                    } else {
-                        document.getElementById("no-grades-1st").style.display = "block";
-                    }
+                            years.forEach((year, yIndex) => {
+                                semesters.forEach((semester, sIndex) => {
+                                    let gradeDivId = `grades-${yIndex + 1}-${sIndex + 1}`;
+                                    let noGradesDivId = `no-grades-${yIndex + 1}-${sIndex + 1}`;
 
-                    // Display 2nd Semester Grades
-                    if (data.grades_2nd.length > 0) {
-                        document.getElementById("grades-2nd").innerHTML = generateGradeTable(data.grades_2nd, "total-units-2nd", "gwa-2nd");
-                    } else {
-                        document.getElementById("no-grades-2nd").style.display = "block";
-                    }
+                                    let gradeDiv = document.getElementById(gradeDivId);
+                                    let noGradesDiv = document.getElementById(noGradesDivId);
 
-                    // Start Countdown Timer
-                    let timer = 60;
-                    document.getElementById("countdown-timer").style.display = "block";
-                    document.getElementById("countdown-timer").innerText = timer;
+                                    if (!gradeDiv || !noGradesDiv) return;
 
-                    let countdown = setInterval(() => {
-                        timer--;
-                        document.getElementById("countdown-timer").innerText = timer;
+                                    gradeDiv.innerHTML = "";
+                                    noGradesDiv.style.display = "none";
 
-                        if (timer <= 10) {
-                            document.getElementById("countdown-timer").classList.add("red");
-                        }
+                                    let grades = data.grades[year][semester];
 
-                        if (timer <= 0) {
-                            clearInterval(countdown);
+                                    if (grades && grades.length > 0) {
+                                        gradeDiv.innerHTML = generateGradeTable(grades);
+                                    } else {
+                                        noGradesDiv.style.display = "block";
+                                    }
+                                });
+                            });
 
-                            // Reset everything after 20 seconds
-                            document.getElementById("student-id-form").reset();
-                            document.getElementById("student-info").style.display = "none";
-                            document.getElementById("grade-form-1st").style.display = "none";
-                            document.getElementById("grade-form-2nd").style.display = "none";
-                            document.getElementById("countdown-timer").style.display = "none";
-                            document.getElementById("countdown-timer").classList.remove("red"); // Reset timer color
-                        }
-                    }, 1000); // 1000ms = 1 second
+                            document.getElementById("grade-forms").style.display = "block";
+                        })
+                        .catch(error => console.error("Error fetching student grades:", error));
+                }
 
-                })
-                .catch(error => console.error("Error fetching student grades:", error));
-        }
-
-
-
-        // Function to generate the grade table dynamically
-        function generateGradeTable(grades, totalUnitsId, gwaId) {
-            let totalUnits = 0;
-            let totalGradePoints = 0;
-            let hasValidGrades = false; // Check if at least one valid grade exists
-
-            let table = `
-    <table class="table table-hover table-striped table-bordered">
-        <thead class="table-dark">
+                function generateGradeTable(grades) {
+                    let table = `<table class="table table-bordered">
+        <thead>
             <tr>
                 <th>Course No.</th>
                 <th>Descriptive Title</th>
                 <th>Grade</th>
-                <th>Remarks</th>
                 <th>Unit</th>
                 <th>Pre-Req</th>
             </tr>
         </thead>
-        <tbody>
-    `;
+        <tbody>`;
 
-            grades.forEach(grade => {
-                let numericGrade = parseFloat(grade.grade); // Convert to number
-                let unitValue = parseFloat(grade.unit); // Convert to number
-
-                // Determine Remarks
-                let remarks;
-                if (!grade.grade || numericGrade === 0) {
-                    remarks = `<span class='text-muted'>No Grade</span>`;
-                } else if (numericGrade < 75) {
-                    remarks = `<span class='text-danger fw-bold'>Failed</span>`;
-                } else {
-                    remarks = `<span class='text-success fw-bold'>Passed</span>`;
-                }
-
-                // If the grade is valid (a number), add it to GWA computation
-                if (!isNaN(numericGrade) && !isNaN(unitValue)) {
-                    totalGradePoints += numericGrade * unitValue;
-                    totalUnits += unitValue;
-                    hasValidGrades = true;
-                }
-
-                table += `
-        <tr>
+                    grades.forEach(grade => {
+                        table += `<tr>
             <td>${grade.course_no}</td>
             <td>${grade.descriptive_title}</td>
-            <td>${grade.grade ? grade.grade : '-'}</td>
-            <td>${remarks}</td>
+            <td>${grade.grade}</td>
             <td>${grade.unit}</td>
-            <td>${grade.pre_req ? grade.pre_req : '-'}</td>
-        </tr>
-        `;
-            });
+            <td>${grade.pre_req}</td>
+        </tr>`;
+                    });
 
-            table += `</tbody></table>`;
+                    table += `</tbody></table>`;
+                    return table;
+                }
+            </script>
 
-            // Compute GWA
-            let gwa = hasValidGrades ? (totalGradePoints / totalUnits).toFixed(2) : "N/A";
-
-            table += `
-    <div class="alert alert-info text-center">
-        <strong>Total Units:</strong> <span id="${totalUnitsId}">${totalUnits}</span> | 
-        <strong>General Weighted Average (GWA):</strong> <span id="${gwaId}">${gwa}</span>
+        </div>
     </div>
-    `;
-
-            return table;
-        }
-    </script>
 
 
 

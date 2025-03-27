@@ -53,15 +53,34 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
     <link rel="stylesheet" href="css/view-post.css">
 
 </head>
+<style> 
+    /* Ensures the video covers the entire screen */
+    .video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: -1;
+    }
 
-<body style="
-    background-image: url('https://static.vecteezy.com/system/resources/previews/006/699/632/original/technology-connection-circuit-system-design-background-abstract-free-vector.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-">
-</body>
+    .video-container video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ensures video fills the screen */
+    } 
+</style>
+<body class="position-relative">
+        <!-- Full-Screen Video Background -->
+        <div class="video-container">
+        <video autoplay muted loop>
+            <source src="./assets/video-cpsu/cpsu.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
 
     <?php include('includes/header.php'); ?>
 
@@ -129,7 +148,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
 
 
 
-                <h3 class="mt-5 fw-bold">Related Posts</h3>
+                <h3 class="mt-5 fw-bold text-white">Related Posts</h3>
                 <div class="row">
                     <?php
                     while ($related = mysqli_fetch_array($relatedQuery)) {
