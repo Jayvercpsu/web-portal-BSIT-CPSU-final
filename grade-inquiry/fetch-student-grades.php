@@ -51,30 +51,21 @@ $resultGrades = $stmtGrades->get_result();
 
 $grade_structure = [];
 
-// Check if there are results
-if ($resultGrades->num_rows === 0) {
-    echo json_encode([
-        "status" => "warning",
-        "message" => "No grades have been recorded for this student yet.",
-        "student_name" => $student_name,
-        "student_year" => $student_year,
-        "student_year_label" => $student_year_label,
-        "grades" => $grade_structure
-    ], JSON_PRETTY_PRINT);
-    exit();
-}
+// Initialize grade structure with empty semesters for all year levels
+$grade_structure = [
+    "1st Year" => ["1st Sem" => [], "2nd Sem" => []],
+    "2nd Year" => ["1st Sem" => [], "2nd Sem" => []],
+    "3rd Year" => ["1st Sem" => [], "2nd Sem" => []],
+    "4th Year" => ["1st Sem" => [], "2nd Sem" => []]
+];
 
-// Process grades
+// Process grades if available
 while ($row = $resultGrades->fetch_assoc()) {
     $year_forms = json_decode($row["year_form"], true);
     $year_form = is_array($year_forms) && !empty($year_forms) ? $year_forms[0] : "1";
     $semester = trim($row["semester"]) ?: "1st Sem";
     $year_display = $year_map[$year_form] ?? "1st Year";
-    
-    if (!isset($grade_structure[$year_display])) {
-        $grade_structure[$year_display] = ["1st Sem" => [], "2nd Sem" => []];
-    }
-    
+
     $grade_structure[$year_display][$semester][] = [
         "course_no" => $row["course_no"] ?? "N/A",
         "descriptive_title" => $row["descriptive_title"] ?? "N/A",
@@ -84,6 +75,7 @@ while ($row = $resultGrades->fetch_assoc()) {
         "pre_req" => $row["pre_req"] ?? "None"
     ];
 }
+
 
 $stmtGrades->close();
 
@@ -95,4 +87,3 @@ echo json_encode([
     "student_year_label" => $student_year_label,
     "grades" => $grade_structure
 ], JSON_PRETTY_PRINT);
-?>
