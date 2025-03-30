@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
         exit();
     }
 
-    // ✅ Check if student exists in `tblstudents` using `student_id`
+    // ✅ Check if student exists
     $stmt_check_student = $con->prepare("SELECT student_id FROM tblstudents WHERE student_id = ?");
     $stmt_check_student->bind_param("s", $student_id);
     $stmt_check_student->execute();
@@ -26,36 +26,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
     $stmt_check_student->close();
 
     // ✅ Validate required fields
-    if (!isset($_POST['course_no'], $_POST['descriptive_title'], $_POST['grade'], $_POST['unit'], $_POST['pre_req'])) {
+    if (!isset($_POST['course_no'], $_POST['descriptive_title'], $_POST['grade'], $_POST['unit'], $_POST['pre_req'], $_POST['year_form'], $_POST['semester'])) {
         echo json_encode(["status" => "error", "message" => "Missing form data. Ensure all fields are filled."]);
         exit();
     }
 
     // ✅ Prepare SQL queries
-    $stmt_insert = $con->prepare("INSERT INTO tblgrades (student_id, course_no, descriptive_title, grade, unit, pre_req) 
-                                  VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt_update = $con->prepare("UPDATE tblgrades SET grade = ? WHERE student_id = ? AND course_no = ?");
+    $stmt_insert = $con->prepare("INSERT INTO tblgrades (student_id, course_no, descriptive_title, grade, unit, pre_req, year_form, semester) 
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt_update = $con->prepare("UPDATE tblgrades SET grade = ?, year_form = ?, semester = ? WHERE student_id = ? AND course_no = ?");
 
     $allProcessed = true;
+
     foreach ($_POST['course_no'] as $index => $course_no) {
         $desc = $_POST['descriptive_title'][$index];
         $grade = !empty($_POST['grade'][$index]) ? $_POST['grade'][$index] : NULL;
         $unit = $_POST['unit'][$index];
         $pre_req = $_POST['pre_req'][$index];
+        $year_form_json = json_encode($_POST['year_form']);
+        $semester = $_POST['semester'][$index] ?? '1st Sem'; // Default to 1st Sem if missing
 
-        // ✅ Check if the grade already exists
-        $stmt_check_grade = $con->prepare("SELECT id FROM tblgrades WHERE student_id = ? AND course_no = ?");
-        $stmt_check_grade->bind_param("ss", $student_id, $course_no);
+        // ✅ Check if the grade already exists for this semester
+        $stmt_check_grade = $con->prepare("SELECT id FROM tblgrades WHERE student_id = ? AND course_no = ? AND semester = ?");
+        $stmt_check_grade->bind_param("sss", $student_id, $course_no, $semester);
         $stmt_check_grade->execute();
         $result = $stmt_check_grade->get_result();
 
         if ($result->num_rows > 0) {
             // ✅ Update grade if it exists
-            $stmt_update->bind_param("sss", $grade, $student_id, $course_no);
+            $stmt_update->bind_param("sssss", $grade, $year_form_json, $semester, $student_id, $course_no);
             $query = $stmt_update->execute();
         } else {
             // ✅ Insert new grade
-            $stmt_insert->bind_param("ssssss", $student_id, $course_no, $desc, $grade, $unit, $pre_req);
+            $stmt_insert->bind_param("ssssssss", $student_id, $course_no, $desc, $grade, $unit, $pre_req, $year_form_json, $semester);
             $query = $stmt_insert->execute();
         }
 

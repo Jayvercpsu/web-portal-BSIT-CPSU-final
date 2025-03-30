@@ -1,0 +1,185 @@
+.card-custom {
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.form-floating input {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.btn-primary {
+  width: 100%;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+}
+
+#student-info {
+  transition: all 0.5s ease-in-out;
+}
+
+#countdown-timer {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  animation: pulse 1s infinite alternate;
+  transition: background-color 0.5s ease-in-out;
+  /* Smooth transition effect */
+}
+
+#countdown-timer.red {
+  background-color: red !important;
+  color: white;
+  font-weight: bold;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+#countdown-timer {
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  /* Box Shadow for better front appearance */
+}
+
+#countdown-timer:hover {
+  transform: scale(1.1);
+  /* Zoom Effect on Hover */
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  #countdown-timer {
+    width: 80px;
+    /* Smaller Width on Mobile */
+    font-size: 16px;
+    /* Smaller Font Size */
+    top: 10px;
+    /* Adjust Position */
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  #countdown-timer {
+    width: 60px;
+    font-size: 14px;
+  }
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+  /* Fallback color */
+}
+
+/* Blurred Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  filter: blur(2px);
+  opacity: 0.9;
+  z-index: -1;
+}
+
+/* Gradient Overlay for Better Readability */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Floating label container */
+.floating-label {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+/* Input styling */
+.floating-label input {
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 16px;
+  border: 2px solid #ced4da;
+  border-radius: 8px;
+  outline: none;
+  background: transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Label starts inside the input field */
+.floating-label label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #6c757d;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+  background: white;
+  padding: 0 5px;
+}
+
+/* Move label when input is focused or has a value */
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  top: 5px;
+  font-size: 14px;
+  color: #007bff;
+}
+
+/* Input focus effect */
+.floating-label input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* Hide the default placeholder text */
+.floating-label input::placeholder {
+  color: transparent;
+}

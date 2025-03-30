@@ -4,6 +4,8 @@
     <form method="post" id="grade-entry-form-2nd">
         <input type="hidden" name="student_id" id="selected_student_id_2nd">
         <input type="hidden" name="student_name" id="selected_student_name_2nd">
+        <input type="hidden" name="year_form[]" value="2">
+
 
         <!-- ✅ First Semester Table -->
         <h4 class="text-center mt-4">1ST SEMESTER</h4>
@@ -141,26 +143,29 @@
             tbody2nd.html("");
 
             courses["1st Sem"].forEach((course, index) => {
-                tbody1st.append(createTableRow(course, `2-1-${index}`));
+                tbody1st.append(createTableRow(course, `2-1-${index}`, "1st Sem"));
             });
 
             courses["2nd Sem"].forEach((course, index) => {
-                tbody2nd.append(createTableRow(course, `2-2-${index}`));
+                tbody2nd.append(createTableRow(course, `2-2-${index}`, "2nd Sem"));
             });
+
 
             loadSavedGrades(studentId);
         }
 
-        function createTableRow(course, index) {
+        function createTableRow(course, index, semester) {
             return `<tr>
-            <td>${course.course_no}<input type="hidden" name="course_no[]" value="${course.course_no}"></td>
-            <td>${course.title}<input type="hidden" name="descriptive_title[]" value="${course.title}"></td>
-            <td><input type="number" name="grade[]" class="form-control grade-input" data-index="${index}" min="0" max="100"></td>
-            <td id="remarks-${index}" class="text-center text-muted">No Grade</td>
-            <td>${course.unit}<input type="hidden" name="unit[]" value="${course.unit}"></td>
-            <td>${course.pre_req}<input type="hidden" name="pre_req[]" value="${course.pre_req}"></td>
-        </tr>`;
+        <td>${course.course_no}<input type="hidden" name="course_no[]" value="${course.course_no}"></td>
+        <td>${course.title}<input type="hidden" name="descriptive_title[]" value="${course.title}"></td>
+        <td><input type="number" name="grade[]" class="form-control grade-input" data-index="${index}" min="0" max="100"></td>
+        <td id="remarks-${index}" class="text-center text-muted">No Grade</td>
+        <td>${course.unit}<input type="hidden" name="unit[]" value="${course.unit}"></td>
+        <td>${course.pre_req}<input type="hidden" name="pre_req[]" value="${course.pre_req}"></td>
+        <input type="hidden" name="semester[]" value="${semester}">
+    </tr>`;
         }
+
 
         function loadSavedGrades(studentId) {
             $.ajax({
@@ -212,7 +217,6 @@
                 alert("Please select a student before submitting.");
                 return;
             }
-
             $.ajax({
                 url: "add-student-grade.php",
                 type: "POST",

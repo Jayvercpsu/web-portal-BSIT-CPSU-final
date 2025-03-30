@@ -6,9 +6,10 @@ $student_id = $_POST['student_id'] ?? '';
 $grades = [];
 
 if (!empty($student_id)) {
-    // ✅ Fetch all grades for this student
-    $query = $con->prepare("SELECT course_no, descriptive_title, grade, unit, pre_req FROM tblgrades WHERE student_id = ?");
-    $query->bind_param("i", $student_id);
+    // ✅ Fetch all grades for this student, including `year_form`
+    $query = $con->prepare("SELECT course_no, descriptive_title, grade, unit, pre_req, year_form 
+                            FROM tblgrades WHERE student_id = ?");
+    $query->bind_param("s", $student_id);
     $query->execute();
     $result = $query->get_result();
 
@@ -17,7 +18,8 @@ if (!empty($student_id)) {
             "grade" => $row['grade'],
             "descriptive_title" => $row['descriptive_title'],
             "unit" => $row['unit'],
-            "pre_req" => $row['pre_req']
+            "pre_req" => $row['pre_req'],
+            "year_form" => $row['year_form'] // ✅ Include `year_form`
         ];
     }
 
