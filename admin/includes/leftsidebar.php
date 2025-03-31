@@ -55,7 +55,7 @@
                     <a href="all-students.php" class="waves-effect"><i class="fa fa-users"></i> <span> All Students </span> </a>
                 </li>
 
-                <li class="has_sub">
+                <!-- <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 1st Sem Grades </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="1stsem-1st-year-grades.php"><i class="fa fa-university"></i> 1st Year</a></li>
@@ -63,11 +63,11 @@
                         <li><a href="1stsem-3rd-year-grades.php"><i class="fa fa-book-reader"></i> 3rd Year</a></li>
                         <li><a href="1stsem-4th-year-grades.php"><i class="fa fa-user-graduate"></i> 4th Year</a></li>
                     </ul>
-                </li>
+                </li> -->
 
 
                 <!-- 2nd sem -->
-                <li class="has_sub">
+                <!-- <li class="has_sub">
                     <a href="javascript:void(0);" class="waves-effect"><i class="fa fa-users"></i> <span> 2nd Sem Grades </span> <span class="menu-arrow"></span></a>
                     <ul class="list-unstyled">
                         <li><a href="2ndsem-1st-year-grades.php"><i class="fa fa-university"></i> 1st Year</a></li>
@@ -76,7 +76,7 @@
                         <li><a href="2ndsem-4th-year-grades.php"><i class="fa fa-user-graduate"></i> 4th Year</a></li>
 
                     </ul>
-                </li>
+                </li> -->
 
 
 
