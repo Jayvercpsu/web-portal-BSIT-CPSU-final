@@ -26,17 +26,22 @@ if (!$student) {
 }
 
 $student_name = $student["student_name"];
-$student_year = !empty($student["student_year"]) ? $student["student_year"] : "1";
+$student_year = trim($student["student_year"]); // Fetch directly from the database
 
-// Year mapping for display
 $year_map = [
     "1" => "1st Year",
     "2" => "2nd Year",
     "3" => "3rd Year",
-    "4" => "4th Year"
+    "4" => "4th Year",
+    "1st Year" => "1st Year",
+    "2nd Year" => "2nd Year",
+    "3rd Year" => "3rd Year",
+    "4th Year" => "4th Year"
 ];
 
-$student_year_label = $year_map[$student_year] ?? "1st Year";
+$student_year_label = $year_map[$student_year] ?? $student_year;
+
+
 
 // Fetch grades grouped by year_form and semester
 $sqlGrades = "SELECT year_form, semester, course_no, descriptive_title, grade, re, unit, pre_req

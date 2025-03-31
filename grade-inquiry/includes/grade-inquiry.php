@@ -105,8 +105,7 @@
                             <!-- ✅ Student Info -->
                             <div id="student-info" class="text-center mb-4">
                                 <h4 id="student-name" class="text-white px-4 py-2 rounded d-inline-block shadow-sm" style="background-color:rgb(148, 76, 200);"></h4>
-                                <h5 id="student-year" class="badge mt-2 px-3 py-2 text-white" style="background-color:rgb(148, 76, 200);"></h5>
-                                <h5 id="school-year" class="badge mt-2 px-3 py-2 text-white" style="background-color:rgb(68, 36, 91);">School Year: 2024 - 2025</h5>
+                                <h5 id="student-year" class="badge mt-2 px-3 py-2 text-white" style="background-color:rgb(148, 76, 200);"></h5> 
                             </div>
 
                             <!-- ✅ Warning message container -->
