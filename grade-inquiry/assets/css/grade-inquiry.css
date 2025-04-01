@@ -1,0 +1,102 @@
+.custom-btn {
+  background-color: rgb(148, 76, 200);
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.custom-btn:hover {
+  background-color: rgb(68, 36, 91);
+  color: white;
+}
+
+.year-header {
+  background-color: rgb(68, 36, 91);
+}
+
+.semester-header {
+  background-color: rgb(148, 76, 200);
+}
+
+.year-container {
+  margin-bottom: 30px;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-color: #ffeeba;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.empty-message {
+  padding: 20px;
+  text-align: center;
+  font-style: italic;
+  color: #6c757d;
+}
+
+.year-header {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.year-container {
+  background-color: #fff;
+}
+
+.toggle-icon {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Smooth slide animation */
+.semester-wrapper {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .custom {
+    padding: 10px;
+    margin: 0 auto;
+    font-size: 14px;
+  }
+
+  .custom .year-container {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .custom .year-header h3 {
+    font-size: 16px;
+  }
+
+  .custom .semester-wrapper h4 {
+    font-size: 14px;
+  }
+
+  .custom table {
+    font-size: 12px;
+  }
+
+  .custom .btn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .custom #student-info h4,
+  .custom #student-info h5 {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 769px) {
+  .custom {
+    margin-top: 30px;
+  }
+}

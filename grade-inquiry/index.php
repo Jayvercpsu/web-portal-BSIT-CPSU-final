@@ -27,6 +27,7 @@ session_start();
     <link rel="stylesheet" href="../assets/vendor/animate/animate.css">
     <link rel="stylesheet" href="../assets/css/theme.css">
     <link rel="stylesheet" href="../css/grade-inquiry.css">
+    <link rel="stylesheet" href="./assets/css/grade-inquiry.css">
 </head>
 
 <body>
