@@ -42,3 +42,19 @@ Username: admin <br/>
 
  - **Command to connect to the MySQL server**:
 1. `mysql -h kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com -u iwbih7e9i4ko5whu -puoab8qpujs8v4hky ldvkpn5fi7uw9vtr`
+
+
+JAWSDB_URL=mysql://frbxlw5f5wimln7p:ja7t8p4t3wnea83d@kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/alhgww70hd0wexw1
+HEROKU_HOST=kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+HEROKU_USERNAME=frbxlw5f5wimln7p	
+HEROKU_PASSWORD=ja7t8p4t3wnea83d	
+HEROKU_PORT=3306	
+HEROKU_DB=alhgww70hd0wexw1
+
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=
+DB_NAME=bsit_final
+
+
+mysql -u frbxlw5f5wimln7p -p'ja7t8p4t3wnea83d' -h kavfu5f7pido12mr.cbetxkdyhwsb.us-east-1.rds.amazonaws.com -P 3306 -D alhgww70hd0wexw1
