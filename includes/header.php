@@ -3,8 +3,8 @@
     <div class="container">
         <!-- Logo & Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <img src="admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
-                <div> <span class="mx-2 text-muted">|</span>
+            <img src="admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
+            <div> <span class="mx-2 text-muted">|</span>
 
                 <span class="text-dark font-weight-bold" style="font-size: 20px; transition: color 0.3s;">College of Computer Studies</span>
             </div>
@@ -31,7 +31,7 @@
                     </div>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="moreInfoDropdown" role="button">
+                    <a class="nav-link dropdown-toggle text-dark" href="#" id="moreInfoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-info-circle"></i> More Info
                     </a>
                     <div class="dropdown-menu">
@@ -63,7 +63,7 @@
         transform: scale(1.2);
     }
 </style>
- 
+
 <style>
     .navbar-nav .nav-link {
         position: relative;
@@ -122,59 +122,97 @@
     .dropdown-item:hover::after {
         width: 100%;
     }
-/* Sticky Navbar on Desktop */
-@media (min-width: 992px) {
-    .navbar {
-        position: sticky;
-        top: 0;
-        z-index: 1020; /* Keeps navbar above other content */
-        background-color: #f8f9fa; /* Navbar Background */
-    }
-}
-/* Mobile View: Hide Branding Text, Show Logo Only */
-@media (max-width: 991.98px) {
-    .navbar-brand div {
-        display: none; /* Hides College of Computer Studies text */
+
+    /* Sticky Navbar on Desktop */
+    @media (min-width: 992px) {
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+            /* Keeps navbar above other content */
+            background-color: #f8f9fa;
+            /* Navbar Background */
+        }
     }
 
-    .d-flex.align-items-center {
-        display: none; /* Hides date and Facebook icon outside the menu */
+    /* Mobile View: Hide Branding Text, Show Logo Only */
+    @media (max-width: 991.98px) {
+        .navbar-brand div {
+            display: none;
+            /* Hides College of Computer Studies text */
+        }
+
+        .d-flex.align-items-center {
+            display: none;
+            /* Hides date and Facebook icon outside the menu */
+        }
+
+        .navbar-collapse .d-flex.align-items-center {
+            display: flex;
+            /* Shows date and Facebook icon inside the menu */
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .navbar-toggler {
+            transition: none;
+            /* Remove Rotation Animation */
+        }
+
+        /* Fix for dropdown in mobile view */
+        .dropdown-menu {
+            position: static !important;
+            float: none;
+            width: 100%;
+            margin-top: 0;
+            background-color: #f8f9fa;
+            border: none;
+            box-shadow: none;
+            display: none;
+            transition: none !important;
+            transform: none !important;
+            opacity: 1 !important;
+            animation: none !important;
+        }
+
+        /* Show dropdown when active */
+        .dropdown-menu.show {
+            display: block !important;
+        }
+
+        /* Style for active dropdown */
+        .dropdown.show .nav-link {
+            color: #007bff !important;
+        }
+
+        .dropdown.show .nav-link::after {
+            width: 100%;
+        }
     }
 
-    .navbar-collapse .d-flex.align-items-center {
-        display: flex; /* Shows date and Facebook icon inside the menu */
-        justify-content: center; 
-        margin-top: 10px;
+    /* Animation only for desktop */
+    @media (min-width: 992px) {
+        .dropdown-menu {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     }
-
-    .navbar-toggler {
-    transition: none; /* Remove Rotation Animation */
-}
-
-}
- 
-
-.dropdown-menu {
-    display: none;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.dropdown-menu.show {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
 </style>
 
 <script>
@@ -191,81 +229,104 @@
 </script>
 
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
-    // Dropdown Toggle for Mobile
-    document.querySelectorAll('.dropdown-toggle').forEach(item => {
-        item.addEventListener('click', function (e) {
-            if (window.innerWidth < 992) {
-                e.preventDefault();
+    document.addEventListener("DOMContentLoaded", function() {
+        // Handle dropdown toggle on mobile
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-                let parent = this.parentElement;
-                let menu = parent.querySelector('.dropdown-menu');
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                if (window.innerWidth < 992) {
+                    e.preventDefault();
+                    e.stopPropagation(); // Prevent event bubbling
 
-                // Close all dropdowns first
-                document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-                    dropdown.classList.remove('show');
-                    let dropdownMenu = dropdown.querySelector('.dropdown-menu');
-                    if (dropdownMenu) {
-                        dropdownMenu.classList.remove('show');
+                    const parent = this.parentElement;
+                    const menu = parent.querySelector('.dropdown-menu');
+
+                    // Toggle current dropdown visibility
+                    if (parent.classList.contains('show')) {
+                        parent.classList.remove('show');
+                        menu.classList.remove('show');
+                    } else {
+                        // Close all other dropdowns first
+                        document.querySelectorAll('.dropdown').forEach(dropdown => {
+                            if (dropdown !== parent) {
+                                dropdown.classList.remove('show');
+                                const dropMenu = dropdown.querySelector('.dropdown-menu');
+                                if (dropMenu) dropMenu.classList.remove('show');
+                            }
+                        });
+
+                        // Open current dropdown
+                        parent.classList.add('show');
+                        menu.classList.add('show');
                     }
+                }
+            });
+        });
+
+        // Desktop dropdown behavior (hover)
+        if (window.innerWidth >= 992) {
+            const dropdowns = document.querySelectorAll('.dropdown');
+
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('mouseenter', function() {
+                    this.classList.add('show');
+                    this.querySelector('.dropdown-menu').classList.add('show');
                 });
 
-                // Toggle current dropdown
-                parent.classList.toggle('show');
-                if (menu) {
-                    menu.classList.toggle('show');
+                dropdown.addEventListener('mouseleave', function() {
+                    this.classList.remove('show');
+                    this.querySelector('.dropdown-menu').classList.remove('show');
+                });
+            });
+        }
+
+        // Keep dropdowns open when clicking on them
+        document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            menu.addEventListener('click', function(e) {
+                if (window.innerWidth < 992) {
+                    e.stopPropagation(); // Prevent closing when clicking inside
                 }
+            });
+        });
+
+        // Close dropdowns when clicking outside navbar
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.navbar')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                    const menu = dropdown.querySelector('.dropdown-menu');
+                    if (menu) menu.classList.remove('show');
+                });
+            }
+        });
+
+        // Close navbar collapse but keep dropdown open when clicking a dropdown item
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (window.innerWidth < 992) {
+                    // Don't close dropdown, just close the main navbar collapse
+                    const navbarCollapse = document.querySelector('.navbar-collapse');
+                    if (navbarCollapse.classList.contains('show')) {
+                        e.stopPropagation(); // Prevent event from closing dropdown
+                        const toggle = document.querySelector('.navbar-toggler');
+                        toggle.click(); // Close the main navbar
+                    }
+                }
+            });
+        });
+
+        // Reset layout on window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 992) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                    const menu = dropdown.querySelector('.dropdown-menu');
+                    if (menu) menu.classList.remove('show');
+                });
             }
         });
     });
-
-    // Hover Dropdown for Desktop
-    if (window.innerWidth >= 992) {
-        document.querySelectorAll('.nav-item.dropdown').forEach(item => {
-            item.addEventListener('mouseenter', function () {
-                this.classList.add('show');
-                this.querySelector('.dropdown-menu').classList.add('show');
-            });
-            item.addEventListener('mouseleave', function () {
-                this.classList.remove('show');
-                this.querySelector('.dropdown-menu').classList.remove('show');
-            });
-        });
-    }
-
-    // Close Dropdowns When Clicking Outside
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.navbar')) {
-            document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-                dropdown.classList.remove('show');
-                dropdown.querySelector('.dropdown-menu').classList.remove('show');
-            });
-        }
-    });
-
-    // Navbar Collapse Close on Click (Mobile)
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function () {
-            if (window.innerWidth < 992) {
-                let navbarCollapse = document.querySelector('.navbar-collapse');
-                if (navbarCollapse.classList.contains('show')) {
-                    navbarCollapse.classList.remove('show');
-                }
-            }
-        });
-    });
-
-    // Reset Dropdowns on Window Resize
-    window.addEventListener('resize', function () {
-        if (window.innerWidth >= 992) {
-            document.querySelectorAll('.nav-item.dropdown').forEach(dropdown => {
-                dropdown.classList.remove('show');
-                dropdown.querySelector('.dropdown-menu').classList.remove('show');
-            });
-        }
-    });
-});
-
 </script>
 
 <!-- Bootstrap JS & Popper.js (Already in Your Setup) -->
