@@ -85,123 +85,123 @@
                                                                 });
                                                               });
 
-                                                              
+
                                                               function checkStudentID() {
-  var studentId = document.getElementById("student_id").value.trim();
-  if (studentId === "") {
-    alert("Please enter a valid Student ID.");
-    return;
-  }
+                                                                var studentId = document.getElementById("student_id").value.trim();
+                                                                if (studentId === "") {
+                                                                  alert("Please enter a valid Student ID.");
+                                                                  return;
+                                                                }
 
-  // Show loading indicator
-  document.getElementById("student-id-form").innerHTML += '<div class="text-center mt-3"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+                                                                // Show loading indicator
+                                                                document.getElementById("student-id-form").innerHTML += '<div class="text-center mt-3"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
 
-  fetch("fetch-student-grades.php?student_id=" + studentId)
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("student-id-form").querySelector(".spinner-border")?.remove();
+                                                                fetch("fetch-student-grades.php?student_id=" + studentId)
+                                                                  .then(response => response.json())
+                                                                  .then(data => {
+                                                                    document.getElementById("student-id-form").querySelector(".spinner-border")?.remove();
 
-      if (data.status === "error") {
-        alert(data.message);
-        return;
-      }
+                                                                    if (data.status === "error") {
+                                                                      alert(data.message);
+                                                                      return;
+                                                                    }
 
-      // ✅ Show student info
-      document.getElementById("student-info").style.display = "block";
-      document.getElementById("student-name").innerHTML = `<strong>Name:</strong> ${data.student_name}`;
-      document.getElementById("student-year").innerHTML = `<strong>Current Year:</strong> ${data.student_year_label}`;
+                                                                    // ✅ Show student info
+                                                                    document.getElementById("student-info").style.display = "block";
+                                                                    document.getElementById("student-name").innerHTML = `<strong>Name:</strong> ${data.student_name}`;
+                                                                    document.getElementById("student-year").innerHTML = `<strong>Current Year:</strong> ${data.student_year_label}`;
 
-      // ✅ Handle warning message
-      let warningElement = document.getElementById("warning-message");
-      warningElement.style.display = data.status === "warning" ? "block" : "none";
-      warningElement.innerText = data.message || "";
+                                                                    // ✅ Handle warning message
+                                                                    let warningElement = document.getElementById("warning-message");
+                                                                    warningElement.style.display = data.status === "warning" ? "block" : "none";
+                                                                    warningElement.innerText = data.message || "";
 
-      // ✅ Clear previous grade data
-      let yearContainers = document.getElementById("year-containers");
-      yearContainers.innerHTML = "";
+                                                                    // ✅ Clear previous grade data
+                                                                    let yearContainers = document.getElementById("year-containers");
+                                                                    yearContainers.innerHTML = "";
 
-      let yearLabels = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
-      let semesterLabels = ["1st Sem", "2nd Sem"];
+                                                                    let yearLabels = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+                                                                    let semesterLabels = ["1st Sem", "2nd Sem"];
 
-      // ✅ Loop through years
-      yearLabels.forEach(yearLabel => {
-        let yearContainer = document.createElement("div");
-        yearContainer.className = "year-container mb-4 p-3 border rounded";
+                                                                    // ✅ Loop through years
+                                                                    yearLabels.forEach(yearLabel => {
+                                                                      let yearContainer = document.createElement("div");
+                                                                      yearContainer.className = "year-container mb-4 p-3 border rounded";
 
-        // 📌 Year Header (with toggle)
-        let yearHeader = document.createElement("div");
-        yearHeader.className = "year-header d-flex justify-content-between align-items-center p-2";
-        yearHeader.style.cursor = "pointer";
-        yearHeader.innerHTML = `<h3 class="mb-0">${yearLabel} <span class="">Grades</span></h3>
+                                                                      // 📌 Year Header (with toggle)
+                                                                      let yearHeader = document.createElement("div");
+                                                                      yearHeader.className = "year-header d-flex justify-content-between align-items-center p-2";
+                                                                      yearHeader.style.cursor = "pointer";
+                                                                      yearHeader.innerHTML = `<h3 class="mb-0">${yearLabel} <span class="">Grades</span></h3>
                 <span class="toggle-icon">[+]</span>`;
 
-        // 📌 Semester Container (Initially Hidden)
-        let semesterWrapper = document.createElement("div");
-        semesterWrapper.className = "semester-wrapper mt-3";
-        semesterWrapper.style.maxHeight = "0"; // Initially collapsed
-        semesterWrapper.style.overflow = "hidden";
-        semesterWrapper.style.transition = "max-height 0.5s ease-in-out";
+                                                                      // 📌 Semester Container (Initially Hidden)
+                                                                      let semesterWrapper = document.createElement("div");
+                                                                      semesterWrapper.className = "semester-wrapper mt-3";
+                                                                      semesterWrapper.style.maxHeight = "0"; // Initially collapsed
+                                                                      semesterWrapper.style.overflow = "hidden";
+                                                                      semesterWrapper.style.transition = "max-height 0.5s ease-in-out";
 
-        semesterLabels.forEach(semesterLabel => {
-          let semesterGrades = data.grades[yearLabel][semesterLabel] || [];
-          let hasRealGrades = data.has_grades && data.has_grades[yearLabel] && 
-                             data.has_grades[yearLabel][semesterLabel];
+                                                                      semesterLabels.forEach(semesterLabel => {
+                                                                        let semesterGrades = data.grades[yearLabel][semesterLabel] || [];
+                                                                        let hasRealGrades = data.has_grades && data.has_grades[yearLabel] &&
+                                                                          data.has_grades[yearLabel][semesterLabel];
 
-          let semesterContainer = document.createElement("div");
-          semesterContainer.className = "mb-3 p-3 border rounded";
+                                                                        let semesterContainer = document.createElement("div");
+                                                                        semesterContainer.className = "mb-3 p-3 border rounded";
 
-          let semesterHeader = document.createElement("h4");
-          semesterHeader.className = "text-center mb-2";
-          semesterHeader.innerText = semesterLabel;
-          semesterContainer.appendChild(semesterHeader);
+                                                                        let semesterHeader = document.createElement("h4");
+                                                                        semesterHeader.className = "text-center mb-2";
+                                                                        semesterHeader.innerText = semesterLabel;
+                                                                        semesterContainer.appendChild(semesterHeader);
 
-          let semesterBody = document.createElement("div");
-          
-          // Only show grade table if semester has real grades
-          if (hasRealGrades && semesterGrades.length > 0) {
-            semesterBody.innerHTML = generateGradeTable(semesterGrades);
-          } else {
-            semesterBody.innerHTML = '<div class="text-center text-muted">No grades recorded.</div>';
-          }
+                                                                        let semesterBody = document.createElement("div");
 
-          semesterContainer.appendChild(semesterBody);
-          semesterWrapper.appendChild(semesterContainer);
-        });
+                                                                        // Only show grade table if semester has real grades
+                                                                        if (hasRealGrades && semesterGrades.length > 0) {
+                                                                          semesterBody.innerHTML = generateGradeTable(semesterGrades);
+                                                                        } else {
+                                                                          semesterBody.innerHTML = '<div class="text-center text-muted">No grades recorded.</div>';
+                                                                        }
 
-        // ✅ Toggle Animation on Click
-        yearHeader.addEventListener("click", function() {
-          let isVisible = semesterWrapper.style.maxHeight !== "0px";
+                                                                        semesterContainer.appendChild(semesterBody);
+                                                                        semesterWrapper.appendChild(semesterContainer);
+                                                                      });
 
-          if (isVisible) {
-            semesterWrapper.style.maxHeight = "0";
-            this.querySelector(".toggle-icon").textContent = "[+]";
-          } else {
-            semesterWrapper.style.maxHeight = semesterWrapper.scrollHeight + "px";
-            this.querySelector(".toggle-icon").textContent = "[-]";
-          }
-        });
+                                                                      // ✅ Toggle Animation on Click
+                                                                      yearHeader.addEventListener("click", function() {
+                                                                        let isVisible = semesterWrapper.style.maxHeight !== "0px";
 
-        yearContainer.appendChild(yearHeader);
-        yearContainer.appendChild(semesterWrapper);
-        yearContainers.appendChild(yearContainer);
-      });
+                                                                        if (isVisible) {
+                                                                          semesterWrapper.style.maxHeight = "0";
+                                                                          this.querySelector(".toggle-icon").textContent = "[+]";
+                                                                        } else {
+                                                                          semesterWrapper.style.maxHeight = semesterWrapper.scrollHeight + "px";
+                                                                          this.querySelector(".toggle-icon").textContent = "[-]";
+                                                                        }
+                                                                      });
 
-      document.getElementById("grade-forms").style.display = "block";
-    })
-    .catch(error => {
-      console.error("Error fetching student grades:", error);
-      alert("An error occurred while fetching student data. Please try again.");
-      document.getElementById("student-id-form").querySelector(".spinner-border")?.remove();
-    });
-}
+                                                                      yearContainer.appendChild(yearHeader);
+                                                                      yearContainer.appendChild(semesterWrapper);
+                                                                      yearContainers.appendChild(yearContainer);
+                                                                    });
 
-// Function to generate HTML table for grades
-function generateGradeTable(grades) {
-  if (!grades || grades.length === 0) {
-    return '<div class="empty-message">No grades recorded for this semester</div>';
-  }
+                                                                    document.getElementById("grade-forms").style.display = "block";
+                                                                  })
+                                                                  .catch(error => {
+                                                                    console.error("Error fetching student grades:", error);
+                                                                    alert("An error occurred while fetching student data. Please try again.");
+                                                                    document.getElementById("student-id-form").querySelector(".spinner-border")?.remove();
+                                                                  });
+                                                              }
 
-  let table = `<div class="table-responsive"><table class="table table-bordered">
+                                                              // Function to generate HTML table for grades
+                                                              function generateGradeTable(grades) {
+                                                                if (!grades || grades.length === 0) {
+                                                                  return '<div class="empty-message">No grades recorded for this semester</div>';
+                                                                }
+
+                                                                let table = `<div class="table-responsive"><table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
                           <th>Course No.</th>
@@ -214,31 +214,31 @@ function generateGradeTable(grades) {
                     </thead>
                     <tbody>`;
 
-  grades.forEach(grade => {
-    // Skip empty grade entries
-    if ((grade.grade === "0" || grade.grade === "") && !grade.re) {
-      return;
-    }
-    
-    let remarks = "N/A";
-    let remarkColor = "gray"; // Default color for no grade
+                                                                grades.forEach(grade => {
+                                                                  // Skip empty grade entries
+                                                                  if ((grade.grade === "0" || grade.grade === "") && !grade.re) {
+                                                                    return;
+                                                                  }
 
-    if (grade.re && grade.re.trim() !== "") {
-      remarks = grade.re;
-    } else {
-      let numericGrade = parseFloat(grade.grade);
-      if (!isNaN(numericGrade)) {
-        if (numericGrade >= 75) {
-          remarks = "Passed";
-          remarkColor = "green"; // Green for passed
-        } else if (numericGrade > 0) { // Only mark as failed if grade is actually set
-          remarks = "Failed";
-          remarkColor = "red"; // Red for failed
-        }
-      }
-    }
+                                                                  let remarks = "N/A";
+                                                                  let remarkColor = "gray"; // Default color for no grade
 
-    table += `<tr>
+                                                                  if (grade.re && grade.re.trim() !== "") {
+                                                                    remarks = grade.re;
+                                                                  } else {
+                                                                    let numericGrade = parseFloat(grade.grade);
+                                                                    if (!isNaN(numericGrade)) {
+                                                                      if (numericGrade >= 75) {
+                                                                        remarks = "Passed";
+                                                                        remarkColor = "green"; // Green for passed
+                                                                      } else if (numericGrade > 0) { // Only mark as failed if grade is actually set
+                                                                        remarks = "Failed";
+                                                                        remarkColor = "red"; // Red for failed
+                                                                      }
+                                                                    }
+                                                                  }
+
+                                                                  table += `<tr>
         <td>${grade.course_no}</td>
         <td>${grade.descriptive_title}</td>
         <td>${grade.grade}</td>
@@ -246,9 +246,9 @@ function generateGradeTable(grades) {
         <td>${grade.unit}</td>
         <td>${grade.pre_req || "None"}</td>
       </tr>`;
-  });
+                                                                });
 
-  table += `</tbody></table></div>`;
-  return table;
-}
+                                                                table += `</tbody></table></div>`;
+                                                                return table;
+                                                              }
                                                             </script>

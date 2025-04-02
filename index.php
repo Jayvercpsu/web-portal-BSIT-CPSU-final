@@ -112,6 +112,8 @@ $first = true;
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/vendor/wow/wow.min.js"></script>
     <script src="./assets/js/theme.js"></script>
+
+    
     <!-- jQuery & Owl Carousel -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>

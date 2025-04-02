@@ -48,6 +48,7 @@
                      <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2"> 
                      </ol>
                  </nav> 
+                 <h1 class="font-weight-normal">Contact</h1>
              </div> <!-- .container -->
          </div> <!-- .banner-section -->
      </div> <!-- .page-banner -->

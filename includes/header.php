@@ -1,29 +1,32 @@
 <!-- Main Navigation (Enhanced Design) -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:rgb(148, 76, 200);">
     <div class="container">
         <!-- Logo & Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
             <div> <span class="mx-2 text-muted">|</span>
 
-                <span class="text-dark font-weight-bold" style="font-size: 20px; transition: color 0.3s;">College of Computer Studies</span>
+                <span class="text-white font-weight-bold" style="font-size: 20px; transition: color 0.3s;">College of Computer Studies</span>
             </div>
         </a>
 
 
         <!-- Toggler Button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
-            <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+            <span class="navbar-toggler-icon text-white"></span>
         </button>
 
         <!-- Navbar Links -->
         <div class="collapse navbar-collapse justify-content-center" id="navbarResponsive">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="index.php"><i class="fa fa-home"></i> Home</a>
+                    <a class="nav-link text-white" href="index.php"><i class="fa fa-home"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="facilities.php"><i class="fa fa-building"></i> Facilities</a>
                 </li>
                 <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="gradeInquiryDropdown" role="button">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="gradeInquiryDropdown" role="button">
                         <i class="fa fa-user"></i> Grade Inquiry
                     </a>
                     <div class="dropdown-menu">
@@ -31,12 +34,12 @@
                     </div>
                 </li> -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#" id="moreInfoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="moreInfoDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-info-circle"></i> More Info
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="about-us.php"><i class="fa fa-info-circle"></i> About</a>
-                        <!-- <a class="dropdown-item" href="vis_mis.php"><i class="fa fa-users"></i> Vision & Mission</a> -->
+                        <a class="dropdown-item" href="vis_mis.php"><i class="fa fa-users"></i> Mandate</a>
                         <a class="dropdown-item" href="contact-us.php"><i class="fa fa-envelope"></i> Contact</a>
                     </div>
                 </li>
@@ -45,9 +48,9 @@
 
         <!-- Right Side: Date & Social Media -->
         <div class="d-flex align-items-center">
-            <span class="small text-dark mr-3"><i class="fa fa-calendar"></i> <span id="live-date"></span></span>
+            <span class="small text-white mr-3"><i class="fa fa-calendar"></i> <span id="live-date"></span></span>
             <span class="mx-2 text-muted">|</span>
-            <a href="https://web.facebook.com/CollegeofComputrStudies" class="ml-2" style="color: #007bff; transition: color 0.3s, transform 0.3s;">
+            <a href="https://web.facebook.com/CollegeofComputrStudies" class="ml-2 d-flex align-items-center justify-content-center" style="background-color: #fff; color: #007bff; border-radius: 50%; width: 21px; height: 21px; transition: color 0.3s, transform 0.3s;">
                 <i class="fab fa-facebook fa-lg"></i>
             </a>
         </div>

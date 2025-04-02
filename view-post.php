@@ -53,33 +53,8 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
     <link rel="stylesheet" href="css/view-post.css">
 
 </head>
-<style> 
-    /* Ensures the video covers the entire screen */
-    .video-container {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: -1;
-    }
 
-    .video-container video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        /* Ensures video fills the screen */
-    } 
-</style>
-<body class="position-relative">
-        <!-- Full-Screen Video Background -->
-        <div class="video-container">
-        <video autoplay muted loop>
-            <source src="./assets/video-cpsu/cpsu.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
+<body>
 
 
     <?php include('includes/header.php'); ?>
@@ -88,7 +63,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
         <div class="row">
 
             <!-- Left Section -->
-            <div class="col-lg-9">
+            <div class="col-lg-9 post-section">
                 <div class="card shadow-sm p-4">
                     <button class="btn btn-sm btn-outline-secondary mb-3" onclick="goBack()">← Back</button>
                     <h2 class="fw-bold"><?php echo htmlentities($post['PostTitle']); ?></h2>
@@ -96,9 +71,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
                         <i class="fa fa-user"></i> Admin |
                         <i class="fa fa-clock"></i> <?php echo date("M d, Y h:i A", strtotime($post['PostingDate'])); ?> |
                         <i class="fas fa-eye"></i> <?php echo htmlentities($post['viewCounter']); ?> Views
-
                     </p>
-
 
                     <div id="postCarousel" class="carousel slide" data-ride="carousel">
                         <!-- Carousel Indicators -->
@@ -131,25 +104,19 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
                         </button>
                     </div>
 
-
-
                     <!-- Post Details -->
                     <div class="post-details mt-4">
                         <div class="post-content" style="text-align: justify;">
                             <?php echo $postDetails; ?>
                         </div>
                         <div class="btn-container">
-                            <button id="toggle" class="btn btn-outline-primary btn-sm">Read More</button>
+                            <button id="toggle" class="btn btn-sm" style="background-color:rgb(94, 17, 149);">Read More</button>
                         </div>
                     </div>
-
                 </div>
 
-
-
-
-                <h3 class="mt-5 fw-bold text-white">Related Posts</h3>
-                <div class="row">
+                <h3 class="mt-5 fw-bold text-dark">Related Posts</h3>
+                <div class="row related-posts">
                     <?php
                     while ($related = mysqli_fetch_array($relatedQuery)) {
                         $images = explode(",", $related['PostImage']); // Split images by commas
@@ -162,20 +129,18 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
                                 </div>
                                 <div class="card-body d-flex flex-column">
                                     <h6 class="fw-bold mb-2"><?php echo htmlentities($related['PostTitle']); ?></h6>
-                                    <a href="view-post.php?id=<?php echo htmlentities($related['id']); ?>" class="btn btn-primary btn-sm mt-auto">Read More</a>
+                                    <a href="view-post.php?id=<?php echo htmlentities($related['id']); ?>" class="btn btn-sm mt-auto" style="background-color: #6a0dad; color: white;">Read More</a>
                                 </div>
                             </div>
                         </div>
                     <?php } ?>
                 </div>
-
-
             </div>
 
 
             <!-- Sidebar -->
             <div class="col-lg-3">
-                <h4 class="fw-bold text-white">Latest Posts</h4>
+                <h4 class="fw-bold text-dark">Latest Posts</h4>
                 <ul class="list-group latest-posts-scroll">
                     <?php
                     while ($latest = mysqli_fetch_array($latestQuery)) {
@@ -199,7 +164,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
 
 
                 <!-- Quick Links -->
-                <h4 class="mt-4 fw-bold text-white">Quick Links</h4>
+                <h4 class="mt-4 fw-bold text-dark">Quick Links</h4>
                 <ul class="list-group shadow-sm">
                     <li class="list-group-item">
                         <a href="index.php" class="quick-link"><i class="fa fa-home"></i> Home</a>
@@ -209,7 +174,7 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
                     </li>
                     <li class="list-group-item">
                         <a href="contact-us.php" class="quick-link"><i class="fa fa-phone"></i> Contact</a>
-                    </li> 
+                    </li>
                 </ul>
 
             </div>

@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
-<footer class="footer-section">
+<footer class="footer-section" style="background-color:rgb(89, 40, 124);">
     <div class="container">
         <div class="footer-con">
             <!-- Location Section -->
@@ -11,7 +11,7 @@
                 <div class="single-cta">
                     <i class="fas fa-map-marker-alt text-white"></i>
                     <div class="cta-text">
-                        <h4>Find Us</h4>
+                        <h4 style="color: white;">Find Us</h4>
                         <div class="map-container">
                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d980.9179023218929!2d123.35990996159614!3d10.447612092268333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a93f4321fa90b3%3A0x5a32a445f78a1f2f!2sCentral%20Philippines%20State%20University%20-%20Don%20Justo%20V.%20Valmayor%20Campus!5e0!3m2!1sen!2sph!4v1731682023909!5m2!1sen!2sph"
                                 width="100%" height="200" style="border: 0; border-radius: 10px;" allowfullscreen loading="lazy"></iframe>
@@ -68,8 +68,7 @@
 
 <style>
     .footer-section {
-        background-color: #000;
-        color: #fff;
+        background-color: #6a0dad; 
         padding: 40px 0;
         font-family: Arial, sans-serif;
     }

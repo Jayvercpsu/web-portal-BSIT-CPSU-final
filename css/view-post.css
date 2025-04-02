@@ -1,128 +1,124 @@
 body {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .post-content {
-    overflow: hidden;
-    max-height: 150px;
-    /* Initially show 6 lines approximately */
-    line-height: 1.6;
-    /* Adjust line spacing */
-    transition: max-height 0.6s ease-in-out;
+  overflow: hidden;
+  max-height: 150px;
+  /* Initially show 6 lines approximately */
+  line-height: 1.6;
+  /* Adjust line spacing */
+  transition: max-height 0.6s ease-in-out;
 }
 
 .post-content.open {
-    max-height: 1000px;
-    /* Large height to reveal full content */
+  max-height: 1000px;
+  /* Large height to reveal full content */
 }
 
 .btn-container {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 button {
-    cursor: pointer;
-    padding: 8px 12px;
-    font-size: 14px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background 0.3s ease-in-out;
+  cursor: pointer;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
 }
 
 button:hover {
-    background: #0056b3;
+  background: #6a0dad;
 }
 
-
 .latest-posts-scroll {
-    max-height: 400px;
-    /* Fixed height for the sidebar */
-    overflow-y: auto;
-    /* Enable vertical scroll */
-    padding-right: 5px;
-    /* Prevent scrollbar overlap */
+  max-height: 400px;
+  /* Fixed height for the sidebar */
+  overflow-y: auto;
+  /* Enable vertical scroll */
+  padding-right: 5px;
+  /* Prevent scrollbar overlap */
 }
 
 .latest-posts-scroll::-webkit-scrollbar {
-    width: 6px;
-    /* Customize scrollbar width */
+  width: 6px;
+  /* Customize scrollbar width */
 }
 
 .latest-posts-scroll::-webkit-scrollbar-thumb {
-    background: #007bff;
-    /* Scrollbar color */
-    border-radius: 10px;
+  background: #007bff;
+  /* Scrollbar color */
+  border-radius: 10px;
 }
 
 .latest-posts-scroll::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    /* Track background */
+  background: #f1f1f1;
+  /* Track background */
 }
 
-
 .text-muted {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .card {
-    border-radius: 10px;
-    background: white;
-    padding: 20px;
+  border-radius: 10px;
+  background: white;
+  padding: 20px;
 }
 
 .latest-posts-list {
-    max-height: 400px;
-    /* Limit height */
-    overflow-y: auto;
-    /* Enable scrolling */
+  max-height: 400px;
+  /* Limit height */
+  overflow-y: auto;
+  /* Enable scrolling */
 }
 
-
 .list-group-item a {
-    text-decoration: none;
-    color: #333;
-    transition: 0.3s;
+  text-decoration: none;
+  color: #333;
+  transition: 0.3s;
 }
 
 .list-group-item a:hover {
-    color: #007bff;
+  color: #007bff;
 }
 
 .list-group-item a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    /* Adds space between image and text */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Adds space between image and text */
 }
 
 .list-group-item img {
-    border-radius: 5px;
+  border-radius: 5px;
 }
 
 .card-title {
-    font-size: 1rem;
-    font-weight: bold;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 /* Hover Zoom Effect (Image only zooms inside the box) */
 .image-container {
-    overflow: hidden;
-    border-radius: 10px;
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .zoom-image {
-    transition: transform 0.3s ease-in-out;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .image-container:hover .zoom-image {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
- 
 
 /* General Carousel Styling */
 .carousel {
@@ -149,7 +145,7 @@ button:hover {
 
 /* Carousel Indicators */
 .carousel-indicators button {
-  background: #007bff; /* Blue color */
+  background: #6a0dad;
   border: 2px solid #fff;
   border-radius: 50%;
   width: 14px;
@@ -159,8 +155,8 @@ button:hover {
 }
 
 .carousel-indicators .active {
-  background: #0056b3; /* Darker blue when active */
-  border: 2px solid #0056b3;
+  background: #6a0dad; /* Darker blue when active */
+  border: 2px solid #6a0dad;
   transform: scale(1.2);
 }
 
@@ -194,12 +190,12 @@ button:hover {
 
 @keyframes fadeIn {
   from {
-      opacity: 0;
-      transform: translateY(20px);
+    opacity: 0;
+    transform: translateY(20px);
   }
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -219,7 +215,7 @@ button:hover {
   cursor: pointer;
   padding: 10px 20px;
   font-size: 14px;
-  background: linear-gradient(135deg, #007bff, #0056b3);
+  background: linear-gradient(135deg, #6a0dad);
   color: white;
   border: none;
   border-radius: 5px;
@@ -227,7 +223,7 @@ button:hover {
 }
 
 .btn-container button:hover {
-  background: #0056b3;
+  background: #510a85;
   transform: scale(1.05); /* Slight scale effect on hover */
 }
 
@@ -243,14 +239,13 @@ button:hover {
 }
 
 .latest-posts-scroll::-webkit-scrollbar-thumb {
-  background: #007bff;
+  background: #6a0dad;
   border-radius: 10px;
 }
 
 .latest-posts-scroll::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
-
 
 .latest-posts-scroll {
   max-height: 400px; /* Limit Sidebar Height */
@@ -263,7 +258,7 @@ button:hover {
 }
 
 .latest-posts-scroll::-webkit-scrollbar-thumb {
-  background: #007bff; /* Blue Scrollbar */
+  background: #6a0dad;
   border-radius: 10px;
 }
 
@@ -288,4 +283,34 @@ button:hover {
   transform: scale(1.1);
 }
 
+/* Mobile-specific margin-top */
+@media (max-width: 767px) {
+  .post-section {
+    margin-top: 30px;
+  }
 
+  .card {
+    margin-top: 25px;
+  }
+
+  .related-posts {
+    margin-top: 20px;
+  }
+
+  h3.mt-5 {
+    margin-top: 30px !important;
+  }
+}
+
+/* Optional: Enhance the responsiveness of the carousel */
+@media (max-width: 767px) {
+  #postCarousel {
+    margin-top: 10px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 10%;
+  }
+}
+ 
