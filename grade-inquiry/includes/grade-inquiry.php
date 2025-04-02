@@ -135,7 +135,7 @@
                                             let yearHeader = document.createElement("div");
                                             yearHeader.className = "year-header d-flex justify-content-between align-items-center p-2";
                                             yearHeader.style.cursor = "pointer";
-                                            yearHeader.innerHTML = `<h3 class="mb-0">${yearLabel} <span class="text-muted">(SY 2024 - 2025)</span></h3>
+                                            yearHeader.innerHTML = `<h3 class="mb-0">${yearLabel} <span class="">Grades</span></h3>
                                         <span class="toggle-icon">[+]</span>`;
 
                                             // 📌 Semester Container (Initially Hidden)
