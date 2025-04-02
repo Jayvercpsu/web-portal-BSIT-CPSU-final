@@ -45,12 +45,9 @@
              <div class="container text-center wow fadeInUp">
                  <nav aria-label="Breadcrumb">
                      <br><br>
-                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
-                         <li class="breadcrumb-item"><a style="color: violet;" href="index.html">Home</a></li>
-                         <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2"> 
                      </ol>
-                 </nav>
-                 <h1 class="font-weight-normal">Contact Us</h1>
+                 </nav> 
              </div> <!-- .container -->
          </div> <!-- .banner-section -->
      </div> <!-- .page-banner -->
@@ -82,14 +79,7 @@
      <!-- /.container -->
 
 
-
-
-
-
-
-
-
-     <div class="page-section">
+     <!-- <div class="page-section">
          <div class="container">
              <h1 class="text-center wow fadeInUp text-dark">Get In Touch</h1>
              <form class="main-form">
@@ -107,7 +97,9 @@
                  <button type="submit" class="btn btn-primary mt-3 wow zoomIn">Send Message</button>
              </form>
          </div>
-     </div>
+     </div> -->
+
+
      </div>
 
      <div class="maps-container wow fadeInUp">

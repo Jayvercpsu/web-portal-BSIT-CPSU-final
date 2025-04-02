@@ -44,8 +44,8 @@ $first = true;
 
 
 </head>
-<style>
-    /* Ensures the video covers the entire screen */
+<!-- 
+<style> 
     .video-container {
         position: fixed;
         top: 0;
@@ -59,12 +59,12 @@ $first = true;
     .video-container video {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        /* Ensures video fills the screen */
+        object-fit: cover; 
     }
-</style>
+</style> -->
 
-<body class="position-relative">
+<body>
+<!-- <body class="position-relative"> -->
 
     <?php include('includes/header.php'); ?>
 
@@ -72,12 +72,12 @@ $first = true;
 
 
     <!-- Full-Screen Video Background -->
-    <div class="video-container">
+    <!-- <div class="video-container">
         <video autoplay muted loop>
             <source src="./assets/video-cpsu/cpsu.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-    </div>
+    </div> -->
 
 
 

@@ -36,7 +36,7 @@
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="about-us.php"><i class="fa fa-info-circle"></i> About</a>
-                        <a class="dropdown-item" href="vis_mis.php"><i class="fa fa-users"></i> Vision & Mission</a>
+                        <!-- <a class="dropdown-item" href="vis_mis.php"><i class="fa fa-users"></i> Vision & Mission</a> -->
                         <a class="dropdown-item" href="contact-us.php"><i class="fa fa-envelope"></i> Contact</a>
                     </div>
                 </li>
@@ -51,8 +51,6 @@
                 <i class="fab fa-facebook fa-lg"></i>
             </a>
         </div>
-
-
 
     </div>
 </nav>
