@@ -1,0 +1,164 @@
+.facility-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.facility-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.facility-img {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.facility-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  padding: 20px;
+  color: white;
+}
+
+.section-title {
+  position: relative;
+  margin-bottom: 40px;
+  padding-bottom: 15px;
+}
+
+.section-title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: #5e1195;
+}
+
+.room-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #5e1195;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.facility-detail {
+  padding: 20px;
+  background: #fff;
+}
+
+.feature-icon {
+  font-size: 20px;
+  color: #5e1195;
+  margin-right: 10px;
+}
+
+.lab-section,
+.classroom-section {
+  padding: 50px 0;
+}
+
+.lab-section {
+  background-color: #f8f9fa;
+}
+
+.classroom-section {
+  background-color: #fff;
+}
+
+@media (max-width: 768px) {
+  .facility-card {
+    margin-top: 20px;
+  }
+
+  .section-title {
+    margin-top: 20px;
+  }
+}
+
+.smart-hub-section {
+  background: linear-gradient(135deg, #6a11cb 0%, rgb(173, 43, 224) 100%);
+  color: white;
+  padding: 60px 0;
+  margin: 40px 0;
+  border-radius: 15px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.smart-hub-img {
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s ease;
+}
+
+.smart-hub-img:hover {
+  transform: scale(1.05);
+}
+
+/* Additional animated elements */
+.animated-icon {
+  transition: all 0.3s ease;
+}
+
+.animated-icon:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.bounce-animation {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-20px);
+  }
+
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(94, 17, 149, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(94, 17, 149, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(94, 17, 149, 0);
+  }
+}
