@@ -3,14 +3,15 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6" data-aos="fade-right" data-aos-duration="1200">
-                <h2 class="mb-4">BSIT Smart Hub</h2>
-                <p class="lead">Our innovative smart hub integrates modern technology with collaborative learning environments.</p>
-                <p>The Smart Hub serves as the central technology nerve center for BSIT students, featuring:</p>
+                <h2 class="mb-4">Smart Hub</h2>
+                <p class="lead">Our innovative Smart Hub is open to all students, offering a collaborative and technology-driven environment for learning.</p>
+                <p>The Smart Hub provides students with:</p>
                 <ul class="list-unstyled mt-4">
                     <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Advanced research stations</li>
                     <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Collaborative workspaces</li>
-                    <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> IoT development environment</li>
-                    <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> 24/7 access for enrolled students</li>
+                    <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Development environment</li>
+                    <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> 24/7 access for all students</li>
+                    <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Open for use by all courses</li>
                 </ul>
                 <button class="btn btn-light mt-3 bounce-animation">Take a Virtual Tour</button>
             </div>
@@ -21,6 +22,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     document.querySelectorAll('.preview-img').forEach(img => {

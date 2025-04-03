@@ -63,12 +63,39 @@
     <div class="scroll-to-top">
         <i class="fas fa-arrow-up"></i>
     </div>
+
 </footer>
 
 
 <style>
+    .scroll-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #262b2d;
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .scroll-to-top i {
+        font-size: 20px;
+        /* Adjust size to fit well inside the circle */
+    }
+
+    .scroll-to-top:hover {
+        transform: scale(.6);
+    }
+
     .footer-section {
-        background-color: #6a0dad; 
+        background-color: #6a0dad;
         padding: 40px 0;
         font-family: Arial, sans-serif;
     }
@@ -131,24 +158,6 @@
         background-color: #222;
         margin-top: 20px;
     }
-
-    .scroll-to-top {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        background-color: #262b2d;
-        color: #fff;
-        padding: 15px;
-        border-radius: 50%;
-        cursor: pointer;
-        display: none;
-        transition: transform 0.3s ease;
-    }
-
-    .scroll-to-top:hover {
-        transform: scale(1.2);
-    }
-
 
     .footer-section {
         background-color: #000;

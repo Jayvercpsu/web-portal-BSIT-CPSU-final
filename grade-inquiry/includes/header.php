@@ -6,7 +6,7 @@
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="../admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
             <div class="d-flex align-items-center">
-                <span class="mx-2 text-muted d-none d-md-inline">|</span>
+                <span class="mx-2 text-white d-none d-md-inline">|</span>
                 <span class="text-white font-weight-bold custom-btn-logo responsive-text">College of Computer Studies</span>
             </div>
         </a>
@@ -19,7 +19,7 @@
             <span class="small text-white mr-3">
                 <i class="fa fa-clock"></i> <span id="live-time"></span>
             </span>
-            <span class="mx-2 text-muted d-none d-md-inline">|</span>
+            <span class="mx-2 text-white d-none d-md-inline">|</span>
             <span class="small text-white">
                 <i class="fa fa-calendar"></i> <span id="live-date"></span>
             </span>

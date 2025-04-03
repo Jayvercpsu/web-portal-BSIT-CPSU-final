@@ -47,8 +47,9 @@
                         <span class="room-badge">Lab 4</span>
                         <img src="images/facilities/lab4.jpeg" alt="Laboratory 4" class="facility-img preview-img">
                         <div class="facility-detail">
-                            <h5>Database & Development Lab</h5>
-                            <p>Focused on database management and software development projects.</p>
+                            <h5>Simple Activities & Classes</h5>
+                            <p>Focused on simple activities and hands-on learning in class.</p>
+
                         </div>
                     </div>
                 </div>

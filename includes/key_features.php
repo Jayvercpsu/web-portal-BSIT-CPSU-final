@@ -1,7 +1,7 @@
 <div class="container" id="about">
     <!-- Key Features of the BSIT Program Section -->
     <div class="text-center mb-5" style="margin-top: 10%;">
-        <h2 class="text-white wow fadeInRight">Key Features of the BSIT Program</h2>
+        <h2 class="text-dark wow fadeInRight">Key Features of the BSIT Program</h2>
     </div>
 
     <div class="row mb-4">
@@ -39,7 +39,7 @@
     <!-- Why Choose BSIT at CPSU Section -->
     <div class="py-5">
         <div class="text-center mb-5 wow fadeInLeft">
-            <h2 class="text-white">Why Choose BSIT at CPSU?</h2>
+            <h2 class="text-dark">Why Choose BSIT at CPSU?</h2>
         </div>
         <div class="row">
             <!-- Modern Infrastructure -->
@@ -73,7 +73,7 @@
             </div>
         </div>
     </div>
- 
+
 </div>
 
 <!-- Custom Bootstrap Violet Button Styling -->

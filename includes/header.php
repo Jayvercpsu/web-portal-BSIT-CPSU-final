@@ -4,7 +4,7 @@
         <!-- Logo & Branding -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="admin/assets/images/bsit_logo.png" height="50" alt="BSIT Logo" class="mr-2 rounded-circle shadow-sm">
-            <div> <span class="mx-2 text-muted">|</span>
+            <div> <span class="mx-2 text-white">|</span>
 
                 <span class="text-white font-weight-bold" style="font-size: 20px; transition: color 0.3s;">College of Computer Studies</span>
             </div>
@@ -49,7 +49,7 @@
         <!-- Right Side: Date & Social Media -->
         <div class="d-flex align-items-center">
             <span class="small text-white mr-3"><i class="fa fa-calendar"></i> <span id="live-date"></span></span>
-            <span class="mx-2 text-muted">|</span>
+            <span class="mx-2 text-white">|</span>
             <a href="https://web.facebook.com/CollegeofComputrStudies" class="ml-2 d-flex align-items-center justify-content-center" style="background-color: #fff; color: #007bff; border-radius: 50%; width: 21px; height: 21px; transition: color 0.3s, transform 0.3s;">
                 <i class="fab fa-facebook fa-lg"></i>
             </a>
