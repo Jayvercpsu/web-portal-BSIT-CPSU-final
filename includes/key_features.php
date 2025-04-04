@@ -1,6 +1,6 @@
 <div class="container" id="about">
     <!-- Key Features of the BSIT Program Section -->
-    <div class="text-center mb-5" style="margin-top: 10%;">
+    <div class="text-center mb-5" style="margin-top: 30px;">
         <h2 class="text-dark wow fadeInRight">Key Features of the BSIT Program</h2>
     </div>
 
@@ -37,7 +37,7 @@
     </div>
 
     <!-- Why Choose BSIT at CPSU Section -->
-    <div class="py-5">
+    <div class="">
         <div class="text-center mb-5 wow fadeInLeft">
             <h2 class="text-dark">Why Choose BSIT at CPSU?</h2>
         </div>

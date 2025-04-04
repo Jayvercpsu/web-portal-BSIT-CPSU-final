@@ -10,10 +10,10 @@
                     <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Advanced research stations</li>
                     <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Collaborative workspaces</li>
                     <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Development environment</li>
-                    <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> 24/7 access for all students</li>
+                    <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> 8 am - 5 pm hours access for all students</li>
                     <li class="mb-3"><i class="fas fa-check-circle mr-2 text-warning"></i> Open for use by all courses</li>
                 </ul>
-                <button class="btn btn-light mt-3 bounce-animation">Take a Virtual Tour</button>
+                <!-- <button class="btn btn-light mt-3 bounce-animation">Take a Virtual Tour</button> -->
             </div>
             <div class="col-md-6" data-aos="fade-left" data-aos-duration="1200">
                 <!-- Add "preview-img" class to make it clickable -->

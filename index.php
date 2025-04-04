@@ -89,10 +89,12 @@ $first = true;
 
     <?php include('includes/about-us.php') ?>
 
-    <?php include('includes/vis&mis.php') ?>
+    <?php 
+    // include('includes/vis&mis.php') 
+    ?>
 
     <!-- Responsive Map Section -->
-    <div class="maps-container wow fadeInUp">
+    <!-- <div class="maps-container wow fadeInUp">
         <div class="responsive-map">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d980.9179023218929!2d123.35990996159614!3d10.447612092268333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a93f4321fa90b3%3A0x5a32a445f78a1f2f!2sCentral%20Philippines%20State%20University%20-%20Don%20Justo%20V.%20Valmayor%20Campus!5e0!3m2!1sen!2sph!4v1731682023909!5m2!1sen!2sph"
@@ -101,7 +103,7 @@ $first = true;
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
         </div>
-    </div>
+    </div> -->
 
     <br><br>
 

@@ -3,7 +3,7 @@
 } ?>
 <div class="container-fluid latest-news py-2">
     <div class="container py-2">
-        <h2 class="mb-4 text-dark fw-bold">Latest News</h2>
+        <h2 class="mb-4 text-dark fw-bold text-center" style="font-weight: bold;">Latest News</h2>
         <div class="latest-news-carousel owl-carousel owl-theme" style="background-color: #f5f9f6;">
             <?php
             mysqli_data_seek($query, 0); // Reset the query pointer
@@ -39,8 +39,8 @@
                                 <i class="fas fa-calendar-alt"></i>
                                 <?php echo date("M d, Y", strtotime($row['PostingDate'])); ?>
                             </small>
-                            <div class="mt-3 mt-auto">
-                                <a href="view-post.php?id=<?php echo $row['id']; ?>" class="btn btn-primary px-4 py-2">
+                            <div class="mt-3 text-center">
+                                <a href="view-post.php?id=<?php echo $row['id']; ?>" class="btn btn-primary px-2 py-1" style="font-size: 16px;">
                                     Read More
                                 </a>
                             </div>

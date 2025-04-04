@@ -11,7 +11,7 @@ $secondPost = mysqli_fetch_array($secondPostQuery);
 $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
 ?>
 
-<div class="container my-5" style="background-color:#f5f9f6; padding: 20px;">
+<div class="container" style="background-color:#f5f9f6; padding: 20px;">
     <div class="row">
         <!-- Left Section: Featured Post -->
         <div class="col-lg-8">
