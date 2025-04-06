@@ -1,14 +1,16 @@
 <?php
-$latestPostQuery = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostImage, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
+// Update the queries to also fetch cloudinary_url
+$latestPostQuery = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostImage, cloudinary_url, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
 $latestPost = mysqli_fetch_array($latestPostQuery);
 
-$secondPostQuery = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostImage, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
+$secondPostQuery = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostImage, cloudinary_url, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
 $secondPost = mysqli_fetch_array($secondPostQuery);
 
-
-
 // Fetch the next latest posts for the sidebar
-$sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
+$sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, cloudinary_url, PostingDate, viewCounter FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
+
+// Check if Cloudinary is enabled
+$isCloudinary = filter_var($_ENV['ENABLE_CLOUDINARY'], FILTER_VALIDATE_BOOLEAN);
 ?>
 
 <div class="container" style="background-color:#f5f9f6; padding: 20px;">
@@ -17,9 +19,15 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
         <div class="col-lg-8">
             <?php if ($latestPost) {
                 $latestImages = explode(",", $latestPost['PostImage']);
-                $latestFirstImage = trim($latestImages[0]); ?>
+                $latestCloudinaryImages = explode(",", $latestPost['cloudinary_url']);
+                
+                // Choose the image source based on Cloudinary setting
+                $latestFirstImage = $isCloudinary ? 
+                    trim($latestCloudinaryImages[0]) : 
+                    "admin/postimages/" . trim($latestImages[0]);
+            ?>
                 <div class="position-relative card shadow-sm border-0 overflow-hidden">
-                    <img src="admin/postimages/<?php echo htmlentities($latestFirstImage); ?>"
+                    <img src="<?php echo htmlentities($latestFirstImage); ?>"
                         class="img-fluid w-100 rounded zoom-image"
                         style="height: 450px; object-fit: cover;">
 
@@ -43,12 +51,18 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
             <!-- Top Story -->
             <?php if ($secondPost) {
                 $secondImages = explode(",", $secondPost['PostImage']);
-                $secondFirstImage = trim($secondImages[0]); ?>
+                $secondCloudinaryImages = explode(",", $secondPost['cloudinary_url']);
+                
+                // Choose the image source based on Cloudinary setting
+                $secondFirstImage = $isCloudinary ? 
+                    trim($secondCloudinaryImages[0]) : 
+                    "admin/postimages/" . trim($secondImages[0]);
+            ?>
                 <h3 class="mt-4 fw-bold text-dark">Top Story</h3>
                 <div class="card shadow-sm border-0 overflow-hidden">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="admin/postimages/<?php echo htmlentities($secondFirstImage); ?>"
+                            <img src="<?php echo htmlentities($secondFirstImage); ?>"
                                 class="img-fluid w-100 rounded zoom-image"
                                 style="height: 180px; object-fit: cover;">
                         </div>
@@ -75,10 +89,16 @@ $sidePostsQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, PostingDa
             <div class="list-group latest-news-list">
                 <?php while ($sidePost = mysqli_fetch_array($sidePostsQuery)) {
                     $sideImages = explode(",", $sidePost['PostImage']);
-                    $sideFirstImage = trim($sideImages[0]); ?>
+                    $sideCloudinaryImages = explode(",", $sidePost['cloudinary_url']);
+                    
+                    // Choose the image source based on Cloudinary setting
+                    $sideFirstImage = $isCloudinary ? 
+                        trim($sideCloudinaryImages[0]) : 
+                        "admin/postimages/" . trim($sideImages[0]);
+                ?>
                     <a href="view-post.php?id=<?php echo htmlentities($sidePost['id']); ?>" class="list-group-item list-group-item-action d-flex align-items-center p-3 gap-3" style="">
                         <div class="flex-shrink-0 rounded overflow-hidden" style="width: 80px; height: 60px;">
-                            <img src="admin/postimages/<?php echo htmlentities($sideFirstImage); ?>" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                            <img src="<?php echo htmlentities($sideFirstImage); ?>" class="img-fluid w-100 h-100" style="object-fit: cover;">
                         </div>
                         <div class="flex-grow-1 m-3">
                             <h6 class="mb-0 fw-semibold"><?php echo htmlentities($sidePost['PostTitle']); ?></h6>

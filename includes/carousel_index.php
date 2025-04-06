@@ -1,49 +1,59 @@
-<?php if (!isset($query)) {
-    die("Query not set.");
-} ?>
-<div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="3000">
-    <div class="carousel-inner">
-        <?php
-        while ($row = mysqli_fetch_assoc($query)) {
-            $images = explode(",", htmlspecialchars($row['PostImage'])); // Split images by commas
-            $firstImage = trim($images[0]); // Get the first image
-            $title = htmlspecialchars(strip_tags($row['PostTitle']));
-            $details = strip_tags($row['PostDetails']);
-            $date = date("M d, Y h:i A", strtotime($row['PostingDate']));
-        ?>
-            <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
-                <div class="page-hero bg-image overlay-dark" style="background-image: url('admin/postimages/<?php echo $firstImage; ?>');">
-                    <div class="hero-section d-flex align-items-center">
-                        <div class="container text-center text-white">
-                            <span class="subhead d-block mb-2 fs-5">Latest News</span>
-                            <h1><?php echo $title; ?></h1>
-                            <p><?php echo substr($details, 0, 100); ?>...</p>
+                                                <?php
+                                                if (!isset($query)) {
+                                                    die("Query not set.");
+                                                }
 
-                            <!-- Posted by Admin with Date and Time -->
-                            <div class="posted-info mb-2">
-                                <small>
-                                    <i class="fas fa-user"></i> Posted by Admin on <?php echo $date; ?>
-                                </small>
-                            </div>
+                                                $first = true; // initialize for carousel "active" class
+                                                ?>
 
-                            <a href="view-post.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Read More</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php
-            $first = false;
-        }
-        ?>
-    </div>
+                                                <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="3000">
+                                                    <div class="carousel-inner">
+                                                        <?php
+                                                        while ($row = mysqli_fetch_assoc($query)) {
+                                                            $images = explode(",", htmlspecialchars($row['PostImage']));
+                                                            $cloudinaryImages = explode(",", $row['cloudinary_url']);
+                                                            $isCloudinary = filter_var($_ENV['ENABLE_CLOUDINARY'], FILTER_VALIDATE_BOOLEAN);
 
-    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </a>
-</div>
+                                                            // Choose first available image
+                                                            $firstImage = $isCloudinary ? trim($cloudinaryImages[0]) : 'admin/postimages/' . trim($images[0]);
+
+                                                            $title = htmlspecialchars(strip_tags($row['PostTitle']));
+                                                            $details = strip_tags($row['PostDetails']);
+                                                            $date = date("M d, Y h:i A", strtotime($row['PostingDate']));
+                                                        ?>
+                                                            <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
+                                                                <div class="page-hero bg-image overlay-dark" style="background-image: url('<?php echo $firstImage; ?>');">
+                                                                    <div class="hero-section d-flex align-items-center">
+                                                                        <div class="container text-center text-white">
+                                                                            <span class="subhead d-block mb-2 fs-5">Latest News</span>
+                                                                            <h1><?php echo $title; ?></h1>
+                                                                            <p><?php echo substr($details, 0, 100); ?>...</p>
+
+                                                                            <div class="posted-info mb-2">
+                                                                                <small>
+                                                                                    <i class="fas fa-user"></i> Posted by Admin on <?php echo $date; ?>
+                                                                                </small>
+                                                                            </div>
+
+                                                                            <a href="view-post.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Read More</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php
+                                                            $first = false;
+                                                        }
+                                                        ?>
+                                                    </div>
+
+                                                    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon"></span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon"></span>
+                                                    </a>
+                                                </div>
+
 
 <!-- Initialize Carousel -->
 <script>

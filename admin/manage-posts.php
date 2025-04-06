@@ -1,5 +1,6 @@
 <?php
 session_start();
+include('../cloudinary.php');
 include('includes/config.php');
 error_reporting(0);
 
@@ -74,7 +75,7 @@ if (strlen($_SESSION['login']) == 0) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $query = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostImage 
+                                        $query = mysqli_query($con, "SELECT id, PostTitle, PostDetails, PostImage, cloudinary_url 
                                                                  FROM tblposts 
                                                                  WHERE Is_Active = 1 
                                                                  ORDER BY id DESC");
@@ -82,17 +83,34 @@ if (strlen($_SESSION['login']) == 0) {
                                         if (mysqli_num_rows($query) == 0) {
                                             echo '<tr><td colspan="4" class="text-center text-danger"><h4>No records found.</h4></td></tr>';
                                         } else {
+                                            // Check if Cloudinary is enabled
+                                            $isCloudinaryEnabled = isset($_ENV['ENABLE_CLOUDINARY']) ? 
+                                                                filter_var($_ENV['ENABLE_CLOUDINARY'], FILTER_VALIDATE_BOOLEAN) : 
+                                                                false;
+                                                                
                                             while ($row = mysqli_fetch_array($query)) {
                                         ?>
                                                 <tr>
                                                     <td>
                                                         <?php
-                                                        $imageArray = explode(",", $row['PostImage']); // Split the images by commas
-                                                        $firstImage = trim($imageArray[0]); // Get the first image
+                                                        if ($isCloudinaryEnabled && !empty($row['cloudinary_url'])) {
+                                                            // Use Cloudinary URL if enabled and available
+                                                            $cloudinaryImages = explode(",", $row['cloudinary_url']);
+                                                            $firstImage = trim($cloudinaryImages[0]);
+                                                            ?>
+                                                            <img src="<?php echo htmlentities($firstImage); ?>"
+                                                                class="img-fluid rounded" style="width: 80px; height: 50px; object-fit: cover;">
+                                                        <?php
+                                                        } else {
+                                                            // Fall back to local images
+                                                            $imageArray = explode(",", $row['PostImage']);
+                                                            $firstImage = trim($imageArray[0]);
+                                                            ?>
+                                                            <img src="postimages/<?php echo htmlentities($firstImage); ?>"
+                                                                class="img-fluid rounded" style="width: 80px; height: 50px; object-fit: cover;">
+                                                        <?php
+                                                        }
                                                         ?>
-                                                        <img src="postimages/<?php echo htmlentities($firstImage); ?>"
-                                                            class="img-fluid rounded" style="width: 80px; height: 50px; object-fit: cover;">
-
                                                     </td>
                                                     <td><?php echo htmlentities($row['PostTitle']); ?></td>
                                                     <td><?php echo substr(htmlentities($row['PostDetails']), 0, 100) . '...'; ?></td>

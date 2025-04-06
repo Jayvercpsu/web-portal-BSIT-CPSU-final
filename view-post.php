@@ -1,4 +1,5 @@
 <?php
+include('cloudinary.php');
 include('includes/config.php');
 session_start();
 
@@ -9,7 +10,7 @@ if ($postid > 0) {
     if (!isset($_SESSION[$sessionKey])) {
         $updateViews = mysqli_query($con, "UPDATE tblposts SET viewCounter = viewCounter + 1 WHERE id = $postid");
         if ($updateViews) {
-            $_SESSION[$sessionKey] = true; // Set session to avoid duplicate views
+            $_SESSION[$sessionKey] = true;
         }
     }
 }
@@ -23,17 +24,27 @@ if (!$post) {
 }
 
 $postDetails = strip_tags($post['PostDetails']);
-$images = explode(",", $post['PostImage']);
+$cloudinaryEnabled = filter_var($_ENV['ENABLE_CLOUDINARY'], FILTER_VALIDATE_BOOLEAN);
+
+// Properly filter and trim image URLs
+$cloudinaryUrls = $cloudinaryEnabled && !empty($post['cloudinary_url']) 
+    ? array_filter(array_map('trim', explode(",", $post['cloudinary_url'])))
+    : [];
+
+$images = !$cloudinaryEnabled && !empty($post['PostImage']) 
+    ? array_filter(array_map('trim', explode(",", $post['PostImage'])))
+    : [];
+
+// Determine final image set to use
+$imageArray = $cloudinaryEnabled ? $cloudinaryUrls : $images;
 
 // Fetch updated viewCounter after increment
 $latestPostQuery = mysqli_query($con, "SELECT viewCounter FROM tblposts WHERE id = '$postid'");
 $latestPost = mysqli_fetch_array($latestPostQuery);
 
-// Fetch related posts
-$relatedQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts WHERE id != '$postid' AND Is_Active = 1 ORDER BY RAND()");
-
-// Fetch latest posts for sidebar
-$latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
+// Fetch related and latest posts
+$relatedQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, cloudinary_url FROM tblposts WHERE id != '$postid' AND Is_Active = 1 ORDER BY RAND()");
+$latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage, cloudinary_url FROM tblposts WHERE Is_Active = 1 ORDER BY id DESC");
 ?>
 
 
@@ -62,125 +73,140 @@ $latestQuery = mysqli_query($con, "SELECT id, PostTitle, PostImage FROM tblposts
     <div class="container my-5">
         <div class="row">
 
-            <!-- Left Section -->
-            <div class="col-lg-9 post-section">
-                <div class="card shadow-sm p-4">
-                    <button class="btn btn-sm btn-outline-secondary mb-3" onclick="goBack()">← Back</button>
-                    <h2 class="fw-bold"><?php echo htmlentities($post['PostTitle']); ?></h2>
-                    <p class="text-muted">
-                        <i class="fa fa-user"></i> Admin |
-                        <i class="fa fa-clock"></i> <?php echo date("M d, Y h:i A", strtotime($post['PostingDate'])); ?> |
-                        <i class="fas fa-eye"></i> <?php echo htmlentities($post['viewCounter']); ?> Views
-                    </p>
+<!-- Left Section -->
+<div class="col-lg-9 post-section">
 
-                    <div id="postCarousel" class="carousel slide" data-ride="carousel">
-                        <!-- Carousel Indicators -->
-                        <div class="carousel-indicators">
-                            <?php foreach ($images as $index => $image) { ?>
-                                <button type="button" data-target="#postCarousel"
-                                    data-slide-to="<?php echo $index; ?>"
-                                    class="<?php echo $index == 0 ? 'active' : ''; ?>"></button>
-                            <?php } ?>
-                        </div>
 
-                        <!-- Carousel Images -->
-                        <div class="carousel-inner">
-                            <?php foreach ($images as $index => $image) { ?>
-                                <div class="carousel-item <?php echo $index == 0 ? 'active' : ''; ?>">
-                                    <img src="admin/postimages/<?php echo htmlentities($image); ?>" class="d-block w-100 rounded zoom-image" alt="Post Image">
-                                </div>
-                            <?php } ?>
-                        </div>
+<div class="card shadow-sm p-4">
+    <button class="btn btn-sm btn-outline-secondary mb-3" onclick="goBack()">← Back</button>
+    <h2 class="fw-bold"><?php echo htmlentities($post['PostTitle']); ?></h2>
+    <p class="text-muted">
+        <i class="fa fa-user"></i> Admin |
+        <i class="fa fa-clock"></i> <?php echo date("M d, Y h:i A", strtotime($post['PostingDate'])); ?> |
+        <i class="fas fa-eye"></i> <?php echo htmlentities($latestPost['viewCounter']); ?> Views
+    </p>
 
-                        <!-- Navigation Arrows -->
-                        <button class="carousel-control-prev" type="button" data-target="#postCarousel" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
+    <div id="postCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <?php foreach (array_values($imageArray) as $index => $img): ?>
+                <button type="button" data-target="#postCarousel"
+                        data-slide-to="<?php echo $index; ?>"
+                        class="<?php echo $index == 0 ? 'active' : ''; ?>"></button>
+            <?php endforeach; ?>
+        </div>
 
-                        <button class="carousel-control-next" type="button" data-target="#postCarousel" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+        <!-- Carousel Images -->
+        <div class="carousel-inner">
+            <?php foreach (array_values($imageArray) as $index => $img): ?>
+                <div class="carousel-item <?php echo $index == 0 ? 'active' : ''; ?>">
+                    <img src="<?php echo $cloudinaryEnabled ? htmlentities($img) : 'admin/postimages/' . htmlentities($img); ?>" class="d-block w-100 rounded zoom-image" alt="Post Image">
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Navigation Arrows -->
+        <button class="carousel-control-prev" type="button" data-target="#postCarousel" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-target="#postCarousel" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Post Details -->
+    <div class="post-details mt-4">
+        <div class="post-content" style="text-align: justify;">
+            <?php echo $postDetails; ?>
+        </div>
+        <div class="btn-container">
+            <button id="toggle" class="btn btn-sm" style="background-color:rgb(94, 17, 149);">Read More</button>
+        </div>
+    </div>
+</div>
+
+    <h3 class="mt-5 fw-bold text-dark">Related Posts</h3>
+    <div class="row related-posts">
+        <?php
+        while ($related = mysqli_fetch_array($relatedQuery)) {
+            // Process and get first image for related posts
+            $relatedImages = explode(",", $related['PostImage']);
+            $relatedFirstImage = "";
+            
+            if ($cloudinaryEnabled && !empty($related['cloudinary_url'])) {
+                $relatedCloudinaryUrls = explode(",", $related['cloudinary_url']);
+                $relatedFirstImage = !empty($relatedCloudinaryUrls) ? trim($relatedCloudinaryUrls[0]) : "";
+            }
+            
+            // If no cloudinary URL or cloudinary is disabled, use local path
+            if (empty($relatedFirstImage)) {
+                $relatedFirstImage = "admin/postimages/" . trim($relatedImages[0]);
+            }
+        ?>
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 d-flex flex-column">
+                    <div class="rounded overflow-hidden">
+                        <img src="<?php echo htmlentities($relatedFirstImage); ?>" class="card-img-top zoom-image" style="height: 200px; object-fit: cover;">
                     </div>
-
-                    <!-- Post Details -->
-                    <div class="post-details mt-4">
-                        <div class="post-content" style="text-align: justify;">
-                            <?php echo $postDetails; ?>
-                        </div>
-                        <div class="btn-container">
-                            <button id="toggle" class="btn btn-sm" style="background-color:rgb(94, 17, 149);">Read More</button>
-                        </div>
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="fw-bold mb-2"><?php echo htmlentities($related['PostTitle']); ?></h6>
+                        <a href="view-post.php?id=<?php echo htmlentities($related['id']); ?>" class="btn btn-sm mt-auto" style="background-color: #6a0dad; color: white;">Read More</a>
                     </div>
                 </div>
-
-                <h3 class="mt-5 fw-bold text-dark">Related Posts</h3>
-                <div class="row related-posts">
-                    <?php
-                    while ($related = mysqli_fetch_array($relatedQuery)) {
-                        $images = explode(",", $related['PostImage']); // Split images by commas
-                        $firstImage = trim($images[0]); // Get the first image only
-                    ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="card shadow-sm h-100 d-flex flex-column">
-                                <div class="rounded overflow-hidden">
-                                    <img src="admin/postimages/<?php echo htmlentities($firstImage); ?>" class="card-img-top zoom-image" style="height: 200px; object-fit: cover;">
-                                </div>
-                                <div class="card-body d-flex flex-column">
-                                    <h6 class="fw-bold mb-2"><?php echo htmlentities($related['PostTitle']); ?></h6>
-                                    <a href="view-post.php?id=<?php echo htmlentities($related['id']); ?>" class="btn btn-sm mt-auto" style="background-color: #6a0dad; color: white;">Read More</a>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
             </div>
+        <?php } ?>
+    </div>
+</div>
 
+<!-- Sidebar -->
+<div class="col-lg-3">
+    <h4 class="fw-bold text-dark">Latest Posts</h4>
+    <ul class="list-group latest-posts-scroll">
+        <?php
+        while ($latest = mysqli_fetch_array($latestQuery)) {
+            // Process and get first image for latest posts
+            $latestImages = explode(",", $latest['PostImage']);
+            $latestFirstImage = "";
+            
+            if ($cloudinaryEnabled && !empty($latest['cloudinary_url'])) {
+                $latestCloudinaryUrls = explode(",", $latest['cloudinary_url']);
+                $latestFirstImage = !empty($latestCloudinaryUrls) ? trim($latestCloudinaryUrls[0]) : "";
+            }
+            
+            // If no cloudinary URL or cloudinary is disabled, use local path
+            if (empty($latestFirstImage)) {
+                $latestFirstImage = "admin/postimages/" . trim($latestImages[0]);
+            }
+        ?>
+            <li class="list-group-item list-group-item-action p-3">
+                <a href="view-post.php?id=<?php echo htmlentities($latest['id']); ?>" class="d-flex align-items-center text-decoration-none gap-3">
+                    <div class="flex-shrink-0 rounded overflow-hidden" style="width: 80px; height: 60px; border: 1px solid #ddd;">
+                        <img src="<?php echo htmlentities($latestFirstImage); ?>" class="img-fluid w-100 h-100" style="object-fit: cover;">
+                    </div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-0 fw-semibold"><?php echo htmlentities($latest['PostTitle']); ?></h6>
+                    </div>
+                </a>
+            </li>
+        <?php } ?>
+    </ul>
 
-            <!-- Sidebar -->
-            <div class="col-lg-3">
-                <h4 class="fw-bold text-dark">Latest Posts</h4>
-                <ul class="list-group latest-posts-scroll">
-                    <?php
-                    while ($latest = mysqli_fetch_array($latestQuery)) {
-                        $images = explode(",", $latest['PostImage']); // Split images by commas
-                        $firstImage = trim($images[0]); // Get the first image only
-                    ?>
-                        <li class="list-group-item list-group-item-action p-3">
-                            <a href="view-post.php?id=<?php echo htmlentities($latest['id']); ?>" class="d-flex align-items-center text-decoration-none gap-3">
-                                <div class="flex-shrink-0 rounded overflow-hidden" style="width: 80px; height: 60px; border: 1px solid #ddd;">
-                                    <img src="admin/postimages/<?php echo htmlentities($firstImage); ?>" class="img-fluid w-100 h-100" style="object-fit: cover;">
-                                </div>
-                                <div class="flex-grow-1">
-                                    <h6 class="mb-0 fw-semibold"><?php echo htmlentities($latest['PostTitle']); ?></h6>
-                                </div>
-                            </a>
-                        </li>
-                    <?php } ?>
-                </ul>
-
-
-
-
-                <!-- Quick Links -->
-                <h4 class="mt-4 fw-bold text-dark">Quick Links</h4>
-                <ul class="list-group shadow-sm">
-                    <li class="list-group-item">
-                        <a href="index.php" class="quick-link"><i class="fa fa-home"></i> Home</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="about-us.php" class="quick-link"><i class="fa fa-info-circle"></i> About Us</a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="contact-us.php" class="quick-link"><i class="fa fa-phone"></i> Contact</a>
-                    </li>
-                </ul>
-
-            </div>
-
-
-
+    <!-- Quick Links -->
+    <h4 class="mt-4 fw-bold text-dark">Quick Links</h4>
+    <ul class="list-group shadow-sm">
+        <li class="list-group-item">
+            <a href="index.php" class="quick-link"><i class="fa fa-home"></i> Home</a>
+        </li>
+        <li class="list-group-item">
+            <a href="about-us.php" class="quick-link"><i class="fa fa-info-circle"></i> About Us</a>
+        </li>
+        <li class="list-group-item">
+            <a href="contact-us.php" class="quick-link"><i class="fa fa-phone"></i> Contact</a>
+        </li>
+    </ul>
+</div>
 
 
         </div>

@@ -6,34 +6,67 @@
         <h2 class="mb-4 text-dark fw-bold text-center" style="font-weight: bold;">Latest News</h2>
         <div class="latest-news-carousel owl-carousel owl-theme" style="background-color: #f5f9f6;">
             <?php
-            mysqli_data_seek($query, 0); // Reset the query pointer
+            mysqli_data_seek($query, 0); // Reset pointer
+            
+            // Array to track displayed post IDs
+            $displayedPostIds = array();
+            
+            if ($query && mysqli_num_rows($query) > 0) {
             while ($row = mysqli_fetch_assoc($query)) {
+                // Skip if we've already displayed this post ID
+                if (in_array((int)$row['id'], $displayedPostIds)) {
+                    continue;
+                }
+                
+                // Add this post ID to our tracking array
+                $displayedPostIds[] = (int)$row['id'];
+
                 $title = strip_tags($row['PostTitle']);
                 $details = strip_tags($row['PostDetails']);
-                $images = explode(",", htmlspecialchars($row['PostImage'])); // Split images by commas
-                $firstImage = trim($images[0]); // Get only the first image
+
+                // Handle images
+                $localImages = explode(",", $row['PostImage']);
                 
-                // Limit title length for consistency
+                // Handle cloudinary if available
+                $firstImage = '';
+                if (isset($row['cloudinary_url']) && !empty($row['cloudinary_url'])) {
+                    $cloudinaryImages = explode(",", $row['cloudinary_url']);
+                    $isCloudinary = isset($_ENV['ENABLE_CLOUDINARY']) ? 
+                        filter_var($_ENV['ENABLE_CLOUDINARY'], FILTER_VALIDATE_BOOLEAN) : false;
+                    
+                    if ($isCloudinary && !empty($cloudinaryImages[0])) {
+                        $firstImage = trim($cloudinaryImages[0]);
+                    } else if (!empty($localImages[0])) {
+                        $firstImage = 'admin/postimages/' . trim($localImages[0]);
+                    }
+                } else if (!empty($localImages[0])) {
+                    $firstImage = 'admin/postimages/' . trim($localImages[0]);
+                }
+
+                // Skip if no image is available
+                if (empty($firstImage)) {
+                    continue;
+                }
+
+                // Truncate text
                 $truncatedTitle = (strlen($title) > 60) ? substr($title, 0, 60) . '...' : $title;
-                
-                // Limit details to exactly 100 characters for consistency
                 $truncatedDetails = substr($details, 0, 100) . '...';
             ?>
                 <div class="latest-news-item">
                     <div class="rounded shadow card-equal bg-white">
                         <div class="circle-image-container">
                             <div class="circle-image">
-                                <img src="admin/postimages/<?php echo $firstImage; ?>"
-                                    class="img-fluid"
-                                    alt="<?php echo $truncatedTitle; ?>">
+                                <img src="<?php echo htmlspecialchars($firstImage); ?>"
+                                     class="img-fluid"
+                                     alt="<?php echo htmlspecialchars($truncatedTitle); ?>">
                             </div>
                         </div>
                         <div class="p-4 d-flex flex-column h-100">
                             <a href="view-post.php?id=<?php echo $row['id']; ?>" class="h4 text-dark text-decoration-none latest-news-title truncate-title">
-                                <?php echo $truncatedTitle; ?>
+                                <?php echo htmlspecialchars($truncatedTitle); ?>
                             </a>
                             <p class="text-dark flex-grow-1 truncate-details">
-                                <?php echo $truncatedDetails; ?>
+                                <?php echo htmlspecialchars($truncatedDetails); ?>
                             </p>
                             <small class="text-dark">
                                 <i class="fas fa-calendar-alt"></i>
@@ -47,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-            <?php } ?>
+            <?php }} ?>
         </div>
     </div>
 </div>
