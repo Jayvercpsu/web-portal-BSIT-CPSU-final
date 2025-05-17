@@ -10,8 +10,7 @@
                                                                   <div class="card card-custom shadow-lg mt-5">
                                                                     <div class="card-body">
                                                                       <h4 class="text-center mb-4">Enter Your Student ID</h4>
-
-                                                                      <!-- Show error message if Student ID not found -->
+ 
                                                                       <?php if (isset($_SESSION['error'])) { ?>
                                                                         <div class="alert alert-danger text-center">
                                                                           <?php echo $_SESSION['error'];
@@ -33,7 +32,6 @@
                                                                 </div>
                                                               </div>
                                                             </div>
-
 
                                                             <div class="container custom">
                                                               <div id="grade-forms" style="display: none;">

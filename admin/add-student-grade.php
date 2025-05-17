@@ -145,52 +145,57 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['submit_grades'])) {
     </div>
 </div>
 
+<?php include('includes/footer.php'); ?>
 <!-- ✅ Include jQuery & Select2 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $("#student_id").select2({
-        placeholder: "Search and select a student...",
-        allowClear: true,
-        ajax: {
-            url: "fetch-students.php",
-            type: "GET",
-            dataType: "json",
-            delay: 250,
-            data: function(params) {
-                return { search: params.term };
-            },
-            processResults: function(data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        }
-    });
-
-    $('#student_id').on('change', function() {
-        let studentId = $(this).val();
-
-        if (studentId) {
-            $("#grade-form-container").html('<p class="text-center text-primary">Loading...</p>');
-
-            $.ajax({
-                url: "load-forms.php",
-                type: "POST",
-                data: { student_id: studentId },
-                success: function(response) {
-                    $("#grade-form-container").html(response);
+    $(document).ready(function() {
+        $("#student_id").select2({
+            placeholder: "Search and select a student...",
+            allowClear: true,
+            ajax: {
+                url: "fetch-students.php",
+                type: "GET",
+                dataType: "json",
+                delay: 250,
+                data: function(params) {
+                    return {
+                        search: params.term
+                    };
                 },
-                error: function() {
-                    $("#grade-form-container").html('<p class="text-center text-danger">Error loading data.</p>');
-                }
-            });
-        } else {
-            $("#grade-form-container").html('<p class="text-center text-muted">Please select a student.</p>');
-        }
+                processResults: function(data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            }
+        });
+
+        $('#student_id').on('change', function() {
+            let studentId = $(this).val();
+
+            if (studentId) {
+                $("#grade-form-container").html('<p class="text-center text-primary">Loading...</p>');
+
+                $.ajax({
+                    url: "load-forms.php",
+                    type: "POST",
+                    data: {
+                        student_id: studentId
+                    },
+                    success: function(response) {
+                        $("#grade-form-container").html(response);
+                    },
+                    error: function() {
+                        $("#grade-form-container").html('<p class="text-center text-danger">Error loading data.</p>');
+                    }
+                });
+            } else {
+                $("#grade-form-container").html('<p class="text-center text-muted">Please select a student.</p>');
+            }
+        });
     });
-});
 </script>
